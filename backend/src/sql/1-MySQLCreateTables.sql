@@ -1,6 +1,7 @@
 -- Indexes for primary keys have been explicitly created.
 
 DROP TABLE User;
+DROP TABLE Tariff;
 
 
 CREATE TABLE User (
@@ -18,5 +19,10 @@ CREATE TABLE User (
 CREATE INDEX UserIndexByUserName ON User (userName);
 
 
-
+CREATE TABLE Tariff (
+    id BIGINT NOT NULL AUTO_INCREMENT,
+    tariffName VARCHAR(60) COLLATE latin1_bin NOT NULL,
+    CONSTRAINT TariffPK PRIMARY KEY (id),
+      CONSTRAINT TariffNameUniqueKey UNIQUE (tariffName)
+) ENGINE = InnoDB;
 
