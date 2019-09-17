@@ -22,7 +22,9 @@ CREATE INDEX UserIndexByUserName ON User (userName);
 CREATE TABLE Tariff (
     id BIGINT NOT NULL AUTO_INCREMENT,
     tariffName VARCHAR(60) COLLATE latin1_bin NOT NULL,
+    tariffCode VARCHAR(60) COLLATE latin1_bin NOT NULL,
     CONSTRAINT TariffPK PRIMARY KEY (id),
-      CONSTRAINT TariffNameUniqueKey UNIQUE (tariffName)
+    CONSTRAINT TariffNameUniqueKey UNIQUE (tariffName),
+    CONSTRAINT TariffCodeUniqueKey UNIQUE (tariffCode)
 ) ENGINE = InnoDB;
 
