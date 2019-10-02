@@ -2,9 +2,13 @@ package es.udc.tfg.backend.rest.controllers;
 
 import static es.udc.tfg.backend.rest.dtos.TariffConversor.toTariff;
 import static es.udc.tfg.backend.rest.dtos.TariffConversor.toTariffDto;
+import static es.udc.tfg.backend.rest.dtos.TariffConversor.toTariffDtos;
+
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,5 +30,12 @@ public class TariffController {
 			throws DuplicateInstanceException {
 		return toTariffDto(tariffService.addTariff(toTariff(tariffDto)));
 	}
+	
+	@GetMapping("/tariffs")
+	public List<TariffDto> findAllTariffs() {
+		return toTariffDtos(tariffService.findAllTariffs());
+	}
+
+
 
 }
