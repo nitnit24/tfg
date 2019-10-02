@@ -30,7 +30,7 @@ const Header = ({user, handleLogout}) => (
                 </li>              
                 :
                 <li className="nav-item">
-                    <NavLink exact className="nav-link" to="/tariff/tariff-management">
+                    <NavLink exact className="nav-link" to="/tariffs/tariff-management">
                         <span></span>
                         <FormattedMessage id="project.app.Header.tariff"/>
                     </NavLink>

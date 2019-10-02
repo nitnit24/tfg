@@ -26,6 +26,9 @@ export default {
     'project.global.validator.passwordsDoNotMatch': 'Las contraseñas no coinciden',
     'project.global.validator.required': 'Campo obligatorio',
 
+    'project.global.buttons.add': 'Añadir',
+    'project.global.fields.code': 'Código',
+
     'project.users.ChangePassword.fields.confirmNewPassword': 'Confirmar contraseña nueva',
     'project.users.ChangePassword.fields.newPassword': 'Contraseña nueva',
     'project.users.ChangePassword.fields.oldPassword': 'Contraseña antigua',
@@ -33,6 +36,8 @@ export default {
     'project.users.Login.title': 'Autenticarse',
     'project.users.SignUp.fields.confirmPassword': 'Confirmar contraseña',
     'project.users.SignUp.title': 'Registrarse',
-    'project.users.UpdateProfile.title': 'Actualizar perfil'
+    'project.users.UpdateProfile.title': 'Actualizar perfil',
+
+    'project.tariffs.TariffForm.title': 'Tarifa'
 
 }

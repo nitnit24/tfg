@@ -21,7 +21,7 @@ public class TariffController {
 	@Autowired
 	private TariffService tariffService;
 
-	@PostMapping("/tariffs")
+	@PostMapping("/addTariff")
 	public TariffDto addTariff(@Validated({ TariffDto.AllValidations.class }) @RequestBody TariffDto tariffDto)
 			throws DuplicateInstanceException {
 		return toTariffDto(tariffService.addTariff(toTariff(tariffDto)));

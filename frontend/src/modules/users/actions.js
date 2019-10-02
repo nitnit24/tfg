@@ -1,10 +1,34 @@
 import * as actionTypes from './actionTypes';
 import backend from '../../backend';
 
+
+
+const request = (options) => {
+    const headers = new Headers({
+        'Content-Type': 'application/json',
+    })
+
+    const defaults = {headers: headers};
+    options = Object.assign({}, defaults, options);
+
+    return fetch(options.url, options)
+    .then(response => 
+        response.json().then(json => {
+            if(!response.ok) {
+                return Promise.reject(json);
+            }
+            return json;
+        })
+    );
+};
+
 const signUpCompleted = authenticatedUser => ({
     type: actionTypes.SIGN_UP_COMPLETED,
     authenticatedUser
 });
+
+
+
 
 export const signUp = (user, onSuccess, onErrors) => dispatch =>
     backend.userService.signUp(user,
@@ -63,3 +87,11 @@ export const updateProfile = (user, onSuccess, onErrors) => dispatch =>
 
 export const changePassword = (id, oldPassword, newPassword, onSuccess, onErrors) => dispatch =>
     backend.userService.changePassword(id, oldPassword, newPassword, onSuccess, onErrors);
+
+export function addTariff (TariffData) {
+        return request ({
+            url: "http://localhost:8080/tariffs/addTariff",
+            method: 'POST',
+            body: JSON.stringify(TariffData)
+        });
+    }
