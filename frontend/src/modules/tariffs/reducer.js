@@ -6,19 +6,22 @@ const initialState = {
     tariffs: null
 };
 
-const tariff = (state = initialState, action) => {
+const tariffs = (state = initialState.tariffs, action) => {
 
     switch (action.type) {
 
-        default:
-            return state;
+    case actionTypes.FIND_ALL_TARIFFS_COMPLETED:
+        return action.tariffs;
+
+    default:
+        return state;
 
     }
 
 }
 
 const reducer = combineReducers({
-    tariff
+    tariffs
 });
 
 export default reducer;

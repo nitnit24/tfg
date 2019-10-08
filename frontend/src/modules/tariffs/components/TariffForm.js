@@ -1,5 +1,4 @@
 import React from 'react';
-import {connect} from 'react-redux';
 import {FormattedMessage} from 'react-intl';
 import PropTypes from 'prop-types';
 
@@ -50,8 +49,8 @@ class TariffForm extends React.Component {
         
         actions.addTariff(
             tariff, 
-            // () => this.props.history.history.push("/tariffs/tariff-management"),
-            () => this.props.history.history.push("/"),
+             () => this.props.history.push("/tariffs/tariff-management"),
+           // () => this.props.history.push("/"),
             errors => this.setBackendErrors(errors)
             );
 
@@ -127,21 +126,10 @@ class TariffForm extends React.Component {
 
 }
 
-// const mapStateToProps = (state) => ({
-//     tariff: selectors.getTariff(state)
-// });
-
-// const mapDispatchToProps = {
-//     add: actions.addTariff
-// }
-
-// TariffForm = connect(mapStateToProps, mapDispatchToProps)(TariffForm);
-
 TariffForm.propTypes = {
-    history: PropTypes.object.isRequired
+    //history: PropTypes.object.isRequired
 };
 
 export default TariffForm;
 
-// export default connect()(TariffForm);
 

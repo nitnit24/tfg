@@ -28,6 +28,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.authorizeRequests().antMatchers("/users/login").permitAll().and()
 			.authorizeRequests().antMatchers("/users/loginFromServiceToken").permitAll().and()
 			.authorizeRequests().antMatchers("/tariffs/addTariff").permitAll().and()
+			.authorizeRequests().antMatchers("/tariffs/tariffs").permitAll().and()
 			.authorizeRequests().antMatchers("/**").hasRole("USER");
 
 	}

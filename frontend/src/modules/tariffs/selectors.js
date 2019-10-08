@@ -1,4 +1,4 @@
 const getModuleState = state => state.tariffs;
 
-export const getTariff = state =>
-    getModuleState(state).tariff;
+export const getTariffs = state =>
+    getModuleState(state).tariffs;

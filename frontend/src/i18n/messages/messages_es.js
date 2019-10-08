@@ -38,6 +38,8 @@ export default {
     'project.users.SignUp.title': 'Registrarse',
     'project.users.UpdateProfile.title': 'Actualizar perfil',
 
-    'project.tariffs.TariffForm.title': 'Tarifa'
+    'project.tariffs.TariffForm.title': 'Añadir tarifa',
+    'project.tariff.TariffItemList.empty': 'Vacío',
+    'project.tariffs.TariffItemList.title': 'Tarifas',
 
-}
+}   
