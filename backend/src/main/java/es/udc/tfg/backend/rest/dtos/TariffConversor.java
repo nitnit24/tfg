@@ -15,7 +15,7 @@ public class TariffConversor {
 	}
 
 	public final static Tariff toTariff(TariffDto tariffDto) {
-		return new Tariff(tariffDto.getName(), tariffDto.getCode());
+		return new Tariff(tariffDto.getId(), tariffDto.getName(), tariffDto.getCode());
 	}
 
 	public final static List<TariffDto> toTariffDtos(List<Tariff> tariffs) {

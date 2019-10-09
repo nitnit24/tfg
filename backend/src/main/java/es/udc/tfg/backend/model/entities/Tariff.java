@@ -20,6 +20,12 @@ public class Tariff {
 		this.name = name;
 		this.code = code;
 	}
+	
+	public Tariff(Long id, String name, String code) {
+		this.id = id;
+		this.name = name;
+		this.code = code;
+	}
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
