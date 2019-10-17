@@ -31,7 +31,7 @@ const handleOkResponse = (response, onSuccess) => {
 
     if (isJson(response)) {
         response.json().then(payload => onSuccess(payload));
-    }
+    } 
 
     return true;
 

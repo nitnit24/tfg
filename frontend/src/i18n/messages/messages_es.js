@@ -39,6 +39,9 @@ export default {
     'project.users.UpdateProfile.title': 'Actualizar perfil',
 
     'project.tariffs.TariffForm.title': 'Añadir tarifa',
+
+    'project.tariffs.TariffUpdateForm.title': 'Modificar tarifa',
+    
     'project.tariff.TariffItemList.empty': 'Vacío',
     'project.tariffs.TariffItemList.title': 'Tarifas',
 

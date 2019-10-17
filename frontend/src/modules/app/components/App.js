@@ -6,7 +6,6 @@ import Header from './Header';
 import Body from './Body';
 import Footer from './Footer';
 import users from '../../users';
-import tariffs from '../../tariffs';
 
 const reauthenticationCallback = dispatch => () => 
     dispatch(users.actions.logout());
@@ -18,8 +17,6 @@ class App extends React.Component {
         this.props.dispatch(
             users.actions.tryLoginFromServiceToken(
                 reauthenticationCallback(this.props.dispatch)));
-
-        this.props.dispatch(tariffs.actions.findAllTariffs());
 
     }
 

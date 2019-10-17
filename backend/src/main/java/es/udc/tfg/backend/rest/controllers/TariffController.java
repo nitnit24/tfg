@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
 
 import es.udc.tfg.backend.model.common.exceptions.DuplicateInstanceException;
 import es.udc.tfg.backend.model.common.exceptions.InstanceNotFoundException;
@@ -43,18 +45,23 @@ public class TariffController {
 	
 
 	@PutMapping("/{id}")
-	public TariffDto updateTariffs(@PathVariable("id") Long id,
+	public TariffDto updateTariff(@PathVariable("id") Long id,
 			 @RequestBody TariffDto tariffDto) 
 					throws InstanceNotFoundException {
 		return toTariffDto(tariffService.updateTariff(toTariff(tariffDto)));
 	}
 
-//	@DeleteMapping("/{id}")
-//	public removeTariffs(@RequestAttribute Long tariffId, @PathVariable("id") Long id) 
-//					throws InstanceNotFoundException {
-//		return tariffService.removeTariff(id);
-//	}
+	@DeleteMapping("/{id}")
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	public void removeTariff(@PathVariable("id") Long id) 			
+			throws InstanceNotFoundException {
+		tariffService.removeTariff(id);
+	}
 
+	@GetMapping("/{id}")
+	public TariffDto findTariffById(@PathVariable("id") Long id) throws InstanceNotFoundException 	 {
+		return toTariffDto(tariffService.findTariffById(id));
+	}
 
 
 }

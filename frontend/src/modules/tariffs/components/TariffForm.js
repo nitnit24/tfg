@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 
 import {Errors} from '../../common';
 import * as actions from '../actions';
+import {connect} from 'react-redux';
 
 const initialState = {
     name: '',
@@ -12,7 +13,7 @@ const initialState = {
 };
 
 class TariffForm extends React.Component {
-
+    
     constructor(props) {
 
         super(props);
@@ -47,12 +48,7 @@ class TariffForm extends React.Component {
             code : this.state.code.trim()
         }
         
-        actions.addTariff(
-            tariff, 
-             () => this.props.history.push("/tariffs/tariff-management"),
-           // () => this.props.history.push("/"),
-            errors => this.setBackendErrors(errors)
-            );
+        this.props.addTariff(tariff,  errors => this.setBackendErrors(errors))
 
     }
 
@@ -63,14 +59,14 @@ class TariffForm extends React.Component {
     handleErrorsClose() {
         this.setState({backendErrors: null});
     }
+    
 
     render() {
 
         return (
 
             <div>
-                <Errors errors={this.state.backendErrors}
-                    onClose={() => this.handleErrorsClose()}/>
+                 <Errors errors={this.state.backendErrors} handleClose={() => this.handleErrorsClose()}/>
                 <div className="card bg-light border-dark">
                     <h5 className="card-header">
                         <FormattedMessage id="project.tariffs.TariffForm.title"/>
@@ -127,9 +123,13 @@ class TariffForm extends React.Component {
 }
 
 TariffForm.propTypes = {
-    //history: PropTypes.object.isRequired
+    history: PropTypes.object.isRequired
 };
 
-export default TariffForm;
+const mapDispatchToProps = {
+    addTariff: actions.addTariff
+}
+
+export default connect(null, mapDispatchToProps)(TariffForm);
 
 

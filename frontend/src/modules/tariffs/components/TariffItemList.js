@@ -1,8 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {FormattedMessage} from 'react-intl';
-import {connect} from 'react-redux';
-import * as selectors from '../selectors';
+
 
 import TariffItem from './TariffItem';
 import {Errors} from '../../common';
@@ -31,9 +30,12 @@ class TariffItemList extends React.Component {
         this.setState({backendErrors: null});
     }
 
+
     render() {
 
         const list = this.props.list;
+        const removeTariff = this.props.removeTariff;
+        
 
         // if (list.items.length === 0) {
         //     return (
@@ -68,17 +70,13 @@ class TariffItemList extends React.Component {
                     </thead>
 
                     <tbody>
-                          {/* {list.map(item => 
-                            <TariffItem tariffItemListId={list.id}
-                                key={item.tariffId} item={item}
-                                onBackendErrors={errors => this.setBackendErrors(errors)}/>
-                        )}   */}
+
                         {list.map(item => 
                             <TariffItem tariffItemListId={list.id}
-                                key={item.tariffId} item={item}
+                                key={item.id} item={item}
+                                removeTariff={removeTariff} 
                                 onBackendErrors={errors => this.setBackendErrors(errors)}/>
                         )} 
-
 
                     </tbody>
 
@@ -94,7 +92,7 @@ class TariffItemList extends React.Component {
 
 
 TariffItemList.propTypes = {
-    list: PropTypes.object.isRequired,
+     list: PropTypes.array.isRequired
 }
 
 export default TariffItemList;

@@ -6,7 +6,7 @@ import AppGlobalComponents from './AppGlobalComponents';
 import Home from './Home';
 import {Login, SignUp, UpdateProfile, ChangePassword} from '../../users';
 import users from '../../users';
-import {Tariff} from '../../tariffs';
+import {Tariff, TariffUpdateForm} from '../../tariffs';
 
 const Body = ({user}) => (
 
@@ -16,6 +16,7 @@ const Body = ({user}) => (
         <Switch>
             <Route exact path="/" component={Home}/>
             {user && <Route exact path="/tariffs/tariff-management" component={Tariff}/>}
+            {user && <Route exact path="/tariffs/tariff-update/:id" component={TariffUpdateForm}/>}
             {user && <Route exact path="/users/update-profile" component={UpdateProfile}/>}
             {user && <Route exact path="/users/change-password" component={ChangePassword}/>}
             {!user && <Route exact path="/users/login" component={Login}/>}

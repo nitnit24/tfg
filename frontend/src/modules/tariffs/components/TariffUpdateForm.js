@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {FormattedMessage} from 'react-intl';
 
@@ -6,40 +7,46 @@ import {Errors} from '../../common';
 import * as actions from '../actions';
 import * as selectors from '../selectors';
 
-class UpdateProfile extends React.Component {
+class TariffUpdateForm extends React.Component {
+
+    componentDidMount() {
+
+        const id = Number(this.props.match.params.id);
+        
+        if (!Number.isNaN(id)) {
+            this.props.findTariffById(id);
+        }
+        
+    }
 
     constructor(props) {
 
         super(props);
 
         this.state = {
-            firstName: props.user.firstName,
-            lastName: props.user.lastName,
-            email: props.user.email,
-            backendErrors: null,
-            passwordsDoNotMatch: false
+            name: this.props.tariff.code,
+            code: this.props.tariff.name,
+            
+            backendErrors: null
         };
 
     }
 
-    handleFirstNameChange(event) {
-        this.setState({firstName: event.target.value});
+    handleNameChange(event) {
+        this.setState({name: event.target.value});
     }
 
-    handleLastNameChange(event) {
-        this.setState({lastName: event.target.value});
+    handleCodeChange(event) {
+        this.setState({code: event.target.value});
     }
 
-    handleEmailChange(event) {
-        this.setState({email: event.target.value});
-    }
 
     handleSubmit(event) {
 
         event.preventDefault();
 
         if (this.form.checkValidity()) {
-            this.updateProfile();
+            this.update();
         } else {
             this.setBackendErrors(null);
             this.form.classList.add('was-validated');
@@ -47,14 +54,13 @@ class UpdateProfile extends React.Component {
 
     }
 
-    updateProfile() {
+    update() {
 
-        this.props.updateProfile(
-            {id: this.props.user.id,
-            firstName: this.state.firstName.trim(),
-            lastName: this.state.lastName.trim(),
-            email: this.state.email.trim()},
-            () => this.props.history.push('/'),
+        this.props.updateTariff(
+            {id: this.props.tariff.id,
+            name: this.state.name.trim(),
+            code: this.state.code.trim()},
+            () => this.props.history.push('/tariffs/tariff-management'),
             errors => this.setBackendErrors(errors));
         
     }
@@ -69,24 +75,28 @@ class UpdateProfile extends React.Component {
 
     render() {
 
+        // const tariff = this.props.tariff;
+        // this.state.name = tariff.name;
+        // this.state.code = tariff.code;
+
         return (
             <div>
                 <Errors errors={this.state.backendErrors} onClose={() => this.handleErrorsClose()}/>
                 <div className="card bg-light border-dark">
                     <h5 className="card-header">
-                        <FormattedMessage id="project.users.UpdateProfile.title"/>
+                        <FormattedMessage id="project.tariffs.TariffUpdateForm.title"/>
                     </h5>
                     <div className="card-body">
                         <form ref={node => this.form = node} 
                             className="needs-validation" noValidate onSubmit={(e) => this.handleSubmit(e)}>
                             <div className="form-group row">
-                                <label htmlFor="firstName" className="col-md-3 col-form-label">
-                                    <FormattedMessage id="project.global.fields.firstName"/>
+                                <label htmlFor="name" className="col-md-3 col-form-label">
+                                    <FormattedMessage id="project.global.fields.name"/>
                                 </label>
                                 <div className="col-md-4">
-                                    <input type="text" id="firstName" className="form-control"
-                                        value={this.state.firstName}
-                                        onChange={(e) => this.handleFirstNameChange(e)}
+                                    <input type="text" id="name" className="form-control"
+                                        value={this.state.name}
+                                        onChange={(e) => this.handleNameChange(e)}
                                         autoFocus
                                         required/>
                                     <div className="invalid-feedback">
@@ -95,30 +105,16 @@ class UpdateProfile extends React.Component {
                                 </div>
                             </div>
                             <div className="form-group row">
-                                <label htmlFor="lastName" className="col-md-3 col-form-label">
-                                    <FormattedMessage id="project.global.fields.lastName"/>
+                                <label htmlFor="code" className="col-md-3 col-form-label">
+                                    <FormattedMessage id="project.global.fields.code"/>
                                 </label>
                                 <div className="col-md-4">
-                                    <input type="text" id="lastName" className="form-control"
-                                        value={this.state.lastName}
-                                        onChange={(e) => this.handleLastNameChange(e)}
+                                    <input type="text" id="code" className="form-control"
+                                        value={this.state.code}
+                                        onChange={(e) => this.handleCodeChange(e)}
                                         required/>
                                     <div className="invalid-feedback">
                                         <FormattedMessage id='project.global.validator.required'/>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="form-group row">
-                                <label htmlFor="email" className="col-md-3 col-form-label">
-                                    <FormattedMessage id="project.global.fields.email"/>
-                                </label>
-                                <div className="col-md-4">
-                                    <input type="email" id="email" className="form-control"
-                                        value={this.state.email}
-                                        onChange={(e) => this.handleEmailChange(e)}
-                                        required/>
-                                    <div className="invalid-feedback">
-                                        <FormattedMessage id='project.global.validator.email'/>
                                     </div>
                                 </div>
                             </div>
@@ -139,12 +135,17 @@ class UpdateProfile extends React.Component {
 
 }
 
+TariffUpdateForm.propTypes = {
+    //: PropTypes.string
+}
 const mapStateToProps = (state) => ({
-    user: selectors.getUser(state)
+    tariff : selectors.getTariff(state)
 });
 
 const mapDispatchToProps = {
-    updateProfile: actions.updateProfile
+    updateTariff: actions.updateTariff,
+    findTariffById: actions.findTariffById
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(UpdateProfile);
+export default connect(mapStateToProps, mapDispatchToProps)(TariffUpdateForm);
+
