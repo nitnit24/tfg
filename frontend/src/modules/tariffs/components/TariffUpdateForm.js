@@ -24,8 +24,8 @@ class TariffUpdateForm extends React.Component {
         super(props);
 
         this.state = {
-            name: this.props.tariff.code,
-            code: this.props.tariff.name,
+            code: this.props.tariff.code,
+            name: this.props.tariff.name,
             
             backendErrors: null
         };
@@ -90,6 +90,20 @@ class TariffUpdateForm extends React.Component {
                         <form ref={node => this.form = node} 
                             className="needs-validation" noValidate onSubmit={(e) => this.handleSubmit(e)}>
                             <div className="form-group row">
+                                <label htmlFor="code" className="col-md-3 col-form-label">
+                                    <FormattedMessage id="project.global.fields.code"/>
+                                </label>
+                                <div className="col-md-4">
+                                    <input type="text" id="code" className="form-control"
+                                        value={this.state.code}
+                                        onChange={(e) => this.handleCodeChange(e)}
+                                        required/>
+                                    <div className="invalid-feedback">
+                                        <FormattedMessage id='project.global.validator.required'/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="form-group row">
                                 <label htmlFor="name" className="col-md-3 col-form-label">
                                     <FormattedMessage id="project.global.fields.name"/>
                                 </label>
@@ -98,20 +112,6 @@ class TariffUpdateForm extends React.Component {
                                         value={this.state.name}
                                         onChange={(e) => this.handleNameChange(e)}
                                         autoFocus
-                                        required/>
-                                    <div className="invalid-feedback">
-                                        <FormattedMessage id='project.global.validator.required'/>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="form-group row">
-                                <label htmlFor="code" className="col-md-3 col-form-label">
-                                    <FormattedMessage id="project.global.fields.code"/>
-                                </label>
-                                <div className="col-md-4">
-                                    <input type="text" id="code" className="form-control"
-                                        value={this.state.code}
-                                        onChange={(e) => this.handleCodeChange(e)}
                                         required/>
                                     <div className="invalid-feedback">
                                         <FormattedMessage id='project.global.validator.required'/>

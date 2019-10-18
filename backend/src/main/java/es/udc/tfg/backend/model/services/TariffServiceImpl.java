@@ -83,7 +83,7 @@ public class TariffServiceImpl implements TariffService {
 	@Override
 	public List<Tariff> findAllTariffs() {
 
-		Iterable<Tariff> tariffs = tariffDao.findAll(new Sort(Sort.Direction.ASC, "name"));
+		Iterable<Tariff> tariffs = tariffDao.findAll(new Sort(Sort.Direction.ASC, "id"));
 		List<Tariff> tariffsAsList = new ArrayList<>();
 
 		tariffs.forEach(c -> tariffsAsList.add(c));
