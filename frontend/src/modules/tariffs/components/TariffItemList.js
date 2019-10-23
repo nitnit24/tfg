@@ -34,7 +34,6 @@ class TariffItemList extends React.Component {
     render() {
 
         const list = this.props.list;
-        const removeTariff = this.props.removeTariff;
         
 
         // if (list.items.length === 0) {
@@ -74,7 +73,7 @@ class TariffItemList extends React.Component {
                         {list.map(item => 
                             <TariffItem tariffItemListId={list.id}
                                 key={item.id} item={item}
-                                removeTariff={removeTariff} 
+                                history={this.props.history}
                                 onBackendErrors={errors => this.setBackendErrors(errors)}/>
                         )} 
 

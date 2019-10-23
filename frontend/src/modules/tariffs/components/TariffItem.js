@@ -1,7 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Link} from 'react-router-dom';
+import * as actions from '../actions';
+import * as selectors from '../selectors';
+import {connect} from 'react-redux';
 
+const initialState = {
+    backendErrors: null
+};
 
 class TariffItem extends React.Component {
 
@@ -9,8 +14,11 @@ class TariffItem extends React.Component {
     constructor(props) {
         super(props);
     
+        this.state = initialState;
+
       }
 
+  
     handleRemoveItem(item) {
        this.props.removeTariff(item,
         () => {
@@ -20,6 +28,13 @@ class TariffItem extends React.Component {
             this.props.onBackendErrors(backendErrors);
         });
     
+    }
+
+    handleClick(){
+        this.props.findTariffById(this.props.item.id,
+            () => this.props.history.push('/tariffs/tariff-update'),
+            errors => this.setBackendErrors(errors));
+
     }
     
     setBackendErrors(backendErrors) {
@@ -46,9 +61,10 @@ class TariffItem extends React.Component {
                 </button>
                 </td>
                 <td> 
-                <Link className="dropdown-item" to = {`/tariffs/tariff-update/${item.id}`}>
-                        <span className='fas fa-edit'></span>
-                </Link>
+                <button type="button" className="btn btn-light btn-sm"
+                            onClick={() => this.handleClick()}>
+                            <span className="fas fa-edit"></span>
+                </button>
                 </td>
             </tr>
           
@@ -65,4 +81,13 @@ TariffItem.propTypes = {
     removeTariff: PropTypes.func
 }
 
-export default (TariffItem);
+const mapStateToProps = (state) => ({
+    tariff : selectors.getTariff(state)
+});
+
+const mapDispatchToProps = {
+    findTariffById: actions.findTariffById,
+    removeTariff: actions.removeTariff
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(TariffItem);

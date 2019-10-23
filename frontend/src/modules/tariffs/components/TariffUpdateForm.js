@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {FormattedMessage} from 'react-intl';
 
@@ -9,15 +8,6 @@ import * as selectors from '../selectors';
 
 class TariffUpdateForm extends React.Component {
 
-    componentDidMount() {
-
-        const id = Number(this.props.match.params.id);
-        
-        if (!Number.isNaN(id)) {
-            this.props.findTariffById(id);
-        }
-        
-    }
 
     constructor(props) {
 
@@ -75,10 +65,6 @@ class TariffUpdateForm extends React.Component {
 
     render() {
 
-        // const tariff = this.props.tariff;
-        // this.state.name = tariff.name;
-        // this.state.code = tariff.code;
-
         return (
             <div>
                 <Errors errors={this.state.backendErrors} onClose={() => this.handleErrorsClose()}/>
@@ -135,9 +121,6 @@ class TariffUpdateForm extends React.Component {
 
 }
 
-TariffUpdateForm.propTypes = {
-    //: PropTypes.string
-}
 const mapStateToProps = (state) => ({
     tariff : selectors.getTariff(state)
 });

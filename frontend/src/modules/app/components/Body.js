@@ -16,7 +16,7 @@ const Body = ({user}) => (
         <Switch>
             <Route exact path="/" component={Home}/>
             {user && <Route exact path="/tariffs/tariff-management" component={Tariff}/>}
-            {user && <Route exact path="/tariffs/tariff-update/:id" component={TariffUpdateForm}/>}
+            {user && <Route exact path="/tariffs/tariff-update" component={TariffUpdateForm}/>}
             {user && <Route exact path="/users/update-profile" component={UpdateProfile}/>}
             {user && <Route exact path="/users/change-password" component={ChangePassword}/>}
             {!user && <Route exact path="/users/login" component={Login}/>}

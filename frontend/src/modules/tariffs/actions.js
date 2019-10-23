@@ -20,7 +20,7 @@ export const updateTariff = (tariff, onSuccess, onErrors) => (dispatch) => {
    
     backend.tariffService.updateTariff(tariff,
         () => {
-            dispatch(findAllTariffs());
+            //dispatch(findAllTariffs());
             onSuccess();
         },
         onErrors)
@@ -44,8 +44,12 @@ const findTariffByIdCompleted = tariff => ({
     tariff
 });
         
-export const findTariffById = id => dispatch => {
+
+export const findTariffById = (id, onSuccess) => (dispatch) => {
     backend.tariffService.findTariffById(id,
-        tariff => dispatch(findTariffByIdCompleted(tariff)));
-}
+        tariff => {
+            dispatch(findTariffByIdCompleted(tariff));
+            onSuccess();
+        })
+    }
 

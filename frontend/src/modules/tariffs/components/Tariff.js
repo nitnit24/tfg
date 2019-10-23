@@ -46,7 +46,7 @@ class Tariff extends React.Component {
                     </div>
                 &nbsp;
                 &nbsp;
-                <TariffItemList list={this.props.tariffs} removeTariff= {this.props.removeTariff}/> 
+                <TariffItemList list={this.props.tariffs} history={this.props.history}/> 
             </div>
         );
     }
@@ -58,8 +58,7 @@ const mapStateToProps = state => ({
 
 
 const mapDispatchToProps = {
-    findTariffs : actions.findAllTariffs,
-    removeTariff : actions.removeTariff,
+    findTariffs : actions.findAllTariffs
 }
 
 export default connect(mapStateToProps,mapDispatchToProps)(Tariff);
