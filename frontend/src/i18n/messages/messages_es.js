@@ -3,6 +3,7 @@ export default {
     'project.app.Footer.text': 'TFG Project - Area de Ingeniería Telemática - Universidad de A Coruña',
     'project.app.Header.home': 'Inicio',
     'project.app.Header.tariff': 'Tipos de tarifa',
+    'project.app.Header.roomType': 'Tipos de habitación',
     'project.app.Header.logout': 'Salir',
     'project.app.Home.welcome': '¡Contenido de la página principal de TFG Project!',
     
@@ -28,6 +29,9 @@ export default {
 
     'project.global.buttons.add': 'Añadir',
     'project.global.fields.code': 'Código',
+    'project.global.fields.capacity': 'Capacidad',
+    'project.global.fields.minPrice': 'Precio mínimo',
+    'project.global.fields.maxPrice': 'Precio máximo',
 
     'project.users.ChangePassword.fields.confirmNewPassword': 'Confirmar contraseña nueva',
     'project.users.ChangePassword.fields.newPassword': 'Contraseña nueva',
@@ -39,10 +43,13 @@ export default {
     'project.users.UpdateProfile.title': 'Actualizar perfil',
 
     'project.tariffs.TariffForm.title': 'Añadir tarifa',
-
     'project.tariffs.TariffUpdateForm.title': 'Modificar tarifa',
-    
     'project.tariff.TariffItemList.empty': 'Vacío',
     'project.tariffs.TariffItemList.title': 'Tarifas',
+
+    'project.roomtypes.RoomTypeForm.title' : 'Añadir tipo de Habitación',
+    'project.roomTypes.RoomTypeUpdateForm.title' : 'Actualizar Tipo de habitación',
+    'project.roomTypes.RoomTypeItemList.title' : 'Tipos de Habitación'
+    
 
 }   
