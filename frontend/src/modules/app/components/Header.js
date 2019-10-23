@@ -34,7 +34,13 @@ const Header = ({user, handleLogout}) => (
                         <span></span>
                         <FormattedMessage id="project.app.Header.tariff"/>
                     </NavLink>
+                
+                    <NavLink exact className="nav-link" to="/roomTypes/roomType-management">
+                           <span></span>
+                           <FormattedMessage id="project.app.Header.roomType"/>
+                       </NavLink>
                 </li>
+                
                 
                 }
     
