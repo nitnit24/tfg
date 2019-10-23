@@ -19,32 +19,36 @@ const Header = ({user, handleLogout}) => (
 
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
 
-            <ul className="navbar-nav mr-auto">
+            
 
-            {!user ?
+            {user ?
+            <ul className="navbar-nav mr-auto">   
                 <li className="nav-item">
                     <NavLink exact className="nav-link" to="/">
                         <span className="fas fa-home"></span>&nbsp;
                         <FormattedMessage id="project.app.Header.home"/>
                     </NavLink>
                 </li>              
-                :
                 <li className="nav-item">
                     <NavLink exact className="nav-link" to="/tariffs/tariff-management">
                         <span></span>
                         <FormattedMessage id="project.app.Header.tariff"/>
                     </NavLink>
-                
+                </li>
+                <li className="nav-item">
                     <NavLink exact className="nav-link" to="/roomTypes/roomType-management">
                            <span></span>
                            <FormattedMessage id="project.app.Header.roomType"/>
-                       </NavLink>
+                    </NavLink>
                 </li>
-                
-                
-                }
-    
             </ul>
+            :
+            <ul className="navbar-nav mr-auto">   
+            </ul>
+            }
+            
+    
+            
             
             {user ? 
 
