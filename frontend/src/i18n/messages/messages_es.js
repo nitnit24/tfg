@@ -49,7 +49,13 @@ export default {
 
     'project.roomtypes.RoomTypeForm.title' : 'Añadir tipo de Habitación',
     'project.roomTypes.RoomTypeUpdateForm.title' : 'Actualizar Tipo de habitación',
-    'project.roomTypes.RoomTypeItemList.title' : 'Tipos de Habitación'
+    'project.roomTypes.RoomTypeItemList.title' : 'Tipos de Habitación',
+    
+    
+    'project.dailyPanel.dailyPanelTable.title' : 'Panel Diario',
+    "project.app.Header.dailyPanel": 'Panel Diario',
+
+    "project.dailyPanel.dailyPanel.freeRooms": 'libres'
     
 
 }   
