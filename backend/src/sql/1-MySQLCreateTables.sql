@@ -2,6 +2,9 @@
 
 DROP TABLE User;
 DROP TABLE Tariff;
+DROP TABLE SaleRoom;
+DROP TABLE RoomType;
+
 
 
 CREATE TABLE User (
@@ -26,5 +29,24 @@ CREATE TABLE Tariff (
     CONSTRAINT TariffPK PRIMARY KEY (id),
     CONSTRAINT TariffNameUniqueKey UNIQUE (tariffName),
     CONSTRAINT TariffCodeUniqueKey UNIQUE (tariffCode)
+) ENGINE = InnoDB;
+
+CREATE TABLE RoomType (
+    id BIGINT NOT NULL AUTO_INCREMENT,
+    typeName VARCHAR(60) NOT NULL,
+    capacity SMALLINT NOT NULL,
+    minPrice DECIMAL(11, 2),
+    maxPrice DECIMAL(11, 2),
+    CONSTRAINT RoomTypePK PRIMARY KEY (id),
+    CONSTRAINT TypeNameUniqueKey UNIQUE (typeName)
+) ENGINE = InnoDB;
+
+CREATE TABLE SaleRoom (
+    idRoomType BIGINT NOT NULL,
+    freeRooms SMALLINT NOT NULL,
+    date DATETIME NOT NULL,
+    CONSTRAINT SaleRoomPK PRIMARY KEY (idRoomType, date),
+      CONSTRAINT idRoomTypeFK FOREIGN KEY(idRoomType)
+        REFERENCES RoomType (id)
 ) ENGINE = InnoDB;
 
