@@ -4,6 +4,7 @@ export default {
     'project.app.Header.home': 'Inicio',
     'project.app.Header.tariff': 'Tipos de tarifa',
     'project.app.Header.roomType': 'Tipos de habitación',
+    'project.app.Header.ReserveRoom' : 'Reservar habitación',
     'project.app.Header.logout': 'Salir',
     'project.app.Home.welcome': '¡Contenido de la página principal de TFG Project!',
     
@@ -49,7 +50,20 @@ export default {
 
     'project.roomtypes.RoomTypeForm.title' : 'Añadir tipo de Habitación',
     'project.roomTypes.RoomTypeUpdateForm.title' : 'Actualizar Tipo de habitación',
-    'project.roomTypes.RoomTypeItemList.title' : 'Tipos de Habitación'
+    'project.roomTypes.RoomTypeItemList.title' : 'Tipos de Habitación',
     
+    'project.shopping.SaleRoomsFindForm.title' : 'Buscar habitación',
+
+    'project.saleRooms.SaleRoomItemList.capacity': 'Capacidad: ',
+
+    'project.saleRooms.Total.total':'Total: ',
+
+    'project.global.fields.startDate' : 'Fecha Entrada',
+    'project.global.fields.endDate' : 'Fecha Salida',
+    'project.global.fields.roomsNum' :  'Habitaciones',
+    'project.global.fields.peopleNum' : 'Personas',
+    'project.global.buttons.find': 'Buscar',
+    'project.global.buttons.continue': 'Continuar'
+
 
 }   

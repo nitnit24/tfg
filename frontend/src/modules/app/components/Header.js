@@ -8,7 +8,7 @@ import './Header.css';
 
 const Header = ({user, handleLogout}) => (
 
-    <nav className="navbar navbar-expand-lg navbar-dark border">
+    <nav className="navbar navbar-expand-lg navbar-light border">
         <Link className="navbar-brand" to="/">TFG Project</Link>
         <button className="navbar-toggler" type="button" 
             data-toggle="collapse" data-target="#navbarSupportedContent" 
@@ -22,7 +22,7 @@ const Header = ({user, handleLogout}) => (
             
 
             {user ?
-            <ul className="navbar-nav mr-auto">   
+            <ul className="navbar-nav mr-auto text-uppercase">   
                 <li className="nav-item">
                     <NavLink exact className="nav-link" to="/">
                         <span className="fas fa-home"></span>&nbsp;
@@ -43,7 +43,12 @@ const Header = ({user, handleLogout}) => (
                 </li>
             </ul>
             :
-            <ul className="navbar-nav mr-auto">   
+            <ul className="navbar-nav mr-auto text-uppercase">   
+                <li className="nav-item ">
+                    <NavLink exact className="nav-link" to="/saleRooms/find-saleRooms">
+                        <FormattedMessage id="project.app.Header.ReserveRoom"/>
+                    </NavLink>
+                </li> 
             </ul>
             }
             

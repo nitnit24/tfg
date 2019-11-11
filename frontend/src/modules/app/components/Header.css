@@ -1,9 +1,11 @@
 
 .navbar {
-  background-color: rgb(94, 161, 224); 
+  /* background-color: rgb(94, 161, 224);  */
+  background-color:#cfe9fc
 }
 
 /* When you mouse over the navigation links, change their color */
 .nav-link:hover{
-  background-color: #7cc3f3;
+  /* background-color: #7cc3f3; */
+  background-color: #ffffff
 }

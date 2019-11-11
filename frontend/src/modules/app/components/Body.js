@@ -8,6 +8,7 @@ import {Login, SignUp, UpdateProfile, ChangePassword} from '../../users';
 import users from '../../users';
 import {Tariff, TariffUpdateForm} from '../../tariffs';
 import {RoomType, RoomTypeUpdateForm} from '../../roomTypes';
+import {SaleRoom} from '../../saleRooms';
 
 const Body = ({user}) => (
 
@@ -24,7 +25,7 @@ const Body = ({user}) => (
             {user && <Route exact path="/users/change-password" component={ChangePassword}/>}
             {!user && <Route exact path="/users/login" component={Login}/>}
             {!user && <Route exact path="/users/signup" component={SignUp}/>}
-            <Route path="/" component={Home}/>
+            <Route exact path="/saleRooms/find-saleRooms" component={SaleRoom}/>
         </Switch>
     </div>
 
