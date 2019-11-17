@@ -9,6 +9,7 @@ import users from '../../users';
 import {Tariff, TariffUpdateForm} from '../../tariffs';
 import {RoomType, RoomTypeUpdateForm} from '../../roomTypes';
 import {DailyPanel} from '../../dailyPanel';
+import {TablePanel} from '../../dailyPanel';
 
 const Body = ({user}) => (
 

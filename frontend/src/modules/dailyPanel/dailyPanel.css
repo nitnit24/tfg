@@ -3,6 +3,18 @@ span.text-panel {
     line-height:0.5;
   }
 
+  span.text-panelWeekDay {
+    font-size: 0.5em;
+    line-height:0.5;
+  }
+
+input.table-input {
+    font-size: 0.7em;
+    width: 100%; /*Aquí va el ancho de la Celda*/
+    height: 100%; /*Aquí el Alto*/
+    border: rounded;
+  }
+
 th.panel{
   text-align: center;
   background:  #cde0f7;
@@ -16,8 +28,5 @@ th.room{
 
 }
 
-td.header{
-  width: 2%; /*Aquí va el ancho de la Celda*/
-  height: 10%; /*Aquí el Alto*/
-}
+
 

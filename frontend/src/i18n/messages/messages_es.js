@@ -55,7 +55,8 @@ export default {
     'project.dailyPanel.dailyPanelTable.title' : 'Panel Diario',
     "project.app.Header.dailyPanel": 'Panel Diario',
 
-    "project.dailyPanel.dailyPanel.freeRooms": 'libres'
+    "project.dailyPanel.dailyPanel.freeRooms": 'Libres',
+    "project.dailyPanel.dailyPanel.roomState": 'Estado'
     
 
 }   

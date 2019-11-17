@@ -4,7 +4,7 @@ DROP TABLE User;
 DROP TABLE Tariff;
 DROP TABLE SaleRoom;
 DROP TABLE RoomType;
-
+--DROP TABLE Tariff_SaleRoom
 
 
 CREATE TABLE User (
@@ -49,4 +49,16 @@ CREATE TABLE SaleRoom (
       CONSTRAINT idRoomTypeFK FOREIGN KEY(id)
         REFERENCES RoomType (id)
 ) ENGINE = InnoDB;
+
+--CREATE TABLE Tariff_SaleRoom (
+--	id_tariff NOT NULL,
+--	id_roomType NOT NULL,
+--	date DATETIME NOT NULL,
+--	price DECIMAL(11,2),
+--	CONSTRAINT TariffSaleRoomPK PRIMARY KEY (id_tariff, id_roomType, date),
+--	CONSTRAINT idTariffFK FOREIGN KEY(id_tariff) REFERENCES Tariff (id),
+--	CONSTRAINT idSaleRoomFK FOREIGN KEY(id_roomType) REFERENCES SaleRoom (id),
+--	CONSTRAINT dateFK FOREIGN KEY(date) REFERENCES SaleRoom (date)
+	
+--) Engine = InnoDB
 
