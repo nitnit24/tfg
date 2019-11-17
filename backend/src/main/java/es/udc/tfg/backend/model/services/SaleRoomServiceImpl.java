@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -36,7 +35,7 @@ public class SaleRoomServiceImpl implements SaleRoomService {
 			throw new InstanceNotFoundException("project.entities.roomType", roomTypeId);
 		}
 	
-		SaleRoom newSaleRoom = new SaleRoom(roomType.get(), date, freeRooms);
+		SaleRoom newSaleRoom = new SaleRoom(roomType.get().getId(), date, freeRooms, roomType.get());
 		saleRoomDao.save(newSaleRoom);
 		
 		return newSaleRoom;
@@ -44,13 +43,13 @@ public class SaleRoomServiceImpl implements SaleRoomService {
 	}
 	
 	@Override
-	public SaleRoom findSaleRoomByIdAndDate(Long roomId, Calendar date) throws InstanceNotFoundException {
+	public SaleRoom findByIdAndDate(Long id, Calendar date) throws InstanceNotFoundException {
 
-
-		Optional<SaleRoom> saleRoom = saleRoomDao.findByRoomTypeIdSaleRoomAndDate(roomId, date);
+		
+		Optional<SaleRoom> saleRoom = saleRoomDao.findByIdAndDate(id, date);
 
 		if (!saleRoom.isPresent()) {
-			throw new InstanceNotFoundException("project.entities.saleRoom", roomId);
+			throw new InstanceNotFoundException("project.entities.saleRoom", id);
 		}
 
 		return saleRoom.get();

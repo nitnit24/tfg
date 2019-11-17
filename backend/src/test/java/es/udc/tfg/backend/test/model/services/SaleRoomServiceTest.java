@@ -47,14 +47,22 @@ public class SaleRoomServiceTest {
 		roomTypeService.addRoomType(roomType);
 		
 		Calendar today = Calendar.getInstance();
+		today.set(Calendar.HOUR, 0);
+		today.set(Calendar.MINUTE, 0);
+		today.set(Calendar.MILLISECOND, 0);
+		today.set(Calendar.SECOND, 0);
+		
 		
 		int freeRooms = 4;
 		
-		saleRoomService.addSaleRoom(roomType.getId(), today, freeRooms);
+		SaleRoom saleRoom = saleRoomService.addSaleRoom(roomType.getId(), today, freeRooms);
 
-		SaleRoom saleRoomFind = saleRoomService.findSaleRoomByIdAndDate(roomType.getId(), today);
+		SaleRoom saleRoomFind = saleRoomService.findByIdAndDate(saleRoom.getId(), saleRoom.getDate());
 
-		assertEquals(roomType, saleRoomFind);
+		assertEquals(saleRoom.getId(), saleRoomFind.getId());
+		assertEquals(saleRoom.getDate(), saleRoomFind.getDate());
+		assertEquals(saleRoom.getFreeRooms(), saleRoomFind.getFreeRooms());
+		assertEquals(saleRoom.getRoomType(), saleRoomFind.getRoomType());
 	}
 
 	

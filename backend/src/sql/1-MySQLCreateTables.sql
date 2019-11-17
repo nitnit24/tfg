@@ -42,11 +42,11 @@ CREATE TABLE RoomType (
 ) ENGINE = InnoDB;
 
 CREATE TABLE SaleRoom (
-    idRoomType BIGINT NOT NULL,
+    id BIGINT NOT NULL,
     freeRooms SMALLINT NOT NULL,
     date DATETIME NOT NULL,
-    CONSTRAINT SaleRoomPK PRIMARY KEY (idRoomType, date),
-      CONSTRAINT idRoomTypeFK FOREIGN KEY(idRoomType)
+    CONSTRAINT SaleRoomPK PRIMARY KEY (id, date),
+      CONSTRAINT idRoomTypeFK FOREIGN KEY(id)
         REFERENCES RoomType (id)
 ) ENGINE = InnoDB;
 
