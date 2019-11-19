@@ -4,16 +4,16 @@ import java.util.Calendar;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
 @Entity
-@IdClass(SaleRoomPk.class)
 public class SaleRoom {
 	
-	private Long id;
+	private Long idSaleRoom;
 	private Calendar date;
 	private int freeRooms;
 	private RoomType roomType;
@@ -21,24 +21,29 @@ public class SaleRoom {
 	public SaleRoom() {
 	}
 
-	public SaleRoom(Long id, Calendar date, int freeRooms,  RoomType roomType) {
-		this.id = id;
+	public SaleRoom(Long idSaleRoom, Calendar date, int freeRooms,  RoomType roomType) {
+		this.idSaleRoom = idSaleRoom;
 		this.date = date;
 		this.freeRooms = freeRooms;
 		this.roomType = roomType;
 	}
 
-	
-	@Id
-	public Long getId() {
-		return id;
+	public SaleRoom(Calendar date, int freeRooms,  RoomType roomType) {
+		this.date = date;
+		this.freeRooms = freeRooms;
+		this.roomType = roomType;
 	}
 	
-	public void setId(Long id) {
-		this.id = id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	public Long getIdSaleRoom() {
+		return idSaleRoom;
 	}
 
-	@Id
+	public void setIdSaleRoom(Long idSaleRoom) {
+		this.idSaleRoom = idSaleRoom;
+	}
+
 	public Calendar getDate() {
 		return date;
 	}
@@ -55,8 +60,8 @@ public class SaleRoom {
 		this.freeRooms = freeRooms;
 	}
 	
-	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name= "id", nullable = false , insertable=false , updatable=false)
+	@OneToOne(optional=false, fetch=FetchType.LAZY)
+	@JoinColumn(name= "idRoomType")
 	public RoomType getRoomType() {
 		return roomType;
 	}

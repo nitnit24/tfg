@@ -34,8 +34,11 @@ public class SaleRoomServiceImpl implements SaleRoomService {
 		if (!roomType.isPresent()) {
 			throw new InstanceNotFoundException("project.entities.roomType", roomTypeId);
 		}
-	
-		SaleRoom newSaleRoom = new SaleRoom(roomType.get().getId(), date, freeRooms, roomType.get());
+		
+		//DUPLICATE
+		
+		SaleRoom newSaleRoom = new SaleRoom(date, freeRooms, roomType.get());
+		
 		saleRoomDao.save(newSaleRoom);
 		
 		return newSaleRoom;
@@ -43,13 +46,13 @@ public class SaleRoomServiceImpl implements SaleRoomService {
 	}
 	
 	@Override
-	public SaleRoom findByIdAndDate(Long id, Calendar date) throws InstanceNotFoundException {
+	public SaleRoom findByRoomTypeIdAndDate(Long idRoomType, Calendar date) throws InstanceNotFoundException {
 
 		
-		Optional<SaleRoom> saleRoom = saleRoomDao.findByIdAndDate(id, date);
+		Optional<SaleRoom> saleRoom = saleRoomDao.findByRoomTypeIdAndDate(idRoomType, date);
 
 		if (!saleRoom.isPresent()) {
-			throw new InstanceNotFoundException("project.entities.saleRoom", id);
+			throw new InstanceNotFoundException("project.entities.roomType", idRoomType);
 		}
 
 		return saleRoom.get();

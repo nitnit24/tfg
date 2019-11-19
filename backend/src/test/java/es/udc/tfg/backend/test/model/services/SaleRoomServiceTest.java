@@ -5,6 +5,7 @@ import static org.junit.Assert.assertEquals;
 import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Optional;
 
 import javax.transaction.Transactional;
 
@@ -19,6 +20,7 @@ import es.udc.tfg.backend.model.common.exceptions.DuplicateInstanceException;
 import es.udc.tfg.backend.model.common.exceptions.InstanceNotFoundException;
 import es.udc.tfg.backend.model.entities.RoomType;
 import es.udc.tfg.backend.model.entities.SaleRoom;
+import es.udc.tfg.backend.model.entities.SaleRoomDao;
 import es.udc.tfg.backend.model.services.RoomTypeService;
 import es.udc.tfg.backend.model.services.SaleRoomService;
 
@@ -34,6 +36,9 @@ public class SaleRoomServiceTest {
 	
 	@Autowired
 	private SaleRoomService saleRoomService;
+	
+	@Autowired
+	private SaleRoomDao saleRoomDao;
 
 	private RoomType createRoomType(String name, int capacity, BigDecimal minPrice, BigDecimal maxPrice) 
 			throws DuplicateInstanceException {
@@ -41,7 +46,7 @@ public class SaleRoomServiceTest {
 	}
 
 	@Test
-	public void testAddSaleRoomAndFind() throws DuplicateInstanceException, InstanceNotFoundException {
+	public void testAdd() throws DuplicateInstanceException, InstanceNotFoundException {
 
 		RoomType roomType = createRoomType("name", 2, new BigDecimal (30), new BigDecimal (100));
 		roomTypeService.addRoomType(roomType);
@@ -56,10 +61,34 @@ public class SaleRoomServiceTest {
 		int freeRooms = 4;
 		
 		SaleRoom saleRoom = saleRoomService.addSaleRoom(roomType.getId(), today, freeRooms);
+		
+		Optional<SaleRoom> saleRoomFind = saleRoomDao.findById(saleRoom.getIdSaleRoom());
 
-		SaleRoom saleRoomFind = saleRoomService.findByIdAndDate(saleRoom.getId(), saleRoom.getDate());
+		assertEquals(saleRoom.getIdSaleRoom(), saleRoomFind.get().getIdSaleRoom());
+		assertEquals(saleRoom.getDate(), saleRoomFind.get().getDate());
+		assertEquals(saleRoom.getFreeRooms(), saleRoomFind.get().getFreeRooms());
+		assertEquals(saleRoom.getRoomType(), saleRoomFind.get().getRoomType());
+	}
+	
+	@Test
+	public void testAddAndfindByRoomTypeIdAndDate() throws DuplicateInstanceException, InstanceNotFoundException {
 
-		assertEquals(saleRoom.getId(), saleRoomFind.getId());
+		RoomType roomType = createRoomType("name", 2, new BigDecimal (30), new BigDecimal (100));
+		roomTypeService.addRoomType(roomType);
+		
+		Calendar today = Calendar.getInstance();
+		today.set(Calendar.HOUR, 0);
+		today.set(Calendar.MINUTE, 0);
+		today.set(Calendar.MILLISECOND, 0);
+		today.set(Calendar.SECOND, 0);
+		
+		int freeRooms = 4;
+		
+		SaleRoom saleRoom = saleRoomService.addSaleRoom(roomType.getId(), today, freeRooms);
+		
+		SaleRoom saleRoomFind = saleRoomService.findByRoomTypeIdAndDate(roomType.getId(), today);
+
+		assertEquals(saleRoom.getIdSaleRoom(), saleRoomFind.getIdSaleRoom());
 		assertEquals(saleRoom.getDate(), saleRoomFind.getDate());
 		assertEquals(saleRoom.getFreeRooms(), saleRoomFind.getFreeRooms());
 		assertEquals(saleRoom.getRoomType(), saleRoomFind.getRoomType());

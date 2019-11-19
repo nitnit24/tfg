@@ -13,7 +13,7 @@ public interface SaleRoomService {
 
 	SaleRoom addSaleRoom(Long roomTypeId, Calendar date, int freeRooms) throws DuplicateInstanceException, InstanceNotFoundException;
 
-	SaleRoom findByIdAndDate(Long roomId, Calendar date) throws InstanceNotFoundException;
+	SaleRoom findByRoomTypeIdAndDate(Long idRoomType, Calendar date) throws InstanceNotFoundException;
 
 //	SaleRoom updateSaleRoom(SaleRoom saleRoom) throws InstanceNotFoundException;
 //

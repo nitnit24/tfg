@@ -7,6 +7,6 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 
 public interface SaleRoomDao extends PagingAndSortingRepository<SaleRoom, Long> {
 
-	Optional<SaleRoom> findByIdAndDate(Long rooomType, Calendar date);
+	Optional<SaleRoom> findByRoomTypeIdAndDate(Long rooomType, Calendar date);
 	
 }
