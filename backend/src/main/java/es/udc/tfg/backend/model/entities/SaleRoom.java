@@ -24,12 +24,24 @@ public class SaleRoom {
 	public SaleRoom(Long idSaleRoom, Calendar date, int freeRooms,  RoomType roomType) {
 		this.idSaleRoom = idSaleRoom;
 		this.date = date;
+		if (date != null) {
+			this.date.set(Calendar.MILLISECOND, 0);
+			this.date.set(Calendar.SECOND, 0);
+			this.date.set(Calendar.MINUTE, 0);
+			this.date.set(Calendar.HOUR, 0);
+		}
 		this.freeRooms = freeRooms;
 		this.roomType = roomType;
 	}
 
 	public SaleRoom(Calendar date, int freeRooms,  RoomType roomType) {
 		this.date = date;
+		if (date != null) {
+			this.date.set(Calendar.MILLISECOND, 0);
+			this.date.set(Calendar.SECOND, 0);
+			this.date.set(Calendar.MINUTE, 0);
+			this.date.set(Calendar.HOUR, 0);
+		}
 		this.freeRooms = freeRooms;
 		this.roomType = roomType;
 	}

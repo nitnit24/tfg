@@ -31,6 +31,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.authorizeRequests().antMatchers("/tariffs/tariffs").permitAll().and()
 			.authorizeRequests().antMatchers("/tariffs/*").permitAll().and()
 			.authorizeRequests().antMatchers("/roomTypes/*").permitAll().and()
+			.authorizeRequests().antMatchers("/dailyPanel/*").permitAll().and()
 			
 			.authorizeRequests().antMatchers("/**").hasRole("USER");
 

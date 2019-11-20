@@ -57,7 +57,6 @@ public class SaleRoomServiceTest {
 		today.set(Calendar.MILLISECOND, 0);
 		today.set(Calendar.SECOND, 0);
 		
-		
 		int freeRooms = 4;
 		
 		SaleRoom saleRoom = saleRoomService.addSaleRoom(roomType.getId(), today, freeRooms);
@@ -68,6 +67,16 @@ public class SaleRoomServiceTest {
 		assertEquals(saleRoom.getDate(), saleRoomFind.get().getDate());
 		assertEquals(saleRoom.getFreeRooms(), saleRoomFind.get().getFreeRooms());
 		assertEquals(saleRoom.getRoomType(), saleRoomFind.get().getRoomType());
+		
+		int newfreeRooms = 1;
+		
+		SaleRoom saleRoomUpdated = saleRoomService.addSaleRoom(roomType.getId(), today, newfreeRooms);
+		
+		assertEquals(saleRoom.getIdSaleRoom(), saleRoomUpdated.getIdSaleRoom());
+		assertEquals(saleRoom.getDate(), saleRoomUpdated.getDate());
+		assertEquals(saleRoom.getFreeRooms(), saleRoomUpdated.getFreeRooms());
+		assertEquals(saleRoom.getRoomType(), saleRoomUpdated.getRoomType());
+		
 	}
 	
 	@Test

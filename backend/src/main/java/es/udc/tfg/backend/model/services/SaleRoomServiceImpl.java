@@ -35,13 +35,24 @@ public class SaleRoomServiceImpl implements SaleRoomService {
 			throw new InstanceNotFoundException("project.entities.roomType", roomTypeId);
 		}
 		
-		//DUPLICATE
+		Optional<SaleRoom> saleRoom = saleRoomDao.findByRoomTypeIdAndDate(roomTypeId, date);
 		
-		SaleRoom newSaleRoom = new SaleRoom(date, freeRooms, roomType.get());
+		if(!saleRoom.isPresent()) {
+			SaleRoom newSaleRoom = new SaleRoom(date, freeRooms, roomType.get());
+			
+			saleRoomDao.save(newSaleRoom);
+			
+			return newSaleRoom;
+			
+		}else {
+			saleRoom.get().setFreeRooms(freeRooms);
+			saleRoomDao.save(saleRoom.get());
+			
+			return saleRoom.get();
+		}
 		
-		saleRoomDao.save(newSaleRoom);
 		
-		return newSaleRoom;
+		
 	
 	}
 	
