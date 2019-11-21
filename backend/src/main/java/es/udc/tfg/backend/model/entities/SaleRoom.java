@@ -1,6 +1,7 @@
 package es.udc.tfg.backend.model.entities;
 
 import java.util.Calendar;
+import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -28,7 +29,7 @@ public class SaleRoom {
 			this.date.set(Calendar.MILLISECOND, 0);
 			this.date.set(Calendar.SECOND, 0);
 			this.date.set(Calendar.MINUTE, 0);
-			this.date.set(Calendar.HOUR, 0);
+			this.date.set(Calendar.HOUR_OF_DAY, 0);
 		}
 		this.freeRooms = freeRooms;
 		this.roomType = roomType;
@@ -40,7 +41,7 @@ public class SaleRoom {
 			this.date.set(Calendar.MILLISECOND, 0);
 			this.date.set(Calendar.SECOND, 0);
 			this.date.set(Calendar.MINUTE, 0);
-			this.date.set(Calendar.HOUR, 0);
+			this.date.set(Calendar.HOUR_OF_DAY, 0);
 		}
 		this.freeRooms = freeRooms;
 		this.roomType = roomType;
@@ -62,6 +63,13 @@ public class SaleRoom {
 
 	public void setDate(Calendar date) {
 		this.date = date;
+		if (date != null) {
+			this.date.set(Calendar.MILLISECOND, 0);
+			this.date.set(Calendar.SECOND, 0);
+			this.date.set(Calendar.MINUTE, 0);
+			this.date.set(Calendar.HOUR_OF_DAY, 00);
+			this.date.set(Calendar.AM_PM, Calendar.AM);
+		}
 	}
 
 	public int getFreeRooms() {

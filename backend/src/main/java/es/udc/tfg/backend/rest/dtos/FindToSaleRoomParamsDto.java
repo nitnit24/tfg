@@ -6,13 +6,12 @@ import java.util.Date;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
-public class AddToSaleRoomParamsDto {
+public class FindToSaleRoomParamsDto {
 	
 	private Long idRoomType;
 	private Calendar date;
-	private int freeRooms;
 	
-	public AddToSaleRoomParamsDto() {}
+	public FindToSaleRoomParamsDto() {}
 
 	@NotNull
 	public Long getIdRoomType() {
@@ -35,17 +34,6 @@ public class AddToSaleRoomParamsDto {
 	
 	public void setDate(Calendar date) {
 		this.date = date;
-	}
-
-	@NotNull
-	@Min(value=0)
-	public int getFreeRooms() {
-		return freeRooms;
-	}
-
-	
-	public void setFreeRooms(int freeRooms) {
-		this.freeRooms = freeRooms;
 	}
 
 }

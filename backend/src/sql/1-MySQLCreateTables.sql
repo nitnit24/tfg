@@ -45,7 +45,7 @@ CREATE TABLE SaleRoom (
 	idSaleRoom BIGINT NOT NULL AUTO_INCREMENT,
     idRoomType BIGINT NOT NULL,
     freeRooms SMALLINT NOT NULL,
-    date DATETIME NOT NULL,
+    date DATE NOT NULL,
     CONSTRAINT AK_SaleRoom UNIQUE(idRoomType,date),
     CONSTRAINT SaleRoomPK PRIMARY KEY (idSaleRoom),
       CONSTRAINT idRoomTypeFK FOREIGN KEY(idRoomType)

@@ -2,6 +2,7 @@ package es.udc.tfg.backend.model.services;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -58,7 +59,6 @@ public class SaleRoomServiceImpl implements SaleRoomService {
 	
 	@Override
 	public SaleRoom findByRoomTypeIdAndDate(Long idRoomType, Calendar date) throws InstanceNotFoundException {
-
 		
 		Optional<SaleRoom> saleRoom = saleRoomDao.findByRoomTypeIdAndDate(idRoomType, date);
 

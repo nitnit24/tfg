@@ -2,6 +2,7 @@ package es.udc.tfg.backend.model.services;
 
 import java.time.LocalDateTime;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import es.udc.tfg.backend.model.common.exceptions.DuplicateInstanceException;
