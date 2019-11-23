@@ -1,9 +1,6 @@
 package es.udc.tfg.backend.model.services;
 
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,9 +50,8 @@ public class SaleRoomServiceImpl implements SaleRoomService {
 		}
 		
 		
-		
-	
 	}
+	
 	
 	@Override
 	public SaleRoom findByRoomTypeIdAndDate(Long idRoomType, Calendar date) throws InstanceNotFoundException {
@@ -69,38 +65,7 @@ public class SaleRoomServiceImpl implements SaleRoomService {
 		return saleRoom.get();
 
 	}
-//	
-//	@Override
-//	public SaleRoom updateSaleRoom(SaleRoom saleRoom) throws InstanceNotFoundException {
-//
-//		Optional<SaleRoom> existingSaleRoomItem = saleRoomDao.findByIdRoomTypeAndDate(saleRoom.getIdRoomType(),
-//													saleRoom.getDate());
-//
-//		if (!existingSaleRoomItem.isPresent()) {
-//			throw new InstanceNotFoundException("project.entities.saleRoom", saleRoom.getIdRoomType());
-//		}
-//
-//		existingSaleRoomItem.get().setFreeRooms(saleRoom.getFreeRooms());
-//
-//		saleRoomDao.save(existingSaleRoomItem.get());
-//
-//		return existingSaleRoomItem.get();
-//
-//	}
-	
-	@Override
-	public List<Calendar> findDate()  {
 
-		List<Calendar> calendarList = new ArrayList<>();
-		
-		Calendar today = Calendar.getInstance();
-		
-		for (int i = 1; i <= 15; i++) {
-			  calendarList.add(today);
-			  today.add(Calendar.DAY_OF_YEAR,1);
-			}
-		
-		return calendarList;
-	}
+
 
 }

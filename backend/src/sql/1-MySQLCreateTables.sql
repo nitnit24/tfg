@@ -1,10 +1,11 @@
 -- Indexes for primary keys have been explicitly created.
 
 DROP TABLE User;
+DROP TABLE SaleRoomTariff;
 DROP TABLE Tariff;
 DROP TABLE SaleRoom;
 DROP TABLE RoomType;
---DROP TABLE Tariff_SaleRoom
+
 
 
 CREATE TABLE User (
@@ -52,15 +53,13 @@ CREATE TABLE SaleRoom (
         REFERENCES RoomType (id)
 ) ENGINE = InnoDB;
 
---CREATE TABLE Tariff_SaleRoom (
---	id_tariff NOT NULL,
---	id_roomType NOT NULL,
---	date DATETIME NOT NULL,
---	price DECIMAL(11,2),
---	CONSTRAINT TariffSaleRoomPK PRIMARY KEY (id_tariff, id_roomType, date),
---	CONSTRAINT idTariffFK FOREIGN KEY(id_tariff) REFERENCES Tariff (id),
---	CONSTRAINT idSaleRoomFK FOREIGN KEY(id_roomType) REFERENCES SaleRoom (id),
---	CONSTRAINT dateFK FOREIGN KEY(date) REFERENCES SaleRoom (date)
-	
---) Engine = InnoDB
+CREATE TABLE SaleRoomTariff (
+	id BIGINT NOT NULL AUTO_INCREMENT,
+	price DECIMAL(11,2),
+	idTariff BIGINT NOT NULL,
+	idSaleRoom BIGINT NOT NULL,
+	CONSTRAINT SaleRoomTariifPK PRIMARY KEY (id),
+	CONSTRAINT idTariffFK FOREIGN KEY(idTariff) REFERENCES Tariff (id),
+	CONSTRAINT idSaleRoomFK FOREIGN KEY(idSaleRoom) REFERENCES SaleRoom (idSaleRoom)
+) Engine = InnoDB
 

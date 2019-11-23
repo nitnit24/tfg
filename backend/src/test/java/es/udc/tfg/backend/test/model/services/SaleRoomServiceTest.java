@@ -3,7 +3,6 @@ package es.udc.tfg.backend.test.model.services;
 import static org.junit.Assert.assertEquals;
 
 import java.math.BigDecimal;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Optional;
 

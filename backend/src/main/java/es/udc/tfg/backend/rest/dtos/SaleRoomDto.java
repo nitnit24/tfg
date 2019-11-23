@@ -1,31 +1,26 @@
 package es.udc.tfg.backend.rest.dtos;
 
-import java.math.BigDecimal;
 import java.util.Calendar;
-import java.util.Date;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-
-import es.udc.tfg.backend.model.entities.RoomType;
 
 public class SaleRoomDto {
 
 	public interface AllValidations {
 	}
 
-	private Long idSaleRoom;
+	private Long saleRoomId;
 	private Calendar date;
 	private int freeRooms;
-	private RoomType roomType;
+	private Long roomTypeId;
 
 	public SaleRoomDto() {
 	}
 
 	
-	public SaleRoomDto(Long idSaleRoom, Calendar date, int freeRooms, RoomType roomType) {
-		this.idSaleRoom = idSaleRoom;
+	public SaleRoomDto(Long saleRoomId, Calendar date, int freeRooms, Long roomTypeId) {
+		this.saleRoomId = saleRoomId;
 		this.date = date;
 		if (date != null) {
 			this.date.set(Calendar.MILLISECOND, 0);
@@ -34,16 +29,16 @@ public class SaleRoomDto {
 			this.date.set(Calendar.HOUR_OF_DAY, 00);
 		}
 		this.freeRooms = freeRooms;
-		this.roomType = roomType;
+		this.roomTypeId = roomTypeId;
 	}
 
 
-	public Long getIdSaleRoom() {
-		return idSaleRoom;
+	public Long getSaleRoomId() {
+		return saleRoomId;
 	}
 
-	public void setIdSaleRoom(Long idSaleRoom) {
-		this.idSaleRoom = idSaleRoom;
+	public void setSaleRoomId(Long saleRoomId) {
+		this.saleRoomId = saleRoomId;
 	}
 
 	@NotNull
@@ -79,12 +74,12 @@ public class SaleRoomDto {
 	}
 
 	@NotNull
-	public RoomType getRoomType() {
-		return roomType;
+	public Long getRoomTypeId() {
+		return roomTypeId;
 	}
 
-	public void setRoomType(RoomType roomType) {
-		this.roomType = roomType;
+	public void setRoomTypeId(Long roomTypeId) {
+		this.roomTypeId = roomTypeId;
 	}
 
 	

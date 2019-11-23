@@ -1,7 +1,6 @@
 package es.udc.tfg.backend.model.entities;
 
 import java.util.Calendar;
-import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
