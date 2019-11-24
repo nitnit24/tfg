@@ -1,7 +1,6 @@
 package es.udc.tfg.backend.rest.dtos;
 
 import java.util.Calendar;
-import java.util.Date;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;

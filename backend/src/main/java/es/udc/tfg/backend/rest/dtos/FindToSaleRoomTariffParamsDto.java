@@ -4,20 +4,30 @@ import java.util.Calendar;
 
 import javax.validation.constraints.NotNull;
 
-public class FindToSaleRoomParamsDto {
+public class FindToSaleRoomTariffParamsDto {
 	
-	private Long idRoomType;
+	private Long tariffId;
+	private Long roomTypeId;
 	private Calendar date;
 	
-	public FindToSaleRoomParamsDto() {}
-
+	public FindToSaleRoomTariffParamsDto() {}
+	
 	@NotNull
-	public Long getIdRoomType() {
-		return idRoomType;
+	public Long getTariffId() {
+		return tariffId;
 	}
 
-	public void setIdRoomType(Long idRoomType) {
-		this.idRoomType = idRoomType;
+	public void setTariffId(Long tariffId) {
+		this.tariffId = tariffId;
+	}
+	
+	@NotNull
+	public Long getRoomTypeId() {
+		return roomTypeId;
+	}
+
+	public void setRoomTypeId(Long roomTypeId) {
+		this.roomTypeId = roomTypeId;
 	}
 
 	@NotNull
