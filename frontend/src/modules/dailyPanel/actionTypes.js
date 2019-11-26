@@ -1,0 +1,1 @@
+export const ADD_DATE_COMPLETED = "project/dailyPanel/AddDateCompleted";

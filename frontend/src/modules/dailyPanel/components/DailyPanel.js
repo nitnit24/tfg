@@ -1,7 +1,7 @@
 import React from 'react';
-import {connect} from 'react-redux';
 
 import {FormattedMessage} from 'react-intl';
+
 
 import TablePanel from './TablePanel';
 import FindDailyPanel from './FindDailyPanel';
@@ -13,10 +13,12 @@ class DailyPanel extends React.Component {
         this.state = {
         };
       }
-    
+
+
     render(){
 
         return (
+            // <div onClick={() => { this.child.getHoli(); }}>
             <div>
                 <div>
                     <h4 className="h4">
@@ -24,9 +26,10 @@ class DailyPanel extends React.Component {
                     </h4>
                 </div>
                 <br/>
-                <FindDailyPanel/>
+                <FindDailyPanel />
                 <br/>
-                <TablePanel/>
+                <TablePanel  />
+                {/* <Prueba ref={instance => { this.child = instance; }}/> */}
             </div>
         );
     }

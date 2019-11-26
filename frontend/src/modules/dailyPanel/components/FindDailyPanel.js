@@ -3,44 +3,81 @@ import {connect} from 'react-redux';
 
 import {FormattedMessage} from 'react-intl';
 
-import TablePanel from './TablePanel';
-import FindDailyPanel from './FindDailyPanel';
+import * as actions from '../actions';
 
 
-class DailyPanel extends React.Component {
+
+class FindPanel extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-        };
+        this.state = {datePanel: ''};
+
+         this.handleChange = this.handleChange.bind(this);
+         this.handleSubmit = this.handleSubmit.bind(this);
       }
     
+    // handleDatePanelChange(event) {
+    //     this.setState({datePanel: event.target.value});
+    //     this.saveDatePanel()
+    // }
+
+    handleSubmit(event) {
+        event.preventDefault();
+        this.saveDatePanel()
+      }
+
+    handleChange(event) {
+        this.setState({datePanel: event.target.value});
+        // event.preventDefault();
+        // this.saveDatePanel()
+    }
+
+    saveDatePanel(){
+        const datePanel = this.state.datePanel;
+        this.props.addDate(datePanel);
+    }
+
     render(){
 
         return (
             <div>
                 <div className= "row justify-content-end">
-                    <form>
-                    <div className="row">
-                                <label htmlFor="minPrice" className="col-md-3 col-form-label">
-                                    {/* <FormattedMessage id="project.global.fields.minPrice"/> */}
-                                    Desde:
-                                </label>
-                               
-                                <div className="col-md-4">
-                                <input type="date" id="start" classNname="form-control"
-                                        // value="2018-07-22"
-                                     min="2018-01-01" max="2022-12-31"/>
-                                    <div className="invalid-feedback">
-                                        <FormattedMessage id='project.global.validator.min'/>
-                                    </div>
-                                </div>
-                               
+                      <form  onSubmit={this.handleSubmit} >
+                      <div className="input-group-prepend">
+                            <div className= "input-group-text" >
+                                <span className="fas fa-calendar-alt" ></span>
                             </div>
-                    </form>
+                            <input type="date" id="datePanel" className="form-control "
+                                    style={{width: '60%'}}
+                                    value={this.state.datePanel}  
+                                    onChange={(e) => this.handleChange(e)}
+                                    autoFocus
+                                  
+                            />    
+                             <div className="offset-md-0 col-md-1">
+                                    <button type="submit" className="btn btn-primary" >
+                                        <span className="	fas fa-sync-alt" ></span>
+                                    </button>
+                                </div>
+                        </div>                     
+                        </form>
+   
+         
                 </div>
             </div>
+          
         );
     }
 }
 
-export default DailyPanel;
+const mapStateToProps = (state) => ({
+
+    
+});
+
+const mapDispatchToProps = {
+    addDate: actions.addDate,
+
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(FindPanel);

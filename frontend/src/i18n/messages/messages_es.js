@@ -32,6 +32,7 @@ export default {
     'project.global.fields.capacity': 'Capacidad',
     'project.global.fields.minPrice': 'Precio mínimo',
     'project.global.fields.maxPrice': 'Precio máximo',
+    'project.global.fields.since':  'Desde:',
 
     'project.users.ChangePassword.fields.confirmNewPassword': 'Confirmar contraseña nueva',
     'project.users.ChangePassword.fields.newPassword': 'Contraseña nueva',

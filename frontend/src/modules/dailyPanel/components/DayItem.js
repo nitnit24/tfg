@@ -48,18 +48,19 @@ class DayItem extends React.Component {
 
     render(){
 
-        const day = this.props.day ;
+        const item = this.props.item ;
+        const pos = this.props.pos;
+
         return (
-                <span>{day}</span>
-                // <th className = "p-0 panel" scope="col">
-                //     { day.getDate() == 1 &&
-                //         <span className = " m-0 text-panelWeekDay">  {this.getNameMonth(day)}</span>
-                //     }
-                //     <br></br> 
-                //     <span className = " m-0 text-panelWeekDay text-secondary">  {this.getDayOfWeek(day)}</span>
-                //     <br></br>
-                //     <span className = " m-0 text-panel">  {day.getDate()} </span>
-                // </th>
+            <th className = "p-0 panel" scope="col" style={{width: '2.6%'}}>
+                { (item.getDate() === 1 || pos === 0) && 
+                <span className = " m-0 text-panelWeekDay">  {this.getNameMonth(item)}</span>
+                }
+                <br></br> 
+                <span className = " m-0 text-panelWeekDay text-secondary">  {this.getDayOfWeek(item)}</span>
+                <br></br>
+                <span className = " m-0 text-panel">  {item.getDate()} </span>
+            </th>
 
         );
     }
