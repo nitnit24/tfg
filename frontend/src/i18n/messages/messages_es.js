@@ -33,6 +33,7 @@ export default {
     'project.global.fields.capacity': 'Capacidad',
     'project.global.fields.minPrice': 'Precio mínimo',
     'project.global.fields.maxPrice': 'Precio máximo',
+    'project.global.fields.since':  'Desde:',
 
     'project.users.ChangePassword.fields.confirmNewPassword': 'Confirmar contraseña nueva',
     'project.users.ChangePassword.fields.newPassword': 'Contraseña nueva',
@@ -51,6 +52,12 @@ export default {
     'project.roomtypes.RoomTypeForm.title' : 'Añadir tipo de Habitación',
     'project.roomTypes.RoomTypeUpdateForm.title' : 'Actualizar Tipo de habitación',
     'project.roomTypes.RoomTypeItemList.title' : 'Tipos de Habitación',
+    
+    'project.dailyPanel.dailyPanelTable.title' : 'Panel Diario',
+    "project.app.Header.dailyPanel": 'Panel Diario',
+
+    "project.dailyPanel.dailyPanel.freeRooms": 'Libres',
+    "project.dailyPanel.dailyPanel.roomState": 'Estado',
     
     'project.shopping.SaleRoomsFindForm.title' : 'Buscar habitación',
 

@@ -1,0 +1,32 @@
+span.text-panel {
+    font-size: 0.7em;
+    line-height:0.5;
+  }
+
+  span.text-panelWeekDay {
+    font-size: 0.5em;
+    line-height:0.5;
+  }
+
+input.table-input {
+    font-size: 0.7em;
+    width: 100%; /*Aquí va el ancho de la Celda*/
+    height: 100%; /*Aquí el Alto*/
+    border: rounded;
+  }
+
+th.panel{
+  text-align: center;
+  background:  #cde0f7;
+  width: 2%; /*Aquí va el ancho de la Celda*/
+  height: 2%; /*Aquí el Alto*/
+}
+
+th.room{
+  text-align: left;
+  background:  #a8cdf8;
+
+}
+
+
+
