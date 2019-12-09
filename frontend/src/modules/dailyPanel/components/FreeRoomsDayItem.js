@@ -1,11 +1,12 @@
-import React from 'react';
-
 import '../dailyPanel.css';
 import  backend from '../../../backend';
 
+import {FormattedMessage} from 'react-intl';
+import React from 'react';
+
 const initialState = {
     freeRooms: '',
-    
+
     backendErrors: null
 }
 
@@ -14,48 +15,73 @@ class FreeRoomsDayItem extends React.Component {
 
     constructor(props) {
         super(props);
-
         this.state = initialState;
+
+        this.handleChange = this.handleChange.bind(this);
+
     }
 
-    componentWillMount() {
-        console.log("hola")
-        
-        //const SaleRoom =   backend.dailyPanelService.findSaleRoom(this.props.roomTypeId, this.props.day,
-          //() =>dispatch(findAllRoomTypes()),
-        //errors => this.setBackendErrors(errors))
-        
-        //this.setState({freeRooms: SaleRoom.freeRooms.toString()}) 
+    componentDidMount() {
+        this.find();
     }
 
-    handleFreeRoomsChange(event,date,roomTypeId) {
-        this.setState({freeRooms: event.target.value})
-        this.add(date,roomTypeId)
+    componentDidUpdate(prevProps, prevState) {
+        if (this.props.day !== prevProps.day) {
+            this.find()
+        }
+        if ((this.props.day === prevProps.day) && (this.state.freeRooms !== prevState.freeRooms) &&
+          (this.state.freeRooms !== ''))
+            {
+            this.add();
+            }
+      }
+
+    add(){
+        const idRoomType = this.props.roomTypeId;
+        const date = this.props.day;
+        const freeRooms = this.state.freeRooms;
+
+        console.log("ADDDDDDDDDDDD " + date)
+        backend.dailyPanelService.addSaleRoom(idRoomType, date, freeRooms,
+        null,
+        errors => this.setBackendErrors(errors))
+    }
+
+    find(){
+        const day = this.props.day;
+        let date = day.getDate();
+        let month = day.getMonth() + 1;
+        let year = day.getFullYear();
+        
+        backend.dailyPanelService.findSaleRoom(this.props.roomTypeId, 
+            year + '-'+ month + '-' + date ,
+            saleRoom => this.setState({freeRooms:saleRoom.freeRooms}),
+            errors => { this.setBackendErrors(errors),
+                    errors ?  this.setState({freeRooms:''}) : "";
+            });
+    }
+
+    handleChange(event) {
+        this.setState({freeRooms: event.target.value});
     }
 
     setBackendErrors(backendErrors) {
         this.setState({backendErrors});
     }
-    
-    add(date, roomTypeId){
-        const freeRooms = this.state.freeRooms.trim();
-        backend.dailyPanelService.addSaleRoom(roomTypeId, date, freeRooms,
-          //  () =>dispatch(findAllRoomTypes()),
-          errors => this.setBackendErrors(errors))
-    }
+
 
     render(){
-
-        const day = this.props.day ;
-        const roomTypeId = this.props.roomTypeId;
-
+       // this.setState({day: this.props.day})
         return (
             <td className = "p-0" style={{width: '2.6%'}}>
+                 <form >
                 <input type="text" id="" className=" border-0 table-input text-center" 
                     value={this.state.freeRooms}  
-                    onChange={(e) => this.handleFreeRoomsChange(e,day,roomTypeId)} 
+                    onChange={(e) => this.handleChange(e)} 
+                    autoFocus
                     min= "0"      
                 />
+                </form>
             </td>
 
         );

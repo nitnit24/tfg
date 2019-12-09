@@ -15,9 +15,4 @@ public class SaleRoomConversor {
 				saleRoom.getRoomType().getId());
 	}
 
-
-	public final static List<SaleRoomDto> toSaleRoomDtos(List<SaleRoom> saleRooms) {
-		return saleRooms.stream().map(c -> toSaleRoomDto(c)).collect(Collectors.toList());
-	}
-
 }

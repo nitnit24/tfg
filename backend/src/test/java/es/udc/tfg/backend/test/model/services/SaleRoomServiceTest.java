@@ -43,9 +43,35 @@ public class SaleRoomServiceTest {
 			throws DuplicateInstanceException {
 		return new RoomType(name, capacity, minPrice, maxPrice);
 	}
-
+	
 	@Test
 	public void testAdd() throws DuplicateInstanceException, InstanceNotFoundException {
+
+		RoomType roomType = createRoomType("name", 2, new BigDecimal (30), new BigDecimal (100));
+		roomTypeService.addRoomType(roomType);
+		
+		Calendar today = Calendar.getInstance();
+		today.set(Calendar.HOUR_OF_DAY, 0);
+		today.set(Calendar.MINUTE, 0);
+		today.set(Calendar.MILLISECOND, 0);
+		today.set(Calendar.SECOND, 0);
+		
+		int freeRooms = 4;
+		
+		SaleRoom saleRoom = saleRoomService.addSaleRoom(roomType.getId(), today, freeRooms);
+		
+		Optional<SaleRoom> saleRoomFind = saleRoomDao.findById(saleRoom.getIdSaleRoom());
+
+		assertEquals(saleRoom.getIdSaleRoom(), saleRoomFind.get().getIdSaleRoom());
+		assertEquals(saleRoom.getDate(), saleRoomFind.get().getDate());
+		assertEquals(saleRoom.getFreeRooms(), saleRoomFind.get().getFreeRooms());
+		assertEquals(saleRoom.getRoomType(), saleRoomFind.get().getRoomType());
+		
+	}
+	
+
+	@Test
+	public void testAddAndUpdate() throws DuplicateInstanceException, InstanceNotFoundException {
 
 		RoomType roomType = createRoomType("name", 2, new BigDecimal (30), new BigDecimal (100));
 		roomTypeService.addRoomType(roomType);
@@ -102,6 +128,21 @@ public class SaleRoomServiceTest {
 		assertEquals(saleRoom.getRoomType(), saleRoomFind.getRoomType());
 	}
 
+
+	@Test(expected = InstanceNotFoundException.class)
+	public void testAddRoomTyPEfNotFound() throws DuplicateInstanceException, InstanceNotFoundException {
+
+		Calendar today = Calendar.getInstance();
+		today.set(Calendar.HOUR_OF_DAY, 0);
+		today.set(Calendar.MINUTE, 0);
+		today.set(Calendar.MILLISECOND, 0);
+		today.set(Calendar.SECOND, 0);
+		
+		int freeRooms = 4;
+		
+		SaleRoom saleRoom = saleRoomService.addSaleRoom(NON_EXISTENT_ID , today, freeRooms);
+
+	}
 	
 
 

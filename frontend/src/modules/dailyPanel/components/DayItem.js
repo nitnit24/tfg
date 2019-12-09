@@ -16,14 +16,14 @@ class DayItem extends React.Component {
       }
 
       getDayOfWeek(day){
-        switch(day.getDay()+1){
+        switch(day.getDay()){
             case 1: return( "lun." );
             case 2: return( "mar." );
             case 3: return( "mié." );
             case 4: return( "jue." );
             case 5: return( "vie." );
             case 6: return( "sáb." );
-            case 7: return( "dom." );
+            case 0: return( "dom." );
         break;      
         }
     }

@@ -22,6 +22,7 @@ import es.udc.tfg.backend.model.entities.SaleRoom;
 import es.udc.tfg.backend.model.entities.SaleRoomTariff;
 import es.udc.tfg.backend.model.entities.SaleRoomTariffDao;
 import es.udc.tfg.backend.model.entities.Tariff;
+import es.udc.tfg.backend.model.services.PriceNotBetweenMinAndMaxValueException;
 import es.udc.tfg.backend.model.services.RoomTypeService;
 import es.udc.tfg.backend.model.services.SaleRoomService;
 import es.udc.tfg.backend.model.services.SaleRoomTariffService;
@@ -59,7 +60,7 @@ public class SaleRoomTariffServiceTest {
 	}
 	
 	@Test
-	public void testAdd() throws DuplicateInstanceException, InstanceNotFoundException {
+	public void testAdd() throws DuplicateInstanceException, InstanceNotFoundException, PriceNotBetweenMinAndMaxValueException {
 
 		Tariff newTariff = createTariff("name", "CODE");
 		Tariff tariff = tariffService.addTariff(newTariff);
@@ -86,9 +87,79 @@ public class SaleRoomTariffServiceTest {
 		assertEquals(saleRoomTariff.getId(), saleRoomTariffFound.get().getId());
 
 	}
+	
+//	@Test
+//	public void testAddNewSaleRoom() throws DuplicateInstanceException, InstanceNotFoundException, PriceNotBetweenMinAndMaxValueException {
+//
+//		Tariff newTariff = createTariff("name", "CODE");
+//		Tariff tariff = tariffService.addTariff(newTariff);
+//
+//		RoomType roomType = createRoomType("name", 2, new BigDecimal(30), new BigDecimal(100));
+//		roomTypeService.addRoomType(roomType);
+//
+//		Calendar today = Calendar.getInstance();
+//
+//		BigDecimal price = new BigDecimal(90);
+//
+//		SaleRoomTariff saleRoomTariff = saleRoomTariffService.uploadSaleRoomTariff(price, tariff.getId(),
+//				roomType.getId(), today);
+//
+//		Optional<SaleRoomTariff> saleRoomTariffFound = saleRoomTariffDao.findById(saleRoomTariff.getId());
+//
+//		assertEquals(price, saleRoomTariffFound.get().getPrice());
+//		assertEquals(tariff, saleRoomTariffFound.get().getTariff());
+//		assertEquals(0, saleRoomTariffFound.get().getSaleRoom().getFreeRooms());
+//		assertEquals(saleRoomTariff.getId(), saleRoomTariffFound.get().getId());
+//
+//	}
 
+	@Test(expected = PriceNotBetweenMinAndMaxValueException.class)
+	public void testAddPriceNotBetweenMinAndMaxValue() throws DuplicateInstanceException, InstanceNotFoundException, PriceNotBetweenMinAndMaxValueException {
+
+		Tariff newTariff = createTariff("name", "CODE");
+		Tariff tariff = tariffService.addTariff(newTariff);
+
+		RoomType roomType = createRoomType("name", 2, new BigDecimal(30), new BigDecimal(100));
+		roomTypeService.addRoomType(roomType);
+
+		Calendar today = Calendar.getInstance();
+
+		int freeRooms = 4;
+
+		saleRoomService.addSaleRoom(roomType.getId(), today, freeRooms);
+
+		BigDecimal price = new BigDecimal(10);
+
+		saleRoomTariffService.uploadSaleRoomTariff(price, tariff.getId(),
+				roomType.getId(), today);
+
+	}
+	
+	@Test(expected = PriceNotBetweenMinAndMaxValueException.class)
+	public void testAddPriceNotBetweenMinAndMaxValue2() throws DuplicateInstanceException, InstanceNotFoundException, PriceNotBetweenMinAndMaxValueException {
+
+		Tariff newTariff = createTariff("name", "CODE");
+		Tariff tariff = tariffService.addTariff(newTariff);
+
+		RoomType roomType = createRoomType("name", 2, new BigDecimal(30), new BigDecimal(100));
+		roomTypeService.addRoomType(roomType);
+
+		Calendar today = Calendar.getInstance();
+
+		int freeRooms = 4;
+
+		saleRoomService.addSaleRoom(roomType.getId(), today, freeRooms);
+
+		BigDecimal price = new BigDecimal(1000);
+
+		saleRoomTariffService.uploadSaleRoomTariff(price, tariff.getId(),
+				roomType.getId(), today);
+
+	}
+	
+	
 	@Test
-	public void testAddAndFindByTariffIdAndSaleRoomRoomTypeIdAndSaleRoomDate() throws InstanceNotFoundException, DuplicateInstanceException {
+	public void testAddAndFindByTariffIdAndSaleRoomRoomTypeIdAndSaleRoomDate() throws InstanceNotFoundException, DuplicateInstanceException, PriceNotBetweenMinAndMaxValueException {
 
 		Tariff newTariff = createTariff("name", "CODE");
 		Tariff tariff = tariffService.addTariff(newTariff);

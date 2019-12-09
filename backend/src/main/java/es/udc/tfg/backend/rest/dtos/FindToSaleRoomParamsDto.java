@@ -6,18 +6,18 @@ import javax.validation.constraints.NotNull;
 
 public class FindToSaleRoomParamsDto {
 	
-	private Long idRoomType;
+	private Long roomTypeId;
 	private Calendar date;
 	
 	public FindToSaleRoomParamsDto() {}
 
 	@NotNull
-	public Long getIdRoomType() {
-		return idRoomType;
+	public Long getRoomTypeId() {
+		return roomTypeId;
 	}
 
-	public void setIdRoomType(Long idRoomType) {
-		this.idRoomType = idRoomType;
+	public void setRoomTypeId(Long roomTypeId) {
+		this.roomTypeId = roomTypeId;
 	}
 
 	@NotNull

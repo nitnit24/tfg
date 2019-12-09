@@ -14,11 +14,9 @@ class DailyPanel extends React.Component {
         };
       }
 
-
     render(){
 
         return (
-            // <div onClick={() => { this.child.getHoli(); }}>
             <div>
                 <div>
                     <h4 className="h4">
@@ -28,8 +26,8 @@ class DailyPanel extends React.Component {
                 <br/>
                 <FindDailyPanel />
                 <br/>
-                <TablePanel  />
-                {/* <Prueba ref={instance => { this.child = instance; }}/> */}
+
+                <TablePanel />
             </div>
         );
     }

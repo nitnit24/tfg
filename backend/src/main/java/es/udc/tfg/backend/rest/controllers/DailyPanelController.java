@@ -4,16 +4,27 @@ package es.udc.tfg.backend.rest.controllers;
 import static es.udc.tfg.backend.rest.dtos.SaleRoomConversor.toSaleRoomDto;
 import static es.udc.tfg.backend.rest.dtos.SaleRoomTariffConversor.toSaleRoomTariffDto;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Calendar;
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import es.udc.tfg.backend.model.common.exceptions.DuplicateInstanceException;
 import es.udc.tfg.backend.model.common.exceptions.InstanceNotFoundException;
+import es.udc.tfg.backend.model.services.PriceNotBetweenMinAndMaxValueException;
 import es.udc.tfg.backend.model.services.SaleRoomService;
 import es.udc.tfg.backend.model.services.SaleRoomTariffService;
 import es.udc.tfg.backend.rest.dtos.AddToSaleRoomParamsDto;
@@ -38,20 +49,34 @@ public class DailyPanelController {
 		return toSaleRoomDto(saleRoomService.addSaleRoom(params.getIdRoomType(), params.getDate(), params.getFreeRooms()));
 	}
 	
+
 	@GetMapping("/findSaleRoom")
-	public SaleRoomDto findSaleRoom(@Validated @RequestBody FindToSaleRoomParamsDto params) throws InstanceNotFoundException {
-		return toSaleRoomDto(saleRoomService.findByRoomTypeIdAndDate(params.getIdRoomType(), params.getDate()));
+	public SaleRoomDto findSaleRoom(
+			@RequestParam Long roomTypeId , 
+			@RequestParam("date") 
+			@DateTimeFormat(pattern = "yyyy-MM-dd") Date date)
+					throws InstanceNotFoundException {
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(date);
+		return toSaleRoomDto(saleRoomService.findByRoomTypeIdAndDate(roomTypeId, calendar));
 	}
 	
-	@PostMapping("/addSaleRoomTariff")
-	public SaleRoomTariffDto addSaleRoomTariff(@Validated @RequestBody AddToSaleRoomTariffParamsDto params) throws InstanceNotFoundException, DuplicateInstanceException {
+	@PostMapping("/uploadSaleRoomTariff")
+	public SaleRoomTariffDto uploadSaleRoomTariff(@Validated @RequestBody AddToSaleRoomTariffParamsDto params) throws InstanceNotFoundException, DuplicateInstanceException, PriceNotBetweenMinAndMaxValueException {
 		return toSaleRoomTariffDto(saleRoomTariffService.uploadSaleRoomTariff(params.getPrice(), params.getTariffId(), params.getRoomTypeId(), params.getDate()));
 	}
 	
+
 	@GetMapping("/findSaleRoomTariff")
-	public SaleRoomTariffDto findSaleRoomTariff(@Validated @RequestBody FindToSaleRoomTariffParamsDto params) throws InstanceNotFoundException {
-		return toSaleRoomTariffDto(saleRoomTariffService.findByTariffIdAnRoomTypeIdAndDate(params.getTariffId(), params.getRoomTypeId(), params.getDate()));
-	} 
-	
+	public SaleRoomTariffDto findSaleRoomTariff(
+			@RequestParam Long tariffId , 
+			@RequestParam Long roomTypeId , 
+			@RequestParam("date") 
+			@DateTimeFormat(pattern = "yyyy-MM-dd") Date date)
+					throws InstanceNotFoundException {
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(date);
+		return toSaleRoomTariffDto(saleRoomTariffService.findByTariffIdAnRoomTypeIdAndDate(tariffId, roomTypeId, calendar));
+	}
 
 }

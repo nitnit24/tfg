@@ -9,7 +9,7 @@ import es.udc.tfg.backend.model.entities.SaleRoomTariff;
 
 public interface SaleRoomTariffService {
 
-	SaleRoomTariff uploadSaleRoomTariff(BigDecimal price, Long tariffId, Long roomTypeId, Calendar date) throws DuplicateInstanceException, InstanceNotFoundException;
+	SaleRoomTariff uploadSaleRoomTariff(BigDecimal price, Long tariffId, Long roomTypeId, Calendar date) throws InstanceNotFoundException, PriceNotBetweenMinAndMaxValueException;
 
 	SaleRoomTariff findByTariffIdAnRoomTypeIdAndDate(Long tariffId, Long roomTypeId, Calendar date) throws InstanceNotFoundException;
 }

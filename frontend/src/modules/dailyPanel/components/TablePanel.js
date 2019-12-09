@@ -4,6 +4,7 @@ import DayItem from './DayItem';
 import FreeRoomsDayItem from './FreeRoomsDayItem';
 import TariffDayItem from './TariffDayItem';
 
+
 import roomTypes from '../../roomTypes';
 import tariffs from '../../tariffs';
 import * as selectors from '../selectors';
@@ -27,7 +28,9 @@ class TablePanel extends React.Component {
         this.state = {
             days: []
         };
+
       }
+
 
     getCalendar(){
         const days = new Array(31);
@@ -50,11 +53,10 @@ class TablePanel extends React.Component {
         return days;
     }
 
-    getHoli() {
-        alert('clicked');
-    }
+
 
     render(){
+
         var days = [];
         if (this.props.datePanel === ''){
             days = this.getCalendar();
@@ -95,6 +97,7 @@ class TablePanel extends React.Component {
                                 {days.map(day => 
                                         <FreeRoomsDayItem
                                             key={days.indexOf(day)} day={day} roomTypeId={roomType.id}
+                                        
                                         />
                                      )} 
                             </tr>
@@ -133,4 +136,7 @@ const mapDispatchToProps = {
     findAllTariffs: tariffs.actions.findAllTariffs,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(TablePanel);
+TablePanel = connect(
+    mapStateToProps, mapDispatchToProps)(TablePanel);
+
+export default TablePanel;

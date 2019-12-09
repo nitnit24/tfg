@@ -54,12 +54,12 @@ public class SaleRoomServiceImpl implements SaleRoomService {
 	
 	
 	@Override
-	public SaleRoom findByRoomTypeIdAndDate(Long idRoomType, Calendar date) throws InstanceNotFoundException {
+	public SaleRoom findByRoomTypeIdAndDate(Long roomTypeId, Calendar date) throws InstanceNotFoundException {
 		
-		Optional<SaleRoom> saleRoom = saleRoomDao.findByRoomTypeIdAndDate(idRoomType, date);
+		Optional<SaleRoom> saleRoom = saleRoomDao.findByRoomTypeIdAndDate(roomTypeId, date);
 
 		if (!saleRoom.isPresent()) {
-			throw new InstanceNotFoundException("project.entities.roomType", idRoomType);
+			throw new InstanceNotFoundException("project.entities.roomType", roomTypeId );
 		}
 
 		return saleRoom.get();

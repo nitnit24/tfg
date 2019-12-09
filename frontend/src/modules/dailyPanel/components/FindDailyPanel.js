@@ -5,31 +5,20 @@ import {FormattedMessage} from 'react-intl';
 
 import * as actions from '../actions';
 
-
-
 class FindPanel extends React.Component {
     constructor(props) {
         super(props);
         this.state = {datePanel: ''};
 
          this.handleChange = this.handleChange.bind(this);
-         this.handleSubmit = this.handleSubmit.bind(this);
       }
-    
-    // handleDatePanelChange(event) {
-    //     this.setState({datePanel: event.target.value});
-    //     this.saveDatePanel()
-    // }
 
-    handleSubmit(event) {
-        event.preventDefault();
-        this.saveDatePanel()
-      }
+      componentDidUpdate(){
+        this.saveDatePanel();
+    }
 
     handleChange(event) {
         this.setState({datePanel: event.target.value});
-        // event.preventDefault();
-        // this.saveDatePanel()
     }
 
     saveDatePanel(){
@@ -42,23 +31,20 @@ class FindPanel extends React.Component {
         return (
             <div>
                 <div className= "row justify-content-end">
-                      <form  onSubmit={this.handleSubmit} >
-                      <div className="input-group-prepend">
+                    <form  onSubmit={this.handleSubmit} >
+                        <div className="p-3 input-group-prepend">
+                            <label htmlFor="name" className="col-md-3 col-form-label">
+                                <FormattedMessage id="project.global.fields.since"/>
+                            </label>
                             <div className= "input-group-text" >
                                 <span className="fas fa-calendar-alt" ></span>
                             </div>
                             <input type="date" id="datePanel" className="form-control "
-                                    style={{width: '60%'}}
+                                     style={{width: '75%'}}
                                     value={this.state.datePanel}  
                                     onChange={(e) => this.handleChange(e)}
                                     autoFocus
-                                  
-                            />    
-                             <div className="offset-md-0 col-md-1">
-                                    <button type="submit" className="btn btn-primary" >
-                                        <span className="	fas fa-sync-alt" ></span>
-                                    </button>
-                                </div>
+                             />    
                         </div>                     
                         </form>
    
