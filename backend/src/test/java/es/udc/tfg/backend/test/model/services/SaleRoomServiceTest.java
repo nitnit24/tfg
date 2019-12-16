@@ -140,7 +140,7 @@ public class SaleRoomServiceTest {
 		
 		int freeRooms = 4;
 		
-		SaleRoom saleRoom = saleRoomService.addSaleRoom(NON_EXISTENT_ID , today, freeRooms);
+		saleRoomService.addSaleRoom(NON_EXISTENT_ID , today, freeRooms);
 
 	}
 	
