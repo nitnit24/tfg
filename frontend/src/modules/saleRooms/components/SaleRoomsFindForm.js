@@ -1,9 +1,13 @@
 import React from 'react';
+import {connect} from 'react-redux';
 
 import {FormattedMessage} from 'react-intl';
 import PropTypes from 'prop-types';
 
 import {Errors} from '../../common';
+import  backend from '../../../backend';
+import * as actions from '../actions';
+
 
 const initialState = {
     startDate: '',
@@ -13,7 +17,7 @@ const initialState = {
     backendErrors: null
 };
 
-class BuyForm extends React.Component {
+class SaleRoomsFindForm extends React.Component {
 
     constructor(props) {
         super();
@@ -24,12 +28,14 @@ class BuyForm extends React.Component {
         //this.state = initialState;
         
         this.state = {
-            date: date
+            date: date,
+            startDate: '',
+            endDate: '',
+            rooms: '1',
+            people: '',
+            date: date,
+            backendErrors: null
         };
-
-     
-                  
-
     }
 
     handleStartDateChange(event) {
@@ -40,12 +46,12 @@ class BuyForm extends React.Component {
         this.setState({endDate: event.target.value});
     }
 
-    handleRoomsNumChange(event) {
-        this.setState({roomsNum: event.target.value});
+    handleRoomsChange(event) {
+        this.setState({rooms: event.target.value});
     }
 
-    handlePeopleNumChange(event) {
-        this.setState({peopleNum: event.target.value});
+    handlePeopleChange(event) {
+        this.setState({people: event.target.value});
     }
 
 
@@ -53,22 +59,24 @@ class BuyForm extends React.Component {
 
         event.preventDefault();
 
-        if (this.form.checkValidity()) {
-           this.findSaleRooms();
-        } else {
-            this.setBackendErrors(null);
-            this.form.classList.add('was-validated');
-        }
+        //if (this.form.checkValidity()) {
+           this.findFreeRooms();
+        //} else {
+        //    this.setBackendErrors(null);
+        //   this.form.classList.add('was-validated');
+        //}
 
     }
 
-    findSaleRooms() {
+    findFreeRooms() {
+        console.log(this.state.startDate);
+        console.log(this.state.endDate);
+        console.log("people" +this.state.people);
+        console.log("rooms" +this.state.rooms)
 
-        // this.props.findSaleRooms(
-        //     this.state.checkInDate.trim(),
-        //     () => this.props.history.push(''),
-        //     errors => this.setBackendErrors(errors));
-
+        backend.bookingService.findFreeRooms(this.state.startDate, this.state.endDate, 
+            this.state.people, this.state.rooms, 
+            roomTypes =>  this.props.addFreeRoomTypes(roomTypes))
     }
 
     setBackendErrors(backendErrors) {
@@ -110,7 +118,7 @@ class BuyForm extends React.Component {
                 <Errors errors={this.state.backendErrors}
                     onClose={() => this.handleErrorsClose()}/>
                     <div className="container"> 
-                        <form ref={node => this.form = node}
+                        <form
                             className="needs-validation" noValidate 
                             onSubmit={(e) => this.handleSubmit(e)}>
                                 <div className="row justify-content-start">
@@ -147,8 +155,8 @@ class BuyForm extends React.Component {
                                                 <span className="fas fa-user-friends" ></span>
                                             </div>
                                             <input type="number" id="peopleNum"  className=" form-control "
-                                                value={this.state.peopleNum} 
-                                                onChange={(e) => this.handlePeopleNumChange(e)}
+                                                value={this.state.people} 
+                                                onChange={(e) => this.handlePeopleChange(e)}
                                                 placeholder= "0"
                                                 min= "0" max ="15"
                                                 required/>  
@@ -159,13 +167,8 @@ class BuyForm extends React.Component {
                                             <div className= "input-group-text" >
                                                 <span className="fas fa-bed" ></span>
                                             </div>
-                                            {/* <input type="number" id="roomsNum"  className="form-control"
-                                                value={this.state.roomsNum} 
-                                                onChange={(e) => this.handleRoomsNumChange(e)}
-                                                placeholder= "Rooms"
-                                                min= "0" max = "7"
-                                                required/> */}
-                                            <select class="h-100 form-control " id="Rooms">
+                                            <select class="h-100 form-control " id="Rooms"
+                                            value={this.state.rooms} onChange={(e) => this.handleRoomsChange(e)}>
                                                 <option value="1">1 Habitación</option>
                                                 <option value="2">2 Habitaciones</option>
                                                 <option value="3">3 Habitaciones</option>
@@ -190,8 +193,14 @@ class BuyForm extends React.Component {
 
 }
 
-BuyForm.propTypes = {
-    history: PropTypes.object.isRequired
+const mapStateToProps = (state) => ({
+
+    
+});
+
+const mapDispatchToProps = {
+    addFreeRoomTypes: actions.addFreeRoomTypes,
+
 };
 
-export default BuyForm;
+export default connect(mapStateToProps, mapDispatchToProps)(SaleRoomsFindForm);

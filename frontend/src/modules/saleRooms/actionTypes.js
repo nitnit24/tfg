@@ -1,0 +1,1 @@
+export const ADD_FREEROOMTYPES_COMPLETED = "project/booking/AddFreeRoomTypesCompleted";

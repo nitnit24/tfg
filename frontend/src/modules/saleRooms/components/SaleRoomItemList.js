@@ -1,16 +1,14 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import {FormattedMessage} from 'react-intl';
-import Bed from '../bed.png';
+import {connect} from 'react-redux';
+
 import DetailsRoom from './DetailsRoom';
-import TariffsItemList from './TariffsItemList';
-
-
+import { TariffsItemLis } from '..';
 
 import {Errors} from '../../common';
 
+import * as selectors from '../selectors';
+
 import '../../styles.css';
-import { TariffsItemLis } from '..';
 
 const initialState = {
     backendErrors: null
@@ -37,20 +35,20 @@ class RoomTypeItemList extends React.Component {
 
     render() {
 
-        //const list = this.props.list;
+        const list = this.props.freeRoomTypes;
 
         return (
 
             <div>
                 <Errors errors={this.state.backendErrors}
                     onClose={() => this.handleErrorsClose()}/>
+                     {list.map(room => 
+                     <div className= "border rounded ">
+                        <DetailsRoom key={room.id} item={room} />
+                        <TariffsItemLis></TariffsItemLis>
+                        </div>
+                    )} 
 
-                <div className= "border rounded ">
-                    <DetailsRoom></DetailsRoom>
-                    <TariffsItemLis></TariffsItemLis>
-                </div>
-              
-           
             </div>
 
 
@@ -61,9 +59,13 @@ class RoomTypeItemList extends React.Component {
 }
 
 
-RoomTypeItemList.propTypes = {
-     //list: PropTypes.array.isRequired,
-     history: PropTypes.object.isRequired
-}
+const mapStateToProps = (state) => ({
+    freeRoomTypes: selectors.getFreeRoomTypes(state)
+});
 
-export default RoomTypeItemList;
+const mapDispatchToProps = {
+
+};
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(RoomTypeItemList);
