@@ -137,26 +137,26 @@ public class BookingServiceTest {
 		
 		
 		// all
-		List<RoomType> foundFreeRoomTypes = bookingService.findFreeRoomTypes(startDate, endDate, people, rooms);
+		List<RoomType> foundFreeRoomTypes = bookingService.findFreeRooms(startDate, endDate, people, rooms);
 				
 		assertEquals(freeRoomTypes, foundFreeRoomTypes);
 		assertEquals(freeRoomTypes.size(), foundFreeRoomTypes.size());
 		
 		//limit rooms
-		List<RoomType> foundFreeRoomTypes2 = bookingService.findFreeRoomTypes(startDate, endDate, people, 4);
+		List<RoomType> foundFreeRoomTypes2 = bookingService.findFreeRooms(startDate, endDate, people, 4);
 		assertEquals(freeRoomTypes, foundFreeRoomTypes2);
 		assertEquals(freeRoomTypes.size(), foundFreeRoomTypes2.size());
 		
 		//middle
 		startDate.add(Calendar.DAY_OF_YEAR, 1);
-		List<RoomType> foundFreeRoomTypes3 = bookingService.findFreeRoomTypes(startDate, endDate, people, rooms);
+		List<RoomType> foundFreeRoomTypes3 = bookingService.findFreeRooms(startDate, endDate, people, rooms);
 		assertEquals(freeRoomTypes, foundFreeRoomTypes3);
 		assertEquals(freeRoomTypes.size(), foundFreeRoomTypes3.size());
 		
 		//last night
 		startDate.add(Calendar.DAY_OF_YEAR, 2); //+1 +2
 		endDate.add(Calendar.DAY_OF_YEAR, 2); // +2 +2
-		List<RoomType> foundFreeRoomTypes10 = bookingService.findFreeRoomTypes(startDate, endDate, people, rooms);
+		List<RoomType> foundFreeRoomTypes10 = bookingService.findFreeRooms(startDate, endDate, people, rooms);
 		assertEquals(freeRoomTypes, foundFreeRoomTypes10);
 		assertEquals(freeRoomTypes.size(), foundFreeRoomTypes10.size());
 		
@@ -197,10 +197,78 @@ public class BookingServiceTest {
 		endDate2.set(Calendar.SECOND, 0);
 		endDate2.add(Calendar.DAY_OF_YEAR, 1);
 		
-		List<RoomType> foundFreeRoomTypes4 = bookingService.findFreeRoomTypes(startDate2, endDate2, people, rooms);
+		List<RoomType> foundFreeRoomTypes4 = bookingService.findFreeRooms(startDate2, endDate2, people, rooms);
 		
 		assertEquals(freeRoomTypes2, foundFreeRoomTypes4);
 		assertEquals(freeRoomTypes2.size(), foundFreeRoomTypes4.size());
+		
+	}
+	
+	
+	
+	@Test
+	public void testFindTariffByFreeRoom() throws DuplicateInstanceException, InstanceNotFoundException, PriceNotBetweenMinAndMaxValueException {
+
+		Tariff newTariff = createTariff("name", "CODE");
+		Tariff tariff = tariffService.addTariff(newTariff);
+		Tariff newTariff2 = createTariff("name2", "CODE2");
+		Tariff tariff2 = tariffService.addTariff(newTariff2);
+
+		RoomType roomType = createRoomType("name", 2, new BigDecimal(30), new BigDecimal(100));
+		roomTypeService.addRoomType(roomType);
+
+		int freeRooms = 4;
+		BigDecimal price = new BigDecimal(90);
+		
+		List<Tariff> availableTariffs = new ArrayList<>();
+		List<Tariff> availableTariffs2 = new ArrayList<>();
+		
+		//Day1
+		Calendar date = Calendar.getInstance();
+		saleRoomService.addSaleRoom(roomType.getId(), date, freeRooms);
+		saleRoomTariffService.uploadSaleRoomTariff(price, tariff.getId(),
+				roomType.getId(), date);
+		saleRoomTariffService.uploadSaleRoomTariff(price, tariff2.getId(),
+				roomType.getId(), date);
+		
+		//Day2
+		Calendar date2 = Calendar.getInstance();
+		date2.add(Calendar.DAY_OF_YEAR, 1);
+		saleRoomService.addSaleRoom(roomType.getId(), date2, freeRooms);
+		saleRoomTariffService.uploadSaleRoomTariff(price, tariff.getId(),
+				roomType.getId(), date2);
+		
+		availableTariffs.add(tariff);
+		availableTariffs2.add(tariff);
+		availableTariffs2.add(tariff2);
+		
+		//Find
+		Calendar startDate = Calendar.getInstance();
+		startDate.set(Calendar.HOUR_OF_DAY, 0);
+		startDate.set(Calendar.MINUTE, 0);
+		startDate.set(Calendar.MILLISECOND, 0);
+		startDate.set(Calendar.SECOND, 0);
+		
+		Calendar endDate = Calendar.getInstance();
+		endDate.set(Calendar.HOUR_OF_DAY, 0);
+		endDate.set(Calendar.MINUTE, 0);
+		endDate.set(Calendar.MILLISECOND, 0);
+		endDate.set(Calendar.SECOND, 0);
+		endDate.add(Calendar.DAY_OF_YEAR, 2);
+		
+		
+		List<Tariff> foundTariffs = bookingService.findTariffsByFreeRoom(startDate, endDate, roomType.getId());
+				
+		assertEquals(availableTariffs, foundTariffs);
+		assertEquals(availableTariffs.size(), foundTariffs.size());
+		
+		
+		endDate.add(Calendar.DAY_OF_YEAR, -1);
+		List<Tariff> foundTariffs2 = bookingService.findTariffsByFreeRoom(startDate, endDate, roomType.getId());
+		
+		assertEquals(availableTariffs2, foundTariffs2);
+		assertEquals(availableTariffs2.size(), foundTariffs2.size());
+		
 		
 	}
 	
