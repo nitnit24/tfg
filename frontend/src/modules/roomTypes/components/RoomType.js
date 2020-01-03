@@ -23,7 +23,6 @@ class RoomType extends React.Component {
 
     componentDidMount() {
         this.props.findRoomTypes();
-    
     }
 
     render(){

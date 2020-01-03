@@ -1,9 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {FormattedMessage} from 'react-intl';
+import {FormattedMessage, FormattedDate} from 'react-intl';
+import * as selectors from '../selectors';
 
 
-import {Errors} from '../../common';
+import {connect} from 'react-redux';
+
+import RoomsList from './RoomsList';
 
 import '../../styles.css';
 
@@ -31,13 +34,15 @@ class Total extends React.Component {
     }
 
 
+    totalPrice(){
+        var lista= this.props.rooms;
+        const suma = lista.reduce((total, room) =>
+            {return total + room.price * room.quantity},0);
+       return suma;
+    
+    }
 
     render() {
-
-        const { showModal } = this.state;
-
-        //const list = this.props.list;
- 
 
         return (
             <div className=" border rounded p-4">
@@ -45,13 +50,24 @@ class Total extends React.Component {
                     <FormattedMessage id="project.saleRooms.Total.total"/>
                 </b></h5>
                 <div className= "m-3">
-                    <h4>00,00€</h4>
+                    <h4>{this.totalPrice()}€</h4>
                 </div>
-                <div className= "row justify-content-end">
+                <div className= "row justify-content-center">
                     <button type="submit" className="btn btn-dark disabled" >
                         <FormattedMessage id="project.global.buttons.continue"/>
                     </button>
                 </div>
+                { (this.props.startDate && this.props.endDate && this.props.rooms.length >0) && 
+                <div className= "m-3">
+                    <hr/><hr/>
+                    <p>
+                        <FormattedDate value={new Date(this.props.startDate)}/>
+                        &nbsp;-&nbsp;
+                        <FormattedDate value={new Date(this.props.endDate)}/>
+                    </p>
+                </div>
+                }
+                <RoomsList history={this.props.history} list={this.props.rooms}/>
             </div>
                      
          
@@ -63,9 +79,14 @@ class Total extends React.Component {
 }
 
 
-Total.propTypes = {
-     //list: PropTypes.array.isRequired,
-     history: PropTypes.object.isRequired
-}
+const mapStateToProps = (state) => ({
+    startDate: selectors.getStartDate(state),
+    endDate: selectors.getEndDate(state),
+    rooms: selectors.getRooms(state)
 
-export default Total;
+});
+
+const mapDispatchToProps = {
+};
+
+export default connect (mapStateToProps, mapDispatchToProps)(Total);

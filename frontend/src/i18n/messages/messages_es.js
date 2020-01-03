@@ -9,8 +9,8 @@ export default {
     'project.app.Home.welcome': '¡Contenido de la página principal de TFG Project!',
     
     'project.common.ErrorDialog.title': 'Error',
-
     'project.global.buttons.cancel': 'Cancelar',
+    'project.global.buttons.remove': 'Eliminar',
     'project.global.buttons.close': 'Cerrar',
     'project.global.buttons.ok': 'OK',
     'project.global.buttons.save': 'Guardar',

@@ -2,7 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 
 import DetailsRoom from './DetailsRoom';
-import { TariffsItemLis } from '..';
+import { TariffsItemList } from '..';
 
 import {Errors} from '../../common';
 
@@ -14,7 +14,7 @@ const initialState = {
     backendErrors: null
 };
 
-class RoomTypeItemList extends React.Component {
+class SaleRoomItemList extends React.Component {
 
     constructor(props) {
 
@@ -45,8 +45,8 @@ class RoomTypeItemList extends React.Component {
                      {list.map(room => 
                      <div className= "border rounded ">
                         <DetailsRoom key={room.id} item={room} />
-                        <TariffsItemLis></TariffsItemLis>
-                        </div>
+                        <TariffsItemList roomType= {room}></TariffsItemList>
+                    </div>
                     )} 
 
             </div>
@@ -68,4 +68,4 @@ const mapDispatchToProps = {
 };
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(RoomTypeItemList);
+export default connect(mapStateToProps, mapDispatchToProps)(SaleRoomItemList);

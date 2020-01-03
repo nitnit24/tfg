@@ -29,14 +29,14 @@ class TariffDayItem extends React.Component {
     }
 
     componentDidUpdate(prevProps, prevState) {
-        // if (this.props.day !== prevProps.day) {
-        //     this.find()
-        // }
-        //if ((this.props.day === prevProps.day) && (this.state.price !== prevState.price) &&
-        //   (this.state.price !== ''))
-        // {
-          //  this.add();
-        //}
+        if (this.props.day !== prevProps.day) {
+            this.find()
+        }
+        if ((this.props.day === prevProps.day) && (this.state.price !== prevState.price) &&
+          (this.state.price !== ''))
+        {
+           this.add();
+        }
       }
 
     componentWillMount() {

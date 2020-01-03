@@ -32,7 +32,7 @@ class SaleRoomsFindForm extends React.Component {
             startDate: '',
             endDate: '',
             rooms: '1',
-            people: '',
+            people: '1',
             date: date,
             backendErrors: null
         };
@@ -77,6 +77,9 @@ class SaleRoomsFindForm extends React.Component {
         backend.bookingService.findFreeRooms(this.state.startDate, this.state.endDate, 
             this.state.people, this.state.rooms, 
             roomTypes =>  this.props.addFreeRoomTypes(roomTypes))
+        
+        this.props.addStartDate(this.state.startDate);
+        this.props.addEndDate(this.state.endDate);
     }
 
     setBackendErrors(backendErrors) {
@@ -200,6 +203,8 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {
     addFreeRoomTypes: actions.addFreeRoomTypes,
+    addStartDate: actions.addStartDate,
+    addEndDate: actions.addEndDate
 
 };
 
