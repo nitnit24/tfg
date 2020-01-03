@@ -149,4 +149,37 @@ public class BookingServiceImpl implements BookingService {
 		
 	}
 
+	
+	public List<SaleRoomTariff> findSaleRoomTariffsByFreeRoom(Calendar startDate, Calendar endDate, Long roomTypeId,
+			Long tariffId) {
+
+		List<SaleRoomTariff> saleRoomTariffList = new ArrayList<>();
+		List<SaleRoomTariff> possibleSaleRoomTariffList = new ArrayList<>();
+		
+		Calendar date = Calendar.getInstance();
+		date.setTime(startDate.getTime());
+
+		while (date.compareTo(endDate) < 0) {
+
+			Optional<SaleRoomTariff> saleRoomTariff = saleRoomTariffDao
+					.findByTariffIdAndSaleRoomRoomTypeIdAndSaleRoomDate(tariffId, roomTypeId, date);
+
+			if (!saleRoomTariff.isPresent() || saleRoomTariff.get().getPrice().compareTo(BigDecimal.ZERO) == 0) {
+				break;
+			}
+
+			else {
+				date.add(Calendar.DAY_OF_YEAR, 1);
+				possibleSaleRoomTariffList.add(saleRoomTariff.get());
+			}
+
+			if (date.compareTo(endDate) == 0) {
+				saleRoomTariffList = possibleSaleRoomTariffList;
+			}
+
+		}
+
+		return saleRoomTariffList;
+
+	}
 }

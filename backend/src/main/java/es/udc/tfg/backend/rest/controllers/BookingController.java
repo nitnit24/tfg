@@ -2,6 +2,7 @@ package es.udc.tfg.backend.rest.controllers;
 
 
 import static es.udc.tfg.backend.rest.dtos.RoomTypeConversor.toRoomTypeDtos;
+import static es.udc.tfg.backend.rest.dtos.SaleRoomTariffConversor.toSaleRoomTariffDtos;
 import static es.udc.tfg.backend.rest.dtos.TariffConversor.toTariffDtos;
 
 import java.util.Calendar;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import es.udc.tfg.backend.model.services.BookingService;
 import es.udc.tfg.backend.rest.dtos.RoomTypeDto;
+import es.udc.tfg.backend.rest.dtos.SaleRoomTariffDto;
 import es.udc.tfg.backend.rest.dtos.TariffDto;
 
 @RestController
@@ -50,6 +52,19 @@ public class BookingController {
 		Calendar endCalendar = Calendar.getInstance();
 		endCalendar.setTime(endDate);
 		return toTariffDtos(bookingService.findTariffsByFreeRoom(startCalendar, endCalendar, roomTypeId));
+	}
+	
+	@GetMapping("/findSaleRoomTariffsByFreeRoom")
+	public List<SaleRoomTariffDto> findSaleRoomTariffsByFreeRoom(
+			@RequestParam("startDate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
+			@RequestParam("endDate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDate,
+			@RequestParam Long tariffId,
+			@RequestParam Long roomTypeId){
+		Calendar startCalendar = Calendar.getInstance();
+		startCalendar.setTime(startDate);
+		Calendar endCalendar = Calendar.getInstance();
+		endCalendar.setTime(endDate);
+		return toSaleRoomTariffDtos(bookingService.findSaleRoomTariffsByFreeRoom(startCalendar, endCalendar, roomTypeId, tariffId));
 	}
 
 }

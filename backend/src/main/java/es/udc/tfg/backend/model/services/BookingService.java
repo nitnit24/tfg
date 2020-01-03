@@ -15,4 +15,6 @@ public interface BookingService {
 	List<RoomType> findFreeRooms(Calendar startDate, Calendar endDate, int people, int rooms);
 	
 	List<Tariff> findTariffsByFreeRoom(Calendar startDate, Calendar endDate, Long roomTypeId);
+	
+	List<SaleRoomTariff> findSaleRoomTariffsByFreeRoom(Calendar startDate, Calendar endDate, Long roomTypeId, Long tariffId);
 }

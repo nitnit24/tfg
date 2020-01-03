@@ -13,15 +13,15 @@ public class SaleRoomTariffDto {
 	private Long id;
 	private BigDecimal price;
 	private Long tariffId;
-	private Long roomTypeId;
+	private Long saleRoomId;
 	
 	public SaleRoomTariffDto() {}	
 	
-	public SaleRoomTariffDto(Long id, BigDecimal price, Long tariffId, Long roomTypeId) {
+	public SaleRoomTariffDto(Long id, BigDecimal price, Long tariffId, Long saleRoomId) {
 		this.id = id;
 		this.price = price;
 		this.tariffId = tariffId;
-		this.roomTypeId = roomTypeId;
+		this.saleRoomId = saleRoomId;
 	}
 	
 	public Long getId() {
@@ -53,12 +53,12 @@ public class SaleRoomTariffDto {
 	}
 	
 	@NotNull
-	public Long getRoomTypeId() {
-		return roomTypeId;
+	public Long getSaleRoomId() {
+		return saleRoomId;
 	}
 
-	public void setRoomTypeId(Long roomTypeId) {
-		this.roomTypeId = roomTypeId;
+	public void setSaleRoomId(Long saleRoomId) {
+		this.saleRoomId = saleRoomId;
 	}
 
 
