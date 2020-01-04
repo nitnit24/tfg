@@ -44,7 +44,6 @@ class TotalTariff extends React.Component {
 
     handleChangeQuantity(e) {
         this.setState({quantity: e.target.value});
-        this.props.addQuantity(e.target.value)
      }
 
     componentDidUpdate(prevProps, prevState) {
@@ -115,14 +114,12 @@ class TotalTariff extends React.Component {
 
 const mapStateToProps = (state) => ({
     tariffsByFreeRoom: selectors.getTariffsByFreeRoom(state),
-    quantity: selectors.getQuantity(state),
     startDate: selectors.getStartDate(state),
     endDate: selectors.getEndDate(state)
 
 });
 
 const mapDispatchToProps = {
-    addQuantity: actions.addQuantity,
     addTariffsByFreeRoom: actions.addTariffsByFreeRoom,
     addRoom: actions.addRoom,
     removeRoom: actions.removeRoom

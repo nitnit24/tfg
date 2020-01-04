@@ -64,13 +64,24 @@ export default {
     'project.saleRooms.SaleRoomItemList.capacity': 'Capacidad: ',
 
     'project.saleRooms.Total.total':'Total: ',
+    'project.saleRooms.ClientForm.title':'Datos de la reserva',
+    'project.saleRooms.ClientForm.name':'Nombre',
+    'project.saleRooms.ClientForm.surname':'Apellidos',
+    'project.saleRooms.ClientForm.email':'Email',
+    'project.saleRooms.ClientForm.phone':'Teléfono',
+    'project.saleRooms.ClientForm.comments':'Comentarios',
+    'project.saleRooms.ClientForm.confirmation':'Le enviaremos la confirmación de su reserva a ',
+
+    'project.saleRooms.BookingSummary.title' : 'Resumen de la reserva',
+
 
     'project.global.fields.startDate' : 'Fecha Entrada',
     'project.global.fields.endDate' : 'Fecha Salida',
     'project.global.fields.roomsNum' :  'Habitaciones',
     'project.global.fields.peopleNum' : 'Personas',
     'project.global.buttons.find': 'Buscar',
-    'project.global.buttons.continue': 'Continuar'
+    'project.global.buttons.continue': 'Continuar',
+    'project.global.buttons.booking' :'Reservar'
 
 
 }   

@@ -52,19 +52,22 @@ class Total extends React.Component {
                 <div className= "m-3">
                     <h4>{this.totalPrice()}€</h4>
                 </div>
-                <div className= "row justify-content-center">
-                    <button type="submit" className="btn btn-dark disabled" >
-                        <FormattedMessage id="project.global.buttons.continue"/>
-                    </button>
-                </div>
                 { (this.props.startDate && this.props.endDate && this.props.rooms.length >0) && 
-                <div className= "m-3">
-                    <hr/><hr/>
-                    <p>
-                        <FormattedDate value={new Date(this.props.startDate)}/>
-                        &nbsp;-&nbsp;
-                        <FormattedDate value={new Date(this.props.endDate)}/>
-                    </p>
+                <div>
+                    <div className= "row justify-content-center">
+                        <button type="submit" className="btn btn-dark disabled"
+                            onClick={() => this.props.history.push('/booking/client-form')} >
+                            <FormattedMessage id="project.global.buttons.continue"/>
+                        </button>
+                    </div>
+                    {/* <div className= "m-3">
+                        <hr/><hr/>
+                        <p>
+                            <FormattedDate value={new Date(this.props.startDate)}/>
+                            &nbsp;-&nbsp;
+                            <FormattedDate value={new Date(this.props.endDate)}/>
+                        </p>
+                    </div> */}
                 </div>
                 }
                 <RoomsList history={this.props.history} list={this.props.rooms}/>

@@ -8,7 +8,7 @@ import {Login, SignUp, UpdateProfile, ChangePassword} from '../../users';
 import users from '../../users';
 import {Tariff, TariffUpdateForm} from '../../tariffs';
 import {RoomType, RoomTypeUpdateForm} from '../../roomTypes';
-import {SaleRoom} from '../../saleRooms';
+import {SaleRoom, BookingData} from '../../saleRooms';
 import {DailyPanel} from '../../dailyPanel';
 
 const Body = ({user}) => (
@@ -28,6 +28,7 @@ const Body = ({user}) => (
             {!user && <Route exact path="/users/login" component={Login}/>}
             {!user && <Route exact path="/users/signup" component={SignUp}/>}
             <Route exact path="/saleRooms/find-saleRooms" component={SaleRoom}/>
+            <Route exact path="/booking/client-form" component={BookingData}/>
         </Switch>
     </div>
 

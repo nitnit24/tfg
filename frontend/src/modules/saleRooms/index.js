@@ -9,5 +9,8 @@ export {default as SaleRoomsItemList} from './components/SaleRoomItemList';
 export {default as DetailsRoom} from './components/DetailsRoom';
 export {default as TariffsItemList} from './components/TariffsItemList';
 export {default as Total} from './components/Total';
+export {default as BookingData} from './components/BookingData';
+export {default as ClientForm} from './components/ClientForm';
+
 
 export default {actions, actionTypes, reducer, selectors};

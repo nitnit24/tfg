@@ -24,15 +24,7 @@ export const addEndDate = (endDate) => (dispatch) => {
     dispatch(addEndDateCompleted(endDate));
 }
 
-const addQuantityCompleted = quantity => ({
-    type: actionTypes.ADD_QUANTITY_COMPLETED,
-    quantity
-});
-      
 
-export const addQuantity = (quantity) => (dispatch) => {
-    dispatch(addQuantityCompleted(quantity));
-}
 
 const addFreeRoomTypesCompleted = freeRoomTypes => ({
     type: actionTypes.ADD_FREEROOMTYPES_COMPLETED,
@@ -42,6 +34,15 @@ const addFreeRoomTypesCompleted = freeRoomTypes => ({
 
 export const addFreeRoomTypes = (freeRoomTypes) => (dispatch) => {
     dispatch(addFreeRoomTypesCompleted(freeRoomTypes));
+}
+
+const cleanFreeRoomTypesCompleted = () => ({
+    type: actionTypes.CLEAN_FREEROOMTYPES_COMPLETED,
+});
+
+
+export const cleanFreeRoomTypes = () => (dispatch) => {
+    dispatch(cleanFreeRoomTypesCompleted());
 }
 
 const addTariffsByFreeRoomCompleted = tariffsByFreeRoom => ({

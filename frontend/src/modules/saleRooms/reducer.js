@@ -8,7 +8,6 @@ import { log } from 'util';
 const initialState = {
     startDate: '',
     endDate:'',
-    quantity: 0,
     freeRoomTypes: [],
     tariffsByFreeRoom: [],
     rooms: []
@@ -42,19 +41,6 @@ const endDate = (state = initialState.endDate, action) => {
 
 }
 
-const quantity = (state = initialState.quantity, action) => {
-
-    switch (action.type) {
-
-        case actionTypes.ADD_QUANTITY_COMPLETED:
-     
-            return action.quantity;
-
-    default:
-        return state;
-    }
-
-}
 
 const freeRoomTypes = (state = initialState.freeRoomTypes, action) => {
 
@@ -63,6 +49,10 @@ const freeRoomTypes = (state = initialState.freeRoomTypes, action) => {
         case actionTypes.ADD_FREEROOMTYPES_COMPLETED:
      
             return action.freeRoomTypes;
+
+        case actionTypes.CLEAN_FREEROOMTYPES_COMPLETED:
+     
+            return [];
 
     default:
         return state;
@@ -105,7 +95,6 @@ const rooms = (state = initialState.rooms, action) => {
 const reducer = combineReducers({
     startDate, 
     endDate, 
-    quantity,
     freeRoomTypes,
     tariffsByFreeRoom,
     rooms

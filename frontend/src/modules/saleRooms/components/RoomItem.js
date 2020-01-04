@@ -15,7 +15,7 @@ class RoomItem extends React.Component {
           };
       }
 
-      componentDidMount() {
+      componentDidUpdate(prevProps, prevState){
         if (this.props.room.quantity == 0){
             this.props.removeRoom(this.props.room)
         }
@@ -25,8 +25,6 @@ class RoomItem extends React.Component {
         const room = this.props.room;
         return (
             <div>
-            { (room.quantity !== 0 ) && 
-            <div>
                 <hr/><hr/>
                 <span> <small>{room.quantity} &nbsp; hab.</small></span>        
                 <h6 ><b>{room.name}</b></h6>  
@@ -35,15 +33,7 @@ class RoomItem extends React.Component {
                     <li><small>{room.tariff}</small></li> 
                     <li><small><b>{room.price} €</b></small></li>
                 </ul>      
-                <button type="button" className=" m-0 btn btn-link btn-sm "
-                        onClick={() => this.props.removeRoom(room)}>
-                        {/* <span className=" 	fas fa-trash" ></span> 
-                        &nbsp; */}
-                        <FormattedMessage id="project.global.buttons.remove"/>
-                </button>
                
-            </div>
-            }
             </div>
         );
 

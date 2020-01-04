@@ -6,9 +6,6 @@ export const getStartDate = state =>
 export const getEndDate = state =>
     getModuleState(state).endDate;
 
-export const getQuantity = state =>
-    getModuleState(state).quantity;
-
 export const getFreeRoomTypes = state =>
     getModuleState(state).freeRoomTypes;
 

@@ -69,11 +69,7 @@ class SaleRoomsFindForm extends React.Component {
     }
 
     findFreeRooms() {
-        console.log(this.state.startDate);
-        console.log(this.state.endDate);
-        console.log("people" +this.state.people);
-        console.log("rooms" +this.state.rooms)
-
+        this.props.cleanFreeRoomTypes();
         backend.bookingService.findFreeRooms(this.state.startDate, this.state.endDate, 
             this.state.people, this.state.rooms, 
             roomTypes =>  this.props.addFreeRoomTypes(roomTypes))
@@ -203,6 +199,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {
     addFreeRoomTypes: actions.addFreeRoomTypes,
+    cleanFreeRoomTypes: actions.cleanFreeRoomTypes,
     addStartDate: actions.addStartDate,
     addEndDate: actions.addEndDate
 
