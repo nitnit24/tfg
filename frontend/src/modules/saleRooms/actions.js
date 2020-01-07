@@ -45,34 +45,61 @@ export const cleanFreeRoomTypes = () => (dispatch) => {
     dispatch(cleanFreeRoomTypesCompleted());
 }
 
-const addTariffsByFreeRoomCompleted = tariffsByFreeRoom => ({
-    type: actionTypes.ADD_TARIFFSBYFREEROOM_COMPLETED,
-    tariffsByFreeRoom
-});
-      
 
-export const addTariffsByFreeRoom = (tariffsByfreeRoom) => (dispatch) => {
-    dispatch(addTariffsByFreeRoomCompleted(tariffsByfreeRoom));
-}
-
-
-const addRoomCompleted = room => ({
-    type: actionTypes.ADD_ROOM_COMPLETED,
+const addRoomsCompleted = room => ({
+    type: actionTypes.ADD_ROOMS_COMPLETED,
     room
 });
       
 
-export const addRoom = (room) => (dispatch) => {
-    dispatch(addRoomCompleted(room));
+export const addRooms = (room) => (dispatch) => {
+    dispatch(addRoomsCompleted(room));
 }
 
-const addRemoveCompleted = room => ({
-    type: actionTypes.REMOVE_ROOM_COMPLETED,
+const removeRoomsCompleted = room => ({
+    type: actionTypes.REMOVE_ROOMS_COMPLETED,
     room
 });
       
 
-export const removeRoom = (room) => (dispatch) => {
-    console.log(" actions" + room.id + room.name)
-    dispatch(addRemoveCompleted(room));
+export const removeRooms = (room) => (dispatch) => {
+    dispatch(removeRoomsCompleted(room));
+}
+
+const cleanRoomsCompleted = () => ({
+    type: actionTypes.CLEAN_ROOMS_COMPLETED,
+});
+
+
+export const cleanRooms = () => (dispatch) => {
+    dispatch(cleanRoomsCompleted());
+}
+
+const addSummaryRoomsCompleted = summaryRoom => ({
+    type: actionTypes.ADD_SUMMARYROOMS_COMPLETED,
+    summaryRoom
+});
+      
+
+export const addSummaryRooms = (summaryRoom) => (dispatch) => {
+    dispatch(addSummaryRoomsCompleted(summaryRoom));
+}
+
+const removeSummaryRoomsCompleted = summaryRoom => ({
+    type: actionTypes.REMOVE_SUMMARYROOMS_COMPLETED,
+    summaryRoom
+});
+      
+
+export const removeSummaryRooms= (summaryRoom) => (dispatch) => {
+    dispatch(removeSummaryRoomsCompleted(summaryRoom));
+}
+
+const cleanSummaryRoomsCompleted = () => ({
+    type: actionTypes.CLEAN_SUMMARYROOMS_COMPLETED,
+});
+
+
+export const cleanSummaryRooms = () => (dispatch) => {
+    dispatch(cleanSummaryRoomsCompleted());
 }

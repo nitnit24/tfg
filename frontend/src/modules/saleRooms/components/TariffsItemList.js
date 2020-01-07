@@ -74,14 +74,13 @@ TariffsItemList.propTypes = {
 }
 
 const mapStateToProps = (state) => ({
-    tariffsByFreeRoom: selectors.getTariffsByFreeRoom(state),
     startDate: selectors.getStartDate(state),
     endDate: selectors.getEndDate(state)
 
 });
 
 const mapDispatchToProps = {
-    addTariffsByFreeRoom: actions.addTariffsByFreeRoom
+
 };
 
 

@@ -97,9 +97,12 @@ class SaleRoomsFindForm extends React.Component {
         return `${year}${separator}${month<10?`0${month}`:`${month}`}${separator}${date<10?`0${date}`:`${date}`}`
     }
 
-    getTomorrowDate(separator='-'){
+    getTomorrowDate(today){
 
-        let newDate = new Date()
+        var separator ='-';
+
+        let newDate = new Date();
+
         let date = newDate.getDate() +1;
         let month = newDate.getMonth() + 1;
         let year = newDate.getFullYear();
@@ -108,8 +111,8 @@ class SaleRoomsFindForm extends React.Component {
     }
 
     render() {
-        let today = this.getCurrentDate();
-        let tomorrow = this.getTomorrowDate();
+        var today = this.getCurrentDate();
+        var tomorrow = this.getTomorrowDate(today);
         return (
            
 
@@ -134,7 +137,9 @@ class SaleRoomsFindForm extends React.Component {
                                                 required/>
                                         </div>
                                     </div>
+                               
                                     
+                                
                                     <div className="col-3 input-group mb-2" >  
                                         <div class="input-group-prepend">
                                             <div className= "input-group-text" >

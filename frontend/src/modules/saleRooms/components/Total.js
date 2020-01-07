@@ -35,7 +35,7 @@ class Total extends React.Component {
 
 
     totalPrice(){
-        var lista= this.props.rooms;
+        var lista= this.props.summaryRooms;
         const suma = lista.reduce((total, room) =>
             {return total + room.price * room.quantity},0);
        return suma;
@@ -52,7 +52,7 @@ class Total extends React.Component {
                 <div className= "m-3">
                     <h4>{this.totalPrice()}€</h4>
                 </div>
-                { (this.props.startDate && this.props.endDate && this.props.rooms.length >0) && 
+                { (this.props.startDate && this.props.endDate && this.props.summaryRooms.length >0) && 
                 <div>
                     <div className= "row justify-content-center">
                         <button type="submit" className="btn btn-dark disabled"
@@ -70,7 +70,7 @@ class Total extends React.Component {
                     </div> */}
                 </div>
                 }
-                <RoomsList history={this.props.history} list={this.props.rooms}/>
+                <RoomsList history={this.props.history} list={this.props.summaryRooms}/>
             </div>
                      
          
@@ -85,7 +85,7 @@ class Total extends React.Component {
 const mapStateToProps = (state) => ({
     startDate: selectors.getStartDate(state),
     endDate: selectors.getEndDate(state),
-    rooms: selectors.getRooms(state)
+    summaryRooms: selectors.getSummaryRooms(state)
 
 });
 

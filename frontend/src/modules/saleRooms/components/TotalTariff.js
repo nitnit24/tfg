@@ -29,6 +29,8 @@ class TotalTariff extends React.Component {
     }
 
     componentDidMount() {
+        this.props.cleanRooms(),
+        this.props.cleanSummaryRooms(),
         backend.bookingService.findSaleRoomTariffsByFreeRoom(this.props.startDate, this.props.endDate, 
             this.props.roomType.id, this.props.tariff.id,
             saleRoomTariffs =>  this.setState({saleRoomTariffs: saleRoomTariffs}));
@@ -48,7 +50,7 @@ class TotalTariff extends React.Component {
 
     componentDidUpdate(prevProps, prevState) {
         if (this.state.quantity !== 0){
-            var room = {
+            var summaryRoom = {
                 id: this.props.roomType.id,
                 quantity: this.state.quantity,
                 name: this.props.roomType.name,
@@ -56,8 +58,21 @@ class TotalTariff extends React.Component {
                 tariff: this.props.tariff.name,
                 price: this.totalPrice()
             }
-            this.props.removeRoom(room)
-            this.props.addRoom(room)
+            var room ={
+                saleRoomTariffs: this.state.saleRoomTariffs,
+                quantity: this.state.quantity
+            }
+            this.props.removeSummaryRooms(summaryRoom),
+            this.props.addSummaryRooms(summaryRoom),
+            this.props.removeRooms(room),
+            this.props.addRooms(room)
+        }
+        if (this.state.quantity == 0 ){
+            var room ={
+                saleRoomTariffs: this.state.saleRoomTariffs,
+                quantity: this.state.quantity
+            }
+            this.props.removeRooms(room)
         }
       }
 
@@ -113,16 +128,18 @@ class TotalTariff extends React.Component {
 
 
 const mapStateToProps = (state) => ({
-    tariffsByFreeRoom: selectors.getTariffsByFreeRoom(state),
     startDate: selectors.getStartDate(state),
     endDate: selectors.getEndDate(state)
 
 });
 
 const mapDispatchToProps = {
-    addTariffsByFreeRoom: actions.addTariffsByFreeRoom,
-    addRoom: actions.addRoom,
-    removeRoom: actions.removeRoom
+    addRooms: actions.addRooms,
+    removeRooms: actions.removeRooms,
+    addSummaryRooms: actions.addSummaryRooms,
+    removeSummaryRooms: actions.removeSummaryRooms,
+    cleanRooms: actions.cleanRooms,
+    cleanSummaryRooms: actions.cleanSummaryRooms
 };
 
 

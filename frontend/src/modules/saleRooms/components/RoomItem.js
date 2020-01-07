@@ -17,7 +17,7 @@ class RoomItem extends React.Component {
 
       componentDidUpdate(prevProps, prevState){
         if (this.props.room.quantity == 0){
-            this.props.removeRoom(this.props.room)
+            this.props.removeSummaryRooms(this.props.room)
         }
     }
 
@@ -46,7 +46,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = {
-    removeRoom: actions.removeRoom
+    removeSummaryRooms: actions.removeSummaryRooms
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(RoomItem);
