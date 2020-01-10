@@ -1,7 +1,6 @@
 package es.udc.tfg.backend.model.entities;
 
 import java.util.Calendar;
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.repository.PagingAndSortingRepository;
