@@ -30,6 +30,7 @@ import es.udc.tfg.backend.model.entities.RoomType;
 import es.udc.tfg.backend.model.entities.SaleRoom;
 import es.udc.tfg.backend.model.entities.SaleRoomTariff;
 import es.udc.tfg.backend.model.entities.SaleRoomTariffDao;
+import es.udc.tfg.backend.model.entities.State;
 import es.udc.tfg.backend.model.entities.Tariff;
 import es.udc.tfg.backend.model.services.BookingService;
 import es.udc.tfg.backend.model.services.PriceNotBetweenMinAndMaxValueException;
@@ -422,6 +423,164 @@ public class BookingServiceTest {
 		assertEquals(phone, foundBooking.get().getPhone());
 		assertEquals(email, foundBooking.get().getEmail());
 		assertEquals(petition, foundBooking.get().getPetition());
+		assertEquals(State.CONFIRMADA, foundBooking.get().getState());
+		
+		assertEquals(1,foundBooking.get().getBookingRooms().size());
+		assertEquals(3,foundBooking.get().getBookingRooms().iterator().next().getBookingDays().size());
+	
+		
+	}
+	
+	@Test
+	public void testMakeBookingAndFindByLocator() throws DuplicateInstanceException, InstanceNotFoundException, PriceNotBetweenMinAndMaxValueException {
+
+		Tariff newTariff = createTariff("name", "CODE");
+		Tariff tariff = tariffService.addTariff(newTariff);
+
+		RoomType roomType = createRoomType("name", 2, new BigDecimal(30), new BigDecimal(100));
+		roomTypeService.addRoomType(roomType);
+
+		Calendar date = Calendar.getInstance();
+
+		int freeRooms = 4;
+		BigDecimal price = new BigDecimal(90);
+
+		List<SaleRoomTariff> saleRoomTariffs = new ArrayList<>();
+
+		//BookingDay1
+		saleRoomService.addSaleRoom(roomType.getId(), date, freeRooms);
+		SaleRoomTariff saleRoomTariff = saleRoomTariffService.uploadSaleRoomTariff(price, tariff.getId(),
+				roomType.getId(), date);
+		saleRoomTariffs.add(saleRoomTariff);
+		
+		
+		//BookingDay2
+		date.add(Calendar.DAY_OF_YEAR, 1);
+		saleRoomService.addSaleRoom(roomType.getId(), date, freeRooms);
+		SaleRoomTariff saleRoomTariff2 = saleRoomTariffService.uploadSaleRoomTariff(price, tariff.getId(),
+				roomType.getId(), date);
+		saleRoomTariffs.add(saleRoomTariff2);
+		
+		//BookingDay3
+		date.add(Calendar.DAY_OF_YEAR, 1);
+		saleRoomService.addSaleRoom(roomType.getId(), date, freeRooms);
+		SaleRoomTariff saleRoomTariff3 = saleRoomTariffService.uploadSaleRoomTariff(price, tariff.getId(),
+				roomType.getId(), date);
+		saleRoomTariffs.add(saleRoomTariff3);
+		
+		//Booking
+		int quantity = 2;
+		BookingRoomSummary bookingRoomSummary = new BookingRoomSummary(saleRoomTariffs, quantity);
+		List<BookingRoomSummary> bookingRoomSummarys = new ArrayList<>();
+		bookingRoomSummarys.add(bookingRoomSummary);
+		
+		Calendar startDate = Calendar.getInstance();
+		Calendar endDate = Calendar.getInstance();
+		endDate.add(Calendar.DAY_OF_YEAR, 2);
+		String name = "name";
+		String surName = "surNmae";
+		String phone = "666666666";
+		String email = "user@user.com";
+		String petition = "petition";
+		
+		int duration = 2;
+		Calendar bookingDate = Calendar.getInstance();
+		bookingDate.set(Calendar.MILLISECOND, 0);
+		bookingDate.set(Calendar.SECOND, 0);
+		
+		Booking booking = bookingService.makeBooking(bookingRoomSummarys, startDate, endDate, name, surName, phone, email, petition);
+
+		Optional <Booking> foundBooking = bookingDao.findByLocator(booking.getLocator());
+		
+		assertEquals(booking.getId(), foundBooking.get().getId());
+		assertEquals(booking.getKey(), foundBooking.get().getKey());
+		assertEquals(booking.getLocator(), foundBooking.get().getLocator());
+		assertEquals(bookingDate, foundBooking.get().getDate());
+		assertEquals(startDate, foundBooking.get().getStartDate());
+		assertEquals(duration, foundBooking.get().getDuration());
+		assertEquals(endDate, foundBooking.get().getEndDate());
+		assertEquals(phone, foundBooking.get().getPhone());
+		assertEquals(email, foundBooking.get().getEmail());
+		assertEquals(petition, foundBooking.get().getPetition());
+		assertEquals(State.CONFIRMADA, foundBooking.get().getState());
+		
+		assertEquals(1,foundBooking.get().getBookingRooms().size());
+		assertEquals(3,foundBooking.get().getBookingRooms().iterator().next().getBookingDays().size());
+	
+	}
+	
+	@Test
+	public void testMakeBookingAndFindLocatorAndKey() throws DuplicateInstanceException, InstanceNotFoundException, PriceNotBetweenMinAndMaxValueException {
+
+		Tariff newTariff = createTariff("name", "CODE");
+		Tariff tariff = tariffService.addTariff(newTariff);
+
+		RoomType roomType = createRoomType("name", 2, new BigDecimal(30), new BigDecimal(100));
+		roomTypeService.addRoomType(roomType);
+
+		Calendar date = Calendar.getInstance();
+
+		int freeRooms = 4;
+		BigDecimal price = new BigDecimal(90);
+
+		List<SaleRoomTariff> saleRoomTariffs = new ArrayList<>();
+
+		//BookingDay1
+		saleRoomService.addSaleRoom(roomType.getId(), date, freeRooms);
+		SaleRoomTariff saleRoomTariff = saleRoomTariffService.uploadSaleRoomTariff(price, tariff.getId(),
+				roomType.getId(), date);
+		saleRoomTariffs.add(saleRoomTariff);
+		
+		
+		//BookingDay2
+		date.add(Calendar.DAY_OF_YEAR, 1);
+		saleRoomService.addSaleRoom(roomType.getId(), date, freeRooms);
+		SaleRoomTariff saleRoomTariff2 = saleRoomTariffService.uploadSaleRoomTariff(price, tariff.getId(),
+				roomType.getId(), date);
+		saleRoomTariffs.add(saleRoomTariff2);
+		
+		//BookingDay3
+		date.add(Calendar.DAY_OF_YEAR, 1);
+		saleRoomService.addSaleRoom(roomType.getId(), date, freeRooms);
+		SaleRoomTariff saleRoomTariff3 = saleRoomTariffService.uploadSaleRoomTariff(price, tariff.getId(),
+				roomType.getId(), date);
+		saleRoomTariffs.add(saleRoomTariff3);
+			
+		//Booking
+		int quantity = 2;
+		BookingRoomSummary bookingRoomSummary = new BookingRoomSummary(saleRoomTariffs, quantity);
+		List<BookingRoomSummary> bookingRoomSummarys = new ArrayList<>();
+		bookingRoomSummarys.add(bookingRoomSummary);
+		
+		Calendar startDate = Calendar.getInstance();
+		Calendar endDate = Calendar.getInstance();
+		endDate.add(Calendar.DAY_OF_YEAR, 2);
+		String name = "name";
+		String surName = "surNmae";
+		String phone = "666666666";
+		String email = "user@user.com";
+		String petition = "petition";
+		
+		int duration = 2;
+		Calendar bookingDate = Calendar.getInstance();
+		bookingDate.set(Calendar.MILLISECOND, 0);
+		bookingDate.set(Calendar.SECOND, 0);
+		
+		Booking booking = bookingService.makeBooking(bookingRoomSummarys, startDate, endDate, name, surName, phone, email, petition);
+
+		Optional <Booking> foundBooking = bookingDao.findByLocatorAndKey(booking.getLocator(), booking.getKey());
+		
+		assertEquals(booking.getId(), foundBooking.get().getId());
+		assertEquals(booking.getKey(), foundBooking.get().getKey());
+		assertEquals(booking.getLocator(), foundBooking.get().getLocator());
+		assertEquals(bookingDate, foundBooking.get().getDate());
+		assertEquals(startDate, foundBooking.get().getStartDate());
+		assertEquals(duration, foundBooking.get().getDuration());
+		assertEquals(endDate, foundBooking.get().getEndDate());
+		assertEquals(phone, foundBooking.get().getPhone());
+		assertEquals(email, foundBooking.get().getEmail());
+		assertEquals(petition, foundBooking.get().getPetition());
+		assertEquals(State.CONFIRMADA, foundBooking.get().getState());
 		
 		assertEquals(1,foundBooking.get().getBookingRooms().size());
 		assertEquals(3,foundBooking.get().getBookingRooms().iterator().next().getBookingDays().size());

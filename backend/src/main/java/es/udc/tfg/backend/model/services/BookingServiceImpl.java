@@ -24,6 +24,7 @@ import es.udc.tfg.backend.model.entities.SaleRoom;
 import es.udc.tfg.backend.model.entities.SaleRoomDao;
 import es.udc.tfg.backend.model.entities.SaleRoomTariff;
 import es.udc.tfg.backend.model.entities.SaleRoomTariffDao;
+import es.udc.tfg.backend.model.entities.State;
 import es.udc.tfg.backend.model.entities.Tariff;
 import es.udc.tfg.backend.model.entities.TariffDao;
 
@@ -50,62 +51,6 @@ public class BookingServiceImpl implements BookingService {
 	@Autowired
 	private SaleRoomTariffDao saleRoomTariffDao;
 
-	private String createStringRandom(){
-		char[] elementos={'0','1','2','3','4','5','6','7','8','9' ,'a',
-				'b','c','d','e','f','g','h','i','j','k','l','m','n','ñ',
-				'o','p','q','r','s','t','u','v','w','x','y','z',
-				'A','B','C','D','E','F','G','H','I','J','K','L','M',
-				'N','Ñ','O','P','Q','R','S','T','U','V','W','X','Y','Z'};
-
-		char[] conjunto = new char[7];
-
-		for(int i=0;i<7;i++){
-			int el = (int)(Math.random()*64);
-			conjunto[i] = (char)elementos[el];
-		}
-		String sRandom = new String(conjunto);
-		
-		return sRandom;
-	}
-
-			
-	public Booking makeBooking(List<BookingRoomSummary> bookingRoomSummarys, Calendar startDate, Calendar endDate, String name, 
-			String surName, String phone, String email, String petition) throws InstanceNotFoundException {
-
-		Calendar now = Calendar.getInstance();
-		
-		int startDay = startDate.get(Calendar.DAY_OF_YEAR);
-		int endDay = endDate.get(Calendar.DAY_OF_YEAR);
-		int duration = (endDay - startDay);
-		
-		Booking newBooking = bookingDao.save(new Booking(now, startDate, duration, endDate, name, surName,
-				phone, email, petition));
-		
-		String locator = now.get(Calendar.YEAR) +"0"+ now.get(Calendar.MINUTE) + "00"+ now.get(Calendar.DAY_OF_YEAR)+ newBooking.getId().toString() ;
-		newBooking.setLocator(locator);
-		String key = createStringRandom();
-		newBooking.setKey(key);
-		bookingDao.save(newBooking);
-		
-		
-		for(BookingRoomSummary bookingRoomSummary : bookingRoomSummarys) {
-			
-			BookingRoom newBookingRoom = new BookingRoom(bookingRoomSummary.getQuantity());
-			
-			newBooking.addBookingRoom(newBookingRoom);
-			bookingRoomDao.save(newBookingRoom);
-		
-			for(SaleRoomTariff saleRoomTariff : bookingRoomSummary.getSaleRoomTariffs()) {
-				
-				BookingDay newBookingDay = new BookingDay(saleRoomTariff.getPrice(), saleRoomTariff);
-				
-				newBookingRoom.addBookingDay(newBookingDay);
-				bookingDayDao.save(newBookingDay);
-			}
-		}
-		
-		return newBooking;
-	}
 	
 	public List<RoomType> findFreeRooms(Calendar startDate, Calendar endDate, int people, int rooms) {
 
@@ -212,5 +157,86 @@ public class BookingServiceImpl implements BookingService {
 
 		return saleRoomTariffList;
 
+	}
+	
+	private String createStringRandom(){
+		char[] elementos={'0','1','2','3','4','5','6','7','8','9' ,'a',
+				'b','c','d','e','f','g','h','i','j','k','l','m','n','ñ',
+				'o','p','q','r','s','t','u','v','w','x','y','z',
+				'A','B','C','D','E','F','G','H','I','J','K','L','M',
+				'N','Ñ','O','P','Q','R','S','T','U','V','W','X','Y','Z'};
+
+		char[] conjunto = new char[7];
+
+		for(int i=0;i<7;i++){
+			int el = (int)(Math.random()*64);
+			conjunto[i] = (char)elementos[el];
+		}
+		String sRandom = new String(conjunto);
+		
+		return sRandom;
+	}
+
+			
+	public Booking makeBooking(List<BookingRoomSummary> bookingRoomSummarys, Calendar startDate, Calendar endDate, String name, 
+			String surName, String phone, String email, String petition) throws InstanceNotFoundException {
+
+		Calendar now = Calendar.getInstance();
+		
+		int startDay = startDate.get(Calendar.DAY_OF_YEAR);
+		int endDay = endDate.get(Calendar.DAY_OF_YEAR);
+		int duration = (endDay - startDay);
+		State state = State.CONFIRMADA;
+		
+		Booking newBooking = bookingDao.save(new Booking(now, startDate, duration, endDate, state, name, surName,
+				phone, email, petition));
+		
+		String locator = now.get(Calendar.YEAR) +"0"+ now.get(Calendar.MINUTE) + "00"+ now.get(Calendar.DAY_OF_YEAR)+ newBooking.getId().toString() ;
+		newBooking.setLocator(locator);
+		String key = createStringRandom();
+		newBooking.setKey(key);
+		bookingDao.save(newBooking);
+		
+		
+		for(BookingRoomSummary bookingRoomSummary : bookingRoomSummarys) {
+			
+			BookingRoom newBookingRoom = new BookingRoom(bookingRoomSummary.getQuantity());
+			
+			newBooking.addBookingRoom(newBookingRoom);
+			bookingRoomDao.save(newBookingRoom);
+		
+			for(SaleRoomTariff saleRoomTariff : bookingRoomSummary.getSaleRoomTariffs()) {
+				
+				BookingDay newBookingDay = new BookingDay(saleRoomTariff.getPrice(), saleRoomTariff);
+				
+				newBookingRoom.addBookingDay(newBookingDay);
+				bookingDayDao.save(newBookingDay);
+			}
+		}
+		
+		return newBooking;
+	}
+	
+	public Booking findByLocator (String locator) throws InstanceNotFoundException {
+		
+		Optional<Booking> booking = bookingDao.findByLocator(locator);
+
+		if (!booking.isPresent()) {
+			throw new InstanceNotFoundException("project.entities.booking", locator );
+		}
+
+		return booking.get();
+		
+	}
+	
+	public Booking findByLocatorAndKey(String locator, String key) throws InstanceNotFoundException {
+		
+		Optional<Booking> booking = bookingDao.findByLocatorAndKey(locator, key);
+
+		if (!booking.isPresent()) {
+			throw new InstanceNotFoundException("project.entities.booking", locator );
+		}
+
+		return booking.get();
 	}
 }

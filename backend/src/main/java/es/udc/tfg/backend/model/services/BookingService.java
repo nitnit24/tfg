@@ -12,12 +12,17 @@ import es.udc.tfg.backend.model.entities.Tariff;
 
 public interface BookingService {
 
-	Booking makeBooking(List<BookingRoomSummary> bookingRoomSummarys, Calendar startDate, Calendar endDate, String name, 
-			String surName, String phone, String email, String petition) throws InstanceNotFoundException;
-
 	List<RoomType> findFreeRooms(Calendar startDate, Calendar endDate, int people, int rooms);
 	
 	List<Tariff> findTariffsByFreeRoom(Calendar startDate, Calendar endDate, Long roomTypeId);
 	
 	List<SaleRoomTariff> findSaleRoomTariffsByFreeRoom(Calendar startDate, Calendar endDate, Long roomTypeId, Long tariffId);
+
+	Booking makeBooking(List<BookingRoomSummary> bookingRoomSummarys, Calendar startDate, Calendar endDate, String name, 
+			String surName, String phone, String email, String petition) throws InstanceNotFoundException;
+	
+	Booking findByLocator(String locator) throws InstanceNotFoundException;
+	
+	Booking findByLocatorAndKey(String locator, String key) throws InstanceNotFoundException;
+	
 }
