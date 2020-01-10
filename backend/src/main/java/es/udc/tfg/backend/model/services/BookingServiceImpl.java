@@ -239,4 +239,19 @@ public class BookingServiceImpl implements BookingService {
 
 		return booking.get();
 	}
+	
+	public Booking cancel(Booking booking) throws InstanceNotFoundException {
+
+		Optional<Booking> existingBookingItem = bookingDao.findByLocator(booking.getLocator());
+
+		if (!existingBookingItem.isPresent()) {
+			throw new InstanceNotFoundException("project.entities.booking", booking.getLocator());
+		}
+
+		existingBookingItem.get().setState(State.CANCELADA);
+
+		bookingDao.save(existingBookingItem.get());
+
+		return existingBookingItem.get();
+	}
 }

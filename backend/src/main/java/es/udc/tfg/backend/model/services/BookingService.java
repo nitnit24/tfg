@@ -25,4 +25,6 @@ public interface BookingService {
 	
 	Booking findByLocatorAndKey(String locator, String key) throws InstanceNotFoundException;
 	
+	Booking cancel(Booking booking) throws InstanceNotFoundException;
+	
 }
