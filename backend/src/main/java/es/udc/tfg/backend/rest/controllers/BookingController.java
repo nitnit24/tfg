@@ -1,6 +1,7 @@
 package es.udc.tfg.backend.rest.controllers;
 
 
+import static es.udc.tfg.backend.rest.dtos.BookingConversor.toBookingDto;
 import static es.udc.tfg.backend.rest.dtos.RoomTypeConversor.toRoomTypeDtos;
 import static es.udc.tfg.backend.rest.dtos.SaleRoomTariffConversor.toSaleRoomTariffDtos;
 import static es.udc.tfg.backend.rest.dtos.TariffConversor.toTariffDtos;
@@ -11,12 +12,18 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import es.udc.tfg.backend.model.common.exceptions.InstanceNotFoundException;
 import es.udc.tfg.backend.model.services.BookingService;
+import es.udc.tfg.backend.rest.dtos.BookingDto;
+import es.udc.tfg.backend.rest.dtos.BookingParamsDto;
 import es.udc.tfg.backend.rest.dtos.RoomTypeDto;
 import es.udc.tfg.backend.rest.dtos.SaleRoomTariffDto;
 import es.udc.tfg.backend.rest.dtos.TariffDto;
@@ -27,6 +34,21 @@ public class BookingController {
 
 	@Autowired
 	private BookingService bookingService;
+	
+
+	@PostMapping("/makeBooking")
+	public BookingDto makeBooking(
+			@RequestParam("startDate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
+			@RequestParam("endDate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDate,
+			@Validated @RequestBody BookingParamsDto params
+			) throws InstanceNotFoundException{
+		Calendar startCalendar = Calendar.getInstance();
+		startCalendar.setTime(startDate);
+		Calendar endCalendar = Calendar.getInstance();
+		endCalendar.setTime(endDate);
+		return toBookingDto(bookingService.makeBooking(params.getBookingRoomSummarys(), startCalendar, endCalendar, params.getName(), params.getSurname(), 
+				params.getPhone(), params.getEmail(), params.getPetition()));
+	}
 	
 
 	@GetMapping("/findFreeRooms")
