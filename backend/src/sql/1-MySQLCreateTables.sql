@@ -68,6 +68,8 @@ CREATE TABLE SaleRoomTariff (
 
 CREATE TABLE Booking (
 	id BIGINT NOT NULL AUTO_INCREMENT,
+	bookingKey VARCHAR(15),
+	locator VARCHAR(15),
     date DATE NOT NULL,
 	startDate DATE NOT NULL,
 	endDate DATE NOT NULL,
@@ -77,7 +79,7 @@ CREATE TABLE Booking (
 	phone VARCHAR(20) NOT NULL,
 	email VARCHAR(60) NOT NULL,
 	petition VARCHAR(299),
-	priceTotal DECIMAL(11,2),
+	totalPrice DECIMAL(11,2),
 	CONSTRAINT BookingItemPK PRIMARY KEY (id)
 ) Engine = InnoDB;
 
@@ -85,6 +87,7 @@ CREATE TABLE Booking (
 	id BIGINT NOT NULL AUTO_INCREMENT,
 	roomTotalPrice DECIMAL(11,2),
 	idBooking BIGINT NOT NULL,
+	quantity SMALLINT NOT NULL,
 	CONSTRAINT BookingRoomPK PRIMARY KEY (id),
 	CONSTRAINT idBookingFK FOREIGN KEY(idBooking) REFERENCES Booking (id)
 ) Engine = InnoDB;
