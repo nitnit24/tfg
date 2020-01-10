@@ -11,6 +11,14 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import es.udc.tfg.backend.model.common.exceptions.InstanceNotFoundException;
+import es.udc.tfg.backend.model.entities.Booking;
+import es.udc.tfg.backend.model.entities.BookingDao;
+import es.udc.tfg.backend.model.entities.BookingDay;
+import es.udc.tfg.backend.model.entities.BookingDayDao;
+import es.udc.tfg.backend.model.entities.BookingRoom;
+import es.udc.tfg.backend.model.entities.BookingRoomDao;
+import es.udc.tfg.backend.model.entities.BookingRoomSummary;
 import es.udc.tfg.backend.model.entities.RoomType;
 import es.udc.tfg.backend.model.entities.SaleRoom;
 import es.udc.tfg.backend.model.entities.SaleRoomDao;
@@ -23,14 +31,14 @@ import es.udc.tfg.backend.model.entities.TariffDao;
 @Transactional
 public class BookingServiceImpl implements BookingService {
 
-//	@Autowired
-//	private BookingDao bookingDao;
-//	
-//	@Autowired
-//	private BookingDayDao bookingDayDao;
-//	
-//	@Autowired
-//	private BookingRoomDao bookingRoomDao;
+	@Autowired
+	private BookingDao bookingDao;
+	
+	@Autowired
+	private BookingDayDao bookingDayDao;
+	
+	@Autowired
+	private BookingRoomDao bookingRoomDao;
 	
 	@Autowired
 	private TariffDao tariffDao;
@@ -42,39 +50,62 @@ public class BookingServiceImpl implements BookingService {
 	@Autowired
 	private SaleRoomTariffDao saleRoomTariffDao;
 
-	
-//	@Override
-//	public Booking addBooking(List<BookingRoom> bookingRooms, Calendar startDate, Calendar endDate, String name,
-//			String surName, String phone, String email, String petition) throws InstanceNotFoundException {
-//
-//		for (BookingRoom bookingRoom : bookingRooms) {
-//			List<BookingDay> bookingDays = bookingRoom.getBookingDays();
-//			
-//			for (BookingDay bookingDay: bookingDays) {
-//				Long saleRoomTariffId = bookingDay.getSaleRoomTariff().getId();
-//				
-//				Optional<SaleRoomTariff> saleRoomTariff = saleRoomTariffDao.findById(saleRoomTariffId);
-//
-//				if (!saleRoomTariff.isPresent()) {
-//					throw new InstanceNotFoundException("project.entities.saleRoomTariff", saleRoomTariffId);
-//				}
-//				else {
-//					BookingDay newBookingDay = new BookingDay(saleRoomTariff.get().getPrice(), saleRoomTariff.get());
-//					bookingDayDao.save(newBookingDay);
-//				}
-//			}
-//			BookingRoom newBookingRoom= new BookingRoom(bookingDays);
-//			bookingRoomDao.save(newBookingRoom);	
-//		}
-//
-//		Calendar now = Calendar.getInstance();
-//		
-//		Booking newBooking = new Booking(bookingRooms, now, startDate, endDate, name, surName,
-//				phone, email, petition);
-//		
-//		return newBooking;
-//
-//	}
+	private String createStringRandom(){
+		char[] elementos={'0','1','2','3','4','5','6','7','8','9' ,'a',
+				'b','c','d','e','f','g','h','i','j','k','l','m','n','ñ',
+				'o','p','q','r','s','t','u','v','w','x','y','z',
+				'A','B','C','D','E','F','G','H','I','J','K','L','M',
+				'N','Ñ','O','P','Q','R','S','T','U','V','W','X','Y','Z'};
+
+		char[] conjunto = new char[7];
+
+		for(int i=0;i<7;i++){
+			int el = (int)(Math.random()*64);
+			conjunto[i] = (char)elementos[el];
+		}
+		String sRandom = new String(conjunto);
+		
+		return sRandom;
+	}
+
+			
+	public Booking makeBooking(List<BookingRoomSummary> bookingRoomSummarys, Calendar startDate, Calendar endDate, String name, 
+			String surName, String phone, String email, String petition) throws InstanceNotFoundException {
+
+		Calendar now = Calendar.getInstance();
+		
+		int startDay = startDate.get(Calendar.DAY_OF_YEAR);
+		int endDay = endDate.get(Calendar.DAY_OF_YEAR);
+		int duration = (endDay - startDay);
+		
+		Booking newBooking = bookingDao.save(new Booking(now, startDate, duration, endDate, name, surName,
+				phone, email, petition));
+		
+		String locator = now.get(Calendar.YEAR) +"0"+ now.get(Calendar.MINUTE) + "00"+ now.get(Calendar.DAY_OF_YEAR)+ newBooking.getId().toString() ;
+		newBooking.setLocator(locator);
+		String key = createStringRandom();
+		newBooking.setKey(key);
+		bookingDao.save(newBooking);
+		
+		
+		for(BookingRoomSummary bookingRoomSummary : bookingRoomSummarys) {
+			
+			BookingRoom newBookingRoom = new BookingRoom(bookingRoomSummary.getQuantity());
+			
+			newBooking.addBookingRoom(newBookingRoom);
+			bookingRoomDao.save(newBookingRoom);
+		
+			for(SaleRoomTariff saleRoomTariff : bookingRoomSummary.getSaleRoomTariffs()) {
+				
+				BookingDay newBookingDay = new BookingDay(saleRoomTariff.getPrice(), saleRoomTariff);
+				
+				newBookingRoom.addBookingDay(newBookingDay);
+				bookingDayDao.save(newBookingDay);
+			}
+		}
+		
+		return newBooking;
+	}
 	
 	public List<RoomType> findFreeRooms(Calendar startDate, Calendar endDate, int people, int rooms) {
 
