@@ -15,6 +15,7 @@ import javax.persistence.OneToMany;
 @Entity
 public class Booking {
 
+
 	private Long id;
 	private String key;
 	private String locator;
@@ -23,6 +24,7 @@ public class Booking {
 	private Calendar startDate;
 	private int duration;
 	private Calendar endDate;
+	private State state;
 	private String name;
 	private String surName;
 	private String phone;
@@ -34,12 +36,13 @@ public class Booking {
 		
 	}
 	
-	public Booking(Calendar date, Calendar startDate,int duration, Calendar endDate,
+	public Booking(Calendar date, Calendar startDate,int duration, Calendar endDate, State state,
 			String name, String surName, String phone, String email, String petition) {
 		this.date= date;
 		this.startDate = startDate;
 		this.duration = duration;
 		this.endDate = endDate;
+		this.state = state;
 		this.name = name;
 		this.surName = surName;
 		this.phone = phone;
@@ -48,13 +51,14 @@ public class Booking {
 	}
 
 	public Booking( String key, String locator, Calendar date, Calendar startDate,int duration, Calendar endDate,
-			String name, String surName, String phone, String email, String petition) {
+			State state, String name, String surName, String phone, String email, String petition) {
 		this.key = key;
 		this.locator = locator;
 		this.date= date;
 		this.startDate = startDate;
 		this.duration = duration;
 		this.endDate = endDate;
+		this.state = state;
 		this.name = name;
 		this.surName = surName;
 		this.phone = phone;
@@ -172,6 +176,14 @@ public class Booking {
 		this.endDate = endDate;
 	}
 
+
+	public State getState() {
+		return state;
+	}
+
+	public void setState(State state) {
+		this.state = state;
+	}
 
 	public String getName() {
 		return name;

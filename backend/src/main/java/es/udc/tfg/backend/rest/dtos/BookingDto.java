@@ -4,6 +4,8 @@ import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.List;
 
+import es.udc.tfg.backend.model.entities.State;
+
 public class BookingDto {
 
 	public interface AllValidations {
@@ -17,8 +19,9 @@ public class BookingDto {
 	private Calendar startDate;
 	private int duration;
 	private Calendar endDate;
+	private State state;
 	private String name;
-	private String surName;
+	private String surname;
 	private String phone;
 	private String email;
 	private String petition;
@@ -28,7 +31,7 @@ public class BookingDto {
 	}
 
 	public BookingDto(Long id, String key, String locator, List<BookingRoomDto> bookingRooms, Calendar date,
-			Calendar startDate, int duration, Calendar endDate, String name, String surName, String phone, String email,
+			Calendar startDate, int duration, Calendar endDate, State state, String name, String surname, String phone, String email,
 			String petition, BigDecimal totalPrice) {
 		this.id = id;
 		this.key = key;
@@ -38,8 +41,9 @@ public class BookingDto {
 		this.startDate = startDate;
 		this.duration = duration;
 		this.endDate = endDate;
+		this.state = state;
 		this.name = name;
-		this.surName = surName;
+		this.surname = surname;
 		this.phone = phone;
 		this.email = email;
 		this.petition = petition;
@@ -112,6 +116,16 @@ public class BookingDto {
 		this.endDate = endDate;
 	}
 
+	
+	public State getState() {
+		return state;
+	}
+
+	public void setState(State state) {
+		this.state = state;
+	}
+
+
 	public String getName() {
 		return name;
 	}
@@ -120,12 +134,13 @@ public class BookingDto {
 		this.name = name;
 	}
 
-	public String getSurName() {
-		return surName;
+
+	public String getSurname() {
+		return surname;
 	}
 
-	public void setSurName(String surName) {
-		this.surName = surName;
+	public void setSurname(String surname) {
+		this.surname = surname;
 	}
 
 	public String getPhone() {

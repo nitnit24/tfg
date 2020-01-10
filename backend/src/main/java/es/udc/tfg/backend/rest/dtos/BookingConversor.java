@@ -26,7 +26,7 @@ public class BookingConversor {
 		List<BookingRoomDto> bookingRooms = booking.getBookingRooms().stream().map(i -> toBookingRoomDto(i)).collect(Collectors.toList());
 		
 		return new BookingDto(booking.getId(), booking.getKey(), booking.getLocator(), bookingRooms, booking.getDate(), 
-				booking.getStartDate(), booking.getDuration(), booking.getEndDate(), booking.getName(), booking.getSurName(),
+				booking.getStartDate(), booking.getDuration(), booking.getEndDate(), booking.getState(), booking.getName(), booking.getSurName(),
 				booking.getPhone(), booking.getEmail(), booking.getPetition(), booking.getTotalPrice());
 		
 	}

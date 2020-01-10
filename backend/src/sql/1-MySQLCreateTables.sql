@@ -74,6 +74,7 @@ CREATE TABLE Booking (
 	startDate DATE NOT NULL,
 	endDate DATE NOT NULL,
 	duration SMALLINT, 
+	state SMALLINT,
 	name VARCHAR(60) NOT NULL,
 	surName VARCHAR(60) NOT NULL,
 	phone VARCHAR(20) NOT NULL,
