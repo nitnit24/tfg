@@ -10,7 +10,8 @@ const initialState = {
     endDate:'',
     freeRoomTypes: [],
     rooms: [],
-    summaryRooms: []
+    summaryRooms: [],
+    lastBooking:''
 };
 
 const startDate = (state = initialState.startDate, action) => {
@@ -104,12 +105,28 @@ const summaryRooms = (state = initialState.summaryRooms, action) => {
 }
 
 
+const lastBooking = (state = initialState.lastBooking, action) => {
+
+    switch (action.type) {
+
+        case actionTypes.BOOKING_COMPLETED:
+     
+            return action.booking;
+
+    default:
+        return state;
+    }
+
+}
+
+
 const reducer = combineReducers({
     startDate, 
     endDate, 
     freeRoomTypes,
     rooms,
-    summaryRooms
+    summaryRooms,
+    lastBooking
 });
 
 export default reducer;

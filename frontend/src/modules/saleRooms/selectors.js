@@ -15,5 +15,8 @@ export const getTariffsByFreeRoom = state =>
 export const getRooms = state =>
     getModuleState(state).rooms;
 
-    export const getSummaryRooms = state =>
+export const getSummaryRooms = state =>
     getModuleState(state).summaryRooms;
+
+export const getLastBooking= state =>
+    getModuleState(state).lastBooking;

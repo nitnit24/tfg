@@ -141,7 +141,7 @@ class BookingSummary extends React.Component {
 const mapStateToProps = (state) => ({
     startDate: selectors.getStartDate(state),
     endDate: selectors.getEndDate(state),
-    rooms: selectors.getRooms(state)
+    rooms: selectors.getSummaryRooms(state)
 
 });
 

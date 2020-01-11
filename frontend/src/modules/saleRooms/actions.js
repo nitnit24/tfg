@@ -103,3 +103,13 @@ const cleanSummaryRoomsCompleted = () => ({
 export const cleanSummaryRooms = () => (dispatch) => {
     dispatch(cleanSummaryRoomsCompleted());
 }
+
+const bookingCompleted = booking => ({
+    type: actionTypes.BOOKING_COMPLETED,
+    booking
+});
+      
+
+export const booking= (booking) => (dispatch) => {
+    dispatch(bookingCompleted(booking));
+}
