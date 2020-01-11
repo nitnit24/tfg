@@ -23,8 +23,8 @@ public interface BookingService {
 	
 	Booking findByLocator(String locator) throws InstanceNotFoundException;
 	
-	Booking findByLocatorAndKey(String locator, String key) throws InstanceNotFoundException;
+	Booking findByLocatorAndKey(String locator, String key) throws IncorrectFindLocatorKeyException;
 	
-	Booking cancel(Booking booking) throws InstanceNotFoundException;
+	Booking cancel(String locator, String key) throws InstanceNotFoundException;
 	
 }

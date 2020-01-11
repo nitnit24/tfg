@@ -207,6 +207,12 @@ public class BookingServiceImpl implements BookingService {
 		
 			for(SaleRoomTariff saleRoomTariff : bookingRoomSummary.getSaleRoomTariffs()) {
 				
+				Optional<SaleRoomTariff> saleRoomT = saleRoomTariffDao.findById(saleRoomTariff.getId());
+				Optional<SaleRoom> saleRoom = saleRoomDao.findById(saleRoomT.get().getSaleRoom().getIdSaleRoom());
+				int oldFreeRooms = saleRoom.get().getFreeRooms();
+				saleRoom.get().setFreeRooms(oldFreeRooms - bookingRoomSummary.getQuantity());
+				saleRoomDao.save(saleRoom.get());
+				
 				BookingDay newBookingDay = new BookingDay(saleRoomTariff.getPrice(), saleRoomTariff);
 				
 				newBookingRoom.addBookingDay(newBookingDay);
@@ -229,23 +235,24 @@ public class BookingServiceImpl implements BookingService {
 		
 	}
 	
-	public Booking findByLocatorAndKey(String locator, String key) throws InstanceNotFoundException {
+	public Booking findByLocatorAndKey(String locator, String key) throws IncorrectFindLocatorKeyException {
 		
 		Optional<Booking> booking = bookingDao.findByLocatorAndKey(locator, key);
 
 		if (!booking.isPresent()) {
-			throw new InstanceNotFoundException("project.entities.booking", locator );
+			throw new IncorrectFindLocatorKeyException( locator, key );
 		}
 
 		return booking.get();
 	}
 	
-	public Booking cancel(Booking booking) throws InstanceNotFoundException {
+	
+	public Booking cancel(String locator, String key) throws InstanceNotFoundException {
 
-		Optional<Booking> existingBookingItem = bookingDao.findByLocator(booking.getLocator());
+		Optional<Booking> existingBookingItem = bookingDao.findByLocatorAndKey(locator, key);
 
 		if (!existingBookingItem.isPresent()) {
-			throw new InstanceNotFoundException("project.entities.booking", booking.getLocator());
+			throw new InstanceNotFoundException("project.entities.booking", locator);
 		}
 
 		existingBookingItem.get().setState(State.CANCELADA);
