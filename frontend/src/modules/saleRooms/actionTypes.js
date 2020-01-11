@@ -8,3 +8,4 @@ export const CLEAN_ROOMS_COMPLETED="project/booking/CleanRoomsCompleted";
 export const ADD_SUMMARYROOMS_COMPLETED = "project/booking/AddSummaryRoomsCompleted";
 export const REMOVE_SUMMARYROOMS_COMPLETED = "project/booking/RemoveSummaryRoomsCompleted"
 export const CLEAN_SUMMARYROOMS_COMPLETED="project/booking/CleanSummaryRoomsCompleted";
+export const BOOKING_COMPLETED="project/booking/BookingCompleted";
