@@ -6,12 +6,15 @@ import {Errors} from '../../common';
 import * as actions from '../actions';
 import {connect} from 'react-redux';
 
+import  backend from '../../../backend';
+import * as selectors from '../selectors';
+
 const initialState = {
     name: '',
     surname: '',
     email: '',
     phone: '',
-    petiton: '',
+    petition: '',
     
     backendErrors: null
 };
@@ -50,23 +53,26 @@ class ClientForm extends React.Component {
         event.preventDefault();
 
         if (this.form.checkValidity()) {
-            this.add();
+            this.booking();
         } else {
             this.setBackendErrors(null);
             this.form.classList.add('was-validated');
         }
-
     }
 
-    add() {
-        const roomType = {
-            name : this.state.name.trim(),
-            capacity : this.state.capacity.trim(),
-            minPrice: this.state.minPrice.trim(),
-            maxPrice: this.state.maxPrice.trim(),
-        }
-        
-     //   this.props.addRoomType(roomType,  errors => this.setBackendErrors(errors))
+    booking() {
+        const name = this.state.name.trim();
+        const surname = this.state.surname.trim();
+        const email = this.state.email.trim();
+        const phone = this.state.phone.trim();
+        const petition = this.state.petition.trim();
+
+        backend.bookingService.makeBooking(this.props.rooms,this.props.startDate, this.props.endDate, name, surname,
+             phone, email, petition,
+             (booking) => {this.props.history.push('/booking/booking-completed'),
+                this.props.booking(booking),
+                console.log(booking.locator)} ,      
+             errors => this.setBackendErrors(errors))
 
     }
 
@@ -91,7 +97,8 @@ class ClientForm extends React.Component {
                     </h5>
                     <span> <small><em>* Los campos marcados con un asterisco (*) son obligatorios.</em> </small></span>
                     <div className="card-body">
-                        <form   className="needs-validation" noValidate 
+                        <form  ref={node => this.form = node}
+                         className="needs-validation" noValidate 
                             onSubmit={(e) => this.handleSubmit(e)}>
                             <div className="form-group row">
                                 <label className="col-md-3 col-form-label">
@@ -167,11 +174,21 @@ class ClientForm extends React.Component {
                             </label>
                             <div className="col-md-8">
                                     <input type="text" id="petition" className="form-control" 
-                                        value={this.state.petition}
+                                        value={this.state.petition} 
                                         onChange={(e) => this.handlePetitionChange(e)}
                                         />
                                 </div>
                             </div>
+                            {/* <div className="form-group row">
+                                <label htmlFor="comments" className="col-md-3 col-form-label">
+                                </label>
+                                <div className="col-md-8">
+                                <span> <small><em> 
+                                    El establecimiento intentará atender sus peticiones, pero no podemos garantizarlo
+                                </em> </small></span>
+                                </div>
+                            </div> */}
+                            { (this.props.rooms.length !== 0) && 
                             <div className="form-group row">
                                 <div className="offset-md-3 col-md-1">
                                     <button type="submit" className="btn btn-dark disabled" >
@@ -179,6 +196,7 @@ class ClientForm extends React.Component {
                                     </button>
                                 </div>
                             </div>
+                            }
                             <span> <small><em> <FormattedMessage id='project.saleRooms.ClientForm.confirmation'/>{this.state.email}</em> </small></span>
                         </form>
                     </div>
@@ -191,10 +209,15 @@ class ClientForm extends React.Component {
 
 }
 
-ClientForm.propTypes = {
-};
+const mapStateToProps = (state) => ({
+    startDate: selectors.getStartDate(state),
+    endDate: selectors.getEndDate(state),
+    rooms: selectors.getRooms(state)
+
+});
 
 const mapDispatchToProps = {
+    booking: actions.booking
 }
 
-export default connect(null, mapDispatchToProps)(ClientForm);
+export default connect(mapStateToProps, mapDispatchToProps)(ClientForm);

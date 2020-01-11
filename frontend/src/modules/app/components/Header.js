@@ -21,7 +21,7 @@ const Header = ({user, handleLogout}) => (
 
             {user ?
 
-            <ul className="navbar-nav mr-auto">     
+            <ul className="navbar-nav mr-auto text-uppercase">     
                 <li className="nav-item">
                     <NavLink exact className="nav-link" to="/tariffs/tariff-management">
                         <span></span>

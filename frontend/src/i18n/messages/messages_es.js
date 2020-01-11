@@ -73,15 +73,34 @@ export default {
     'project.saleRooms.ClientForm.confirmation':'Le enviaremos la confirmación de su reserva a ',
 
     'project.saleRooms.BookingSummary.title' : 'Resumen de la reserva',
+    'project.saleRooms.BookingCompleted.title': 'Confirmación de la reserva',
+    'project.saleRooms.BookingCompleted.title2': 'Reserva cancelada',
+    'project.saleRooms.BookingCompleted.locator': 'Localizador',
+    'project.saleRooms.BookingCompleted.key': 'Clave',
+    'project.saleRooms.BookingCompleted.date': 'Fecha reserva',
+    'project.saleRooms.BookingCompleted.clientData': 'Datos del cliente',
+    'project.saleRooms.BookingCompleted.BookingData': 'Datos de la reserva',
+    'project.saleRooms.BookingCompleted.name': 'Nombre',
+    'project.saleRooms.BookingCompleted.surname': 'Apellidos',
+    'project.saleRooms.BookingCompleted.phone': 'Teléfono',
+    'project.saleRooms.BookingCompleted.email': 'Email',
+    'project.saleRooms.BookingCompleted.duration': 'Duración de la estancia',
+    'project.saleRooms.BookingCompleted.rooms': 'Habitaciones',
 
+    'project.roomtypes.BookingFindForm.title': 'Buscar reserva',
 
     'project.global.fields.startDate' : 'Fecha Entrada',
     'project.global.fields.endDate' : 'Fecha Salida',
     'project.global.fields.roomsNum' :  'Habitaciones',
     'project.global.fields.peopleNum' : 'Personas',
+    'project.global.fields.locator' : 'Locator',
+    'project.global.fields.key' : 'Key',
     'project.global.buttons.find': 'Buscar',
     'project.global.buttons.continue': 'Continuar',
-    'project.global.buttons.booking' :'Reservar'
+    'project.global.buttons.booking' :'Reservar',
+    'project.global.buttons.showBooking' : 'Ver/Cancelar reserva',
+    'project.global.buttons.bookingCancel' :'Cancelar reserva',
+    'project.global.buttons.bookingUpdate' :'Modificar reserva',
 
 
 }   
