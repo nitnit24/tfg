@@ -7,9 +7,11 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Slice;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 
 import es.udc.tfg.backend.model.common.exceptions.InstanceNotFoundException;
 import es.udc.tfg.backend.model.entities.Booking;
@@ -210,6 +212,8 @@ public class BookingServiceImpl implements BookingService {
 			newBooking.addBookingRoom(newBookingRoom);
 			bookingRoomDao.save(newBookingRoom);
 		
+		
+			
 			for(SaleRoomTariff saleRoomTariff : bookingRoomSummary.getSaleRoomTariffs()) {
 				
 				Optional<SaleRoomTariff> saleRoomT = saleRoomTariffDao.findById(saleRoomTariff.getId());
@@ -222,8 +226,20 @@ public class BookingServiceImpl implements BookingService {
 				
 				newBookingRoom.addBookingDay(newBookingDay);
 				bookingDayDao.save(newBookingDay);
+				
 			}
+			
+			BigDecimal roomTotalPrice = newBookingRoom.getBookingDays().stream().map(i -> i.getDayPrice()).reduce(new BigDecimal(0), (a, b) -> a.add(b));
+			newBookingRoom.setRoomTotalPrice(roomTotalPrice);
+			bookingRoomDao.save(newBookingRoom);
+			
+			
 		}
+
+		BigDecimal totalPrice = newBooking.getBookingRooms().stream().map(i -> i.getRoomTotalPrice().multiply(new BigDecimal(i.getQuantity()))).reduce(new BigDecimal(0), (a, b) -> a.add(b));
+		
+		newBooking.setTotalPrice(totalPrice);
+		bookingDao.save(newBooking);
 		
 		return newBooking;
 	}
@@ -268,5 +284,14 @@ public class BookingServiceImpl implements BookingService {
 		bookingDao.save(existingBookingItem.get());
 
 		return existingBookingItem.get();
+	}
+	
+	@Override
+	public Block<Booking> findBookings(Calendar startDate, Calendar endDate, String keywords, int page, int size) {
+		
+		Slice<Booking> slice = bookingDao.find(startDate, endDate, keywords, page, size);
+		
+		return new Block<>(slice.getContent(), slice.hasNext());
+		
 	}
 }

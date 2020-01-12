@@ -1,51 +1,30 @@
 import React from 'react';
-import {FormattedMessage, FormattedDate,  FormattedTime, FormattedNumber} from 'react-intl';
+import PropTypes from 'prop-types';
+import {FormattedMessage, FormattedDate,  FormattedTime} from 'react-intl';
 import * as selectors from '../selectors';
 
 import {connect} from 'react-redux';
 
-import  backend from '../../../backend';
-import * as actions from '../actions';
 
-import { confirmAlert } from 'react-confirm-alert'; 
-import 'react-confirm-alert/src/react-confirm-alert.css' 
+import  backend from '../../../backend';
+import RoomsList from './RoomsList';
+
 import '../../styles.css';
 
-import BookingRoomItem from './BookingRoomItem';
 
-class BookingCompleted extends React.Component {
+
+class BookingDetails extends React.Component {
 
     constructor(props) {
 
         super(props);
 
         this.state = {
-            backendErrors: null
-            
+            backendErrors: null,
+           
         }
 
     }
-
-    deleteBookingNotification() {
-        confirmAlert({
-          title: 'Cancelar reserva',
-          message: '¿Está seguro de que desea cancelar?',
-          buttons: [
-            {
-              label: 'Si',
-                onClick: () => ( backend.bookingService.cancelBooking(this.props.lastBooking.locator,
-                    this.props.lastBooking.key,
-
-                (booking) =>{this.props.booking(booking), this.props.history.push('/booking/booking-completed')},
-                errors => this.setBackendErrors(errors)
-                ))
-              },
-            {
-              label: 'No',
-            }
-             ]
-          })
-        }
 
     setBackendErrors(backendErrors) {
         this.setState({backendErrors});
@@ -60,34 +39,15 @@ class BookingCompleted extends React.Component {
         return (
             <div className=" border rounded p-4">
                 <div >
-                    {this.props.lastBooking.state === "CONFIRMADA" &&
                     <h4 className= "text-center"><b>
                         <FormattedMessage id="project.saleRooms.BookingCompleted.title"/>
                     </b></h4>
-                    }
-                    {this.props.lastBooking.state === "CANCELADA" &&
-                    <h4 className= "text-center"><b>
-                        <FormattedMessage id="project.saleRooms.BookingCompleted.title2"/>
-                    </b></h4>
-                    }
                     &nbsp;
                     <div >
                         <div className="row justify-content-center">
                              <span> <FormattedMessage id="project.saleRooms.BookingCompleted.date"/></span>
                              <span>: <FormattedDate value={new Date(this.props.lastBooking.date)}/> - <FormattedTime value={new Date(this.props.lastBooking.date)}/></span> 
                         </div>
-                        {this.props.lastBooking.state === "MODIFICADA" &&
-                            <div className="row justify-content-center">
-                                <span> <FormattedMessage id="project.saleRooms.BookingCompleted.updatelDate"/></span>
-                                <span>: <FormattedDate value={new Date(this.props.lastBooking.updateDate)}/> - <FormattedTime value={new Date(this.props.lastBooking.updateDate)}/></span> 
-                            </div>
-                        }
-                        {this.props.lastBooking.state === "CANCELADA" &&
-                            <div className="row justify-content-center">
-                                <span> <FormattedMessage id="project.saleRooms.BookingCompleted.cancelDate"/></span>
-                                <span>: <FormattedDate value={new Date(this.props.lastBooking.cancelDate)}/> - <FormattedTime value={new Date(this.props.lastBooking.cancelDate)}/></span> 
-                            </div>
-                        }
                         <div className="row justify-content-center">
                             <h5> <FormattedMessage id="project.saleRooms.BookingCompleted.locator"/> </h5>
                             <h5>: {this.props.lastBooking.locator}  </h5>
@@ -134,13 +94,6 @@ class BookingCompleted extends React.Component {
                         <div className="row">
                              <span className = "ml-5"> <FormattedMessage id="project.saleRooms.BookingCompleted.duration"/></span>
                              <span>: {this.props.lastBooking.duration}</span> 
-                             {this.props.lastBooking.duration === 1 &&
-                                <span>&nbsp;noche</span>
-                             }
-                              {this.props.lastBooking.duration !== 1 &&
-                                <span>&nbsp;noches</span>
-                             }
-                             
                         </div>
                         <div className="row">
                             <span className = "ml-5"> <FormattedMessage id="project.saleRooms.ClientForm.comments"/></span>
@@ -154,33 +107,10 @@ class BookingCompleted extends React.Component {
                     </div>
                 </div>
                 &nbsp;
-                <div className="row">
-                    <div className="col-12 border rounded p-4">
-                        <h5 className= "text-center"><FormattedMessage id="project.saleRooms.BookingCompleted.rooms"/></h5>
-                        <hr/>
-                        <div>
-                            {this.props.lastBooking.bookingRooms !== undefined &&
-                            <div>
-                            {this.props.lastBooking.bookingRooms.map(room =>
-                                <BookingRoomItem  key={room.id} room={room} />
-                            )}
-                            </div>
-                        }
-                        </div>
-                    </div>
-                </div>
-                &nbsp;
-                <div>
-                    <h5 className= "text-center">
-                    <FormattedMessage id="project.saleRooms.BookingCompleted.total"/>&nbsp;
-                    <FormattedNumber value={this.props.lastBooking.totalPrice}/> €
-                    </h5>
-                </div>
-                &nbsp;
-                {this.props.lastBooking.state === "CONFIRMADA" &&
                 <div className="row justify-content-center">
                     <button type="button" className="btn  btn-link btn-sm"
-                        onClick={this.deleteBookingNotification.bind(this)}>
+                        onClick={() => backend.bookingService.cancelBooking(this.props.lastBooking.locator,
+                        this.props.lastBooking.key)}>
                         <FormattedMessage id="project.global.buttons.bookingCancel"/>
                     </button>
                     |
@@ -189,9 +119,9 @@ class BookingCompleted extends React.Component {
                         <FormattedMessage id="project.global.buttons.bookingUpdate"/>
                     </button> 
                 </div>
-                }
 
             </div>
+
 
         );
 
@@ -209,8 +139,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = {
-    booking: actions.booking
     
 };
 
-export default connect (mapStateToProps, mapDispatchToProps)(BookingCompleted);
+export default connect (mapStateToProps, mapDispatchToProps)(BookingDetails);

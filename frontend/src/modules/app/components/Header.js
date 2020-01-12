@@ -40,6 +40,12 @@ const Header = ({user, handleLogout}) => (
                            <FormattedMessage id="project.app.Header.dailyPanel"/>
                     </NavLink>
                 </li>
+                <li className="nav-item">
+                    <NavLink exact className="nav-link" to="/booking/bookings">
+                           <span></span>
+                           <FormattedMessage id="project.app.Header.bookings"/>
+                    </NavLink>
+                </li>
             </ul>
             :
             <ul className="navbar-nav mr-auto text-uppercase">   

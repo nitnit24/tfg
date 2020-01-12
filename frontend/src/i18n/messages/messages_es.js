@@ -7,6 +7,7 @@ export default {
     'project.app.Header.ReserveRoom' : 'Reservar habitación',
     'project.app.Header.logout': 'Salir',
     'project.app.Home.welcome': '¡Contenido de la página principal de TFG Project!',
+    'project.app.Header.bookings' :'Reservas',
     
     'project.common.ErrorDialog.title': 'Error',
     'project.global.buttons.cancel': 'Cancelar',
@@ -78,6 +79,8 @@ export default {
     'project.saleRooms.BookingCompleted.locator': 'Localizador',
     'project.saleRooms.BookingCompleted.key': 'Clave',
     'project.saleRooms.BookingCompleted.date': 'Fecha reserva',
+    'project.saleRooms.BookingCompleted.cancelDate' : 'Fecha cancelación',
+    'project.saleRooms.BookingCompleted.updateDate' : 'Fecha última modificación',
     'project.saleRooms.BookingCompleted.clientData': 'Datos del cliente',
     'project.saleRooms.BookingCompleted.BookingData': 'Datos de la reserva',
     'project.saleRooms.BookingCompleted.name': 'Nombre',
@@ -86,6 +89,7 @@ export default {
     'project.saleRooms.BookingCompleted.email': 'Email',
     'project.saleRooms.BookingCompleted.duration': 'Duración de la estancia',
     'project.saleRooms.BookingCompleted.rooms': 'Habitaciones',
+    'project.saleRooms.BookingCompleted.total': 'Total:',
 
     'project.roomtypes.BookingFindForm.title': 'Buscar reserva',
 

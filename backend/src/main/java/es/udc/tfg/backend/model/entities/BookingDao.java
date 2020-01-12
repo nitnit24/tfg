@@ -4,7 +4,7 @@ import java.util.Optional;
 
 import org.springframework.data.repository.PagingAndSortingRepository;
 
-public interface BookingDao extends PagingAndSortingRepository<Booking, Long> {
+public interface BookingDao extends PagingAndSortingRepository<Booking, Long>, CustomizedBookingDao {
 
 	Optional<Booking> findByLocatorAndKey(String locator, String key);
 	

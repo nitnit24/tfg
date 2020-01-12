@@ -15,7 +15,7 @@ const initialState = {
     backendErrors: null
 };
 
-class SaleRoomsFindForm extends React.Component {
+class BookingFindForm extends React.Component {
 
     constructor(props) {
         super();
@@ -134,4 +134,4 @@ const mapDispatchToProps = {
 
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(SaleRoomsFindForm);
+export default connect(mapStateToProps, mapDispatchToProps)(BookingFindForm);

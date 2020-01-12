@@ -8,7 +8,7 @@ import {Login, SignUp, UpdateProfile, ChangePassword} from '../../users';
 import users from '../../users';
 import {Tariff, TariffUpdateForm} from '../../tariffs';
 import {RoomType, RoomTypeUpdateForm} from '../../roomTypes';
-import {SaleRoom, BookingData, BookingCompleted, BookingFindForm, BookingDetails} from '../../saleRooms';
+import {SaleRoom, BookingData, BookingCompleted, BookingFindForm, BookingDetails, Bookings} from '../../saleRooms';
 import {DailyPanel} from '../../dailyPanel';
 
 const Body = ({user}) => (
@@ -23,6 +23,7 @@ const Body = ({user}) => (
             {user && <Route exact path="/roomTypes/roomType-management" component={RoomType}/>}
             {user && <Route exact path="/roomTypes/roomType-update" component={RoomTypeUpdateForm}/>}
             {user && <Route exact path="/dailyPanel/dailyPanel-management" component={DailyPanel}/>}
+            {user && <Route exact path="/booking/bookings" component={Bookings}/>}
             {user && <Route exact path="/users/update-profile" component={UpdateProfile}/>}
             {user && <Route exact path="/users/change-password" component={ChangePassword}/>}
             {!user && <Route exact path="/users/login" component={Login}/>}
