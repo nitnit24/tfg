@@ -16,14 +16,16 @@
     "core-js": "^2.5.7",
     "jquery": "^3.3.1",
     "popper.js": "^1.14.3",
-    "react": "^16.4.1",
-    "react-dom": "^16.4.1",
+    "react": "^16.12.0",
+    "react-confirm-alert": "^2.4.1",
+    "react-dom": "^16.12.0",
     "react-intl": "^2.4.0",
     "react-redux": "^5.0.7",
     "react-router-dom": "^4.3.1",
     "react-scripts": "1.1.4",
     "redux": "^4.0.0",
     "redux-logger": "^3.0.6",
-    "redux-thunk": "^2.3.0"
+    "redux-thunk": "^2.3.0",
+    "styled-components": "^4.4.1"
   }
 }

@@ -4,12 +4,14 @@ export default {
     'project.app.Header.home': 'Inicio',
     'project.app.Header.tariff': 'Tipos de tarifa',
     'project.app.Header.roomType': 'Tipos de habitación',
+    'project.app.Header.ReserveRoom' : 'Reservar habitación',
     'project.app.Header.logout': 'Salir',
     'project.app.Home.welcome': '¡Contenido de la página principal de TFG Project!',
+    'project.app.Header.bookings' :'Reservas',
     
     'project.common.ErrorDialog.title': 'Error',
-
     'project.global.buttons.cancel': 'Cancelar',
+    'project.global.buttons.remove': 'Eliminar',
     'project.global.buttons.close': 'Cerrar',
     'project.global.buttons.ok': 'OK',
     'project.global.buttons.save': 'Guardar',
@@ -52,12 +54,57 @@ export default {
     'project.roomTypes.RoomTypeUpdateForm.title' : 'Actualizar Tipo de habitación',
     'project.roomTypes.RoomTypeItemList.title' : 'Tipos de Habitación',
     
-    
     'project.dailyPanel.dailyPanelTable.title' : 'Panel Diario',
     "project.app.Header.dailyPanel": 'Panel Diario',
 
     "project.dailyPanel.dailyPanel.freeRooms": 'Libres',
-    "project.dailyPanel.dailyPanel.roomState": 'Estado'
+    "project.dailyPanel.dailyPanel.roomState": 'Estado',
     
+    'project.shopping.SaleRoomsFindForm.title' : 'Buscar habitación',
+
+    'project.saleRooms.SaleRoomItemList.capacity': 'Capacidad: ',
+
+    'project.saleRooms.Total.total':'Total: ',
+    'project.saleRooms.ClientForm.title':'Datos de la reserva',
+    'project.saleRooms.ClientForm.name':'Nombre',
+    'project.saleRooms.ClientForm.surname':'Apellidos',
+    'project.saleRooms.ClientForm.email':'Email',
+    'project.saleRooms.ClientForm.phone':'Teléfono',
+    'project.saleRooms.ClientForm.comments':'Comentarios',
+    'project.saleRooms.ClientForm.confirmation':'Le enviaremos la confirmación de su reserva a ',
+
+    'project.saleRooms.BookingSummary.title' : 'Resumen de la reserva',
+    'project.saleRooms.BookingCompleted.title': 'Confirmación de la reserva',
+    'project.saleRooms.BookingCompleted.title2': 'Reserva cancelada',
+    'project.saleRooms.BookingCompleted.locator': 'Localizador',
+    'project.saleRooms.BookingCompleted.key': 'Clave',
+    'project.saleRooms.BookingCompleted.date': 'Fecha reserva',
+    'project.saleRooms.BookingCompleted.cancelDate' : 'Fecha cancelación',
+    'project.saleRooms.BookingCompleted.updateDate' : 'Fecha última modificación',
+    'project.saleRooms.BookingCompleted.clientData': 'Datos del cliente',
+    'project.saleRooms.BookingCompleted.BookingData': 'Datos de la reserva',
+    'project.saleRooms.BookingCompleted.name': 'Nombre',
+    'project.saleRooms.BookingCompleted.surname': 'Apellidos',
+    'project.saleRooms.BookingCompleted.phone': 'Teléfono',
+    'project.saleRooms.BookingCompleted.email': 'Email',
+    'project.saleRooms.BookingCompleted.duration': 'Duración de la estancia',
+    'project.saleRooms.BookingCompleted.rooms': 'Habitaciones',
+    'project.saleRooms.BookingCompleted.total': 'Total:',
+
+    'project.roomtypes.BookingFindForm.title': 'Buscar reserva',
+
+    'project.global.fields.startDate' : 'Fecha Entrada',
+    'project.global.fields.endDate' : 'Fecha Salida',
+    'project.global.fields.roomsNum' :  'Habitaciones',
+    'project.global.fields.peopleNum' : 'Personas',
+    'project.global.fields.locator' : 'Locator',
+    'project.global.fields.key' : 'Key',
+    'project.global.buttons.find': 'Buscar',
+    'project.global.buttons.continue': 'Continuar',
+    'project.global.buttons.booking' :'Reservar',
+    'project.global.buttons.showBooking' : 'Ver/Cancelar reserva',
+    'project.global.buttons.bookingCancel' :'Cancelar reserva',
+    'project.global.buttons.bookingUpdate' :'Modificar reserva',
+
 
 }   

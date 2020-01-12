@@ -1,0 +1,11 @@
+export const ADD_STARTDATE_COMPLETED = "project/booking/AddStartDateCompleted";
+export const ADD_ENDDATE_COMPLETED = "project/booking/AddEndDateCompleted";
+export const ADD_FREEROOMTYPES_COMPLETED = "project/booking/AddFreeRoomTypesCompleted";
+export const CLEAN_FREEROOMTYPES_COMPLETED = "project/booking/CleanFreeRoomTypesCompleted";
+export const ADD_ROOMS_COMPLETED="project/booking/AddRoomsCompleted";
+export const REMOVE_ROOMS_COMPLETED="project/booking/RemoveRoomsCompleted";
+export const CLEAN_ROOMS_COMPLETED="project/booking/CleanRoomsCompleted";
+export const ADD_SUMMARYROOMS_COMPLETED = "project/booking/AddSummaryRoomsCompleted";
+export const REMOVE_SUMMARYROOMS_COMPLETED = "project/booking/RemoveSummaryRoomsCompleted"
+export const CLEAN_SUMMARYROOMS_COMPLETED="project/booking/CleanSummaryRoomsCompleted";
+export const BOOKING_COMPLETED="project/booking/BookingCompleted";

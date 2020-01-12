@@ -10,4 +10,5 @@ public interface SaleRoomTariffDao extends PagingAndSortingRepository<SaleRoomTa
 	Optional<SaleRoomTariff> findByTariffIdAndSaleRoomIdSaleRoom(Long tariffId, Long saleRoomId);
 	
 	Optional<SaleRoomTariff> findByTariffIdAndSaleRoomRoomTypeIdAndSaleRoomDate(Long tariffId,Long roomTypeId,Calendar date);
+
 }
