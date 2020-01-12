@@ -720,6 +720,7 @@ public class BookingServiceTest {
 		minDate.set(Calendar.SECOND, 0);
 		minDate.set(Calendar.MINUTE, 0);
 		minDate.set(Calendar.HOUR, 0);
+		minDate.add(Calendar.DAY_OF_YEAR, -1);
 		Calendar maxDate = Calendar.getInstance();
 		maxDate.add(Calendar.DAY_OF_YEAR, 2);
 		String keywords ="";
