@@ -287,9 +287,9 @@ public class BookingServiceImpl implements BookingService {
 	}
 	
 	@Override
-	public Block<Booking> findBookings(Calendar startDate, Calendar endDate, String keywords, int page, int size) {
+	public Block<Booking> findBookings(String dataType, Calendar startDate, Calendar endDate, String keywords, int page, int size) {
 		
-		Slice<Booking> slice = bookingDao.find(startDate, endDate, keywords, page, size);
+		Slice<Booking> slice = bookingDao.find(dataType, startDate, endDate, keywords, page, size);
 		
 		return new Block<>(slice.getContent(), slice.hasNext());
 		

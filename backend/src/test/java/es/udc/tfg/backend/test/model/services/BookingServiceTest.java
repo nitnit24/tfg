@@ -22,10 +22,6 @@ import es.udc.tfg.backend.model.common.exceptions.InstanceNotFoundException;
 import es.udc.tfg.backend.model.entities.Booking;
 import es.udc.tfg.backend.model.entities.BookingDao;
 import es.udc.tfg.backend.model.entities.BookingRoomSummary;
-//import es.udc.tfg.backend.model.entities.Booking;
-//import es.udc.tfg.backend.model.entities.BookingDao;
-//import es.udc.tfg.backend.model.entities.BookingDay;
-//import es.udc.tfg.backend.model.entities.BookingRoom;
 import es.udc.tfg.backend.model.entities.RoomType;
 import es.udc.tfg.backend.model.entities.SaleRoom;
 import es.udc.tfg.backend.model.entities.SaleRoomTariff;
@@ -704,7 +700,7 @@ public class BookingServiceTest {
 		Calendar endDate = Calendar.getInstance();
 		endDate.add(Calendar.DAY_OF_YEAR, 2);
 		String name = "name";
-		String surName = "surNmae";
+		String surName = "surName";
 		String phone = "666666666";
 		String email = "user@user.com";
 		String petition = "petition";
@@ -713,8 +709,13 @@ public class BookingServiceTest {
 		bookingDate.set(Calendar.MILLISECOND, 0);
 		bookingDate.set(Calendar.SECOND, 0);
 		
-		Booking booking = bookingService.makeBooking(bookingRoomSummarys, startDate, endDate, name, surName, phone, email, petition);
+		bookingService.makeBooking(bookingRoomSummarys, startDate, endDate, name, surName, phone, email, petition);
 
+		String name2 = "name2";
+		String surName2 = "surName2";
+		
+		bookingService.makeBooking(bookingRoomSummarys, startDate, endDate, name2, surName2, phone, email, petition);
+		
 		Calendar minDate = Calendar.getInstance();
 		minDate.set(Calendar.MILLISECOND, 0);
 		minDate.set(Calendar.SECOND, 0);
@@ -726,10 +727,15 @@ public class BookingServiceTest {
 		String keywords ="";
 		int page = 0;
 		int size = 2;
+		String dataType = "Entrada";
 		
-		Block<Booking>  bookings = bookingService.findBookings(minDate, maxDate, keywords, page, size);
+		Block<Booking>  bookings = bookingService.findBookings(dataType, minDate, maxDate, keywords, page, size);
 
-		assertEquals(1, bookings.getItems().size());
+		assertEquals(2, bookings.getItems().size());
+		
+		Block<Booking>  bookings2 = bookingService.findBookings(dataType, minDate, maxDate, "name2", page, size);
+
+		assertEquals(1, bookings2.getItems().size());
 
 	}
 	

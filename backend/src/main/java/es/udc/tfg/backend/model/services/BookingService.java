@@ -27,6 +27,6 @@ public interface BookingService {
 	
 	Booking cancel(String locator, String key) throws InstanceNotFoundException;
 	
-	Block<Booking> findBookings(Calendar minDate, Calendar maxDate, String keywords, int page, int size);
+	Block<Booking> findBookings(String dataType, Calendar minDate, Calendar maxDate, String keywords, int page, int size);
 	
 }

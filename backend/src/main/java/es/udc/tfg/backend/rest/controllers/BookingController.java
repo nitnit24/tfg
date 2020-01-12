@@ -2,10 +2,9 @@ package es.udc.tfg.backend.rest.controllers;
 
 
 import static es.udc.tfg.backend.rest.dtos.BookingConversor.toBookingDto;
+import static es.udc.tfg.backend.rest.dtos.BookingConversor.toBookingSummaryDtos;
 import static es.udc.tfg.backend.rest.dtos.RoomTypeConversor.toRoomTypeDtos;
 import static es.udc.tfg.backend.rest.dtos.SaleRoomTariffConversor.toSaleRoomTariffDtos;
-import static es.udc.tfg.backend.rest.dtos.TariffConversor.toTariff;
-import static es.udc.tfg.backend.rest.dtos.TariffConversor.toTariffDto;
 import static es.udc.tfg.backend.rest.dtos.TariffConversor.toTariffDtos;
 
 import java.util.Calendar;
@@ -24,11 +23,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+
 import es.udc.tfg.backend.model.common.exceptions.InstanceNotFoundException;
+import es.udc.tfg.backend.model.entities.Booking;
+import es.udc.tfg.backend.model.services.Block;
 import es.udc.tfg.backend.model.services.BookingService;
 import es.udc.tfg.backend.model.services.IncorrectFindLocatorKeyException;
+import es.udc.tfg.backend.rest.dtos.BlockDto;
 import es.udc.tfg.backend.rest.dtos.BookingDto;
 import es.udc.tfg.backend.rest.dtos.BookingParamsDto;
+import es.udc.tfg.backend.rest.dtos.BookingSummaryDto;
 import es.udc.tfg.backend.rest.dtos.RoomTypeDto;
 import es.udc.tfg.backend.rest.dtos.SaleRoomTariffDto;
 import es.udc.tfg.backend.rest.dtos.TariffDto;
@@ -112,11 +116,23 @@ public class BookingController {
 		return toBookingDto(bookingService.cancel(locator, key));
 	}
 	
-//	@PutMapping("/{id}")
-//	public TariffDto updateTariff(@PathVariable("id") Long id,
-//			 @RequestBody TariffDto tariffDto) 
-//					throws InstanceNotFoundException {
-//		return toTariffDto(tariffService.updateTariff(toTariff(tariffDto)));
-//	}
+	@GetMapping("/bookings")
+	public BlockDto<BookingSummaryDto> findBookings(
+		@RequestParam(required=true) String dataType,
+		@RequestParam("minDate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date minDate,
+		@RequestParam("maxDate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date maxDate,
+		@RequestParam(required=false) String keywords, 
+		@RequestParam(defaultValue="0") int page) {
+		
+		Calendar minCalendar = Calendar.getInstance();
+		minCalendar.setTime(minDate);
+		Calendar maxCalendar = Calendar.getInstance();
+		maxCalendar.setTime(maxDate);
+		
+		Block<Booking> bookingBlock = bookingService.findBookings(dataType, minCalendar, maxCalendar, keywords, page, 10);
+		
+		return new BlockDto<>(toBookingSummaryDtos(bookingBlock.getItems()), bookingBlock.getExistMoreItems());
+		
+	}
 
 }
