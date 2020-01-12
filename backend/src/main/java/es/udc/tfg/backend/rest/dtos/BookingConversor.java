@@ -5,6 +5,8 @@ import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.time.temporal.ChronoUnit;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.TimeZone;
 import java.util.stream.Collectors;
@@ -25,9 +27,12 @@ public class BookingConversor {
 		
 		List<BookingRoomDto> bookingRooms = booking.getBookingRooms().stream().map(i -> toBookingRoomDto(i)).collect(Collectors.toList());
 		
+		bookingRooms.sort(Comparator.comparing(BookingRoomDto::getId));
+		
 		return new BookingDto(booking.getId(), booking.getKey(), booking.getLocator(), bookingRooms, booking.getDate(), 
-				booking.getStartDate(), booking.getDuration(), booking.getEndDate(), booking.getState(), booking.getName(), booking.getSurName(),
-				booking.getPhone(), booking.getEmail(), booking.getPetition(), booking.getTotalPrice());
+				booking.getStartDate(), booking.getDuration(), booking.getEndDate(), booking.getState(), booking.getCancelDate(), 
+				booking.getUpdateDate(), booking.getName(), booking.getSurName(),booking.getPhone(), booking.getEmail(), booking.getPetition(),
+				booking.getTotalPrice());
 		
 	}
 	
@@ -43,14 +48,17 @@ public class BookingConversor {
 
 		List<BookingDayDto> bookingDays = bookingRoom.getBookingDays().stream().map(i -> toBookingDayDto(i)).collect(Collectors.toList());
 		
-		return new BookingRoomDto(bookingRoom.getId(), bookingRoom.getQuantity(), bookingRoom.getRoomTotalPrice(), bookingRoom.getBooking().getId(),
+		bookingDays.sort(Comparator.comparing(BookingDayDto::getDay));
+		
+		return new BookingRoomDto(bookingRoom.getId(), bookingRoom.getQuantity(), bookingRoom.getRoomTotalPrice(), bookingRoom.getRoomTypeName(),
+				bookingRoom.getRoomTypeCapacity(), bookingRoom.getTariffName(), bookingRoom.getBooking().getId(),
 				bookingDays);
 		
 	}
 	
 	private final static BookingDayDto toBookingDayDto(BookingDay bookingDay) {
 		
-		return new BookingDayDto(bookingDay.getId(),  bookingDay.getDayPrice(), bookingDay.getSaleRoomTariff().getId(),
+		return new BookingDayDto(bookingDay.getId(),  bookingDay.getDayPrice(), bookingDay.getDay(), bookingDay.getSaleRoomTariff().getId(),
 				bookingDay.getBookingRoom().getId());
 		
 	}

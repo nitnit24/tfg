@@ -27,6 +27,7 @@ import es.udc.tfg.backend.model.entities.BookingRoomSummary;
 //import es.udc.tfg.backend.model.entities.BookingDay;
 //import es.udc.tfg.backend.model.entities.BookingRoom;
 import es.udc.tfg.backend.model.entities.RoomType;
+import es.udc.tfg.backend.model.entities.SaleRoom;
 import es.udc.tfg.backend.model.entities.SaleRoomTariff;
 import es.udc.tfg.backend.model.entities.SaleRoomTariffDao;
 import es.udc.tfg.backend.model.entities.State;
@@ -166,7 +167,6 @@ public class BookingServiceTest {
 		assertEquals(freeRoomTypes, foundFreeRoomTypes10);
 		assertEquals(freeRoomTypes.size(), foundFreeRoomTypes10.size());
 		
-		
 		//another room
 		RoomType roomType2 = createRoomType("namedos", 2, new BigDecimal(30), new BigDecimal(100));
 		roomTypeService.addRoomType(roomType2);
@@ -175,7 +175,6 @@ public class BookingServiceTest {
 		saleRoomService.addSaleRoom(roomType2.getId(), date, freeRooms);
 		saleRoomTariffService.uploadSaleRoomTariff(price, tariff.getId(),
 				roomType.getId(), date);
-
 		
 		//Day2
 		saleRoomService.addSaleRoom(roomType2.getId(), date2, freeRooms);
@@ -362,24 +361,26 @@ public class BookingServiceTest {
 		List<SaleRoomTariff> saleRoomTariffs = new ArrayList<>();
 
 		//BookingDay1
-		saleRoomService.addSaleRoom(roomType.getId(), date, freeRooms);
+		SaleRoom saleRoom1 = saleRoomService.addSaleRoom(roomType.getId(), date, freeRooms);
 		SaleRoomTariff saleRoomTariff = saleRoomTariffService.uploadSaleRoomTariff(price, tariff.getId(),
 				roomType.getId(), date);
 		saleRoomTariffs.add(saleRoomTariff);
 		
 		
 		//BookingDay2
-		date.add(Calendar.DAY_OF_YEAR, 1);
-		saleRoomService.addSaleRoom(roomType.getId(), date, freeRooms);
+		Calendar date2 = Calendar.getInstance();
+		date2.add(Calendar.DAY_OF_YEAR, 1);
+		SaleRoom saleRoom2 =saleRoomService.addSaleRoom(roomType.getId(), date2, freeRooms);
 		SaleRoomTariff saleRoomTariff2 = saleRoomTariffService.uploadSaleRoomTariff(price, tariff.getId(),
-				roomType.getId(), date);
+				roomType.getId(), date2);
 		saleRoomTariffs.add(saleRoomTariff2);
 		
 		//BookingDay3
-		date.add(Calendar.DAY_OF_YEAR, 1);
-		saleRoomService.addSaleRoom(roomType.getId(), date, freeRooms);
+		Calendar date3 = Calendar.getInstance();
+		date3.add(Calendar.DAY_OF_YEAR, 2);
+		SaleRoom saleRoom3 = saleRoomService.addSaleRoom(roomType.getId(), date3, 6);
 		SaleRoomTariff saleRoomTariff3 = saleRoomTariffService.uploadSaleRoomTariff(price, tariff.getId(),
-				roomType.getId(), date);
+				roomType.getId(), date3);
 		saleRoomTariffs.add(saleRoomTariff3);
 		
 		//BookingRooms
@@ -389,7 +390,7 @@ public class BookingServiceTest {
 //		bookingRooms.add(bookingRoom);
 //		
 		//Booking
-		int quantity = 2;
+		int quantity = 1;
 		BookingRoomSummary bookingRoomSummary = new BookingRoomSummary(saleRoomTariffs, quantity);
 		List<BookingRoomSummary> bookingRoomSummarys = new ArrayList<>();
 		bookingRoomSummarys.add(bookingRoomSummary);
@@ -427,7 +428,11 @@ public class BookingServiceTest {
 		assertEquals(1,foundBooking.get().getBookingRooms().size());
 		assertEquals(3,foundBooking.get().getBookingRooms().iterator().next().getBookingDays().size());
 	
+		int newfreeRooms = 3;
 		
+		assertEquals(newfreeRooms, saleRoom1.getFreeRooms());
+		assertEquals(newfreeRooms, saleRoom2.getFreeRooms());
+		assertEquals(5, saleRoom3.getFreeRooms());
 	}
 	
 	@Test
@@ -644,7 +649,7 @@ public class BookingServiceTest {
 		
 		Booking booking = bookingService.makeBooking(bookingRoomSummarys, startDate, endDate, name, surName, phone, email, petition);
 
-		Booking cancelBooking = bookingService.cancel(booking);
+		Booking cancelBooking = bookingService.cancel(booking.getLocator(), booking.getKey());
 
 		assertEquals(State.CANCELADA, cancelBooking.getState());
 

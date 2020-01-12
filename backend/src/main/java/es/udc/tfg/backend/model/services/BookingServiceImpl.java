@@ -200,7 +200,12 @@ public class BookingServiceImpl implements BookingService {
 		
 		for(BookingRoomSummary bookingRoomSummary : bookingRoomSummarys) {
 			
-			BookingRoom newBookingRoom = new BookingRoom(bookingRoomSummary.getQuantity());
+			List<SaleRoomTariff> SaleRTs = bookingRoomSummary.getSaleRoomTariffs();
+			Optional<SaleRoomTariff> saleRT = saleRoomTariffDao.findById(SaleRTs.get(0).getId());
+			
+			BookingRoom newBookingRoom = new BookingRoom(bookingRoomSummary.getQuantity(), saleRT.get().getSaleRoom().getRoomType().getName(),
+					saleRT.get().getSaleRoom().getRoomType().getCapacity(), 
+					saleRT.get().getTariff().getName());
 			
 			newBooking.addBookingRoom(newBookingRoom);
 			bookingRoomDao.save(newBookingRoom);
@@ -213,7 +218,7 @@ public class BookingServiceImpl implements BookingService {
 				saleRoom.get().setFreeRooms(oldFreeRooms - bookingRoomSummary.getQuantity());
 				saleRoomDao.save(saleRoom.get());
 				
-				BookingDay newBookingDay = new BookingDay(saleRoomTariff.getPrice(), saleRoomTariff);
+				BookingDay newBookingDay = new BookingDay(saleRoomTariff.getPrice(), saleRoom.get().getDate(), saleRoomTariff);
 				
 				newBookingRoom.addBookingDay(newBookingDay);
 				bookingDayDao.save(newBookingDay);
@@ -256,6 +261,9 @@ public class BookingServiceImpl implements BookingService {
 		}
 
 		existingBookingItem.get().setState(State.CANCELADA);
+		
+		Calendar now = Calendar.getInstance();
+		existingBookingItem.get().setCancelDate(now);
 
 		bookingDao.save(existingBookingItem.get());
 

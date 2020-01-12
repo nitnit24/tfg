@@ -11,6 +11,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 public class Booking {
@@ -25,6 +27,8 @@ public class Booking {
 	private int duration;
 	private Calendar endDate;
 	private State state;
+	private Calendar cancelDate;
+	private Calendar updateDate;
 	private String name;
 	private String surName;
 	private String phone;
@@ -39,6 +43,10 @@ public class Booking {
 	public Booking(Calendar date, Calendar startDate,int duration, Calendar endDate, State state,
 			String name, String surName, String phone, String email, String petition) {
 		this.date= date;
+		if (date != null){
+			this.date.set(Calendar.MILLISECOND, 0);
+			this.date.set(Calendar.SECOND, 0);
+		}
 		this.startDate = startDate;
 		this.duration = duration;
 		this.endDate = endDate;
@@ -67,8 +75,8 @@ public class Booking {
 	}
 	
 	public Booking(Long id, String key, String locator, Calendar date, Calendar startDate,
-			int duration, Calendar endDate, String name, String surName, String phone, String email, String petition,
-			BigDecimal totalPrice) {
+			int duration, Calendar endDate, State state, Calendar cancelDate, Calendar updateDate,
+			String name, String surName, String phone, String email, String petition, BigDecimal totalPrice) {
 		this.id= id;
 		this.key = key;
 		this.locator = locator;
@@ -76,6 +84,9 @@ public class Booking {
 		this.startDate = startDate;
 		this.duration = duration;
 		this.endDate = endDate;
+		this.state = state;
+		this.cancelDate = cancelDate;
+		this.updateDate = updateDate;
 		this.name = name;
 		this.surName = surName;
 		this.phone = phone;
@@ -134,16 +145,14 @@ public class Booking {
 		
 	}
 
+	@Temporal(TemporalType.TIMESTAMP)
 	public Calendar getDate() {
 		return date;
 	}
 
 
 	public void setDate(Calendar date) {
-		if (date != null) {
-			this.date.set(Calendar.MILLISECOND, 0);
-			this.date.set(Calendar.SECOND, 0);
-		}
+		this.date=date;
 	}
 
 
@@ -183,6 +192,25 @@ public class Booking {
 
 	public void setState(State state) {
 		this.state = state;
+	}
+	
+	
+	@Temporal(TemporalType.TIMESTAMP)
+	public Calendar getCancelDate() {
+		return cancelDate;
+	}
+
+	public void setCancelDate(Calendar cancelDate) {
+		this.cancelDate = cancelDate;
+	}
+
+	@Temporal(TemporalType.TIMESTAMP)
+	public Calendar getUpdateDate() {
+		return updateDate;
+	}
+
+	public void setUpdateDate(Calendar updateDate) {
+		this.updateDate = updateDate;
 	}
 
 	public String getName() {

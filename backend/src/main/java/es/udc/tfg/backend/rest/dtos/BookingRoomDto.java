@@ -11,6 +11,9 @@ public class BookingRoomDto {
 	private Long id;
 	private int quantity;
 	private BigDecimal roomTotalPrice;
+	private String roomTypeName;
+	private int roomTypeCapacity;
+	private String tariffName;
 	private Long bookingId;
 	private List<BookingDayDto> bookingDays;
 
@@ -18,14 +21,20 @@ public class BookingRoomDto {
 	}
 	
 
-	public BookingRoomDto(Long id, int quantity, BigDecimal roomTotalPrice, Long bookingId,
-			List<BookingDayDto> bookingDays) {
+	public BookingRoomDto(Long id, int quantity, BigDecimal roomTotalPrice, String roomTypeName, int roomTypeCapacity,
+			String tariffName, Long bookingId, List<BookingDayDto> bookingDays) {
 		this.id = id;
 		this.quantity = quantity;
 		this.roomTotalPrice = roomTotalPrice;
+		this.roomTypeName = roomTypeName;
+		this.roomTypeCapacity = roomTypeCapacity;
+		this.tariffName = tariffName;
 		this.bookingId = bookingId;
 		this.bookingDays = bookingDays;
 	}
+
+
+
 
 
 
@@ -52,6 +61,37 @@ public class BookingRoomDto {
 	public void setRoomTotalPrice(BigDecimal roomTotalPrice) {
 		this.roomTotalPrice = roomTotalPrice;
 	}
+
+	
+	public String getRoomTypeName() {
+		return roomTypeName;
+	}
+
+
+	public void setRoomTypeName(String roomTypeName) {
+		this.roomTypeName = roomTypeName;
+	}
+
+
+	public int getRoomTypeCapacity() {
+		return roomTypeCapacity;
+	}
+
+
+	public void setRoomTypeCapacity(int roomTypeCapacity) {
+		this.roomTypeCapacity = roomTypeCapacity;
+	}
+
+
+	public String getTariffName() {
+		return tariffName;
+	}
+
+
+	public void setTariffName(String tariffName) {
+		this.tariffName = tariffName;
+	}
+
 
 	public Long getBookingId() {
 		return bookingId;

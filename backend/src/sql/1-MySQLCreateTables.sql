@@ -70,11 +70,13 @@ CREATE TABLE Booking (
 	id BIGINT NOT NULL AUTO_INCREMENT,
 	bookingKey VARCHAR(15),
 	locator VARCHAR(15),
-    date DATE NOT NULL,
+    date DATETIME NOT NULL,
 	startDate DATE NOT NULL,
 	endDate DATE NOT NULL,
 	duration SMALLINT, 
 	state SMALLINT,
+	cancelDate DATETIME,
+	updateDate DATETIME,
 	name VARCHAR(60) NOT NULL,
 	surName VARCHAR(60) NOT NULL,
 	phone VARCHAR(20) NOT NULL,
@@ -89,6 +91,9 @@ CREATE TABLE Booking (
 	roomTotalPrice DECIMAL(11,2),
 	idBooking BIGINT NOT NULL,
 	quantity SMALLINT NOT NULL,
+	roomTypeName VARCHAR(60),
+	roomTypeCapacity SMALLINT,
+	tariffName VARCHAR(60),
 	CONSTRAINT BookingRoomPK PRIMARY KEY (id),
 	CONSTRAINT idBookingFK FOREIGN KEY(idBooking) REFERENCES Booking (id)
 ) Engine = InnoDB;
@@ -96,6 +101,7 @@ CREATE TABLE Booking (
 	CREATE TABLE BookingDay (
 	id BIGINT NOT NULL AUTO_INCREMENT,
 	dayPrice DECIMAL(11,2),
+	day DATE NOT NULL,
 	idSaleRoomTariff BIGINT NOT NULL,
 	idBookingRoom BIGINT NOT NULL,
 	CONSTRAINT BookingDayPK PRIMARY KEY (id),

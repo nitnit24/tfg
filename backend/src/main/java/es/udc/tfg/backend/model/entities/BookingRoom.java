@@ -19,7 +19,10 @@ public class BookingRoom {
 
 	private Long id;
 	private int quantity;
-	private BigDecimal roomTotalPrice;
+	private BigDecimal roomTotalPrice; 
+	private String roomTypeName;
+	private int roomTypeCapacity;
+	private String tariffName;
 	private Booking booking;
 	private Set<BookingDay> bookingDays = new HashSet<>();
 	
@@ -27,16 +30,33 @@ public class BookingRoom {
 		
 	}
 	
-	public BookingRoom(int quantity) {
+//	public BookingRoom(int quantity) {
+//		this.quantity = quantity;
+//	}
+//
+//	public BookingRoom(Long id, int quantity, BigDecimal roomTotalPrice) {
+//		this.id = id;
+//		this.quantity = quantity;
+//		this.roomTotalPrice = roomTotalPrice;
+//	}
+//	
+	
+	public BookingRoom(int quantity, String roomTypeName, int roomTypeCapacity, String tariffName) {
 		this.quantity = quantity;
+		this.roomTypeName = roomTypeName;
+		this.roomTypeCapacity = roomTypeCapacity;
+		this.tariffName = tariffName;
 	}
-
-	public BookingRoom(Long id, int quantity, BigDecimal roomTotalPrice) {
+	
+	public BookingRoom(Long id, int quantity, BigDecimal roomTotalPrice, String roomTypeName, int roomTypeCapacity,
+			String tariffName) {
 		this.id = id;
 		this.quantity = quantity;
 		this.roomTotalPrice = roomTotalPrice;
+		this.roomTypeName = roomTypeName;
+		this.roomTypeCapacity = roomTypeCapacity;
+		this.tariffName = tariffName;
 	}
-	
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -64,6 +84,30 @@ public class BookingRoom {
 		this.roomTotalPrice = roomTotalPrice;
 	}
 	
+	public String getRoomTypeName() {
+		return roomTypeName;
+	}
+
+	public void setRoomTypeName(String roomTypeName) {
+		this.roomTypeName = roomTypeName;
+	}
+
+	public int getRoomTypeCapacity() {
+		return roomTypeCapacity;
+	}
+
+	public void setRoomTypeCapacity(int roomTypeCapacity) {
+		this.roomTypeCapacity = roomTypeCapacity;
+	}
+
+	public String getTariffName() {
+		return tariffName;
+	}
+
+	public void setTariffName(String tariffName) {
+		this.tariffName = tariffName;
+	}
+
 	@ManyToOne(optional=false, fetch=FetchType.LAZY)
 	@JoinColumn(name= "idBooking")
 	public Booking getBooking() {

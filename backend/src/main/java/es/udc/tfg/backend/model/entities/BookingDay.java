@@ -1,6 +1,7 @@
 package es.udc.tfg.backend.model.entities;
 
 import java.math.BigDecimal;
+import java.util.Calendar;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -16,6 +17,7 @@ public class BookingDay {
 
 	private Long id;
 	private BigDecimal dayPrice;
+	private Calendar day;
 	private SaleRoomTariff saleRoomTariff;
 	private BookingRoom bookingRoom;
 	
@@ -23,15 +25,17 @@ public class BookingDay {
 		
 	}
 
-	public BookingDay(Long id, BigDecimal dayPrice, SaleRoomTariff saleRoomTariff, BookingRoom bookingRoom) {
+	public BookingDay(Long id, BigDecimal dayPrice, Calendar day, SaleRoomTariff saleRoomTariff, BookingRoom bookingRoom) {
 		this.id = id;
 		this.dayPrice = dayPrice;
+		this.day = day;
 		this.saleRoomTariff = saleRoomTariff;
 		this.bookingRoom = bookingRoom;
 	}
 	
-	public BookingDay(BigDecimal dayPrice, SaleRoomTariff saleRoomTariff) {
+	public BookingDay(BigDecimal dayPrice, Calendar day, SaleRoomTariff saleRoomTariff) {
 		this.dayPrice = dayPrice;
+		this.day = day;
 		this.saleRoomTariff = saleRoomTariff;
 	}
 
@@ -51,6 +55,15 @@ public class BookingDay {
 
 	public void setDayPrice(BigDecimal dayPrice) {
 		this.dayPrice = dayPrice;
+	}
+	
+
+	public Calendar getDay() {
+		return day;
+	}
+
+	public void setDay(Calendar day) {
+		this.day = day;
 	}
 
 	@ManyToOne(optional=false, fetch=FetchType.LAZY)
