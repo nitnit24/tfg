@@ -201,9 +201,6 @@ class BookingCompleted extends React.Component {
 
 
 const mapStateToProps = (state) => ({
-    startDate: selectors.getStartDate(state),
-    endDate: selectors.getEndDate(state),
-    rooms: selectors.getSummaryRooms(state),
     lastBooking: selectors.getLastBooking(state)
 
 });
