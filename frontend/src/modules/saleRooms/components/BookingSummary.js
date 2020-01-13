@@ -1,6 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import {FormattedMessage, FormattedDate} from 'react-intl';
+import {FormattedMessage} from 'react-intl';
 import * as selectors from '../selectors';
 
 
@@ -55,7 +54,7 @@ class BookingSummary extends React.Component {
             case 5: return( "vie," );
             case 6: return( "sáb," );
             case 0: return( "dom," );
-        break;      
+            default: break;      
         }
     }
 
@@ -74,7 +73,7 @@ class BookingSummary extends React.Component {
             case 10: return( "oct." );
             case 11: return( "nov." );
             case 12: return( "dec." );
-        break;      
+            default: break;      
         }
     }
 

@@ -93,12 +93,20 @@ export default {
 
     'project.roomtypes.BookingFindForm.title': 'Buscar reserva',
 
+    'project.bookings.FindBookingsResult.noBookingsFound': 'No se han encontrado reservas',
+
     'project.global.fields.startDate' : 'Fecha Entrada',
     'project.global.fields.endDate' : 'Fecha Salida',
     'project.global.fields.roomsNum' :  'Habitaciones',
     'project.global.fields.peopleNum' : 'Personas',
-    'project.global.fields.locator' : 'Locator',
+    'project.global.fields.locator' : 'Localizador',
     'project.global.fields.key' : 'Key',
+    'project.global.fields.rooms' : 'Habitaciones',
+    'project.global.fields.bookingDate' : 'Fecha Reserva',
+    'project.global.fields.state': 'Estado',
+     'project.global.fields.totalPrice' :'Precio total',
+    'project.global.buttons.back': 'Anterior',
+    'project.global.buttons.next': 'Siguiente',
     'project.global.buttons.find': 'Buscar',
     'project.global.buttons.continue': 'Continuar',
     'project.global.buttons.booking' :'Reservar',

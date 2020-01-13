@@ -1,9 +1,6 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import * as actions from '../actions';
-import * as selectors from '../selectors';
 import {connect} from 'react-redux';
-import {FormattedMessage} from 'react-intl';
 
 
 class RoomItem extends React.Component {
@@ -16,7 +13,7 @@ class RoomItem extends React.Component {
       }
 
       componentDidUpdate(prevProps, prevState){
-        if (this.props.room.quantity == 0){
+        if (this.props.room.quantity === 0){
             this.props.removeSummaryRooms(this.props.room)
         }
     }

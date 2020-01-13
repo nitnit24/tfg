@@ -8,7 +8,8 @@ import {Login, SignUp, UpdateProfile, ChangePassword} from '../../users';
 import users from '../../users';
 import {Tariff, TariffUpdateForm} from '../../tariffs';
 import {RoomType, RoomTypeUpdateForm} from '../../roomTypes';
-import {SaleRoom, BookingData, BookingCompleted, BookingFindForm, BookingDetails, Bookings} from '../../saleRooms';
+import {SaleRoom, BookingData, BookingCompleted} from '../../saleRooms';
+import {BookingsFind,  BookingDetails} from '../../bookings';
 import {DailyPanel} from '../../dailyPanel';
 
 const Body = ({user}) => (
@@ -23,7 +24,7 @@ const Body = ({user}) => (
             {user && <Route exact path="/roomTypes/roomType-management" component={RoomType}/>}
             {user && <Route exact path="/roomTypes/roomType-update" component={RoomTypeUpdateForm}/>}
             {user && <Route exact path="/dailyPanel/dailyPanel-management" component={DailyPanel}/>}
-            {user && <Route exact path="/booking/bookings" component={Bookings}/>}
+            {user && <Route exact path="/booking/bookings" component={BookingsFind}/>}
             {user && <Route exact path="/users/update-profile" component={UpdateProfile}/>}
             {user && <Route exact path="/users/change-password" component={ChangePassword}/>}
             {!user && <Route exact path="/users/login" component={Login}/>}
@@ -31,8 +32,8 @@ const Body = ({user}) => (
             <Route exact path="/saleRooms/find-saleRooms" component={SaleRoom}/>
             <Route exact path="/booking/client-form" component={BookingData}/>
             <Route exact path="/booking/booking-completed" component={BookingCompleted}/>
-            <Route exact path="/booking/booking-find" component={BookingFindForm}/>
-            <Route exact path="/booking/booking-details" component={BookingDetails}/>
+            <Route exact path="/booking/booking-find" component={BookingsFind}/>
+            <Route exact path="/booking/booking-details/:locator" component={BookingDetails}/>
         </Switch>
     </div>
 
