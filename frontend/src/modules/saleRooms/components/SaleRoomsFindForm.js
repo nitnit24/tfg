@@ -9,14 +9,6 @@ import  backend from '../../../backend';
 import * as actions from '../actions';
 
 
-const initialState = {
-    startDate: '',
-    endDate: '',
-    roomsNum: '',
-    peopleNum: '',
-    backendErrors: null
-};
-
 class SaleRoomsFindForm extends React.Component {
 
     constructor(props) {
@@ -25,16 +17,14 @@ class SaleRoomsFindForm extends React.Component {
         var today = new Date(),
                 date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
     
-        //this.state = initialState;
-        
+
         this.state = {
             date: date,
             startDate: '',
             endDate: '',
             rooms: '1',
             people: '1',
-            date: date,
-            backendErrors: null
+            date: date
         };
     }
 
@@ -58,13 +48,7 @@ class SaleRoomsFindForm extends React.Component {
     handleSubmit(event) {
 
         event.preventDefault();
-
-        //if (this.form.checkValidity()) {
-           this.findFreeRooms();
-        //} else {
-        //    this.setBackendErrors(null);
-        //   this.form.classList.add('was-validated');
-        //}
+        this.findFreeRooms();
 
     }
 
@@ -97,25 +81,22 @@ class SaleRoomsFindForm extends React.Component {
         return `${year}${separator}${month<10?`0${month}`:`${month}`}${separator}${date<10?`0${date}`:`${date}`}`
     }
 
-    getTomorrowDate(today){
-
-        var separator ='-';
-
-        let newDate = new Date();
-
-        let date = newDate.getDate() +1;
+    getCurrentDateMin(){
+        const separator='-';
+        
+        let newDate = new Date(this.state.startDate);
+        let date = newDate.getDate() + 1;
         let month = newDate.getMonth() + 1;
         let year = newDate.getFullYear();
-     
+
         return `${year}${separator}${month<10?`0${month}`:`${month}`}${separator}${date<10?`0${date}`:`${date}`}`
     }
 
+
     render() {
         var today = this.getCurrentDate();
-        var tomorrow = this.getTomorrowDate(today);
+        var dateMin = this.getCurrentDateMin();
         return (
-           
-
             <div className=" border rounded p-4">
                 <Errors errors={this.state.backendErrors}
                     onClose={() => this.handleErrorsClose()}/>
@@ -138,8 +119,6 @@ class SaleRoomsFindForm extends React.Component {
                                         </div>
                                     </div>
                                
-                                    
-                                
                                     <div className="col-3 input-group mb-2" >  
                                         <div class="input-group-prepend">
                                             <div className= "input-group-text" >
@@ -149,7 +128,7 @@ class SaleRoomsFindForm extends React.Component {
                                                 value={this.state.endDate} placeholder="Check Out"
                                                 onChange={(e) => this.handleEndDateChange(e)}
                                                 autoFocus
-                                                min= {tomorrow}
+                                                min= {dateMin}
                                                 required/>
                                         </div>
                                     </div>

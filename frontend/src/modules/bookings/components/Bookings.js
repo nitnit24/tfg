@@ -54,8 +54,14 @@ const Bookings = ({bookings}) => (
                     )}
                     </td>
                     <td>  <FormattedDate value={new Date(booking.date)}/></td>
-                    <td>{booking.state}</td>
-                    <td><FormattedNumber value={new Date(booking.totalPrice)}/>€</td>
+                    { booking.state !== 'CANCELADA' &&
+                        <td>{booking.state}</td>
+                    }
+                    { booking.state === 'CANCELADA' &&
+                        <td className = "text-danger">{booking.state}</td>
+                    }
+                    
+                    <td><FormattedNumber value={booking.totalPrice}/>€</td>
                 </tr>
             )}
         </tbody>

@@ -6,19 +6,17 @@ import * as selectors from '../selectors';
 import {connect} from 'react-redux';
 
 import * as actions from '../actions';
-import BookingRoomItem from '../../saleRooms';
-
+import BookingRoomItem from '../../saleRooms/components/BookingRoomItem';
 import '../../styles.css';
+import {BackLink} from '../../common';
 
 
 
 class BookingDetails extends React.Component {
 
     componentDidMount() {
-        console.log("hola")
         const locator =this.props.match.params.locator;
-        console.log(locator)
-        
+
         //if (!(locator)) {
             this.props.findBookingByLocator(locator);
         //}
@@ -26,9 +24,9 @@ class BookingDetails extends React.Component {
     }
 
     
-    // componentWillUnmount() {
-    //     this.props.clearBooking();
-    // }
+    componentWillUnmount() {
+        this.props.clearBooking();
+    }
 
     constructor(props) {
 
@@ -57,17 +55,40 @@ class BookingDetails extends React.Component {
         }
 
         return (
+            <div>
+            <BackLink/>
             <div className=" border rounded p-4">
                 <div >
+                {booking.state === "CONFIRMADA" &&
                     <h4 className= "text-center"><b>
                         <FormattedMessage id="project.saleRooms.BookingCompleted.title"/>
                     </b></h4>
+                    }
+                    {booking.state === "CANCELADA" &&
+                    <h4 className= "text-center text-danger"><b>
+                        <div className= "row  justify-content-center">
+                            <i class="fa fa-exclamation-triangle" aria-hidden="true">  <FormattedMessage id="project.saleRooms.BookingCompleted.title2"/></i>
+                        </div>
+                    </b></h4>
+                    }
                     &nbsp;
                     <div >
-                        <div className="row justify-content-center">
+                    <div className="row justify-content-center">
                              <span> <FormattedMessage id="project.saleRooms.BookingCompleted.date"/></span>
                              <span>: <FormattedDate value={new Date(booking.date)}/> - <FormattedTime value={new Date(booking.date)}/></span> 
                         </div>
+                        {booking.state === "MODIFICADA" &&
+                            <div className="row justify-content-center">
+                                <span> <FormattedMessage id="project.saleRooms.BookingCompleted.updatelDate"/></span>
+                                <span>: <FormattedDate value={new Date(booking.updateDate)}/> - <FormattedTime value={new Date(booking.updateDate)}/></span> 
+                            </div>
+                        }
+                        {booking.state === "CANCELADA" &&
+                            <div className="row justify-content-center">
+                                <span > <FormattedMessage id="project.saleRooms.BookingCompleted.cancelDate"/></span>
+                                <span>: <FormattedDate value={new Date(booking.cancelDate)}/> - <FormattedTime value={new Date(booking.cancelDate)}/></span> 
+                            </div>
+                        }
                         <div className="row justify-content-center">
                             <h5> <FormattedMessage id="project.saleRooms.BookingCompleted.locator"/> </h5>
                             <h5>: {booking.locator}  </h5>
@@ -146,6 +167,7 @@ class BookingDetails extends React.Component {
                     </h5>
                 </div>
 
+            </div>
             </div>
 
 

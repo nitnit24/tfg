@@ -16,8 +16,7 @@ class BookingsFindForm extends React.Component {
             dateType: 'Entrada',
             minDate: '',
             maxDate: '',
-            keywords: '',
-            backendErrors: null
+            keywords: ''
         };
     }
 
@@ -52,22 +51,24 @@ class BookingsFindForm extends React.Component {
         console.log(this.state.keywords)
         event.preventDefault();
         this.props.findBookings(criteria);
-        //this.props.history.push('/catalog/find-products-result');
     
     }
 
-    setBackendErrors(backendErrors) {
-        this.setState({backendErrors});
-    }
+    getCurrentDate(){
+        const separator='-';
+        
+        let newDate = new Date(this.state.minDate);
+        let date = newDate.getDate() + 1;
+        let month = newDate.getMonth() + 1;
+        let year = newDate.getFullYear();
 
-    handleErrorsClose() {
-        this.setState({backendErrors: null});
+        return `${year}${separator}${month<10?`0${month}`:`${month}`}${separator}${date<10?`0${date}`:`${date}`}`
     }
 
     render() {
-        return (
-           
+        var untilMin = this.getCurrentDate();
 
+        return (
             <div className=" border rounded p-4">
                 <Errors errors={this.state.backendErrors}
                     onClose={() => this.handleErrorsClose()}/>
@@ -113,6 +114,7 @@ class BookingsFindForm extends React.Component {
                                                 value={this.state.maxDate} 
                                                 onChange={(e) => this.handleMaxDateChange(e)}
                                                 autoFocus
+                                                min= {untilMin}
                                                 required/>
                                         </div>
                                     </div>

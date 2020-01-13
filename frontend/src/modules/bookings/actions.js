@@ -34,7 +34,7 @@ const findBookingByLocatorCompleted = booking => ({
 
 export const findBookingByLocator = locator => dispatch => {
     backend.bookingService.findBookingByLocator(locator, 
-        booking =>  dispatch(findBookingByLocatorCompleted (booking))
+        booking =>  dispatch(findBookingByLocatorCompleted(booking))
     );
 }
 
