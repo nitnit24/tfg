@@ -1,10 +1,6 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import {FormattedMessage} from 'react-intl';
-
 
 import RoomItem from './RoomItem';
-import {Errors} from '../../common';
 
 import '../../styles.css';
 

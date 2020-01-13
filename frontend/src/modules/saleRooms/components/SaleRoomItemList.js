@@ -3,10 +3,10 @@ import {connect} from 'react-redux';
 
 import DetailsRoom from './DetailsRoom';
 import { TariffsItemList } from '..';
-
 import {Errors} from '../../common';
-
 import * as selectors from '../selectors';
+
+import {FormattedMessage} from 'react-intl';
 
 import '../../styles.css';
 
@@ -36,6 +36,14 @@ class SaleRoomItemList extends React.Component {
     render() {
 
         const list = this.props.freeRoomTypes;
+
+        if (list.length === 0) {
+            return (
+                <div className="text-center">
+                 <FormattedMessage id='project.saleRooms.SaleRoomItemList.noSaleRoomsFound'/>
+                </div>
+            );
+        }
 
         return (
 

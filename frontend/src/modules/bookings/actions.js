@@ -1,5 +1,4 @@
 import * as actionTypes from './actionTypes';
-import * as selectors from './selectors';
 import backend from '../../backend';
 
 const findBookingsCompleted = bookingSearch => ({

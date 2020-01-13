@@ -1,11 +1,8 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import {FormattedMessage} from 'react-intl';
 import {connect} from 'react-redux';
 
-import {Errors} from '../../common';
+
 import * as selectors from '../selectors';
-import * as actions from '../actions';
 import  backend from '../../../backend';
 
 import TotalTariff from './TotalTariff';

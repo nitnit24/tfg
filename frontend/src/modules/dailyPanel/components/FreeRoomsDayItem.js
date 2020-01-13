@@ -1,7 +1,6 @@
 import '../dailyPanel.css';
 import  backend from '../../../backend';
 
-import {FormattedMessage} from 'react-intl';
 import React from 'react';
 
 const initialState = {
@@ -52,6 +51,8 @@ class FreeRoomsDayItem extends React.Component {
         let date = day.getDate();
         let month = day.getMonth() + 1;
         let year = day.getFullYear();
+
+        this.setState({freeRooms:''})
         
         backend.dailyPanelService.findSaleRoom(this.props.roomTypeId, 
             year + '-'+ month + '-' + date ,

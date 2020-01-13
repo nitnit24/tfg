@@ -63,6 +63,7 @@ export default {
     'project.shopping.SaleRoomsFindForm.title' : 'Buscar habitación',
 
     'project.saleRooms.SaleRoomItemList.capacity': 'Capacidad: ',
+    'project.saleRooms.SaleRoomItemList.noSaleRoomsFound': 'No se han encontrado habitaciones de ese tipo para esas fechas',
 
     'project.saleRooms.Total.total':'Total: ',
     'project.saleRooms.ClientForm.title':'Datos de la reserva',

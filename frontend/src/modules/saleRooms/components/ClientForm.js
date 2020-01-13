@@ -1,6 +1,5 @@
 import React from 'react';
 import {FormattedMessage} from 'react-intl';
-import PropTypes from 'prop-types';
 
 import {Errors} from '../../common';
 import * as actions from '../actions';
@@ -70,8 +69,7 @@ class ClientForm extends React.Component {
         backend.bookingService.makeBooking(this.props.rooms,this.props.startDate, this.props.endDate, name, surname,
              phone, email, petition,
              (booking) => {this.props.history.push('/booking/booking-completed'),
-                this.props.booking(booking),
-                console.log(booking.locator)} ,      
+                this.props.booking(booking)} ,      
              errors => this.setBackendErrors(errors))
 
     }

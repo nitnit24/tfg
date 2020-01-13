@@ -58,10 +58,10 @@ class TariffDayItem extends React.Component {
         const roomTypeId = this.props.roomTypeId;
         const tariffId = this.props.tariffId;
         const price = this.state.price;
-        console.log(price),
-        console.log(day),
-        console.log(roomTypeId),
-        console.log(tariffId)
+        console.log(price);
+        console.log(day);
+        console.log(roomTypeId);
+        console.log(tariffId);
         backend.dailyPanelService.uploadSaleRoomTariff(price, tariffId, roomTypeId, day,
           //  () =>dispatch(findAllRoomTypes()),
            errors => this.setBackendErrors(errors))

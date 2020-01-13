@@ -61,27 +61,28 @@ public class BookingServiceImpl implements BookingService {
 
 		List<RoomType> freeRoomTypes = new ArrayList<>();
 
+		if (freeSaleRooms.isPresent()) {
+			for (SaleRoom freeSaleRoom : freeSaleRooms.get()) {
 
-		for (SaleRoom freeSaleRoom : freeSaleRooms.get()) {
-			
-			Calendar date = Calendar.getInstance();
-			date.setTime(startDate.getTime());
+				Calendar date = Calendar.getInstance();
+				date.setTime(startDate.getTime());
 
 				while (date.compareTo(endDate) < 0) {
 					Optional<SaleRoom> saleRoom = saleRoomDao
 							.findByRoomTypeIdAndDate(freeSaleRoom.getRoomType().getId(), date);
-
-					if (saleRoom.get().getFreeRooms() < rooms) {
-						break;
-					}
-					else {
-						date.add(Calendar.DAY_OF_YEAR, 1);
-					}
 					
-					if (date.compareTo(endDate) == 0) {
-						freeRoomTypes.add(saleRoom.get().getRoomType());
+					if (saleRoom.isPresent()) {
+						if (saleRoom.get().getFreeRooms() < rooms) {
+							break;
+						} else {
+							date.add(Calendar.DAY_OF_YEAR, 1);
+						}
+
+						if (date.compareTo(endDate) == 0) {
+							freeRoomTypes.add(saleRoom.get().getRoomType());
+						}
 					}
-			
+				}
 			}
 		}
 

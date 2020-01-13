@@ -1,9 +1,6 @@
 import {combineReducers} from 'redux';
 
 import * as actionTypes from './actionTypes';
-import { rootCertificates } from 'tls';
-import { removeRoomType } from '../../backend/roomTypeService';
-import { log } from 'util';
 
 const initialState = {
     startDate: '',

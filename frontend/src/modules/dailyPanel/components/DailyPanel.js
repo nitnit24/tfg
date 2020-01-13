@@ -26,7 +26,6 @@ class DailyPanel extends React.Component {
                 <br/>
                 <FindDailyPanel />
                 <br/>
-
                 <TablePanel />
             </div>
         );
