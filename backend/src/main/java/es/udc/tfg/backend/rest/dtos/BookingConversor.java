@@ -5,7 +5,6 @@ import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.time.temporal.ChronoUnit;
 import java.util.Calendar;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.TimeZone;
@@ -38,9 +37,12 @@ public class BookingConversor {
 	
 	private final static BookingSummaryDto toBookingSummaryDto(Booking booking) {
 		String guest = booking.getName() + " " + booking.getSurName(); 
-				
-		 return new BookingSummaryDto(booking.getLocator(), toMillis(booking.getDate()),  guest, toMillis(booking.getStartDate()),
-				 toMillis(booking.getEndDate()), booking.getTotalPrice());
+		List<BookingRoomDto> bookingRooms = booking.getBookingRooms().stream().map(i -> toBookingRoomDto(i)).collect(Collectors.toList());
+		
+		bookingRooms.sort(Comparator.comparing(BookingRoomDto::getId));
+		
+		 return new BookingSummaryDto(booking.getLocator(), bookingRooms, toMillis(booking.getDate()),  guest, toMillis(booking.getStartDate()),
+				 toMillis(booking.getEndDate()), booking.getState(), booking.getTotalPrice());
 		 
 	}
 	

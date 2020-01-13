@@ -85,3 +85,18 @@ export const findBookingByLocatorAndKey = (locator, key , onSuccess, onErrors) =
 export const cancelBooking = (locator, key , onSuccess, onErrors) =>{
     let path = `/booking/${locator}/cancel?key=${key}`;
     appFetch(path, config('PUT'), onSuccess, onErrors);}
+
+
+export const findBookings = ({dateType, minDate, maxDate, keywords, page}, 
+    onSuccess) => {
+    
+    let path = `/booking/bookings?page=${page}`;
+    
+    path += dateType ? `&dateType=${dateType}` : "";
+    path += minDate ? `&minDate=${minDate}` : "";
+    path += maxDate ? `&maxDate=${maxDate}` : "";
+    path += keywords.length > 0 ? `&keywords=${keywords}` : "";
+    
+    appFetch(path, config('GET'), onSuccess);
+    
+}   

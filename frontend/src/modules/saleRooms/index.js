@@ -13,9 +13,8 @@ export {default as BookingData} from './components/BookingData';
 export {default as ClientForm} from './components/ClientForm';
 export {default as BookingCompleted} from './components/BookingCompleted';
 export {default as BookingFindForm} from './components/BookingFindForm';
-export {default as BookingDetails} from './components/BookingDetails';
-export {default as Bookings} from './components/Bookings';
-export {default as BookingsFindForm} from './components/BookingsFindForm';
+export {default as RoomsList} from './components/RoomsList';
+export {default as BookingRoomItem} from './components/BookingRoomItem';
 
 
 export default {actions, actionTypes, reducer, selectors};
