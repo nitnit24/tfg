@@ -57,7 +57,7 @@ class Login extends React.Component {
         this.props.dispatch(actions.login(
             this.state.userName.trim(),
             this.state.password.trim(),
-            () => this.props.history.push('/'),
+            () => this.props.history.push('/dailyPanel/dailyPanel-management'),
             errors => this.setBackendErrors(errors),
             reauthenticationCallback(this.props.dispatch, this.props.history,
                 this.props.match.url)
@@ -81,7 +81,7 @@ class Login extends React.Component {
                     <Link to="/users/signup">
                         <FormattedMessage id="project.users.SignUp.title"/>
                     </Link>
-                </p>
+                </p> 
                 <Errors errors={this.state.backendErrors} handleClose={() => this.handleErrorsClose()}/>
                 <div className="card bg-light border-dark">
                     <h5 className="card-header">

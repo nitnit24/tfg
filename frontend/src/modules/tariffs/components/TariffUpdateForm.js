@@ -16,6 +16,7 @@ class TariffUpdateForm extends React.Component {
         this.state = {
             code: this.props.tariff.code,
             name: this.props.tariff.name,
+            description: this.props.tariff.description,
             
             backendErrors: null
         };
@@ -30,6 +31,9 @@ class TariffUpdateForm extends React.Component {
         this.setState({code: event.target.value});
     }
 
+    handleDescriptionChange(event) {
+        this.setState({description: event.target.value});
+    }
 
     handleSubmit(event) {
 
@@ -49,7 +53,8 @@ class TariffUpdateForm extends React.Component {
         this.props.updateTariff(
             {id: this.props.tariff.id,
             name: this.state.name.trim(),
-            code: this.state.code.trim()},
+            code: this.state.code.trim(),
+            description: this.state.description.trim()},
             () => this.props.history.push('/tariffs/tariff-management'),
             errors => this.setBackendErrors(errors));
         
@@ -99,6 +104,20 @@ class TariffUpdateForm extends React.Component {
                                         onChange={(e) => this.handleNameChange(e)}
                                         autoFocus
                                         required/>
+                                    <div className="invalid-feedback">
+                                        <FormattedMessage id='project.global.validator.required'/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="form-group row">
+                                <label htmlFor="description" className="col-md-3 col-form-label">
+                                    <FormattedMessage id="project.global.fields.description"/>
+                                </label>
+                                <div className="col-md-4">
+                                    <input type="text" id="description" className="form-control"
+                                        value={this.state.description}
+                                        onChange={(e) => this.handleDescriptionChange(e)}
+                                        autoFocus/>
                                     <div className="invalid-feedback">
                                         <FormattedMessage id='project.global.validator.required'/>
                                     </div>

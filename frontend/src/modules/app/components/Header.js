@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import {Link, NavLink, withRouter} from 'react-router-dom';
 import {FormattedMessage} from 'react-intl';
 
+
 import users from '../../users';
 import './Header.css';
 
@@ -89,14 +90,14 @@ const Header = ({user, handleLogout}) => (
 
             </ul>
             
-            :
+             :
 
             <ul className="navbar-nav">
-                <li className="nav-item">
+                {/* <li className="nav-item">
                     <NavLink exact className="nav-link" to="/users/login">
                         <FormattedMessage id="project.users.Login.title"/>
                     </NavLink>
-                </li>
+                </li> */}
             </ul>
             
             }

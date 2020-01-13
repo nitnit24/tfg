@@ -29,15 +29,15 @@ public class RoomTypeServiceTest {
 	@Autowired
 	private RoomTypeService roomTypeService;
 
-	private RoomType createRoomType(String name, int capacity, BigDecimal minPrice, BigDecimal maxPrice) 
+	private RoomType createRoomType(String name, String description, int capacity, int quantity, BigDecimal minPrice, BigDecimal maxPrice) 
 			throws DuplicateInstanceException {
-		return new RoomType(name, capacity, minPrice, maxPrice);
+		return new RoomType(name, description, capacity, quantity,  minPrice, maxPrice);
 	}
 
 	@Test
 	public void testAddRoomTypeAndFind() throws DuplicateInstanceException, InstanceNotFoundException {
 
-		RoomType roomType = createRoomType("name", 2, new BigDecimal (30), new BigDecimal (100));
+		RoomType roomType = createRoomType("name", "description", 2,10, new BigDecimal (30), new BigDecimal (100));
 		roomTypeService.addRoomType(roomType);
 
 		RoomType roomTypeFind = roomTypeService.findRoomTypeById(roomType.getId());
@@ -48,10 +48,10 @@ public class RoomTypeServiceTest {
 	@Test(expected = DuplicateInstanceException.class)
 	public void testAddRoomTypeNameDuplicate() throws DuplicateInstanceException {
 
-		RoomType roomType = createRoomType("name", 2, new BigDecimal (30), new BigDecimal (100));
+		RoomType roomType = createRoomType("name", "description", 2, 10,  new BigDecimal (30), new BigDecimal (100));
 		roomTypeService.addRoomType(roomType);
 
-		RoomType roomType2 = createRoomType("name", 3, new BigDecimal (40), new BigDecimal (100));
+		RoomType roomType2 = createRoomType("name", "description", 2, 10, new BigDecimal (40), new BigDecimal (100));
 		roomTypeService.addRoomType(roomType2);
 	}
 
@@ -67,18 +67,20 @@ public class RoomTypeServiceTest {
 	@Test
 	public void testAddRoomTypeAndUpdate() throws DuplicateInstanceException, InstanceNotFoundException {
 
-		RoomType roomType = createRoomType("name", 2, new BigDecimal (30), new BigDecimal (100));
+		RoomType roomType = createRoomType("name", "description", 2, 10, new BigDecimal (30), new BigDecimal (100));
 		roomTypeService.addRoomType(roomType);
 
 		String nameNew = "nameNew";
+		String descriptionNew = "descriptionNew";
 		int capacityNew = 3;
+		int quantityNew = 8;
 		BigDecimal minPrice = new BigDecimal (35);
 		BigDecimal maxPrice = new BigDecimal (105);
 		
-		
-
 		roomType.setName(nameNew);
+		roomType.setDescription(descriptionNew);
 		roomType.setCapacity(capacityNew);
+		roomType.setQuantity(quantityNew);
 		roomType.setMinPrice(minPrice);
 		roomType.setMaxPrice(maxPrice);
 
@@ -86,7 +88,9 @@ public class RoomTypeServiceTest {
 
 		assertEquals(roomType.getId(), roomTypeUpdate.getId());
 		assertEquals(nameNew, roomTypeUpdate.getName());
+		assertEquals(descriptionNew, roomTypeUpdate.getDescription());
 		assertEquals(capacityNew, roomTypeUpdate.getCapacity());
+		assertEquals(quantityNew, roomTypeUpdate.getQuantity());
 		assertEquals(minPrice, roomTypeUpdate.getMinPrice());
 		assertEquals(maxPrice, roomTypeUpdate.getMaxPrice());
 
@@ -94,10 +98,10 @@ public class RoomTypeServiceTest {
 
 	@Test
 	public void testFindAllRoomTypes() throws DuplicateInstanceException {
-		RoomType roomType = createRoomType("name", 2, new BigDecimal (30), new BigDecimal (100));
+		RoomType roomType = createRoomType("name", "description", 2, 10, new BigDecimal (30), new BigDecimal (100));
 		roomTypeService.addRoomType(roomType);
 
-		RoomType roomType2 = createRoomType("name2", 2, new BigDecimal (30), new BigDecimal (100));
+		RoomType roomType2 = createRoomType("name2", "description", 2, 10, new BigDecimal (30), new BigDecimal (100));
 		roomTypeService.addRoomType(roomType2);
 
 		assertEquals(Arrays.asList(roomType, roomType2), roomTypeService.findAllRoomTypes());
@@ -107,7 +111,7 @@ public class RoomTypeServiceTest {
 	@Test(expected = InstanceNotFoundException.class)
 	public void testFindRoomTypeAndRemove() throws DuplicateInstanceException, InstanceNotFoundException {
 
-		RoomType roomType = createRoomType("name", 2, new BigDecimal (30), new BigDecimal (100));
+		RoomType roomType = createRoomType("name", "description", 2, 10, new BigDecimal (30), new BigDecimal (100));
 		roomTypeService.addRoomType(roomType);
 
 		RoomType roomTypeFind = roomTypeService.findRoomTypeById(roomType.getId());
@@ -119,16 +123,16 @@ public class RoomTypeServiceTest {
 	
 	@Test
 	public void testRemoveAndFindAllRoomTypes() throws DuplicateInstanceException, InstanceNotFoundException {
-		RoomType roomType = createRoomType("name", 2, new BigDecimal (30), new BigDecimal (100));
+		RoomType roomType = createRoomType("name", "description", 2, 10, new BigDecimal (30), new BigDecimal (100));
 		roomTypeService.addRoomType(roomType);
 
-		RoomType roomType2 = createRoomType("name2", 2, new BigDecimal (30), new BigDecimal (100));
+		RoomType roomType2 = createRoomType("name2", "description", 2, 10, new BigDecimal (30), new BigDecimal (100));
 		roomTypeService.addRoomType(roomType2);
 		
-		RoomType roomType3 = createRoomType("name3", 2, new BigDecimal (30), new BigDecimal (100));
+		RoomType roomType3 = createRoomType("name3", "description", 2, 10, new BigDecimal (30), new BigDecimal (100));
 		roomTypeService.addRoomType(roomType3);
 		
-		RoomType roomType4 = createRoomType("name4", 2, new BigDecimal (30), new BigDecimal (100));
+		RoomType roomType4 = createRoomType("name4", "description", 2, 10, new BigDecimal (30), new BigDecimal (100));
 		roomTypeService.addRoomType(roomType4);
 
 		assertEquals(Arrays.asList(roomType, roomType2, roomType3, roomType4), roomTypeService.findAllRoomTypes());

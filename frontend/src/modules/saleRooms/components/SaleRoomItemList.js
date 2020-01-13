@@ -37,6 +37,10 @@ class SaleRoomItemList extends React.Component {
 
         const list = this.props.freeRoomTypes;
 
+        if (!list) {
+            return null;
+        }
+
         if (list.length === 0) {
             return (
                 <div className="text-center">

@@ -11,13 +11,13 @@ public class RoomTypeConversor {
 	}
 
 	public final static RoomTypeDto toRoomTypeDto(RoomType roomType) {
-		return new RoomTypeDto(roomType.getId(), roomType.getName(), roomType.getCapacity(), 
-				roomType.getMinPrice(), roomType.getMaxPrice());
+		return new RoomTypeDto(roomType.getId(), roomType.getName(), roomType.getDescription(), roomType.getCapacity(), 
+				roomType.getQuantity(), roomType.getMinPrice(), roomType.getMaxPrice());
 	}
 
 	public final static RoomType toRoomType(RoomTypeDto roomTypeDto) {
-		return new RoomType(roomTypeDto.getId(), roomTypeDto.getName(), roomTypeDto.getCapacity(),
-				roomTypeDto.getMinPrice(), roomTypeDto.getMaxPrice());
+		return new RoomType(roomTypeDto.getId(), roomTypeDto.getName(), roomTypeDto.getDescription(), roomTypeDto.getCapacity(),
+				 roomTypeDto.getQuantity(), roomTypeDto.getMinPrice(), roomTypeDto.getMaxPrice());
 	}
 
 	public final static List<RoomTypeDto> toRoomTypeDtos(List<RoomType> roomTypes) {

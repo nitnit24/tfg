@@ -5,7 +5,7 @@ import * as actionTypes from './actionTypes';
 const initialState = {
     startDate: '',
     endDate:'',
-    freeRoomTypes: [],
+    freeRoomTypes: null,
     rooms: [],
     summaryRooms: [],
     lastBooking:''

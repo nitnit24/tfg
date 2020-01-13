@@ -9,6 +9,7 @@ import {connect} from 'react-redux';
 const initialState = {
     name: '',
     code: '',
+    description: '',
     backendErrors: null
 };
 
@@ -30,6 +31,10 @@ class TariffForm extends React.Component {
         this.setState({code: event.target.value});
     }
 
+    handleDescriptionChange(event) {
+        this.setState({description: event.target.value});
+    }
+
     handleSubmit(event) {
         event.preventDefault();
 
@@ -45,7 +50,8 @@ class TariffForm extends React.Component {
     add() {
         const tariff = {
             name : this.state.name.trim(),
-            code : this.state.code.trim()
+            code : this.state.code.trim(),
+            description : this.state.description.trim()
         }
         
         this.props.addTariff(tariff,  errors => this.setBackendErrors(errors))
@@ -99,6 +105,20 @@ class TariffForm extends React.Component {
                                         value={this.state.code}
                                         onChange={(e) => this.handleCodeChange(e)}
                                         required/>
+                                    <div className="invalid-feedback">
+                                        <FormattedMessage id='project.global.validator.required'/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="form-group row">
+                                <label htmlFor="description" className="col-md-3 col-form-label">
+                                    <FormattedMessage id="project.global.fields.description"/>
+                                </label>
+                                <div className="col-md-4">
+                                    <input type="text" id="description" className="form-control"
+                                        value={this.state.description}
+                                        onChange={(e) => this.handleDescriptionChange(e)}
+                                        />
                                     <div className="invalid-feedback">
                                         <FormattedMessage id='project.global.validator.required'/>
                                     </div>

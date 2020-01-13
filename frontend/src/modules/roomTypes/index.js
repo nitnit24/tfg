@@ -5,7 +5,7 @@ import * as selectors from './selectors';
 
 export {default as RoomType} from './components/RoomType';
 export {default as RoomTypeForm} from './components/RoomTypeForm';
-export {default as RoomTypeItemList} from './components/RoomTypeItemList';
+export {default as RoomTypeList} from './components/RoomTypeList';
 export {default as RoomTypeItem} from './components/RoomTypeItem';
 export {default as RoomTypeUpdateForm} from './components/RoomTypeUpdateForm';
 

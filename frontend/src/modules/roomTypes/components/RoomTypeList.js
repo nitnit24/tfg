@@ -12,7 +12,7 @@ const initialState = {
     backendErrors: null
 };
 
-class RoomTypeItemList extends React.Component {
+class RoomTypeList extends React.Component {
 
     constructor(props) {
 
@@ -35,6 +35,14 @@ class RoomTypeItemList extends React.Component {
 
         const list = this.props.list;
         
+        if (list.length === 0) {
+            return (
+                <div className="alert alert-info" role="alert">
+                    <FormattedMessage id='project.tariff.RoomTypeItemList.empty'/>
+                </div>
+            );
+        }
+
         return (
 
             <div>
@@ -51,8 +59,14 @@ class RoomTypeItemList extends React.Component {
                             <th scope="col" style={{width: '30%'}}>
                                 <FormattedMessage id='project.global.fields.name'/>
                             </th>
+                            <th scope="col" style={{width: '30%'}}>
+                                <FormattedMessage id='project.global.fields.description'/>
+                            </th>
                             <th scope="col" style={{width: '10%'}}>
                                 <FormattedMessage id='project.global.fields.capacity'/>
+                            </th>
+                            <th scope="col" style={{width: '10%'}}>
+                                <FormattedMessage id='project.global.fields.quantity'/>
                             </th>
                             <th scope="col" style={{width: '10%'}}>
                                 <FormattedMessage id='project.global.fields.minPrice'/>
@@ -87,9 +101,9 @@ class RoomTypeItemList extends React.Component {
 }
 
 
-RoomTypeItemList.propTypes = {
+RoomTypeList.propTypes = {
      list: PropTypes.array.isRequired,
      history: PropTypes.object.isRequired
 }
 
-export default RoomTypeItemList;
+export default RoomTypeList;

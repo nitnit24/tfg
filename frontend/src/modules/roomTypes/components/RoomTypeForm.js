@@ -8,7 +8,9 @@ import {connect} from 'react-redux';
 
 const initialState = {
     name: '',
+    description:'',
     capacity: '',
+    quantity:'',
     minPrice: '',
     maxPrice: '',
     
@@ -29,8 +31,16 @@ class RoomTypeForm extends React.Component {
         this.setState({name: event.target.value});
     }
 
+    handleDescriptionChange(event) {
+        this.setState({description: event.target.value});
+    }
+
     handleCapacityChange(event) {
         this.setState({capacity: event.target.value});
+    }
+
+    handleQuantityChange(event) {
+        this.setState({quantity: event.target.value});
     }
 
     handleMinPriceChange(event) {
@@ -56,7 +66,9 @@ class RoomTypeForm extends React.Component {
     add() {
         const roomType = {
             name : this.state.name.trim(),
+            description : this.state.description.trim(),
             capacity : this.state.capacity.trim(),
+            quantity: this.state.quantity.trim(),
             minPrice: this.state.minPrice.trim(),
             maxPrice: this.state.maxPrice.trim(),
         }
@@ -104,6 +116,20 @@ class RoomTypeForm extends React.Component {
                                 </div>
                             </div>
                             <div className="form-group row">
+                                <label htmlFor="description" className="col-md-3 col-form-label">
+                                    <FormattedMessage id="project.global.fields.description"/>
+                                </label>
+                                <div className="col-md-4">
+                                    <input type="text" id="description" className="form-control"
+                                        value={this.state.description}
+                                        onChange={(e) => this.handleDescriptionChange(e)}
+                                        autoFocus/>
+                                    <div className="invalid-feedback">
+                                        <FormattedMessage id='project.global.validator.required'/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="form-group row">
                                 <label htmlFor="capacity" className="col-md-3 col-form-label">
                                     <FormattedMessage id="project.global.fields.capacity"/>
                                 </label>
@@ -112,6 +138,21 @@ class RoomTypeForm extends React.Component {
                                         value={this.state.capacity}
                                         onChange={(e) => this.handleCapacityChange(e)}
                                         min= "1"
+                                        required/>
+                                    <div className="invalid-feedback">
+                                        <FormattedMessage id='project.global.validator.required'/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="form-group row">
+                                <label htmlFor="quantity" className="col-md-3 col-form-label">
+                                    <FormattedMessage id="project.global.fields.quantity"/>
+                                </label>
+                                <div className="col-md-4">
+                                    <input type="number" id="quantity" className="form-control" 
+                                        value={this.state.quantity}
+                                        onChange={(e) => this.handleQuantityChange(e)}
+                                        min= "0"
                                         required/>
                                     <div className="invalid-feedback">
                                         <FormattedMessage id='project.global.validator.required'/>

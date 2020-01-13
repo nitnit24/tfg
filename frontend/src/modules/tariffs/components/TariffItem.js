@@ -54,6 +54,7 @@ class TariffItem extends React.Component {
             <tr>                   
                 <td>{item.code}</td>
                 <td>{item.name}</td>
+                <td>{item.description}</td>
                 <td> 
                 <button type="button" className="btn btn-light btn-sm"
                             onClick={() => this.handleRemoveItem(item)}>
