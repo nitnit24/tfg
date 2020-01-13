@@ -118,7 +118,7 @@ public class BookingController {
 	
 	@GetMapping("/bookings")
 	public BlockDto<BookingSummaryDto> findBookings(
-		@RequestParam(required=true) String dataType,
+		@RequestParam(required=true) String dateType,
 		@RequestParam("minDate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date minDate,
 		@RequestParam("maxDate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date maxDate,
 		@RequestParam(required=false) String keywords, 
@@ -129,7 +129,7 @@ public class BookingController {
 		Calendar maxCalendar = Calendar.getInstance();
 		maxCalendar.setTime(maxDate);
 		
-		Block<Booking> bookingBlock = bookingService.findBookings(dataType, minCalendar, maxCalendar, keywords, page, 10);
+		Block<Booking> bookingBlock = bookingService.findBookings(dateType, minCalendar, maxCalendar, keywords, page, 10);
 		
 		return new BlockDto<>(toBookingSummaryDtos(bookingBlock.getItems()), bookingBlock.getExistMoreItems());
 		

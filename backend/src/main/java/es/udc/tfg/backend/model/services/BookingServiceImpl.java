@@ -193,7 +193,7 @@ public class BookingServiceImpl implements BookingService {
 		Booking newBooking = bookingDao.save(new Booking(now, startDate, duration, endDate, state, name, surName,
 				phone, email, petition));
 		
-		String locator = now.get(Calendar.YEAR) +"0"+ now.get(Calendar.MINUTE) + "00"+ now.get(Calendar.DAY_OF_YEAR)+ newBooking.getId().toString() ;
+		String locator = now.get(Calendar.YEAR) +"0"+ now.get(Calendar.DAY_OF_WEEK) + "00"+ now.get(Calendar.DAY_OF_YEAR)+ newBooking.getId().toString() ;
 		newBooking.setLocator(locator);
 		String key = createStringRandom();
 		newBooking.setKey(key);
