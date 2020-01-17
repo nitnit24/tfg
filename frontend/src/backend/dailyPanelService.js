@@ -1,42 +1,37 @@
 import {config, appFetch } from './appFetch';
 
 
-export const addSaleRoom = (idRoomType, date, freeRooms, onSuccess, onErrors) => {
-    console.log("ADD"),
-    console.log("addID" + idRoomType),
-    console.log("add" + date)
-    console.log("add" +freeRooms)
+export const addSaleRoom = (idRoomType, saleRoomDate, freeRooms, onSuccess, onErrors) => {
+
+    const date = saleRoomDate.getTime();
+
     appFetch('/dailyPanel/addSaleRoom', config('POST', {idRoomType, date, freeRooms}), 
     onSuccess, onErrors);
 }
 
-export const findSaleRoom = (roomTypeId, date, onSuccess, onErrors) => {
-    console.log("FIND"),
-    console.log("ID" + roomTypeId),
-    console.log(date)
-    
+export const findSaleRoom = (roomTypeId, saleRoomDate, onSuccess, onErrors) => {
+
+    const date = saleRoomDate.getTime();
+
     let path = `/dailyPanel/findSaleRoom?roomTypeId=${roomTypeId}`;
 
-    path += date ? `&date=${date}` : "";
-    
+    path += `&date=${date}`;
+   
     appFetch(path, config('GET'), onSuccess, onErrors);
 
 }
 
-export const uploadSaleRoomTariff = (price, tariffId, roomTypeId, date, onSuccess, onErrors) => {
-    // console.log("ADD"),
-    // console.log("addID" + roomTypeId),
-    // console.log("add" + date)
-    // console.log("add" + price)
+export const uploadSaleRoomTariff = (price, tariffId, roomTypeId, saleRoomTariffDate, onSuccess, onErrors) => {
+  
+    const date = saleRoomTariffDate.getTime();
+
     appFetch('/dailyPanel/uploadSaleRoomTariff', config('POST', {price, tariffId, roomTypeId, date}), 
     onSuccess, onErrors);
 }
 
-export const findSaleRoomTariff = (tariffId, roomTypeId, date, onSuccess, onErrors) => {
-    // console.log("backFind"),
-    // console.log("IDTariff"+ tariffId)
-    // console.log("IDRoom" + roomTypeId),
-    // console.log(date)
+export const findSaleRoomTariff = (tariffId, roomTypeId, saleRoomTariffDate, onSuccess, onErrors) => {
+    
+    const date = saleRoomTariffDate.getTime();
     
     let path = `/dailyPanel/findSaleRoomTariff?roomTypeId=${roomTypeId}`;
 

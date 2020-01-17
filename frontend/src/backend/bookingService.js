@@ -41,11 +41,7 @@ export const findTariffsByFreeRoom = (startDate, endDate, roomTypeId, onSuccess)
 
 
 export const findSaleRoomTariffsByFreeRoom = (startDate, endDate, roomTypeId, tariffId, onSuccess) => {
-    console.log("FIND"),
-    console.log("start" + startDate),
-    console.log("end" + endDate),
-    console.log("roomTypeId" + roomTypeId),
-    console.log("tariffId" + tariffId)
+
     
     let path = `/booking/findSaleRoomTariffsByFreeRoom?startDate=${startDate}`;
 

@@ -37,26 +37,38 @@ public class DailyPanelController {
 	@Autowired
 	private SaleRoomTariffService saleRoomTariffService;
 
+	@GetMapping("/findDailyPanel")
+	public SaleRoomDto findSaleRoom( 
+			@RequestParam Long date)
+					throws InstanceNotFoundException {
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTimeInMillis(date);
+		return toRoomTableDtos(saleRoomTariffService.findDailyPanel(calendar));
+	}
+	
 	@PostMapping("/addSaleRoom")
 	public SaleRoomDto addSaleRoom(@Validated @RequestBody AddToSaleRoomParamsDto params) throws InstanceNotFoundException, DuplicateInstanceException {
-		return toSaleRoomDto(saleRoomService.addSaleRoom(params.getIdRoomType(), params.getDate(), params.getFreeRooms()));
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTimeInMillis(params.getDate());
+		return toSaleRoomDto(saleRoomService.addSaleRoom(params.getIdRoomType(), calendar, params.getFreeRooms()));
 	}
 	
 
 	@GetMapping("/findSaleRoom")
 	public SaleRoomDto findSaleRoom(
 			@RequestParam Long roomTypeId , 
-			@RequestParam("date") 
-			@DateTimeFormat(pattern = "yyyy-MM-dd") Date date)
+			@RequestParam Long date)
 					throws InstanceNotFoundException {
 		Calendar calendar = Calendar.getInstance();
-		calendar.setTime(date);
+		calendar.setTimeInMillis(date);
 		return toSaleRoomDto(saleRoomService.findByRoomTypeIdAndDate(roomTypeId, calendar));
 	}
 	
 	@PostMapping("/uploadSaleRoomTariff")
 	public SaleRoomTariffDto uploadSaleRoomTariff(@Validated @RequestBody AddToSaleRoomTariffParamsDto params) throws InstanceNotFoundException, DuplicateInstanceException, PriceNotBetweenMinAndMaxValueException {
-		return toSaleRoomTariffDto(saleRoomTariffService.uploadSaleRoomTariff(params.getPrice(), params.getTariffId(), params.getRoomTypeId(), params.getDate()));
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTimeInMillis(params.getDate());
+		return toSaleRoomTariffDto(saleRoomTariffService.uploadSaleRoomTariff(params.getPrice(), params.getTariffId(), params.getRoomTypeId(), calendar));
 	}
 	
 
@@ -64,11 +76,10 @@ public class DailyPanelController {
 	public SaleRoomTariffDto findSaleRoomTariff(
 			@RequestParam Long tariffId , 
 			@RequestParam Long roomTypeId , 
-			@RequestParam("date") 
-			@DateTimeFormat(pattern = "yyyy-MM-dd") Date date)
+			@RequestParam Long date) 
 					throws InstanceNotFoundException {
 		Calendar calendar = Calendar.getInstance();
-		calendar.setTime(date);
+		calendar.setTimeInMillis(date);
 		return toSaleRoomTariffDto(saleRoomTariffService.findByTariffIdAnRoomTypeIdAndDate(tariffId, roomTypeId, calendar));
 	}
 

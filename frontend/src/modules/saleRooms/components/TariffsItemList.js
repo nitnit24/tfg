@@ -48,9 +48,14 @@ class TariffsItemList extends React.Component {
                 {list.map(tariff =>
                     <div className=" m-3 row justify-content-center"> 
                         <div className= "col-4 align-self-end">
-                            {tariff.name}
+                        <div className= "align-self-end">
+                            <b>{tariff.name}</b>
                         </div>
-                        
+                        <div className= "align-self-end">
+                            {tariff.description}
+                        </div>
+                        </div>
+                     
                         <div className= "col-8 align-self-end">
                         <TotalTariff tariff = {tariff} roomType = {this.props.roomType}></TotalTariff>
                         </div>  

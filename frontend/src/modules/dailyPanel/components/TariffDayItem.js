@@ -32,64 +32,34 @@ class TariffDayItem extends React.Component {
         if (this.props.day !== prevProps.day) {
             this.find()
         }
-        if ((this.props.day === prevProps.day) && (this.state.price !== prevState.price) &&
-          (this.state.price !== ''))
-        {
-           this.add();
-        }
-      }
-
-    componentWillMount() {
-        // const day = this.props.day;
-        // let date = day.getDate();
-        // let month = day.getMonth() + 1;
-        // let year = day.getFullYear();
-        
-        // backend.dailyPanelService.findSaleRoomTariff(this.props.roomTypeId, this.props.roomTypeId,
-        //       year + '-'+ month + '-' + date ,
-        // saleRoomTariff =>{ console.log (saleRoomTariff),
-        //     this.setState({price:saleRoomTariff.price}) 
-        //          });
-    }
     
-    add(){
-        console.log("add");
+      }
+    
+    add(price){
         const day = this.props.day ;
         const roomTypeId = this.props.roomTypeId;
         const tariffId = this.props.tariffId;
-        const price = this.state.price;
-        console.log(price);
-        console.log(day);
-        console.log(roomTypeId);
-        console.log(tariffId);
+
         backend.dailyPanelService.uploadSaleRoomTariff(price, tariffId, roomTypeId, day,
           //  () =>dispatch(findAllRoomTypes()),
            errors => this.setBackendErrors(errors))
     }
 
     find(){
-        const day = this.props.day;
-        let date = day.getDate();
-        let month = day.getMonth() + 1;
-        let year = day.getFullYear();
         
         backend.dailyPanelService.findSaleRoomTariff(this.props.tariffId, this.props.roomTypeId, 
-            year + '-'+ month + '-' + date ,
+            this.props.day ,
             saleRoomTariff => this.setState({price:saleRoomTariff.price}),
             errors => { this.setBackendErrors(errors),
                         errors ?  this.setState({price:''}) : "";
             });
 
- 
-
-
     }
-
 
 
     handleChange(event) {
         this.setState({price: event.target.value})
-  
+        this.add(event.target.value);
     }
 
     setBackendErrors(backendErrors) {

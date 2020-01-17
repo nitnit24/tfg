@@ -15,7 +15,7 @@ class FreeRoomsDayItem extends React.Component {
     constructor(props) {
         super(props);
         this.state = initialState;
-
+        console.log("freeRoomItem  " + this.props.day)
         this.handleChange = this.handleChange.bind(this);
 
     }
@@ -28,34 +28,23 @@ class FreeRoomsDayItem extends React.Component {
         if (this.props.day !== prevProps.day) {
             this.find()
         }
-        if ((this.props.day === prevProps.day) && (this.state.freeRooms !== prevState.freeRooms) &&
-          (this.state.freeRooms !== ''))
-            {
-            this.add();
-            }
       }
 
-    add(){
+
+
+    add(freeRooms){
         const idRoomType = this.props.roomTypeId;
         const date = this.props.day;
-        const freeRooms = this.state.freeRooms;
 
-        console.log("ADDDDDDDDDDDD " + date)
         backend.dailyPanelService.addSaleRoom(idRoomType, date, freeRooms,
         null,
         errors => this.setBackendErrors(errors))
     }
 
     find(){
-        const day = this.props.day;
-        let date = day.getDate();
-        let month = day.getMonth() + 1;
-        let year = day.getFullYear();
-
-        this.setState({freeRooms:''})
         
         backend.dailyPanelService.findSaleRoom(this.props.roomTypeId, 
-            year + '-'+ month + '-' + date ,
+            this.props.day ,
             saleRoom => this.setState({freeRooms:saleRoom.freeRooms}),
             errors => { this.setBackendErrors(errors),
                     errors ?  this.setState({freeRooms:''}) : "";
@@ -63,7 +52,9 @@ class FreeRoomsDayItem extends React.Component {
     }
 
     handleChange(event) {
+        console.log("onchange")
         this.setState({freeRooms: event.target.value});
+        this.add(event.target.value);
     }
 
     setBackendErrors(backendErrors) {
@@ -72,7 +63,6 @@ class FreeRoomsDayItem extends React.Component {
 
 
     render(){
-       // this.setState({day: this.props.day})
         return (
             <td className = "p-0" style={{width: '2.6%'}}>
                  <form >

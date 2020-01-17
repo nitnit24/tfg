@@ -1,14 +1,12 @@
 package es.udc.tfg.backend.rest.dtos;
 
-import java.util.Calendar;
-
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 public class AddToSaleRoomParamsDto {
 	
 	private Long idRoomType;
-	private Calendar date;
+	private Long date;
 	private int freeRooms;
 	
 	public AddToSaleRoomParamsDto() {}
@@ -23,16 +21,16 @@ public class AddToSaleRoomParamsDto {
 	}
 
 	@NotNull
-	public Calendar getDate() {
-		this.date.set(Calendar.MILLISECOND, 0);
-		this.date.set(Calendar.SECOND, 0);
-		this.date.set(Calendar.MINUTE, 0);
-		this.date.set(Calendar.HOUR_OF_DAY, 0);
+	public Long getDate() {
+//		this.date.set(Calendar.MILLISECOND, 0);
+//		this.date.set(Calendar.SECOND, 0);
+//		this.date.set(Calendar.MINUTE, 0);
+//		this.date.set(Calendar.HOUR_OF_DAY, 0);
 		return date;
 	}
 
 	
-	public void setDate(Calendar date) {
+	public void setDate(Long date) {
 		this.date = date;
 	}
 

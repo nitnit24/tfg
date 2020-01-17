@@ -11,7 +11,7 @@ public class SaleRoomConversor {
 	}
 
 	public final static SaleRoomDto toSaleRoomDto(SaleRoom saleRoom) {
-		return new SaleRoomDto(saleRoom.getIdSaleRoom(), saleRoom.getDate(), saleRoom.getFreeRooms(), 
+		return new SaleRoomDto(saleRoom.getIdSaleRoom(), saleRoom.getDate().getTimeInMillis(), saleRoom.getFreeRooms(), 
 				saleRoom.getRoomType().getId());
 	}
 
