@@ -7,7 +7,7 @@ import java.util.List;
 public class RoomTableDay {
 
 	private Calendar day;
-	private int freeRooms;
+	private Integer freeRooms;
 	private List<RoomTableTariff> roomTableTariffs;
 
 	
@@ -16,7 +16,7 @@ public class RoomTableDay {
 	}
 
 
-	public RoomTableDay(Calendar day, int freeRooms, List<RoomTableTariff> roomTableTariffs) {
+	public RoomTableDay(Calendar day, Integer freeRooms, List<RoomTableTariff> roomTableTariffs) {
 		super();
 		this.day = day;
 		this.freeRooms = freeRooms;
@@ -34,12 +34,12 @@ public class RoomTableDay {
 	}
 
 
-	public int getFreeRooms() {
+	public Integer getFreeRooms() {
 		return freeRooms;
 	}
 
 
-	public void setFreeRooms(int freeRooms) {
+	public void setFreeRooms(Integer freeRooms) {
 		this.freeRooms = freeRooms;
 	}
 

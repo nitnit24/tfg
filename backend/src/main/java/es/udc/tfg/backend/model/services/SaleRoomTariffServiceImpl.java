@@ -90,7 +90,7 @@ public class SaleRoomTariffServiceImpl implements SaleRoomTariffService {
 	}
 	
 	@Override
-	public SaleRoomTariff findByTariffIdAnRoomTypeIdAndDate(Long tariffId, Long roomTypeId, Calendar date) throws InstanceNotFoundException{
+	public SaleRoomTariff findByTariffIdAndRoomTypeIdAndDate(Long tariffId, Long roomTypeId, Calendar date) throws InstanceNotFoundException{
 		
 		Optional<SaleRoomTariff> saleRoomTariff = saleRoomTariffDao. findByTariffIdAndSaleRoomRoomTypeIdAndSaleRoomDate(tariffId, roomTypeId, date);
 
@@ -118,7 +118,7 @@ public class SaleRoomTariffServiceImpl implements SaleRoomTariffService {
 				Calendar date = Calendar.getInstance();
 				Long millis = initialDate.getTimeInMillis();
 				date.setTimeInMillis(millis);
-				date.add(Calendar.DATE, 0);
+				date.add(Calendar.DATE, i);
 				
 				Optional<SaleRoom> saleRoom = saleRoomDao.findByRoomTypeIdAndDate(roomType.getId(), date);
 				
@@ -128,13 +128,22 @@ public class SaleRoomTariffServiceImpl implements SaleRoomTariffService {
 				for(Tariff tariff:tariffs) {
 					Optional<SaleRoomTariff> saleRoomTariff= saleRoomTariffDao.findByTariffIdAndSaleRoomRoomTypeIdAndSaleRoomDate(tariff.getId(), roomType.getId(), date);
 					
-					roomTableTariffs.add(new RoomTableTariff(tariff.getId(), saleRoomTariff.get().getPrice()));
-					
+					if (saleRoomTariff.isPresent()) {
+						roomTableTariffs.add(new RoomTableTariff(tariff.getId(), saleRoomTariff.get().getPrice()));
+					}
+					else {
+						roomTableTariffs.add(new RoomTableTariff(tariff.getId(), null));
+					}
 				}
 				
-				roomTableDays.add(new RoomTableDay(date, saleRoom.get().getFreeRooms(),roomTableTariffs));
+				if(saleRoom.isPresent()) {
+					roomTableDays.add(new RoomTableDay(date, saleRoom.get().getFreeRooms(),roomTableTariffs));
+
+				}
+				else {
+					roomTableDays.add(new RoomTableDay(date, null , roomTableTariffs));
+				}
 			}
-			
 			 
 			List<Tariff> tariffsList = new ArrayList<>();
 			tariffs.iterator().forEachRemaining(tariffsList::add);

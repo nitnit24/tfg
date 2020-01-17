@@ -22,7 +22,7 @@ class DayItem extends React.Component {
             case 5: return( "vie." );
             case 6: return( "sáb." );
             case 0: return( "dom." );
-        break;      
+            default: break;      
         }
     }
 
@@ -40,24 +40,25 @@ class DayItem extends React.Component {
             case 10: return( "OCT." );
             case 11: return( "NOV." );
             case 12: return( "DEC." );
-        break;      
+            default: break;      
         }
     }
 
     render(){
 
         const item = this.props.item ;
+        const day = new Date(item);
         const pos = this.props.pos;
 
         return (
             <th className = "p-0 panel" scope="col" style={{width: '2.6%'}}>
-                { (item.getDate() === 1 || pos === 0) && 
-                <span className = " m-0 text-panelWeekDay">  {this.getNameMonth(item)}</span>
+                { (day.getDate() === 1 || pos === 0) && 
+                <span className = " m-0 text-panelWeekDay">  {this.getNameMonth(day)}</span>
                 }
                 <br></br> 
-                <span className = " m-0 text-panelWeekDay text-secondary">  {this.getDayOfWeek(item)}</span>
+                <span className = " m-0 text-panelWeekDay text-secondary">  {this.getDayOfWeek(day)}</span>
                 <br></br>
-                <span className = " m-0 text-panel">  {item.getDate()} </span>
+                <span className = " m-0 text-panel">  {day.getDate()} </span>
             </th>
 
         );

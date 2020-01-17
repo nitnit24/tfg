@@ -1,20 +1,20 @@
-package es.udc.tfg.backend.model.entities;
+package es.udc.tfg.backend.rest.dtos;
 
 import java.math.BigDecimal;
 
 
-public class RoomTableTariff {
+public class RoomTableTariffDto {
 
 	private Long tariffId;
 	private BigDecimal price;
 
 
-	public RoomTableTariff(){
+	public RoomTableTariffDto(){
 		
 	}
 
 
-	public RoomTableTariff(Long tariffId, BigDecimal price) {
+	public RoomTableTariffDto(Long tariffId, BigDecimal price) {
 		super();
 		this.tariffId = tariffId;
 		this.price = price;

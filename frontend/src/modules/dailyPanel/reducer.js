@@ -3,7 +3,8 @@ import {combineReducers} from 'redux';
 import * as actionTypes from './actionTypes';
 
 const initialState = {
-    date: ''
+    date: null,
+    roomTables: null 
 };
 
 const date = (state = initialState.date, action) => {
@@ -21,8 +22,28 @@ const date = (state = initialState.date, action) => {
 }
 
 
+const roomTables = (state = initialState.roomTables, action) => {
+
+    switch (action.type) {
+
+        case actionTypes.FIND_ROOMTABLES_COMPLETED:
+     
+            return action.roomTables;
+         
+        case actionTypes.CLEAR_ROOM_TABLES:
+     
+            return null;
+
+    default:
+        return state;
+    }
+
+}
+
+
 const reducer = combineReducers({
-    date
+    date,
+    roomTables
 });
 
 export default reducer;

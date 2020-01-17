@@ -3,9 +3,11 @@ package es.udc.tfg.backend.rest.controllers;
 
 import static es.udc.tfg.backend.rest.dtos.SaleRoomConversor.toSaleRoomDto;
 import static es.udc.tfg.backend.rest.dtos.SaleRoomTariffConversor.toSaleRoomTariffDto;
+import static es.udc.tfg.backend.rest.dtos.RoomTableConversor.toRoomTableDtos;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -24,6 +26,7 @@ import es.udc.tfg.backend.model.services.SaleRoomService;
 import es.udc.tfg.backend.model.services.SaleRoomTariffService;
 import es.udc.tfg.backend.rest.dtos.AddToSaleRoomParamsDto;
 import es.udc.tfg.backend.rest.dtos.AddToSaleRoomTariffParamsDto;
+import es.udc.tfg.backend.rest.dtos.RoomTableDto;
 import es.udc.tfg.backend.rest.dtos.SaleRoomDto;
 import es.udc.tfg.backend.rest.dtos.SaleRoomTariffDto;
 
@@ -38,7 +41,7 @@ public class DailyPanelController {
 	private SaleRoomTariffService saleRoomTariffService;
 
 	@GetMapping("/findDailyPanel")
-	public SaleRoomDto findSaleRoom( 
+	public List<RoomTableDto> findSaleRoom( 
 			@RequestParam Long date)
 					throws InstanceNotFoundException {
 		Calendar calendar = Calendar.getInstance();
