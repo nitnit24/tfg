@@ -29,7 +29,7 @@ public class CustomizedBookingDaoImpl implements CustomizedBookingDao {
 		}
 
 		if (dataType.equals("Reserva")) {
-			queryString += " b.date >= :minDate AND b.date < :maxDate";
+			queryString += " b.date >= :minDate AND b.date <= :maxDate";
 		}
 		
 		if (dataType.equals("Entrada")) {

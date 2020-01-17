@@ -83,7 +83,7 @@ public class DailyPanelController {
 					throws InstanceNotFoundException {
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTimeInMillis(date);
-		return toSaleRoomTariffDto(saleRoomTariffService.findByTariffIdAnRoomTypeIdAndDate(tariffId, roomTypeId, calendar));
+		return toSaleRoomTariffDto(saleRoomTariffService.findByTariffIdAndRoomTypeIdAndDate(tariffId, roomTypeId, calendar));
 	}
 
 }

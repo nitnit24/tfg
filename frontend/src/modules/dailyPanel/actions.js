@@ -25,3 +25,15 @@ export const findRoomTables = (date) => (dispatch) => {
 const clearRoomTables = () => ({
     type: actionTypes.CLEAR_ROOM_TABLES
 });
+
+
+const uploadFreeRoomsCompleted = saleRoom => ({
+    type: actionTypes.UPLOAD_FREEROOMS_COMPLETED,
+    saleRoom
+});
+      
+export const uploadFreeRooms = (roomTypeId, date, freeRooms,) => (dispatch) => {
+    //dispatch(clearRoomTables());
+    backend.dailyPanelService.addSaleRoom (roomTypeId, date, freeRooms, 
+        saleRoom => {console.log(saleRoom) , dispatch(uploadFreeRoomsCompleted(saleRoom))});
+}

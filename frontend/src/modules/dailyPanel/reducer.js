@@ -33,6 +33,21 @@ const roomTables = (state = initialState.roomTables, action) => {
         case actionTypes.CLEAR_ROOM_TABLES:
      
             return null;
+        
+        case actionTypes.UPLOAD_FREEROOMS_COMPLETED:
+
+        return (
+            state.map(
+                (roomTable) => roomTable.roomTypeId === action.saleRoom.roomTypeId ? 
+                   {...roomTable, roomTableDays: roomTable.roomTableDays.map (
+                        (roomTableDay) => roomTableDay.day === action.saleRoom.date ?
+                        (console.log(new Date(roomTableDay.day) + "  " + new Date(action.saleRoom.date)),
+                        {...roomTableDay, freeRooms: action.saleRoom.freeRooms}) : roomTableDay
+                    )
+                    } : roomTable
+             )
+        )
+
 
     default:
         return state;

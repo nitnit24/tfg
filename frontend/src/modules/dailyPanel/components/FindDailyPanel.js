@@ -22,10 +22,13 @@ class FindPanel extends React.Component {
     }
 
     saveDatePanel(){
-        const datePanel = this.state.datePanel;
-        const date = Date.parse(datePanel);
-        this.props.addDate(date);
-        this.props.findRoomTables(date)
+        const datePanelString = this.state.datePanel;
+        const datePanelMillis = Date.parse(datePanelString);
+        const datePanel = new Date(datePanelMillis)
+        const date = new Date(datePanel.getFullYear(),(datePanel.getMonth()+1),datePanel.getDate());
+     
+        //this.props.addDate(date.getTime());
+        this.props.findRoomTables(date.getTime())
     }
 
     render(){

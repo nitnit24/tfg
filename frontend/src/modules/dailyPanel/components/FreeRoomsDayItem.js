@@ -1,6 +1,7 @@
 import '../dailyPanel.css';
 import  backend from '../../../backend';
-
+import {connect} from 'react-redux';
+import * as actions from '../actions';
 import React from 'react';
 
 const initialState = {
@@ -26,9 +27,13 @@ class FreeRoomsDayItem extends React.Component {
     add(freeRooms){
         const roomTypeId = this.props.roomTypeId;
         const date = this.props.day;
-        backend.dailyPanelService.addSaleRoom(roomTypeId, date, freeRooms,
-        null,
-        errors => this.setBackendErrors(errors))
+
+        this.props.uploadFreeRooms(roomTypeId, date, freeRooms)
+            // null,
+            // errors => this.setBackendErrors(errors))
+        // backend.dailyPanelService.addSaleRoom(roomTypeId, date, freeRooms,
+        // null,
+        // errors => this.setBackendErrors(errors))
     }
 
     handleChange(event) {
@@ -58,6 +63,11 @@ class FreeRoomsDayItem extends React.Component {
     }
 }
 
+const mapStateToProps = (state) => ({
 
+});
 
-export default FreeRoomsDayItem;
+const mapDispatchToProps = {
+    uploadFreeRooms: actions.uploadFreeRooms
+};
+export default connect( mapStateToProps, mapDispatchToProps)(FreeRoomsDayItem);
