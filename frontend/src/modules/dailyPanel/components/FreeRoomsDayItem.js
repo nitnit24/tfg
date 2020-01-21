@@ -1,5 +1,4 @@
 import '../dailyPanel.css';
-import  backend from '../../../backend';
 import {connect} from 'react-redux';
 import * as actions from '../actions';
 import React from 'react';
@@ -28,9 +27,9 @@ class FreeRoomsDayItem extends React.Component {
         const roomTypeId = this.props.roomTypeId;
         const date = this.props.day;
 
-        this.props.uploadFreeRooms(roomTypeId, date, freeRooms)
-            // null,
-            // errors => this.setBackendErrors(errors))
+        this.props.uploadFreeRooms(roomTypeId, date, freeRooms,
+             null,
+             errors => this.setBackendErrors(errors))
         // backend.dailyPanelService.addSaleRoom(roomTypeId, date, freeRooms,
         // null,
         // errors => this.setBackendErrors(errors))
@@ -54,7 +53,8 @@ class FreeRoomsDayItem extends React.Component {
                     value={this.state.freeRooms}  
                     onChange={(e) => this.handleChange(e)} 
                     autoFocus
-                    min= "0"      
+                    min= "0" 
+                    data-toggle="tooltip" data-placement="right" title="Tooltip on right"   
                 />
                 </form>
             </td>

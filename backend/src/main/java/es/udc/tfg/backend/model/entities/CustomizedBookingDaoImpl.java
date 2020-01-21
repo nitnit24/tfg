@@ -33,11 +33,11 @@ public class CustomizedBookingDaoImpl implements CustomizedBookingDao {
 		}
 		
 		if (dataType.equals("Entrada")) {
-			queryString += " b.startDate >= :minDate AND b.startDate < :maxDate";
+			queryString += " b.startDate >= :minDate AND b.startDate <= :maxDate";
 		}
 		
 		if(dataType.equals("Salida")) {
-			queryString += " b.endDate >= :minDate AND b.endDate < :maxDate";
+			queryString += " b.endDate >= :minDate AND b.endDate <= :maxDate";
 		}
 		
 		if (keywords.length != 0) {

@@ -180,69 +180,86 @@ public class BookingServiceImpl implements BookingService {
 		return sRandom;
 	}
 
-			
-	public Booking makeBooking(List<BookingRoomSummary> bookingRoomSummarys, Calendar startDate, Calendar endDate, String name, 
-			String surName, String phone, String email, String petition) throws InstanceNotFoundException {
+	@Transactional (rollbackFor= {ThereAreNotEnoughtFreeRoomsException.class})
+	public Booking makeBooking(List<BookingRoomSummary> bookingRoomSummarys, Calendar startDate, Calendar endDate,
+			String name, String surName, String phone, String email, String petition)
+			throws InstanceNotFoundException, ThereAreNotEnoughtFreeRoomsException {
 
-		Calendar now = Calendar.getInstance();
-		
-		int startDay = startDate.get(Calendar.DAY_OF_YEAR);
-		int endDay = endDate.get(Calendar.DAY_OF_YEAR);
-		int duration = (endDay - startDay);
-		State state = State.CONFIRMADA;
-		
-		Booking newBooking = bookingDao.save(new Booking(now, startDate, duration, endDate, state, name, surName,
-				phone, email, petition));
-		
-		String locator = now.get(Calendar.YEAR) +"0"+ now.get(Calendar.DAY_OF_WEEK) + "00"+ now.get(Calendar.DAY_OF_YEAR)+ newBooking.getId().toString() ;
-		newBooking.setLocator(locator);
-		String key = createStringRandom();
-		newBooking.setKey(key);
-		bookingDao.save(newBooking);
-		
-		
-		for(BookingRoomSummary bookingRoomSummary : bookingRoomSummarys) {
-			
-			List<SaleRoomTariff> SaleRTs = bookingRoomSummary.getSaleRoomTariffs();
-			Optional<SaleRoomTariff> saleRT = saleRoomTariffDao.findById(SaleRTs.get(0).getId());
-			
-			BookingRoom newBookingRoom = new BookingRoom(bookingRoomSummary.getQuantity(), saleRT.get().getSaleRoom().getRoomType().getName(),
-					saleRT.get().getSaleRoom().getRoomType().getCapacity(), 
-					saleRT.get().getTariff().getName());
-			
-			newBooking.addBookingRoom(newBookingRoom);
-			bookingRoomDao.save(newBookingRoom);
-		
-		
-			
-			for(SaleRoomTariff saleRoomTariff : bookingRoomSummary.getSaleRoomTariffs()) {
-				
-				Optional<SaleRoomTariff> saleRoomT = saleRoomTariffDao.findById(saleRoomTariff.getId());
-				Optional<SaleRoom> saleRoom = saleRoomDao.findById(saleRoomT.get().getSaleRoom().getIdSaleRoom());
-				int oldFreeRooms = saleRoom.get().getFreeRooms();
-				saleRoom.get().setFreeRooms(oldFreeRooms - bookingRoomSummary.getQuantity());
-				saleRoomDao.save(saleRoom.get());
-				
-				BookingDay newBookingDay = new BookingDay(saleRoomTariff.getPrice(), saleRoom.get().getDate(), saleRoomTariff);
-				
-				newBookingRoom.addBookingDay(newBookingDay);
-				bookingDayDao.save(newBookingDay);
-				
+		//try {
+			Calendar now = Calendar.getInstance();
+
+			int startDay = startDate.get(Calendar.DAY_OF_YEAR);
+			int endDay = endDate.get(Calendar.DAY_OF_YEAR);
+			int duration = (endDay - startDay);
+			State state = State.CONFIRMADA;
+
+			Booking newBooking = bookingDao
+					.save(new Booking(now, startDate, duration, endDate, state, name, surName, phone, email, petition));
+
+			String locator = now.get(Calendar.YEAR) + "0" + now.get(Calendar.DAY_OF_WEEK) + "00"
+					+ now.get(Calendar.DAY_OF_YEAR) + newBooking.getId().toString();
+			newBooking.setLocator(locator);
+			String key = createStringRandom();
+			newBooking.setKey(key);
+			bookingDao.save(newBooking);
+
+			for (BookingRoomSummary bookingRoomSummary : bookingRoomSummarys) {
+
+				List<SaleRoomTariff> SaleRTs = bookingRoomSummary.getSaleRoomTariffs();
+				Optional<SaleRoomTariff> saleRT = saleRoomTariffDao.findById(SaleRTs.get(0).getId());
+
+				BookingRoom newBookingRoom = new BookingRoom(bookingRoomSummary.getQuantity(),
+						saleRT.get().getSaleRoom().getRoomType().getName(),
+						saleRT.get().getSaleRoom().getRoomType().getCapacity(), saleRT.get().getTariff().getName());
+
+				newBooking.addBookingRoom(newBookingRoom);
+				bookingRoomDao.save(newBookingRoom);
+
+				for (SaleRoomTariff saleRoomTariff : bookingRoomSummary.getSaleRoomTariffs()) {
+
+					Optional<SaleRoomTariff> saleRoomT = saleRoomTariffDao.findById(saleRoomTariff.getId());
+					Optional<SaleRoom> saleRoom = saleRoomDao.findById(saleRoomT.get().getSaleRoom().getIdSaleRoom());
+
+					if (saleRoom.get().getFreeRooms() >= bookingRoomSummary.getQuantity()) {
+						
+						int oldFreeRooms = saleRoom.get().getFreeRooms();
+						saleRoom.get().setFreeRooms(oldFreeRooms - bookingRoomSummary.getQuantity());
+						saleRoomDao.save(saleRoom.get());
+						
+					} else {
+						throw new ThereAreNotEnoughtFreeRoomsException();
+					}
+
+					BookingDay newBookingDay = new BookingDay(saleRoomTariff.getPrice(), saleRoom.get().getDate(),
+							saleRoomTariff);
+
+					newBookingRoom.addBookingDay(newBookingDay);
+					bookingDayDao.save(newBookingDay);
+
+				}
+
+				BigDecimal roomTotalPrice = newBookingRoom.getBookingDays().stream().map(i -> i.getDayPrice())
+						.reduce(new BigDecimal(0), (a, b) -> a.add(b));
+				newBookingRoom.setRoomTotalPrice(roomTotalPrice);
+				bookingRoomDao.save(newBookingRoom);
+
 			}
-			
-			BigDecimal roomTotalPrice = newBookingRoom.getBookingDays().stream().map(i -> i.getDayPrice()).reduce(new BigDecimal(0), (a, b) -> a.add(b));
-			newBookingRoom.setRoomTotalPrice(roomTotalPrice);
-			bookingRoomDao.save(newBookingRoom);
-			
-			
-		}
 
-		BigDecimal totalPrice = newBooking.getBookingRooms().stream().map(i -> i.getRoomTotalPrice().multiply(new BigDecimal(i.getQuantity()))).reduce(new BigDecimal(0), (a, b) -> a.add(b));
+			BigDecimal totalPrice = newBooking.getBookingRooms().stream()
+					.map(i -> i.getRoomTotalPrice().multiply(new BigDecimal(i.getQuantity())))
+					.reduce(new BigDecimal(0), (a, b) -> a.add(b));
+
+			newBooking.setTotalPrice(totalPrice);
+			bookingDao.save(newBooking);
+
+			return newBooking;
+
+//		} catch (ThereAreNotEnoughtFreeRoomsException exception) {
+//			
+//			throw new ThereAreNotEnoughtFreeRoomsException();
+//		}
 		
-		newBooking.setTotalPrice(totalPrice);
-		bookingDao.save(newBooking);
-		
-		return newBooking;
+	
 	}
 	
 	public Booking findByLocator (String locator) throws InstanceNotFoundException {

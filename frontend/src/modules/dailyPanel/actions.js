@@ -32,8 +32,21 @@ const uploadFreeRoomsCompleted = saleRoom => ({
     saleRoom
 });
       
-export const uploadFreeRooms = (roomTypeId, date, freeRooms,) => (dispatch) => {
-    //dispatch(clearRoomTables());
+export const uploadFreeRooms = (roomTypeId, date, freeRooms) => (dispatch) => {
     backend.dailyPanelService.addSaleRoom (roomTypeId, date, freeRooms, 
         saleRoom => {console.log(saleRoom) , dispatch(uploadFreeRoomsCompleted(saleRoom))});
+}
+
+const uploadTariffPriceCompleted = (saleRoomTariff, roomTypeId, day) => ({
+    type: actionTypes.UPLOAD_TARIFFPRICE_COMPLETED,
+    data : {saleRoomTariff, roomTypeId,day}
+});
+      
+export const uploadTariffPrice = (price, tariffId, roomTypeId, day) => (dispatch) => {
+    backend.dailyPanelService.uploadSaleRoomTariff (price, tariffId, roomTypeId, day, 
+        saleRoomTariff => {console.log("SaleRoomTariff  " + saleRoomTariff) ,
+                            console.log("roomTypeId" + roomTypeId),
+                            console.log("day" + day )
+                             dispatch(uploadTariffPriceCompleted(saleRoomTariff, roomTypeId, day))}
+        );
 }

@@ -89,17 +89,17 @@ public class SaleRoomTariffServiceImpl implements SaleRoomTariffService {
 		}
 	}
 	
-	@Override
-	public SaleRoomTariff findByTariffIdAndRoomTypeIdAndDate(Long tariffId, Long roomTypeId, Calendar date) throws InstanceNotFoundException{
-		
-		Optional<SaleRoomTariff> saleRoomTariff = saleRoomTariffDao. findByTariffIdAndSaleRoomRoomTypeIdAndSaleRoomDate(tariffId, roomTypeId, date);
-
-		if (!saleRoomTariff.isPresent()) {
-			throw new InstanceNotFoundException("project.entities.roomType", roomTypeId );
-		}
-
-		return saleRoomTariff.get();
-	}
+//	@Override
+//	public SaleRoomTariff findByTariffIdAndRoomTypeIdAndDate(Long tariffId, Long roomTypeId, Calendar date) throws InstanceNotFoundException{
+//		
+//		Optional<SaleRoomTariff> saleRoomTariff = saleRoomTariffDao. findByTariffIdAndSaleRoomRoomTypeIdAndSaleRoomDate(tariffId, roomTypeId, date);
+//
+//		if (!saleRoomTariff.isPresent()) {
+//			throw new InstanceNotFoundException("project.entities.roomType", roomTypeId );
+//		}
+//
+//		return saleRoomTariff.get();
+//	}
 	
 	@Override
 	public List<RoomTable> findDailyPanel (Calendar initialDate){

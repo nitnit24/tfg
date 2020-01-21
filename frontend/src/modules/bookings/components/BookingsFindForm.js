@@ -45,10 +45,6 @@ class BookingsFindForm extends React.Component {
             keywords: this.state.keywords.trim(),
             page: 0
         };
-        console.log(this.state.dateType)
-        console.log(this.state.minDate)
-        console.log(this.state.maxDate),
-        console.log(this.state.keywords)
         event.preventDefault();
         this.props.findBookings(criteria);
     

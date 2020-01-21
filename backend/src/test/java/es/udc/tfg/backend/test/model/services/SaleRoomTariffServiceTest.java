@@ -22,6 +22,7 @@ import es.udc.tfg.backend.model.entities.SaleRoom;
 import es.udc.tfg.backend.model.entities.SaleRoomTariff;
 import es.udc.tfg.backend.model.entities.SaleRoomTariffDao;
 import es.udc.tfg.backend.model.entities.Tariff;
+import es.udc.tfg.backend.model.services.FreeRoomsLessThanRoomTypeQuantityException;
 import es.udc.tfg.backend.model.services.PriceNotBetweenMinAndMaxValueException;
 import es.udc.tfg.backend.model.services.RoomTypeService;
 import es.udc.tfg.backend.model.services.SaleRoomService;
@@ -60,7 +61,7 @@ public class SaleRoomTariffServiceTest {
 	}
 	
 	@Test
-	public void testAdd() throws DuplicateInstanceException, InstanceNotFoundException, PriceNotBetweenMinAndMaxValueException {
+	public void testAdd() throws DuplicateInstanceException, InstanceNotFoundException, PriceNotBetweenMinAndMaxValueException, FreeRoomsLessThanRoomTypeQuantityException {
 
 		Tariff newTariff = createTariff("name", "CODE", "description");
 		Tariff tariff = tariffService.addTariff(newTariff);
@@ -114,7 +115,7 @@ public class SaleRoomTariffServiceTest {
 //	}
 
 	@Test(expected = PriceNotBetweenMinAndMaxValueException.class)
-	public void testAddPriceNotBetweenMinAndMaxValue() throws DuplicateInstanceException, InstanceNotFoundException, PriceNotBetweenMinAndMaxValueException {
+	public void testAddPriceNotBetweenMinAndMaxValue() throws DuplicateInstanceException, InstanceNotFoundException, PriceNotBetweenMinAndMaxValueException, FreeRoomsLessThanRoomTypeQuantityException {
 
 		Tariff newTariff = createTariff("name", "CODE", "description");
 		Tariff tariff = tariffService.addTariff(newTariff);
@@ -136,7 +137,7 @@ public class SaleRoomTariffServiceTest {
 	}
 	
 	@Test(expected = PriceNotBetweenMinAndMaxValueException.class)
-	public void testAddPriceNotBetweenMinAndMaxValue2() throws DuplicateInstanceException, InstanceNotFoundException, PriceNotBetweenMinAndMaxValueException {
+	public void testAddPriceNotBetweenMinAndMaxValue2() throws DuplicateInstanceException, InstanceNotFoundException, PriceNotBetweenMinAndMaxValueException, FreeRoomsLessThanRoomTypeQuantityException {
 
 		Tariff newTariff = createTariff("name", "CODE", "description");
 		Tariff tariff = tariffService.addTariff(newTariff);
@@ -159,7 +160,7 @@ public class SaleRoomTariffServiceTest {
 	
 	
 	@Test
-	public void testAddAndFindByTariffIdAndSaleRoomRoomTypeIdAndSaleRoomDate() throws InstanceNotFoundException, DuplicateInstanceException, PriceNotBetweenMinAndMaxValueException {
+	public void testAddAndFindByTariffIdAndSaleRoomRoomTypeIdAndSaleRoomDate() throws InstanceNotFoundException, DuplicateInstanceException, PriceNotBetweenMinAndMaxValueException, FreeRoomsLessThanRoomTypeQuantityException {
 
 		Tariff newTariff = createTariff("name", "CODE", "description");
 		Tariff tariff = tariffService.addTariff(newTariff);

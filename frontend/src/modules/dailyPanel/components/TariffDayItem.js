@@ -1,7 +1,8 @@
 import React from 'react';
 
 import '../dailyPanel.css';
-import  backend from '../../../backend';
+import {connect} from 'react-redux';
+import * as actions from '../actions';
 
 const initialState = {
     price: '',
@@ -28,7 +29,7 @@ class TariffDayItem extends React.Component {
         const roomTypeId = this.props.roomTypeId;
         const tariffId = this.props.tariffId;
 
-        backend.dailyPanelService.uploadSaleRoomTariff(price, tariffId, roomTypeId, day,
+        this.props.uploadTariffPrice(price, tariffId, roomTypeId, day,
           null,
         errors => this.setBackendErrors(errors))
     }
@@ -59,4 +60,11 @@ class TariffDayItem extends React.Component {
 
 
 
-export default TariffDayItem;
+const mapStateToProps = (state) => ({
+
+});
+
+const mapDispatchToProps = {
+    uploadTariffPrice: actions.uploadTariffPrice
+};
+export default connect( mapStateToProps, mapDispatchToProps)(TariffDayItem);

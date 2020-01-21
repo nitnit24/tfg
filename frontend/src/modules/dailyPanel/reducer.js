@@ -36,17 +36,34 @@ const roomTables = (state = initialState.roomTables, action) => {
         
         case actionTypes.UPLOAD_FREEROOMS_COMPLETED:
 
-        return (
-            state.map(
-                (roomTable) => roomTable.roomTypeId === action.saleRoom.roomTypeId ? 
-                   {...roomTable, roomTableDays: roomTable.roomTableDays.map (
-                        (roomTableDay) => roomTableDay.day === action.saleRoom.date ?
-                        (console.log(new Date(roomTableDay.day) + "  " + new Date(action.saleRoom.date)),
-                        {...roomTableDay, freeRooms: action.saleRoom.freeRooms}) : roomTableDay
+            return (
+                state.map(
+                    (roomTable) => roomTable.roomTypeId === action.saleRoom.roomTypeId ? 
+                        {...roomTable, roomTableDays: roomTable.roomTableDays.map (
+                            (roomTableDay) => roomTableDay.day === action.saleRoom.date ?
+                            {...roomTableDay, freeRooms: action.saleRoom.freeRooms} : roomTableDay
                     )
                     } : roomTable
              )
         )
+
+        case actionTypes.UPLOAD_TARIFFPRICE_COMPLETED:
+
+        return (
+            state.map(
+                (roomTable) => roomTable.roomTypeId === action.data.roomTypeId ? 
+                     {...roomTable, roomTableDays: roomTable.roomTableDays.map (
+                         (roomTableDay) => roomTableDay.day === action.data.day ?
+                            {...roomTableDay, roomTableTariffs: roomTableDay.roomTableTariffs.map(
+                                (roomTableTariff) => roomTableTariff.tariffId === action.data.saleRoomTariff.tariffId ?
+                                    {...roomTableTariff, price : action.data.saleRoomTariff.price} : roomTableTariff
+                            )
+                            }: roomTableDay
+                  )
+                } : roomTable
+              
+         )
+    )
 
 
     default:

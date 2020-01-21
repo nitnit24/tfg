@@ -19,7 +19,7 @@ public interface BookingService {
 	List<SaleRoomTariff> findSaleRoomTariffsByFreeRoom(Calendar startDate, Calendar endDate, Long roomTypeId, Long tariffId);
 
 	Booking makeBooking(List<BookingRoomSummary> bookingRoomSummarys, Calendar startDate, Calendar endDate, String name, 
-			String surName, String phone, String email, String petition) throws InstanceNotFoundException;
+			String surName, String phone, String email, String petition) throws InstanceNotFoundException, ThereAreNotEnoughtFreeRoomsException;
 	
 	Booking findByLocator(String locator) throws InstanceNotFoundException;
 	

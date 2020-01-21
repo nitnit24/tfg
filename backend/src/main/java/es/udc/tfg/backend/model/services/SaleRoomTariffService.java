@@ -12,7 +12,7 @@ public interface SaleRoomTariffService {
 
 	SaleRoomTariff uploadSaleRoomTariff(BigDecimal price, Long tariffId, Long roomTypeId, Calendar date) throws InstanceNotFoundException, PriceNotBetweenMinAndMaxValueException;
 
-	SaleRoomTariff findByTariffIdAndRoomTypeIdAndDate(Long tariffId, Long roomTypeId, Calendar date) throws InstanceNotFoundException;
+//	SaleRoomTariff findByTariffIdAndRoomTypeIdAndDate(Long tariffId, Long roomTypeId, Calendar date) throws InstanceNotFoundException;
 
 	List<RoomTable> findDailyPanel (Calendar initialDate);
 }

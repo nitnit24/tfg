@@ -25,7 +25,7 @@ class FindPanel extends React.Component {
         const datePanelString = this.state.datePanel;
         const datePanelMillis = Date.parse(datePanelString);
         const datePanel = new Date(datePanelMillis)
-        const date = new Date(datePanel.getFullYear(),(datePanel.getMonth()+1),datePanel.getDate());
+        const date = new Date(datePanel.getFullYear(),(datePanel.getMonth()),datePanel.getDate());
      
         //this.props.addDate(date.getTime());
         this.props.findRoomTables(date.getTime())

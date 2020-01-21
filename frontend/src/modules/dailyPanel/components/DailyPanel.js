@@ -20,7 +20,7 @@ class DailyPanel extends React.Component {
 
     if (this.props.date === null){
         const now = new Date();
-        const date = new Date(now.getFullYear(),(now.getMonth()+1),now.getDate());
+        const date = new Date(now.getFullYear(),(now.getMonth()),now.getDate());
         console.log(date)
         this.props.findRoomTables(date.getTime());
         }
