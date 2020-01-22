@@ -36,7 +36,7 @@ class FreeRoomsDayItem extends React.Component {
     handleChange(event) {
         this.setState({freeRooms: event.target.value});
 
-        if( event.target.value < this.props.quantity){
+        if( event.target.value <= this.props.quantity){
             this.add(event.target.value);
         }
     }
@@ -45,7 +45,7 @@ class FreeRoomsDayItem extends React.Component {
         const { freeRooms } = this.state;
         this.setState({
           freeRoomsError:
-            freeRooms <= this.props.quantity ? null : 'El número de habitaciones libres debe ser menor de ' + this.props.freeRooms
+            (freeRooms <= this.props.quantity || !freeRooms) ? null : 'El número de habitaciones libres debe ser menor de ' + this.props.freeRooms
         });
       }
 

@@ -49,7 +49,7 @@ class TariffDayItem extends React.Component {
         const { price } = this.state;
         this.setState({
           priceError:
-            (price >= this.props.minPrice && price <= this.props.maxPrice   ) ? null : 'El precio debe estar entre ' + this.props.minPrice + ' y ' + this.props.maxPrice
+            ((price >= this.props.minPrice && price <= this.props.maxPrice) || !price ) ? null : 'El precio debe estar entre ' + this.props.minPrice + ' y ' + this.props.maxPrice
         });
       }
 

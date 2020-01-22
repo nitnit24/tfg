@@ -86,10 +86,9 @@ public class SendEmail {
 			msg += "</table>";
 			msg += " </div>";
 			
-			msg +="<br/> <br/> <b> <h3 style=\"text-align:center;\" > Habitaciones reservadas: </h3> </b>";
-			
-			
+			msg += "<br/>";
 			msg += "<div style=\"text-align:center;background-color:Lavender;\">";
+			msg +="<b>  <br/> <h2 style=\"text-align:center;\" > Habitaciones reservadas: </h2> </b>";
 			msg += " <br/> <table  align=\"center\">";
 			for (BookingRoom bookingRoom : booking.getBookingRooms()) {
 				msg += "<tr>";
@@ -101,7 +100,7 @@ public class SendEmail {
 				msg += "</tr>";
 			}
 			
-			msg += "<br/><br/> <h3 style=\"text-align:center;\" >Precio total: " + "<b>" + booking.getTotalPrice().toString() + " &#8364;"  + "</b> </h3>";
+			msg += "<br/><br/> <h2 style=\"text-align:center;\" >Precio total: " + "<b>" + booking.getTotalPrice().toString() + " &#8364;"  + "</b> </h2>";
 			msg += "</div>";
 			
 			msg+= "<br/> <br/> <h4 style=\"text-align:center;\" >Puede acceder para ver su reserva completa indicando los siguientes datos: </h4>";
