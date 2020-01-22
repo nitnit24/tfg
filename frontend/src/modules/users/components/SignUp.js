@@ -10,9 +10,10 @@ const initialState = {
     userName: '',
     password: '',
     confirmPassword: '',
-    firstName: '',
-    lastName: '',
+    hotelName: '',
+    address: '',
     email: '',
+    phone: '',
     backendErrors: null,
     passwordsDoNotMatch: false
 };
@@ -44,17 +45,22 @@ class SignUp extends React.Component {
     
     }
 
-    handleFirstNameChange(event) {
-        this.setState({firstName: event.target.value});
+    handleHotelNameChange(event) {
+        this.setState({hotelName: event.target.value});
     }
 
-    handleLastNameChange(event) {
-        this.setState({lastName: event.target.value});
+    handleAddressChange(event) {
+        this.setState({address: event.target.value});
     }
 
     handleEmailChange(event) {
         this.setState({email: event.target.value});
     }
+
+    handlePhoneChange(event) {
+        this.setState({phone: event.target.value});
+    }
+
 
     handleSubmit(event) {
 
@@ -91,9 +97,10 @@ class SignUp extends React.Component {
         this.props.dispatch(actions.signUp(
             {userName: this.state.userName.trim(),
             password: this.state.password,
-            firstName: this.state.firstName.trim(),
-            lastName: this.state.lastName.trim(),
-            email: this.state.email.trim()},
+            hotelName: this.state.hotelName.trim(),
+            address: this.state.address.trim(),
+            email: this.state.email.trim(),
+            phone: this.state.phone.trim()},
             () => this.props.history.push('/'),
             errors => this.setBackendErrors(errors)
         ));
@@ -166,13 +173,13 @@ class SignUp extends React.Component {
                                 </div>
                             </div>
                             <div className="form-group row">
-                                <label htmlFor="firstName" className="col-md-3 col-form-label">
-                                    <FormattedMessage id="project.global.fields.firstName"/>
+                                <label htmlFor="hotelName" className="col-md-3 col-form-label">
+                                    <FormattedMessage id="project.global.fields.hotelName"/>
                                 </label>
                                 <div className="col-md-4">
-                                    <input type="text" id="firstName" className="form-control"
-                                        value={this.state.firstName}
-                                        onChange={(e) => this.handleFirstNameChange(e)}
+                                    <input type="text" id="hotelName" className="form-control"
+                                        value={this.state.hotelName}
+                                        onChange={(e) => this.handleHotelNameChange(e)}
                                         required/>
                                     <div className="invalid-feedback">
                                         <FormattedMessage id='project.global.validator.required'/>
@@ -180,13 +187,13 @@ class SignUp extends React.Component {
                                 </div>
                             </div>
                             <div className="form-group row">
-                                <label htmlFor="lastName" className="col-md-3 col-form-label">
-                                    <FormattedMessage id="project.global.fields.lastName"/>
+                                <label htmlFor="address" className="col-md-3 col-form-label">
+                                    <FormattedMessage id="project.global.fields.address"/>
                                 </label>
                                 <div className="col-md-4">
-                                    <input type="text" id="lastName" className="form-control"
-                                        value={this.state.lastName}
-                                        onChange={(e) => this.handleLastNameChange(e)}
+                                    <input type="text" id="address" className="form-control"
+                                        value={this.state.address}
+                                        onChange={(e) => this.handleAddressChange(e)}
                                         required/>
                                     <div className="invalid-feedback">
                                         <FormattedMessage id='project.global.validator.required'/>
@@ -204,6 +211,20 @@ class SignUp extends React.Component {
                                         required/>
                                     <div className="invalid-feedback">
                                         <FormattedMessage id='project.global.validator.email'/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="form-group row">
+                                <label htmlFor="phone" className="col-md-3 col-form-label">
+                                    <FormattedMessage id="project.global.fields.phone"/>
+                                </label>
+                                <div className="col-md-4">
+                                    <input type="text" id="phone" className="form-control"
+                                        value={this.state.phone}
+                                        onChange={(e) => this.handlePhoneChange(e)}
+                                        required/>
+                                    <div className="invalid-feedback">
+                                        <FormattedMessage id='project.global.validator.required'/>
                                     </div>
                                 </div>
                             </div>
