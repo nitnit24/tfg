@@ -1,6 +1,8 @@
 package es.udc.tfg.backend.model.services;
 
-import java.io.File;
+import static es.udc.tfg.backend.model.entities.SendEmail.sendMsgBooking;
+import static es.udc.tfg.backend.model.entities.SendEmail.sendMsgFreeRoomsZero;
+
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
@@ -15,7 +17,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-
 import es.udc.tfg.backend.model.common.exceptions.InstanceNotFoundException;
 import es.udc.tfg.backend.model.entities.Booking;
 import es.udc.tfg.backend.model.entities.BookingDao;
@@ -29,7 +30,6 @@ import es.udc.tfg.backend.model.entities.SaleRoom;
 import es.udc.tfg.backend.model.entities.SaleRoomDao;
 import es.udc.tfg.backend.model.entities.SaleRoomTariff;
 import es.udc.tfg.backend.model.entities.SaleRoomTariffDao;
-import static es.udc.tfg.backend.model.entities.SendEmail.sendMsgBooking;
 import es.udc.tfg.backend.model.entities.State;
 import es.udc.tfg.backend.model.entities.Tariff;
 import es.udc.tfg.backend.model.entities.TariffDao;
@@ -184,10 +184,11 @@ public class BookingServiceImpl implements BookingService {
 		return sRandom;
 	}
 
-	@Transactional (rollbackFor= {ThereAreNotEnoughtFreeRoomsException.class})
+	@Transactional (rollbackFor= {ThereAreNotEnoughtFreeRoomsException.class, InstanceNotFoundException.class,
+			UnsupportedEncodingException.class, IOException.class})
 	public Booking makeBooking(List<BookingRoomSummary> bookingRoomSummarys, Calendar startDate, Calendar endDate,
 			String name, String surName, String phone, String email, String petition)
-			throws InstanceNotFoundException, ThereAreNotEnoughtFreeRoomsException, UnsupportedEncodingException, IOException {
+			throws InstanceNotFoundException, ThereAreNotEnoughtFreeRoomsException, UnsupportedEncodingException, IOException{
 
 		//try {
 			Calendar now = Calendar.getInstance();
@@ -239,6 +240,10 @@ public class BookingServiceImpl implements BookingService {
 
 					newBookingRoom.addBookingDay(newBookingDay);
 					bookingDayDao.save(newBookingDay);
+					
+					if (saleRoom.get().getFreeRooms() == 0) {
+						sendMsgFreeRoomsZero(saleRoom.get().getRoomType(), saleRoom.get().getDate());
+					}
 
 				}
 
@@ -255,9 +260,6 @@ public class BookingServiceImpl implements BookingService {
 
 			newBooking.setTotalPrice(totalPrice);
 			bookingDao.save(newBooking);
-			
-			String to = "natalia.iglesiast@gmail.com";
-			String type = "Reserva";
 			
 			sendMsgBooking(newBooking);
 
