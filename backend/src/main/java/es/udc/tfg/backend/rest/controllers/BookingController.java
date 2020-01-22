@@ -7,12 +7,12 @@ import static es.udc.tfg.backend.rest.dtos.RoomTypeConversor.toRoomTypeDtos;
 import static es.udc.tfg.backend.rest.dtos.SaleRoomTariffConversor.toSaleRoomTariffDtos;
 import static es.udc.tfg.backend.rest.dtos.TariffConversor.toTariffDtos;
 
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -49,7 +49,7 @@ public class BookingController {
 	@PostMapping("/makeBooking")
 	public BookingDto makeBooking(
 			@Validated @RequestBody BookingParamsDto params
-			) throws InstanceNotFoundException, ThereAreNotEnoughtFreeRoomsException{
+			) throws InstanceNotFoundException, ThereAreNotEnoughtFreeRoomsException, UnsupportedEncodingException, IOException{
 		Calendar startCalendar = Calendar.getInstance();
 		startCalendar.setTimeInMillis(params.getStartDate());
 		Calendar endCalendar = Calendar.getInstance();

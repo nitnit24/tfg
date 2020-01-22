@@ -1,5 +1,7 @@
 package es.udc.tfg.backend.model.services;
 
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.Calendar;
 import java.util.List;
 
@@ -19,7 +21,7 @@ public interface BookingService {
 	List<SaleRoomTariff> findSaleRoomTariffsByFreeRoom(Calendar startDate, Calendar endDate, Long roomTypeId, Long tariffId);
 
 	Booking makeBooking(List<BookingRoomSummary> bookingRoomSummarys, Calendar startDate, Calendar endDate, String name, 
-			String surName, String phone, String email, String petition) throws InstanceNotFoundException, ThereAreNotEnoughtFreeRoomsException;
+			String surName, String phone, String email, String petition) throws InstanceNotFoundException, ThereAreNotEnoughtFreeRoomsException, UnsupportedEncodingException, IOException;
 	
 	Booking findByLocator(String locator) throws InstanceNotFoundException;
 	

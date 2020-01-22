@@ -1,5 +1,8 @@
 package es.udc.tfg.backend.model.services;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -26,6 +29,7 @@ import es.udc.tfg.backend.model.entities.SaleRoom;
 import es.udc.tfg.backend.model.entities.SaleRoomDao;
 import es.udc.tfg.backend.model.entities.SaleRoomTariff;
 import es.udc.tfg.backend.model.entities.SaleRoomTariffDao;
+import static es.udc.tfg.backend.model.entities.SendEmail.sendMsgBooking;
 import es.udc.tfg.backend.model.entities.State;
 import es.udc.tfg.backend.model.entities.Tariff;
 import es.udc.tfg.backend.model.entities.TariffDao;
@@ -183,7 +187,7 @@ public class BookingServiceImpl implements BookingService {
 	@Transactional (rollbackFor= {ThereAreNotEnoughtFreeRoomsException.class})
 	public Booking makeBooking(List<BookingRoomSummary> bookingRoomSummarys, Calendar startDate, Calendar endDate,
 			String name, String surName, String phone, String email, String petition)
-			throws InstanceNotFoundException, ThereAreNotEnoughtFreeRoomsException {
+			throws InstanceNotFoundException, ThereAreNotEnoughtFreeRoomsException, UnsupportedEncodingException, IOException {
 
 		//try {
 			Calendar now = Calendar.getInstance();
@@ -251,6 +255,11 @@ public class BookingServiceImpl implements BookingService {
 
 			newBooking.setTotalPrice(totalPrice);
 			bookingDao.save(newBooking);
+			
+			String to = "natalia.iglesiast@gmail.com";
+			String type = "Reserva";
+			
+			sendMsgBooking(newBooking);
 
 			return newBooking;
 

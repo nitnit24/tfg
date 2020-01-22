@@ -1,5 +1,6 @@
 package es.udc.tfg.backend.model.entities;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 
@@ -7,6 +8,9 @@ public class RoomTable {
 
 	private Long roomTypeId;
 	private String roomTypeName;
+	private int quantity;
+	private BigDecimal minPrice;
+	private BigDecimal maxPrice;
 	private List<RoomTableDay> roomTableDays;
 	private List<Tariff> tariffs;
 
@@ -16,12 +20,20 @@ public class RoomTable {
 	}
 
 
-	public RoomTable(Long roomTypeId, String roomTypeName, List<Tariff> tariffs, List<RoomTableDay> roomTableDays) {
+	public RoomTable(Long roomTypeId, String roomTypeName, int quantity, BigDecimal minPrice, BigDecimal maxPrice,
+		 List<Tariff> tariffs, List<RoomTableDay> roomTableDays) {
+	
 		this.roomTypeId = roomTypeId;
 		this.roomTypeName = roomTypeName;
+		this.quantity = quantity;
+		this.minPrice = minPrice;
+		this.maxPrice = maxPrice;
 		this.roomTableDays = roomTableDays;
 		this.tariffs = tariffs;
 	}
+
+
+
 
 
 	public Long getRoomTypeId() {
@@ -41,6 +53,36 @@ public class RoomTable {
 
 	public void setRoomTypeName(String roomTypeName) {
 		this.roomTypeName = roomTypeName;
+	}
+
+
+	public int getQuantity() {
+		return quantity;
+	}
+
+
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
+	}
+
+
+	public BigDecimal getMinPrice() {
+		return minPrice;
+	}
+
+
+	public void setMinPrice(BigDecimal minPrice) {
+		this.minPrice = minPrice;
+	}
+
+
+	public BigDecimal getMaxPrice() {
+		return maxPrice;
+	}
+
+
+	public void setMaxPrice(BigDecimal maxPrice) {
+		this.maxPrice = maxPrice;
 	}
 
 

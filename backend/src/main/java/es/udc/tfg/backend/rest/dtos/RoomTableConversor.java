@@ -33,8 +33,8 @@ public class RoomTableConversor {
 		
 		List<TariffDto> tariffs = roomTable.getTariffs().stream().map(i -> toTariffDto(i)).collect(Collectors.toList());
 		
-		 return new RoomTableDto(roomTable.getRoomTypeId(), roomTable.getRoomTypeName(),
-				 roomTableDays, tariffs);
+		 return new RoomTableDto(roomTable.getRoomTypeId(), roomTable.getRoomTypeName(), roomTable.getQuantity(),
+				 roomTable.getMinPrice(), roomTable.getMaxPrice(), roomTableDays, tariffs);
 		 
 	}
 	

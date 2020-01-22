@@ -2,6 +2,8 @@ package es.udc.tfg.backend.test.model.services;
 
 import static org.junit.Assert.assertEquals;
 
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -344,7 +346,7 @@ public class BookingServiceTest {
 	}
 	
 	@Test
-	public void testMakeBooking() throws DuplicateInstanceException, InstanceNotFoundException, PriceNotBetweenMinAndMaxValueException, FreeRoomsLessThanRoomTypeQuantityException, ThereAreNotEnoughtFreeRoomsException {
+	public void testMakeBooking() throws DuplicateInstanceException, InstanceNotFoundException, PriceNotBetweenMinAndMaxValueException, FreeRoomsLessThanRoomTypeQuantityException, ThereAreNotEnoughtFreeRoomsException, UnsupportedEncodingException, IOException {
 
 		Tariff newTariff = createTariff("name", "CODE", "description");
 		Tariff tariff = tariffService.addTariff(newTariff);
@@ -435,7 +437,7 @@ public class BookingServiceTest {
 	}
 	
 	@Test
-	public void testMakeBookingAndFindByLocator() throws DuplicateInstanceException, InstanceNotFoundException, PriceNotBetweenMinAndMaxValueException, FreeRoomsLessThanRoomTypeQuantityException, ThereAreNotEnoughtFreeRoomsException {
+	public void testMakeBookingAndFindByLocator() throws DuplicateInstanceException, InstanceNotFoundException, PriceNotBetweenMinAndMaxValueException, FreeRoomsLessThanRoomTypeQuantityException, ThereAreNotEnoughtFreeRoomsException, UnsupportedEncodingException, IOException {
 
 		Tariff newTariff = createTariff("name", "CODE", "description");
 		Tariff tariff = tariffService.addTariff(newTariff);
@@ -513,7 +515,7 @@ public class BookingServiceTest {
 	}
 	
 	@Test
-	public void testMakeBookingAndFindLocatorAndKey() throws DuplicateInstanceException, InstanceNotFoundException, PriceNotBetweenMinAndMaxValueException, FreeRoomsLessThanRoomTypeQuantityException, ThereAreNotEnoughtFreeRoomsException {
+	public void testMakeBookingAndFindLocatorAndKey() throws DuplicateInstanceException, InstanceNotFoundException, PriceNotBetweenMinAndMaxValueException, FreeRoomsLessThanRoomTypeQuantityException, ThereAreNotEnoughtFreeRoomsException, UnsupportedEncodingException, IOException {
 
 		Tariff newTariff = createTariff("name", "CODE", "description");
 		Tariff tariff = tariffService.addTariff(newTariff);
@@ -593,7 +595,7 @@ public class BookingServiceTest {
 	}
 	
 	@Test
-	public void testMakeBookingAndCancel() throws DuplicateInstanceException, InstanceNotFoundException, PriceNotBetweenMinAndMaxValueException, FreeRoomsLessThanRoomTypeQuantityException, ThereAreNotEnoughtFreeRoomsException {
+	public void testMakeBookingAndCancel() throws DuplicateInstanceException, InstanceNotFoundException, PriceNotBetweenMinAndMaxValueException, FreeRoomsLessThanRoomTypeQuantityException, ThereAreNotEnoughtFreeRoomsException, UnsupportedEncodingException, IOException {
 
 		Tariff newTariff = createTariff("name", "CODE", "description");
 		Tariff tariff = tariffService.addTariff(newTariff);
@@ -660,7 +662,7 @@ public class BookingServiceTest {
 	
 	
 	@Test
-	public void testMakeBookingAndFind() throws DuplicateInstanceException, InstanceNotFoundException, PriceNotBetweenMinAndMaxValueException, FreeRoomsLessThanRoomTypeQuantityException, ThereAreNotEnoughtFreeRoomsException {
+	public void testMakeBookingAndFind() throws DuplicateInstanceException, InstanceNotFoundException, PriceNotBetweenMinAndMaxValueException, FreeRoomsLessThanRoomTypeQuantityException, ThereAreNotEnoughtFreeRoomsException, UnsupportedEncodingException, IOException {
 
 		Tariff newTariff = createTariff("name", "CODE", "description");
 		Tariff tariff = tariffService.addTariff(newTariff);

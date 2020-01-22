@@ -149,7 +149,8 @@ public class SaleRoomTariffServiceImpl implements SaleRoomTariffService {
 			tariffs.iterator().forEachRemaining(tariffsList::add);
 	  
 	        
-			roomTables.add(new RoomTable(roomType.getId(), roomType.getName(),tariffsList, roomTableDays));
+			roomTables.add(new RoomTable(roomType.getId(), roomType.getName(), roomType.getQuantity(),
+					roomType.getMinPrice(), roomType.getMaxPrice(), tariffsList, roomTableDays));
 		}
 		
 		return roomTables;

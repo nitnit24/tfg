@@ -64,6 +64,7 @@ class TablePanel extends React.Component {
                                             key={roomTable.roomTableDays.indexOf(roomTableDay)}
                                              day={roomTableDay.day}
                                              roomTypeId={roomTable.roomTypeId} 
+                                             quantity={roomTable.quantity}
                                              freeRooms={roomTableDay.freeRooms}
                                         />
                                      )} 
@@ -78,6 +79,8 @@ class TablePanel extends React.Component {
                                         key={roomTable.roomTableDays.indexOf(roomTableDay)}
                                         day={roomTableDay.day} 
                                         roomTypeId={roomTable.roomTypeId}  
+                                        minPrice = {roomTable.minPrice}
+                                        maxPrice = {roomTable.maxPrice}
                                         tariffId={roomTableDay.roomTableTariffs[roomTable.tariffs.indexOf(tariff)].tariffId}
                                         price={roomTableDay.roomTableTariffs[roomTable.tariffs.indexOf(tariff)].price}
                                         />

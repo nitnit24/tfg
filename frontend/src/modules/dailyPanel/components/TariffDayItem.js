@@ -4,8 +4,10 @@ import '../dailyPanel.css';
 import {connect} from 'react-redux';
 import * as actions from '../actions';
 
+
 const initialState = {
     price: '',
+    priceError: '',
     
     backendErrors: null
 };
@@ -30,30 +32,43 @@ class TariffDayItem extends React.Component {
         const tariffId = this.props.tariffId;
 
         this.props.uploadTariffPrice(price, tariffId, roomTypeId, day,
-          null,
+        null,
         errors => this.setBackendErrors(errors))
+        
     }
 
     handleChange(event) {
-        this.setState({price: event.target.value})
-        this.add(event.target.value);
+        this.setState({price: event.target.value}, () => {this.validatePrice});
+
+        if((this.props.minPrice <= event.target.value) && (event.target.value <= this.props.maxPrice )){
+            this.add(event.target.value);
+        }
     }
+
+    validatePrice = () => {
+        const { price } = this.state;
+        this.setState({
+          priceError:
+            (price >= this.props.minPrice && price <= this.props.maxPrice   ) ? null : 'El precio debe estar entre ' + this.props.minPrice + ' y ' + this.props.maxPrice
+        });
+      }
 
     setBackendErrors(backendErrors) {
         this.setState({backendErrors});
     }
 
     render(){
-
         return (
             <td className= "p-0" style={{width: '2.6%'}}>
-                <input type="text" className="border-0 table-input text-center" 
+                 <input type="text"
+                    className={` border-0 table-input text-center  ${this.state.priceError ? ' bg-danger text-white' : ''}`}
                     value={this.state.price}
                     onChange={(e) => this.handleChange(e)} 
-                    min= "0"  
-                />
+                    onBlur={this.validatePrice}
+                     data-toggle="tooltip" data-placement="right" title={this.state.priceError} 
+                /> 
             </td>
-
+            
         );
     }
 }
@@ -61,7 +76,6 @@ class TariffDayItem extends React.Component {
 
 
 const mapStateToProps = (state) => ({
-
 });
 
 const mapDispatchToProps = {

@@ -5,7 +5,7 @@ import React from 'react';
 
 const initialState = {
     freeRooms: '',
-
+    freeRoomsError: '',
     backendErrors: null
 }
 
@@ -30,15 +30,24 @@ class FreeRoomsDayItem extends React.Component {
         this.props.uploadFreeRooms(roomTypeId, date, freeRooms,
              null,
              errors => this.setBackendErrors(errors))
-        // backend.dailyPanelService.addSaleRoom(roomTypeId, date, freeRooms,
-        // null,
-        // errors => this.setBackendErrors(errors))
+
     }
 
     handleChange(event) {
         this.setState({freeRooms: event.target.value});
-        this.add(event.target.value);
+
+        if( event.target.value < this.props.quantity){
+            this.add(event.target.value);
+        }
     }
+
+    validateFreeRooms = () => {
+        const { freeRooms } = this.state;
+        this.setState({
+          freeRoomsError:
+            freeRooms <= this.props.quantity ? null : 'El número de habitaciones libres debe ser menor de ' + this.props.freeRooms
+        });
+      }
 
     setBackendErrors(backendErrors) {
         this.setState({backendErrors});
@@ -49,12 +58,12 @@ class FreeRoomsDayItem extends React.Component {
         return (
             <td className = "p-0" style={{width: '2.6%'}}>
                 <form >
-                <input type="text" className=" border-0 table-input text-center" 
+                <input type="text" 
+                   className={` border-0 table-input text-center  ${this.state.freeRoomsError ? ' bg-danger text-white' : ''}`}
                     value={this.state.freeRooms}  
                     onChange={(e) => this.handleChange(e)} 
-                    autoFocus
-                    min= "0" 
-                    data-toggle="tooltip" data-placement="right" title="Tooltip on right"   
+                    onBlur={this.validateFreeRooms}
+                    data-toggle="tooltip" data-placement="right" title={this.state.freeRoomsError}  
                 />
                 </form>
             </td>
