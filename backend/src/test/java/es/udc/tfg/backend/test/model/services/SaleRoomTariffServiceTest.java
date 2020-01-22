@@ -22,12 +22,14 @@ import es.udc.tfg.backend.model.entities.SaleRoom;
 import es.udc.tfg.backend.model.entities.SaleRoomTariff;
 import es.udc.tfg.backend.model.entities.SaleRoomTariffDao;
 import es.udc.tfg.backend.model.entities.Tariff;
+import es.udc.tfg.backend.model.entities.User;
 import es.udc.tfg.backend.model.services.FreeRoomsLessThanRoomTypeQuantityException;
 import es.udc.tfg.backend.model.services.PriceNotBetweenMinAndMaxValueException;
 import es.udc.tfg.backend.model.services.RoomTypeService;
 import es.udc.tfg.backend.model.services.SaleRoomService;
 import es.udc.tfg.backend.model.services.SaleRoomTariffService;
 import es.udc.tfg.backend.model.services.TariffService;
+import es.udc.tfg.backend.model.services.UserService;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -50,24 +52,41 @@ public class SaleRoomTariffServiceTest {
 	
 	@Autowired
 	private SaleRoomTariffDao saleRoomTariffDao;
+	
+	@Autowired
+	private UserService userService;
 
-	private Tariff createTariff(String name, String code, String description) throws DuplicateInstanceException {
-		return new Tariff(name, code, description);
+	private User signUpUser(String userName) {
+		
+		User user = new User(userName, "password", "hotelName", "address", userName + "@" + userName + ".com", "666666666");
+		
+		try {
+			userService.signUp(user);
+		} catch (DuplicateInstanceException e) {
+			throw new RuntimeException(e);
+		}
+		
+		return user;
+		
+	}
+
+	private Tariff createTariff(User user, String name, String code, String description) throws DuplicateInstanceException {
+		return new Tariff(user, name, code, description);
 	}
 	
-	private RoomType createRoomType(String name,String description, int capacity, int quantity, BigDecimal minPrice, BigDecimal maxPrice) 
+	private RoomType createRoomType(User user, String name,String description, int capacity, int quantity, BigDecimal minPrice, BigDecimal maxPrice) 
 			throws DuplicateInstanceException {
-		return new RoomType(name,description, capacity,quantity, minPrice, maxPrice);
+		return new RoomType(user, name,description, capacity,quantity, minPrice, maxPrice);
 	}
 	
 	@Test
 	public void testAdd() throws DuplicateInstanceException, InstanceNotFoundException, PriceNotBetweenMinAndMaxValueException, FreeRoomsLessThanRoomTypeQuantityException {
+		User user = signUpUser("user");
+		Tariff newTariff = createTariff(user, "name", "CODE", "description");
+		Tariff tariff = tariffService.addTariff(user.getId(), newTariff);
 
-		Tariff newTariff = createTariff("name", "CODE", "description");
-		Tariff tariff = tariffService.addTariff(newTariff);
-
-		RoomType roomType = createRoomType("name","description", 2, 10, new BigDecimal(30), new BigDecimal(100));
-		roomTypeService.addRoomType(roomType);
+		RoomType roomType = createRoomType(user, "name","description", 2, 10, new BigDecimal(30), new BigDecimal(100));
+		roomTypeService.addRoomType(user.getId(), roomType);
 
 		Calendar today = Calendar.getInstance();
 
@@ -116,12 +135,13 @@ public class SaleRoomTariffServiceTest {
 
 	@Test(expected = PriceNotBetweenMinAndMaxValueException.class)
 	public void testAddPriceNotBetweenMinAndMaxValue() throws DuplicateInstanceException, InstanceNotFoundException, PriceNotBetweenMinAndMaxValueException, FreeRoomsLessThanRoomTypeQuantityException {
+		User user = signUpUser("user");
+		
+		Tariff newTariff = createTariff(user, "name", "CODE", "description");
+		Tariff tariff = tariffService.addTariff(user.getId(), newTariff);
 
-		Tariff newTariff = createTariff("name", "CODE", "description");
-		Tariff tariff = tariffService.addTariff(newTariff);
-
-		RoomType roomType = createRoomType("name","description", 2, 10, new BigDecimal(30), new BigDecimal(100));
-		roomTypeService.addRoomType(roomType);
+		RoomType roomType = createRoomType(user, "name","description", 2, 10, new BigDecimal(30), new BigDecimal(100));
+		roomTypeService.addRoomType(user.getId(), roomType);
 
 		Calendar today = Calendar.getInstance();
 
@@ -138,12 +158,12 @@ public class SaleRoomTariffServiceTest {
 	
 	@Test(expected = PriceNotBetweenMinAndMaxValueException.class)
 	public void testAddPriceNotBetweenMinAndMaxValue2() throws DuplicateInstanceException, InstanceNotFoundException, PriceNotBetweenMinAndMaxValueException, FreeRoomsLessThanRoomTypeQuantityException {
+		User user = signUpUser("user");
+		Tariff newTariff = createTariff(user, "name", "CODE", "description");
+		Tariff tariff = tariffService.addTariff(user.getId(),newTariff);
 
-		Tariff newTariff = createTariff("name", "CODE", "description");
-		Tariff tariff = tariffService.addTariff(newTariff);
-
-		RoomType roomType = createRoomType("name","description", 2, 10, new BigDecimal(30), new BigDecimal(100));
-		roomTypeService.addRoomType(roomType);
+		RoomType roomType = createRoomType(user, "name","description", 2, 10, new BigDecimal(30), new BigDecimal(100));
+		roomTypeService.addRoomType(user.getId(), roomType);
 
 		Calendar today = Calendar.getInstance();
 
@@ -161,12 +181,13 @@ public class SaleRoomTariffServiceTest {
 	
 	@Test
 	public void testAddAndFindByTariffIdAndSaleRoomRoomTypeIdAndSaleRoomDate() throws InstanceNotFoundException, DuplicateInstanceException, PriceNotBetweenMinAndMaxValueException, FreeRoomsLessThanRoomTypeQuantityException {
+		User user = signUpUser("user");
+		
+		Tariff newTariff = createTariff(user, "name", "CODE", "description");
+		Tariff tariff = tariffService.addTariff(user.getId(), newTariff);
 
-		Tariff newTariff = createTariff("name", "CODE", "description");
-		Tariff tariff = tariffService.addTariff(newTariff);
-
-		RoomType roomType = createRoomType("name","description", 2, 10, new BigDecimal(30), new BigDecimal(100));
-		roomTypeService.addRoomType(roomType);
+		RoomType roomType = createRoomType(user, "name","description", 2, 10, new BigDecimal(30), new BigDecimal(100));
+		roomTypeService.addRoomType(user.getId(), roomType);
 
 		Calendar today = Calendar.getInstance();
 

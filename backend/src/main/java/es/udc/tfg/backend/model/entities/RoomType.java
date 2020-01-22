@@ -4,14 +4,18 @@ import java.math.BigDecimal;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class RoomType {
 
 	private Long id;
+	private User user;
 	private String name;
 	private String description;
 	private int capacity;
@@ -22,7 +26,8 @@ public class RoomType {
 	public RoomType() {
 	}
 
-	public RoomType(String name, String description, int capacity, int quantity, BigDecimal minPrice, BigDecimal maxPrice) {
+	public RoomType(User user, String name, String description, int capacity, int quantity, BigDecimal minPrice, BigDecimal maxPrice) {
+		this.user = user;
 		this.name = name;
 		this.description = description;
 		this.capacity = capacity;
@@ -49,6 +54,16 @@ public class RoomType {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	@ManyToOne(optional=false, fetch=FetchType.LAZY)
+	@JoinColumn(name= "userId")
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 	@Column(name = "typeName")

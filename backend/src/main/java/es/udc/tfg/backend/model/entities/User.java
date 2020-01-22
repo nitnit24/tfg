@@ -13,21 +13,21 @@ public class User {
 	private Long id;
 	private String userName;
 	private String password;
-	private String firstName;
-	private String lastName;
+	private String hotelName;
+	private String address;
 	private String email;
+	private String phone;
 	private RoleType role;
 
 	public User() {}
 
-	public User(String userName, String password, String firstName, String lastName, String email) {
-
+	public User(String userName, String password, String hotelName, String address, String email, String phone) {
 		this.userName = userName;
 		this.password = password;
-		this.firstName = firstName;
-		this.lastName = lastName;
+		this.hotelName = hotelName;
+		this.address = address;
 		this.email = email;
-		
+		this.phone = phone;
 	}
 
 	@Id
@@ -56,20 +56,20 @@ public class User {
 		this.password = password;
 	}
 
-	public String getFirstName() {
-		return firstName;
+	public String getHotelName() {
+		return hotelName;
 	}
 
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
+	public void setHotelName(String hotelName) {
+		this.hotelName = hotelName;
 	}
 
-	public String getLastName() {
-		return lastName;
+	public String getAddress() {
+		return address;
 	}
 
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
+	public void setAddress(String address) {
+		this.address = address;
 	}
 
 	public String getEmail() {
@@ -78,6 +78,14 @@ public class User {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
 	}
 
 	public RoleType getRole() {

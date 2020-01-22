@@ -1,7 +1,5 @@
 package es.udc.tfg.backend.rest.dtos;
 
-import java.util.Calendar;
-
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
@@ -22,12 +20,6 @@ public class SaleRoomDto {
 	public SaleRoomDto(Long saleRoomId, Long date, int freeRooms, Long roomTypeId) {
 		this.saleRoomId = saleRoomId;
 		this.date = date;
-//		if (date != null) {
-//			this.date.set(Calendar.MILLISECOND, 0);
-//			this.date.set(Calendar.SECOND, 0);
-//			this.date.set(Calendar.MINUTE, 0);
-//			this.date.set(Calendar.HOUR_OF_DAY, 00);
-//		}
 		this.freeRooms = freeRooms;
 		this.roomTypeId = roomTypeId;
 	}
@@ -43,22 +35,12 @@ public class SaleRoomDto {
 
 	@NotNull
 	public Long getDate() {
-//		this.date.set(Calendar.MILLISECOND, 0);
-//		this.date.set(Calendar.SECOND, 0);
-//		this.date.set(Calendar.MINUTE, 0);
-//		this.date.set(Calendar.HOUR_OF_DAY, 00);
 		return date;
 	}
 
 
 	public void setDate(Long date) {
 		this.date = date;
-//		if (date != null) {
-//			this.date.set(Calendar.MILLISECOND, 0);
-//			this.date.set(Calendar.SECOND, 0);
-//			this.date.set(Calendar.MINUTE, 0);
-//			this.date.set(Calendar.HOUR_OF_DAY, 00);
-//		}
 	}
 
 

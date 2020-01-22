@@ -8,11 +8,11 @@ import es.udc.tfg.backend.model.entities.Tariff;
 
 public interface TariffService {
 
-	Tariff addTariff(Tariff tariff) throws DuplicateInstanceException;
+	Tariff addTariff(Long userId, Tariff tariff) throws DuplicateInstanceException, InstanceNotFoundException;
 
-	Tariff updateTariff(Tariff tariff) throws InstanceNotFoundException;
+	Tariff updateTariff(Long userId, Tariff tariff) throws InstanceNotFoundException, PermissionException;
 
-	void removeTariff(Long tariffId) throws InstanceNotFoundException;
+	void removeTariff(Long userId, Long tariffId) throws InstanceNotFoundException, PermissionException;
 
 	Tariff findTariffById(Long id) throws InstanceNotFoundException;
 

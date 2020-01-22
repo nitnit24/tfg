@@ -12,20 +12,22 @@ public class UserDto {
 	private Long id;
 	private String userName;
 	private String password;
-	private String firstName;
-	private String lastName;
+	private String hotelName;
+	private String address;
 	private String email;
+	private String phone;
 	private String role;
 
 	public UserDto() {}
 
-	public UserDto(Long id, String userName, String firstName, String lastName, String email, String role) {
+	public UserDto(Long id, String userName, String hotelName, String address, String email, String phone, String role) {
 
 		this.id = id;
 		this.userName = userName != null ? userName.trim() : null;
-		this.firstName = firstName.trim();
-		this.lastName = lastName.trim();
+		this.hotelName = hotelName.trim();
+		this.address = address.trim();
 		this.email = email.trim();
+		this.phone = phone.trim();
 		this.role = role;
 		
 	}
@@ -60,22 +62,22 @@ public class UserDto {
 
 	@NotNull(groups={AllValidations.class, UpdateValidations.class})
 	@Size(min=1, max=60, groups={AllValidations.class, UpdateValidations.class})
-	public String getFirstName() {
-		return firstName;
+	public String getHotelName() {
+		return hotelName;
 	}
 
-	public void setFirstName(String firstName) {
-		this.firstName = firstName.trim();
+	public void setHotelName(String hotelName) {
+		this.hotelName = hotelName.trim();
 	}
 
 	@NotNull(groups={AllValidations.class, UpdateValidations.class})
 	@Size(min=1, max=60, groups={AllValidations.class, UpdateValidations.class})
-	public String getLastName() {
-		return lastName;
+	public String getAddress() {
+		return address;
 	}
 
-	public void setLastName(String lastName) {
-		this.lastName = lastName.trim();
+	public void setAddress(String address) {
+		this.address = address.trim();
 	}
 
 	@NotNull(groups={AllValidations.class, UpdateValidations.class})
@@ -88,6 +90,16 @@ public class UserDto {
 		this.email = email.trim();
 	}
 
+	@NotNull(groups={AllValidations.class, UpdateValidations.class})
+	@Size(min=1, max=60, groups={AllValidations.class, UpdateValidations.class})
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone.trim();
+	}
+	
 	public String getRole() {
 		return role;
 	}

@@ -13,6 +13,8 @@ import es.udc.tfg.backend.model.common.exceptions.DuplicateInstanceException;
 import es.udc.tfg.backend.model.common.exceptions.InstanceNotFoundException;
 import es.udc.tfg.backend.model.entities.RoomType;
 import es.udc.tfg.backend.model.entities.RoomTypeDao;
+import es.udc.tfg.backend.model.entities.User;
+import es.udc.tfg.backend.model.entities.UserDao;
 
 @Service
 @Transactional
@@ -20,14 +22,24 @@ public class RoomTypeServiceImpl implements RoomTypeService {
 
 	@Autowired
 	private RoomTypeDao roomTypeDao;
+	
+	@Autowired
+	private UserDao userDao;
 
 	@Override
-	public RoomType addRoomType(RoomType roomType) throws DuplicateInstanceException {
+	public RoomType addRoomType(Long userId, RoomType roomType) throws DuplicateInstanceException, InstanceNotFoundException {
 
+		Optional<User> existingUser = userDao.findById(userId);
+		
+		if (!existingUser.isPresent()) {
+			throw new InstanceNotFoundException("project.entities.user", userId);
+		}
+		
 		if (roomTypeDao.existsByName(roomType.getName())) {
 			throw new DuplicateInstanceException("project.entities.roomType", roomType.getName());
 		}
-
+		
+		roomType.setUser(existingUser.get());
 		roomTypeDao.save(roomType);
 
 		return roomType;
@@ -48,7 +60,7 @@ public class RoomTypeServiceImpl implements RoomTypeService {
 	}
 	
 	@Override
-	public RoomType updateRoomType(RoomType roomType) throws InstanceNotFoundException {
+	public RoomType updateRoomType(Long userId, RoomType roomType) throws InstanceNotFoundException, PermissionException {
 
 		Optional<RoomType> existingRoomTypeItem = roomTypeDao.findById(roomType.getId());
 
@@ -56,6 +68,10 @@ public class RoomTypeServiceImpl implements RoomTypeService {
 			throw new InstanceNotFoundException("project.entities.roomType", roomType.getId());
 		}
 
+		if (!existingRoomTypeItem.get().getUser().getId().equals(userId)) {
+			throw new PermissionException();
+		}
+		
 		existingRoomTypeItem.get().setName(roomType.getName());
 		existingRoomTypeItem.get().setDescription(roomType.getDescription());
 		existingRoomTypeItem.get().setCapacity(roomType.getCapacity());
@@ -69,11 +85,15 @@ public class RoomTypeServiceImpl implements RoomTypeService {
 	}
 	
 	@Override
-	public void removeRoomType(Long roomTypeId) throws InstanceNotFoundException {
+	public void removeRoomType(Long userId, Long roomTypeId) throws InstanceNotFoundException, PermissionException {
 		Optional<RoomType> existingRoomTypeItem = roomTypeDao.findById(roomTypeId);
 
 		if (!existingRoomTypeItem.isPresent()) {
 			throw new InstanceNotFoundException("project.entities.roomType", roomTypeId);
+		}
+		
+		if (!existingRoomTypeItem.get().getUser().getId().equals(userId)) {
+			throw new PermissionException();
 		}
 
 		roomTypeDao.delete(existingRoomTypeItem.get());

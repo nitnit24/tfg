@@ -1,6 +1,6 @@
 -- Indexes for primary keys have been explicitly created.
 
-DROP TABLE User;
+
 DROP TABLE BookingDay;
 DROP TABLE BookingRoom;
 DROP TABLE Booking;
@@ -8,15 +8,17 @@ DROP TABLE SaleRoomTariff;
 DROP TABLE Tariff;
 DROP TABLE SaleRoom;
 DROP TABLE RoomType;
+DROP TABLE User;
 
 
 CREATE TABLE User (
     id BIGINT NOT NULL AUTO_INCREMENT,
     userName VARCHAR(60) COLLATE latin1_bin NOT NULL,
     password VARCHAR(60) NOT NULL, 
-    firstName VARCHAR(60) NOT NULL,
-    lastName VARCHAR(60) NOT NULL, 
+    hotelName VARCHAR(60) COLLATE latin1_bin NOT NULL,
+    address VARCHAR(60) COLLATE latin1_bin NOT NULL, 
     email VARCHAR(60) NOT NULL,
+    phone VARCHAR(60) COLLATE latin1_bin NOT NULL, 
     role TINYINT NOT NULL,
     CONSTRAINT UserPK PRIMARY KEY (id),
     CONSTRAINT UserNameUniqueKey UNIQUE (userName)
@@ -27,16 +29,20 @@ CREATE INDEX UserIndexByUserName ON User (userName);
 
 CREATE TABLE Tariff (
     id BIGINT NOT NULL AUTO_INCREMENT,
+    userId BIGINT NOT NULL,
     tariffName VARCHAR(60) COLLATE latin1_bin NOT NULL,
     tariffCode VARCHAR(60) COLLATE latin1_bin NOT NULL,
     tariffDescription VARCHAR(240) COLLATE latin1_bin NOT NULL,
     CONSTRAINT TariffPK PRIMARY KEY (id),
     CONSTRAINT TariffNameUniqueKey UNIQUE (tariffName),
-    CONSTRAINT TariffCodeUniqueKey UNIQUE (tariffCode)
+    CONSTRAINT TariffCodeUniqueKey UNIQUE (tariffCode),
+    CONSTRAINT idUserFKTariff FOREIGN KEY(userId)
+        REFERENCES User (id)
 ) ENGINE = InnoDB;
 
 CREATE TABLE RoomType (
     id BIGINT NOT NULL AUTO_INCREMENT,
+    userId BIGINT NOT NULL,
     typeName VARCHAR(60) COLLATE latin1_bin NOT NULL,
     description VARCHAR(240) COLLATE latin1_bin,
     capacity SMALLINT NOT NULL,
@@ -44,7 +50,9 @@ CREATE TABLE RoomType (
     minPrice DECIMAL(11, 2),
     maxPrice DECIMAL(11, 2),
     CONSTRAINT RoomTypePK PRIMARY KEY (id),
-    CONSTRAINT TypeNameUniqueKey UNIQUE (typeName)
+    CONSTRAINT TypeNameUniqueKey UNIQUE (typeName),
+     CONSTRAINT idUserFKRoomType FOREIGN KEY(userId)
+        REFERENCES User (id)
 ) ENGINE = InnoDB;
 
 CREATE TABLE SaleRoom (

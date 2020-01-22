@@ -13,6 +13,8 @@ import es.udc.tfg.backend.model.common.exceptions.DuplicateInstanceException;
 import es.udc.tfg.backend.model.common.exceptions.InstanceNotFoundException;
 import es.udc.tfg.backend.model.entities.Tariff;
 import es.udc.tfg.backend.model.entities.TariffDao;
+import es.udc.tfg.backend.model.entities.User;
+import es.udc.tfg.backend.model.entities.UserDao;
 
 @Service
 @Transactional
@@ -20,10 +22,19 @@ public class TariffServiceImpl implements TariffService {
 
 	@Autowired
 	private TariffDao tariffDao;
+	
+	@Autowired
+	private UserDao userDao;
 
 	@Override
-	public Tariff addTariff(Tariff tariff) throws DuplicateInstanceException {
+	public Tariff addTariff(Long userId, Tariff tariff) throws DuplicateInstanceException, InstanceNotFoundException {
 
+		Optional<User> existingUser = userDao.findById(userId);
+		
+		if (!existingUser.isPresent()) {
+			throw new InstanceNotFoundException("project.entities.user", userId);
+		}
+		
 		if (tariffDao.existsByName(tariff.getName())) {
 			throw new DuplicateInstanceException("project.entities.tariff", tariff.getName());
 		}
@@ -31,7 +42,9 @@ public class TariffServiceImpl implements TariffService {
 		if (tariffDao.existsByCode(tariff.getCode())) {
 			throw new DuplicateInstanceException("project.entities.tariff", tariff.getCode());
 		}
-
+		
+		
+		tariff.setUser(existingUser.get());
 		tariffDao.save(tariff);
 
 		return tariff;
@@ -39,12 +52,16 @@ public class TariffServiceImpl implements TariffService {
 	}
 
 	@Override
-	public Tariff updateTariff(Tariff tariff) throws InstanceNotFoundException {
+	public Tariff updateTariff(Long userId, Tariff tariff) throws InstanceNotFoundException, PermissionException {
 
 		Optional<Tariff> existingTariffItem = tariffDao.findById(tariff.getId());
 
 		if (!existingTariffItem.isPresent()) {
 			throw new InstanceNotFoundException("project.entities.tariff", tariff.getId());
+		}
+		
+		if (!existingTariffItem.get().getUser().getId().equals(userId)) {
+			throw new PermissionException();
 		}
 
 		existingTariffItem.get().setName(tariff.getName());
@@ -58,11 +75,15 @@ public class TariffServiceImpl implements TariffService {
 	}
 
 	@Override
-	public void removeTariff(Long tariffId) throws InstanceNotFoundException {
+	public void removeTariff(Long userId, Long tariffId) throws InstanceNotFoundException, PermissionException {
 		Optional<Tariff> existingTariffItem = tariffDao.findById(tariffId);
 
 		if (!existingTariffItem.isPresent()) {
 			throw new InstanceNotFoundException("project.entities.tariff", tariffId);
+		}
+		
+		if (!existingTariffItem.get().getUser().getId().equals(userId)) {
+			throw new PermissionException();
 		}
 
 		tariffDao.delete(existingTariffItem.get());

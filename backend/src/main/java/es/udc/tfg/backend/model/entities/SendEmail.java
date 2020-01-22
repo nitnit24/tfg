@@ -165,6 +165,9 @@ public class SendEmail {
 						+ 1 + "-" + date.get(Calendar.YEAR) + " </b>";
 			 msg += "</h3> ";
 		
+			 msg += "<div style=\"text-align:center;\">";
+			 msg += "<a style=\\\"text-align:center;\\\" href=\'http://localhost:3000/dailyPanel/dailyPanel-management'><button>Revisa tu Panel Diario</button></a>";
+			 msg += "</div>";
 			
 			//Y por ultimo el texto.
 			message.setText(msg);

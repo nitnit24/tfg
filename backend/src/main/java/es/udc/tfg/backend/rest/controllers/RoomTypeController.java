@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -21,6 +22,7 @@ import org.springframework.http.HttpStatus;
 
 import es.udc.tfg.backend.model.common.exceptions.DuplicateInstanceException;
 import es.udc.tfg.backend.model.common.exceptions.InstanceNotFoundException;
+import es.udc.tfg.backend.model.services.PermissionException;
 import es.udc.tfg.backend.model.services.RoomTypeService;
 import es.udc.tfg.backend.rest.dtos.RoomTypeDto;
 
@@ -32,9 +34,10 @@ public class RoomTypeController {
 	private RoomTypeService roomTypeService;
 
 	@PostMapping("/addRoomType")
-	public RoomTypeDto addRoomType(@Validated({ RoomTypeDto.AllValidations.class }) @RequestBody RoomTypeDto roomTypeDto)
-			throws DuplicateInstanceException {
-		return toRoomTypeDto(roomTypeService.addRoomType(toRoomType(roomTypeDto)));
+	public RoomTypeDto addRoomType(@Validated({ RoomTypeDto.AllValidations.class }) @RequestBody RoomTypeDto roomTypeDto,
+			 @RequestAttribute Long userId)
+			throws DuplicateInstanceException, InstanceNotFoundException {
+		return toRoomTypeDto(roomTypeService.addRoomType(userId, toRoomType(roomTypeDto)));
 	}
 	
 	@GetMapping("/roomTypes")
@@ -45,15 +48,17 @@ public class RoomTypeController {
 
 	@PutMapping("/{id}")
 	public RoomTypeDto updateRoomType(@PathVariable("id") Long id,
-			 @RequestBody RoomTypeDto roomTypeDto) 
-					throws InstanceNotFoundException {
-		return toRoomTypeDto(roomTypeService.updateRoomType(toRoomType(roomTypeDto)));
+			 @RequestBody RoomTypeDto roomTypeDto,
+			 @RequestAttribute Long userId) 
+					throws InstanceNotFoundException, PermissionException {
+		return toRoomTypeDto(roomTypeService.updateRoomType(userId, toRoomType(roomTypeDto)));
 	}
 	
 	@DeleteMapping("/{id}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public void removeRoomType(@PathVariable("id") Long id) throws InstanceNotFoundException {
-		roomTypeService.removeRoomType(id);
+	public void removeRoomType(@PathVariable("id") Long id,  @RequestAttribute Long userId)
+			throws InstanceNotFoundException, PermissionException {
+		roomTypeService.removeRoomType(userId, id);
 	}
 
 	@GetMapping("/{id}")

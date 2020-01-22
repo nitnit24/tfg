@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import es.udc.tfg.backend.model.common.exceptions.DuplicateInstanceException;
 import es.udc.tfg.backend.model.common.exceptions.InstanceNotFoundException;
+import es.udc.tfg.backend.model.services.PermissionException;
 import es.udc.tfg.backend.model.services.TariffService;
 import es.udc.tfg.backend.rest.dtos.TariffDto;
 
@@ -32,9 +34,10 @@ public class TariffController {
 	private TariffService tariffService;
 
 	@PostMapping("/addTariff")
-	public TariffDto addTariff(@Validated({ TariffDto.AllValidations.class }) @RequestBody TariffDto tariffDto)
-			throws DuplicateInstanceException {
-		return toTariffDto(tariffService.addTariff(toTariff(tariffDto)));
+	public TariffDto addTariff(@Validated({ TariffDto.AllValidations.class }) @RequestBody TariffDto tariffDto,
+			@RequestAttribute Long userId)
+			throws DuplicateInstanceException, InstanceNotFoundException {
+		return toTariffDto(tariffService.addTariff(userId, toTariff(tariffDto)));
 	}
 	
 	@GetMapping("/tariffs")
@@ -45,16 +48,17 @@ public class TariffController {
 
 	@PutMapping("/{id}")
 	public TariffDto updateTariff(@PathVariable("id") Long id,
-			 @RequestBody TariffDto tariffDto) 
-					throws InstanceNotFoundException {
-		return toTariffDto(tariffService.updateTariff(toTariff(tariffDto)));
+			 @RequestBody TariffDto tariffDto,
+			 @RequestAttribute Long userId) 
+					throws InstanceNotFoundException, PermissionException {
+		return toTariffDto(tariffService.updateTariff(userId, toTariff(tariffDto)));
 	}
 
 	@DeleteMapping("/{id}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public void removeTariff(@PathVariable("id") Long id) 			
-			throws InstanceNotFoundException {
-		tariffService.removeTariff(id);
+	public void removeTariff(@PathVariable("id") Long id, @RequestAttribute Long userId) 			
+			throws InstanceNotFoundException, PermissionException {
+		tariffService.removeTariff(userId, id);
 	}
 
 	@GetMapping("/{id}")
