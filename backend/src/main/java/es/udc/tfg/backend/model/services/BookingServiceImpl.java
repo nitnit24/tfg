@@ -1,6 +1,8 @@
 package es.udc.tfg.backend.model.services;
 
-import java.io.File;
+import static es.udc.tfg.backend.model.entities.SendEmail.sendMsgBooking;
+import static es.udc.tfg.backend.model.entities.SendEmail.sendMsgFreeRoomsZero;
+
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
@@ -15,7 +17,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-
 import es.udc.tfg.backend.model.common.exceptions.InstanceNotFoundException;
 import es.udc.tfg.backend.model.entities.Booking;
 import es.udc.tfg.backend.model.entities.BookingDao;
@@ -29,8 +30,6 @@ import es.udc.tfg.backend.model.entities.SaleRoom;
 import es.udc.tfg.backend.model.entities.SaleRoomDao;
 import es.udc.tfg.backend.model.entities.SaleRoomTariff;
 import es.udc.tfg.backend.model.entities.SaleRoomTariffDao;
-import static es.udc.tfg.backend.model.entities.SendEmail.sendMsgBooking;
-import static es.udc.tfg.backend.model.entities.SendEmail.sendMsgFreeRoomsZero;
 import es.udc.tfg.backend.model.entities.State;
 import es.udc.tfg.backend.model.entities.Tariff;
 import es.udc.tfg.backend.model.entities.TariffDao;
