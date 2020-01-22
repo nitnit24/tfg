@@ -155,7 +155,7 @@ public class Booking {
 		this.date=date;
 	}
 
-
+	@Temporal(TemporalType.DATE)
 	public Calendar getStartDate() {
 		return startDate;
 	}
@@ -175,7 +175,7 @@ public class Booking {
 		this.duration = duration;
 	}
 
-
+	@Temporal(TemporalType.DATE)
 	public Calendar getEndDate() {
 		return endDate;
 	}

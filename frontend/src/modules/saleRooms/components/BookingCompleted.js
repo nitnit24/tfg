@@ -57,15 +57,17 @@ class BookingCompleted extends React.Component {
 
     render() {
 
+        const booking = this.props.lastBooking;
+
         return (
             <div className=" border rounded p-4">
                 <div >
-                    {this.props.lastBooking.state === "CONFIRMADA" &&
+                    {booking.state === "CONFIRMADA" &&
                     <h4 className= "text-center"><b>
                         <FormattedMessage id="project.saleRooms.BookingCompleted.title"/>
                     </b></h4>
                     }
-                    {this.props.lastBooking.state === "CANCELADA" &&
+                    {booking.state === "CANCELADA" &&
                     <h4 className= "text-center"><b>
                         <FormattedMessage id="project.saleRooms.BookingCompleted.title2"/>
                     </b></h4>
@@ -74,27 +76,27 @@ class BookingCompleted extends React.Component {
                     <div >
                         <div className="row justify-content-center">
                              <span> <FormattedMessage id="project.saleRooms.BookingCompleted.date"/></span>
-                             <span>: <FormattedDate value={new Date(this.props.lastBooking.date)}/> - <FormattedTime value={new Date(this.props.lastBooking.date)}/></span> 
+                             <span>: <FormattedDate value={new Date(booking.date)}/> - <FormattedTime value={new Date(booking.date)}/></span> 
                         </div>
-                        {this.props.lastBooking.state === "MODIFICADA" &&
+                        {booking.state === "MODIFICADA" &&
                             <div className="row justify-content-center">
                                 <span> <FormattedMessage id="project.saleRooms.BookingCompleted.updatelDate"/></span>
-                                <span>: <FormattedDate value={new Date(this.props.lastBooking.updateDate)}/> - <FormattedTime value={new Date(this.props.lastBooking.updateDate)}/></span> 
+                                <span>: <FormattedDate value={new Date(booking.updateDate)}/> - <FormattedTime value={new Date(booking.updateDate)}/></span> 
                             </div>
                         }
-                        {this.props.lastBooking.state === "CANCELADA" &&
+                        {booking.state === "CANCELADA" &&
                             <div className="row justify-content-center">
                                 <span> <FormattedMessage id="project.saleRooms.BookingCompleted.cancelDate"/></span>
-                                <span>: <FormattedDate value={new Date(this.props.lastBooking.cancelDate)}/> - <FormattedTime value={new Date(this.props.lastBooking.cancelDate)}/></span> 
+                                <span>: <FormattedDate value={new Date(booking.cancelDate)}/> - <FormattedTime value={new Date(booking.cancelDate)}/></span> 
                             </div>
                         }
                         <div className="row justify-content-center">
                             <h5> <FormattedMessage id="project.saleRooms.BookingCompleted.locator"/> </h5>
-                            <h5>: {this.props.lastBooking.locator}  </h5>
+                            <h5>: {booking.locator}  </h5>
                         </div>
                         <div className="row justify-content-center">
                             <h5>  <FormattedMessage id="project.saleRooms.BookingCompleted.key"/>  </h5>
-                            <h5>: {this.props.lastBooking.key}  </h5>
+                            <h5>: {booking.key}  </h5>
                         </div>
                     </div>
                 </div>
@@ -105,19 +107,19 @@ class BookingCompleted extends React.Component {
                         <hr/>
                         <div className="row">
                             <span  className = "ml-5">  <FormattedMessage id="project.saleRooms.BookingCompleted.name"/></span>
-                             <span>: {this.props.lastBooking.name}</span>
+                             <span>: {booking.name}</span>
                         </div>
                         <div className="row">
                             <span className = "ml-5"> <FormattedMessage id="project.saleRooms.BookingCompleted.surname"/></span>
-                            <span>: {this.props.lastBooking.surname}</span>
+                            <span>: {booking.surname}</span>
                         </div>
                         <div className="row">
                             <span className = "ml-5"> <FormattedMessage id="project.saleRooms.BookingCompleted.email"/></span>
-                            <span>: {this.props.lastBooking.email}</span>
+                            <span>: {booking.email}</span>
                         </div>
                         <div className="row">
                              <span className = "ml-5"> <FormattedMessage id="project.saleRooms.BookingCompleted.phone"/></span>
-                            <span>: {this.props.lastBooking.phone}</span>
+                            <span>: {booking.phone}</span>
                         </div>
                     </div>
                     <div className="col-6 border rounded p-4">
@@ -125,30 +127,30 @@ class BookingCompleted extends React.Component {
                         <hr/>
                         <div className="row">
                              <span className = "ml-5"> <FormattedMessage id="project.global.fields.startDate"/></span>
-                             <span>: <FormattedDate value={new Date(this.props.lastBooking.startDate)}/></span> 
+                             <span>: <FormattedDate value={new Date(booking.startDate)}/></span> 
                         </div>
                         <div className="row">
                              <span className = "ml-5"> <FormattedMessage id="project.global.fields.endDate"/></span>
-                             <span>: <FormattedDate value={new Date(this.props.lastBooking.endDate)}/></span> 
+                             <span>: <FormattedDate value={new Date(booking.endDate)}/></span> 
                         </div>
                         <div className="row">
                              <span className = "ml-5"> <FormattedMessage id="project.saleRooms.BookingCompleted.duration"/></span>
-                             <span>: {this.props.lastBooking.duration}</span> 
-                             {this.props.lastBooking.duration === 1 &&
+                             <span>: {booking.duration}</span> 
+                             {booking.duration === 1 &&
                                 <span>&nbsp;noche</span>
                              }
-                              {this.props.lastBooking.duration !== 1 &&
+                              {booking.duration !== 1 &&
                                 <span>&nbsp;noches</span>
                              }
                              
                         </div>
                         <div className="row">
                             <span className = "ml-5"> <FormattedMessage id="project.saleRooms.ClientForm.comments"/></span>
-                            { (this.props.lastBooking.petition === '') &&
+                            { (booking.petition === '') &&
                                 <span>: No hay comentarios</span>
                             }
-                            { (this.props.lastBooking.petition !== '') &&
-                                <span>: {this.props.lastBooking.petition}</span>
+                            { (booking.petition !== '') &&
+                                <span>: {booking.petition}</span>
                             }
                         </div>
                     </div>
@@ -159,9 +161,9 @@ class BookingCompleted extends React.Component {
                         <h5 className= "text-center"><FormattedMessage id="project.saleRooms.BookingCompleted.rooms"/></h5>
                         <hr/>
                         <div>
-                            {this.props.lastBooking.bookingRooms !== undefined &&
+                            {booking.bookingRooms !== undefined &&
                             <div>
-                            {this.props.lastBooking.bookingRooms.map(room =>
+                            {booking.bookingRooms.map(room =>
                                 <BookingRoomItem  key={room.id} room={room} />
                             )}
                             </div>
@@ -173,11 +175,11 @@ class BookingCompleted extends React.Component {
                 <div>
                     <h5 className= "text-center">
                     <FormattedMessage id="project.saleRooms.BookingCompleted.total"/>&nbsp;
-                    <FormattedNumber value={this.props.lastBooking.totalPrice}/> €
+                    <FormattedNumber value={booking.totalPrice}/> €
                     </h5>
                 </div>
                 &nbsp;
-                {this.props.lastBooking.state === "CONFIRMADA" &&
+                {booking.state === "CONFIRMADA" &&
                 <div className="row justify-content-center">
                     <button type="button" className="btn  btn-link btn-sm"
                         onClick={this.deleteBookingNotification.bind(this)}>

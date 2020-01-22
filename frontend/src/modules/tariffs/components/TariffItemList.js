@@ -36,13 +36,13 @@ class TariffItemList extends React.Component {
         const list = this.props.list;
         
 
-        // if (list.items.length === 0) {
-        //     return (
-        //         <div className="alert alert-info" role="alert">
-        //             <FormattedMessage id='project.tariff.TariffItemList.empty'/>
-        //         </div>
-        //     );
-        // }
+        if (list.length === 0) {
+            return (
+                <div className="alert alert-info" role="alert">
+                    <FormattedMessage id='project.tariff.TariffItemList.empty'/>
+                </div>
+            );
+        }
 
         return (
 
@@ -62,6 +62,9 @@ class TariffItemList extends React.Component {
                             </th>
                             <th scope="col" style={{width: '30%'}}>
                                 <FormattedMessage id='project.global.fields.name'/>
+                            </th>
+                            <th scope="col" style={{width: '30%'}}>
+                                <FormattedMessage id='project.global.fields.description'/>
                             </th>
                             <th scope="col" style={{width: '5%'}}></th>
                             <th scope="col" style={{width: '5%'}}></th>

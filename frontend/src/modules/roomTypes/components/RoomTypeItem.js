@@ -46,7 +46,9 @@ class RoomTypeItem extends React.Component {
         return (
             <tr>                   
                 <td>{item.name}</td>
+                <td>{item.description}</td>
                 <td>{item.capacity}</td>
+                <td>{item.quantity}</td>
                 <td>{item.minPrice}</td>
                 <td>{item.maxPrice}</td>
                 <td> 

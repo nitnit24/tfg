@@ -60,7 +60,7 @@ class DetailsRoom extends React.Component {
                             </button>
                             {showModal &&
                             <SimpleModal onCloseRequest={() => this.handleToggleModal()}>
-                                <p>Detalles de la habitación</p>
+                                <p>{item.description}</p>
                             </SimpleModal>
                             }
                             </div>

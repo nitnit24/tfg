@@ -29,14 +29,14 @@ public class TariffServiceTest {
 	@Autowired
 	private TariffService tariffService;
 
-	private Tariff createTariff(String name, String code) throws DuplicateInstanceException {
-		return new Tariff(name, code);
+	private Tariff createTariff(String name, String code, String description) throws DuplicateInstanceException {
+		return new Tariff(name, code, description);
 	}
 
 	@Test
 	public void testAddTariffAndFind() throws DuplicateInstanceException, InstanceNotFoundException {
 
-		Tariff tariff = createTariff("name", "CODE");
+		Tariff tariff = createTariff("name", "CODE", "description");
 		tariffService.addTariff(tariff);
 
 		Tariff tariffFind = tariffService.findTariffById(tariff.getId());
@@ -47,20 +47,20 @@ public class TariffServiceTest {
 	@Test(expected = DuplicateInstanceException.class)
 	public void testAddTariffNameDuplicate() throws DuplicateInstanceException {
 
-		Tariff tariff = createTariff("name", "CODE");
+		Tariff tariff = createTariff("name", "CODE", "description");
 		tariffService.addTariff(tariff);
 
-		Tariff tariff2 = createTariff("name", "CODE2");
+		Tariff tariff2 = createTariff("name", "CODE2", "description");
 		tariffService.addTariff(tariff2);
 	}
 
 	@Test(expected = DuplicateInstanceException.class)
 	public void testAddTariffCodeDuplicate() throws DuplicateInstanceException {
 
-		Tariff tariff = createTariff("name", "CODE");
+		Tariff tariff = createTariff("name", "CODE", "description");
 		tariffService.addTariff(tariff);
 
-		Tariff tariff2 = createTariff("name2", "CODE");
+		Tariff tariff2 = createTariff("name2", "CODE", "description");
 		tariffService.addTariff(tariff2);
 	}
 
@@ -74,29 +74,33 @@ public class TariffServiceTest {
 	@Test
 	public void testAddTariffAndUpdate() throws DuplicateInstanceException, InstanceNotFoundException {
 
-		Tariff tariff = createTariff("name", "CODE");
+		Tariff tariff = createTariff("name", "CODE", "description");
 		tariffService.addTariff(tariff);
 
 		String nameNew = "nameNew";
-		String codeNew = "CODENEW";
+		String codeNew = "codeNEW";
+		String descriptionNew = "descriptionNEW";
 
 		tariff.setName(nameNew);
 		tariff.setCode(codeNew);
+		tariff.setDescription(descriptionNew);
 
 		Tariff tariffUpdate = tariffService.updateTariff(tariff);
 
 		assertEquals(tariff.getId(), tariffUpdate.getId());
 		assertEquals(nameNew, tariffUpdate.getName());
 		assertEquals(codeNew, tariffUpdate.getCode());
+		assertEquals(descriptionNew, tariffUpdate.getDescription());
+		
 
 	}
 
 	@Test
 	public void testFindAllTariffs() throws DuplicateInstanceException {
-		Tariff tariff1 = createTariff("name", "CODE");
+		Tariff tariff1 = createTariff("name", "CODE", "description");
 		tariffService.addTariff(tariff1);
 
-		Tariff tariff2 = createTariff("name2", "CODE2");
+		Tariff tariff2 = createTariff("name2", "CODE2", "description");
 		tariffService.addTariff(tariff2);
 
 		assertEquals(Arrays.asList(tariff1, tariff2), tariffService.findAllTariffs());

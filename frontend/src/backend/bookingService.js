@@ -1,12 +1,11 @@
 import {config, appFetch } from './appFetch';
 
 
-export const findFreeRooms = (startDate, endDate, people, rooms, onSuccess) => {
-    // console.log("FIND"),
-    // console.log("start" + startDate),
-    // console.log("end" + endDate),
-    // console.log("people" + people),
-    // console.log("rooms" + rooms)
+export const findFreeRooms = (sDate, eDate, people, rooms, onSuccess) => {
+    console.log(sDate)
+    const startDate = (new Date(sDate)).getTime();
+    console.log(startDate)
+    const endDate = (new Date(eDate)).getTime()
     
     let path = `/booking/findFreeRooms?startDate=${startDate}`;
 
@@ -21,11 +20,9 @@ export const findFreeRooms = (startDate, endDate, people, rooms, onSuccess) => {
 
 }
 
-export const findTariffsByFreeRoom = (startDate, endDate, roomTypeId, onSuccess) => {
-    console.log("FIND"),
-    console.log("start" + startDate),
-    console.log("end" + endDate),
-    console.log("roomTypeId" + roomTypeId)
+export const findTariffsByFreeRoom = (sDate, eDate, roomTypeId, onSuccess) => {
+    const startDate = (new Date(sDate)).getTime();
+    const endDate = (new Date(eDate)).getTime()
     
     let path = `/booking/findTariffsByFreeRoom?startDate=${startDate}`;
 
@@ -40,13 +37,11 @@ export const findTariffsByFreeRoom = (startDate, endDate, roomTypeId, onSuccess)
 
 
 
-export const findSaleRoomTariffsByFreeRoom = (startDate, endDate, roomTypeId, tariffId, onSuccess) => {
-    console.log("FIND"),
-    console.log("start" + startDate),
-    console.log("end" + endDate),
-    console.log("roomTypeId" + roomTypeId),
-    console.log("tariffId" + tariffId)
-    
+export const findSaleRoomTariffsByFreeRoom = (sDate, eDate, roomTypeId, tariffId, onSuccess) => {
+
+    const startDate = (new Date(sDate)).getTime();
+    const endDate = (new Date(eDate)).getTime()
+
     let path = `/booking/findSaleRoomTariffsByFreeRoom?startDate=${startDate}`;
 
     path += endDate ? `&endDate=${endDate}` : "";
@@ -60,11 +55,14 @@ export const findSaleRoomTariffsByFreeRoom = (startDate, endDate, roomTypeId, ta
 
 }
 
-export const makeBooking = (bookingRoomSummarys, startDate, endDate, name, surname, phone, email, petition, onSuccess, onErrors) => {
+export const makeBooking = (bookingRoomSummarys, sDate, eDate, name, surname, phone, email, petition, onSuccess, onErrors) => {
 
-    let path = `/booking/makeBooking?startDate=${startDate}`;
+    const startDate = (new Date(sDate)).getTime();
+    const endDate = (new Date(eDate)).getTime()
+    let path = `/booking/makeBooking`;
 
-    path += endDate ? `&endDate=${endDate}` : "";
+    console.log(startDate)
+    console.log(endDate)
 
     appFetch(path, config('POST', {bookingRoomSummarys, startDate, endDate, name, surname, phone, email, petition}), 
     onSuccess, onErrors);
@@ -92,9 +90,12 @@ export const findBookings = ({dateType, minDate, maxDate, keywords, page},
     
     let path = `/booking/bookings?page=${page}`;
     
+    const min = Date.parse(minDate);
+    const max = Date.parse(maxDate);
+
     path += dateType ? `&dateType=${dateType}` : "";
-    path += minDate ? `&minDate=${minDate}` : "";
-    path += maxDate ? `&maxDate=${maxDate}` : "";
+    path += minDate ? `&minDate=${min}` : "";
+    path += maxDate ? `&maxDate=${max}` : "";
     path += keywords.length > 0 ? `&keywords=${keywords}` : "";
     
     appFetch(path, config('GET'), onSuccess);

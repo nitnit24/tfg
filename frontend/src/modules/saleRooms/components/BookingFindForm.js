@@ -2,7 +2,6 @@ import React from 'react';
 import {connect} from 'react-redux';
 
 import {FormattedMessage} from 'react-intl';
-import PropTypes from 'prop-types';
 
 import {Errors} from '../../common';
 import  backend from '../../../backend';

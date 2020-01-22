@@ -13,17 +13,21 @@ public class RoomTypeDto {
 
 	private Long id;
 	private String name;
+	private String description;
 	private int capacity;
+	private int quantity;
 	private BigDecimal minPrice;
 	private BigDecimal maxPrice;
 
 	public RoomTypeDto() {
 	}
 
-	public RoomTypeDto(Long id, String name, int capacity, BigDecimal minPrice, BigDecimal maxPrice) {
+	public RoomTypeDto(Long id, String name,String description, int capacity, int quantity, BigDecimal minPrice, BigDecimal maxPrice) {
 		this.id = id;
 		this.name = name;
+		this.description = description;
 		this.capacity = capacity;
+		this.quantity = quantity;
 		this.minPrice = minPrice;
 		this.maxPrice = maxPrice;
 
@@ -47,6 +51,16 @@ public class RoomTypeDto {
 		this.name = name;
 	}
 
+	@Size(min = 0, max = 240, groups = { AllValidations.class })
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description= description;
+	}
+
+	
 	@NotNull(groups = { AllValidations.class })
 	@Min(value=1,  groups = { AllValidations.class })
 	public int getCapacity() {
@@ -57,7 +71,16 @@ public class RoomTypeDto {
 	public void setCapacity(int capacity) {
 		this.capacity = capacity;
 	}
+	
+	@NotNull(groups = { AllValidations.class })
+	@Min(value=1,  groups = { AllValidations.class })
+	public int getQuantity() {
+		return quantity;
+	}
 
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
+	}
 	@Min(value=0,  groups = { AllValidations.class })
 	public BigDecimal getMinPrice() {
 		return minPrice;

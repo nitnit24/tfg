@@ -1,10 +1,12 @@
 import React from 'react';
 
 import {FormattedMessage} from 'react-intl';
-
+import {connect} from 'react-redux';
 
 import TablePanel from './TablePanel';
 import FindDailyPanel from './FindDailyPanel';
+import * as selectors from '../selectors';
+import * as actions from '../actions';
 
 
 class DailyPanel extends React.Component {
@@ -14,8 +16,18 @@ class DailyPanel extends React.Component {
         };
       }
 
-    render(){
+    componentDidMount() {
 
+    if (this.props.date === null){
+        const now = new Date();
+        const date = new Date(now.getFullYear(),(now.getMonth()),now.getDate());
+        console.log(date)
+        this.props.findRoomTables(date.getTime());
+        }
+
+    }
+    render(){
+        
         return (
             <div>
                 <div>
@@ -26,11 +38,20 @@ class DailyPanel extends React.Component {
                 <br/>
                 <FindDailyPanel />
                 <br/>
-
                 <TablePanel />
             </div>
         );
     }
 }
 
-export default DailyPanel;
+
+const mapStateToProps = (state) => ({
+    date: selectors.getDate(state),
+ 
+});
+
+const mapDispatchToProps = {
+    findRoomTables: actions.findRoomTables
+};
+
+export default  connect( mapStateToProps, mapDispatchToProps)(DailyPanel);

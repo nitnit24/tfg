@@ -2,6 +2,8 @@ package es.udc.tfg.backend.test.model.services;
 
 import static org.junit.Assert.assertEquals;
 
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -30,11 +32,13 @@ import es.udc.tfg.backend.model.entities.State;
 import es.udc.tfg.backend.model.entities.Tariff;
 import es.udc.tfg.backend.model.services.Block;
 import es.udc.tfg.backend.model.services.BookingService;
+import es.udc.tfg.backend.model.services.FreeRoomsLessThanRoomTypeQuantityException;
 import es.udc.tfg.backend.model.services.PriceNotBetweenMinAndMaxValueException;
 import es.udc.tfg.backend.model.services.RoomTypeService;
 import es.udc.tfg.backend.model.services.SaleRoomService;
 import es.udc.tfg.backend.model.services.SaleRoomTariffService;
 import es.udc.tfg.backend.model.services.TariffService;
+import es.udc.tfg.backend.model.services.ThereAreNotEnoughtFreeRoomsException;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -67,24 +71,24 @@ public class BookingServiceTest {
 //	@Autowired
 //	private BookingDao bookingDao;
 
-	private Tariff createTariff(String name, String code) throws DuplicateInstanceException {
-		return new Tariff(name, code);
+	private Tariff createTariff(String name, String code,String description) throws DuplicateInstanceException {
+		return new Tariff(name, code, description);
 	}
 	
-	private RoomType createRoomType(String name, int capacity, BigDecimal minPrice, BigDecimal maxPrice) 
+	private RoomType createRoomType(String name,String description, int capacity, int quantity, BigDecimal minPrice, BigDecimal maxPrice) 
 			throws DuplicateInstanceException {
-		return new RoomType(name, capacity, minPrice, maxPrice);
+		return new RoomType(name, description, capacity, quantity, minPrice, maxPrice);
 	}
 	
 	
 	
 	@Test
-	public void testFindFreeRooms() throws DuplicateInstanceException, InstanceNotFoundException, PriceNotBetweenMinAndMaxValueException {
+	public void testFindFreeRooms() throws DuplicateInstanceException, InstanceNotFoundException, PriceNotBetweenMinAndMaxValueException, FreeRoomsLessThanRoomTypeQuantityException {
 
-		Tariff newTariff = createTariff("name", "CODE");
+		Tariff newTariff = createTariff("name", "CODE", "description");
 		Tariff tariff = tariffService.addTariff(newTariff);
 
-		RoomType roomType = createRoomType("name", 2, new BigDecimal(30), new BigDecimal(100));
+		RoomType roomType = createRoomType("name","description", 2, 10, new BigDecimal(30), new BigDecimal(100));
 		roomTypeService.addRoomType(roomType);
 
 		int freeRooms = 4;
@@ -165,7 +169,7 @@ public class BookingServiceTest {
 		assertEquals(freeRoomTypes.size(), foundFreeRoomTypes10.size());
 		
 		//another room
-		RoomType roomType2 = createRoomType("namedos", 2, new BigDecimal(30), new BigDecimal(100));
+		RoomType roomType2 = createRoomType("namedos","description", 2, 10, new BigDecimal(30), new BigDecimal(100));
 		roomTypeService.addRoomType(roomType2);
 		
 		//Day1
@@ -209,14 +213,14 @@ public class BookingServiceTest {
 	
 	
 	@Test
-	public void testFindTariffByFreeRoom() throws DuplicateInstanceException, InstanceNotFoundException, PriceNotBetweenMinAndMaxValueException {
+	public void testFindTariffByFreeRoom() throws DuplicateInstanceException, InstanceNotFoundException, PriceNotBetweenMinAndMaxValueException, FreeRoomsLessThanRoomTypeQuantityException {
 
-		Tariff newTariff = createTariff("name", "CODE");
+		Tariff newTariff = createTariff("name", "CODE", "description");
 		Tariff tariff = tariffService.addTariff(newTariff);
-		Tariff newTariff2 = createTariff("name2", "CODE2");
+		Tariff newTariff2 = createTariff("name2", "CODE2", "description");
 		Tariff tariff2 = tariffService.addTariff(newTariff2);
 
-		RoomType roomType = createRoomType("name", 2, new BigDecimal(30), new BigDecimal(100));
+		RoomType roomType = createRoomType("name","description", 2, 10, new BigDecimal(30), new BigDecimal(100));
 		roomTypeService.addRoomType(roomType);
 
 		int freeRooms = 4;
@@ -276,14 +280,14 @@ public class BookingServiceTest {
 	
 	
 	@Test
-	public void tesSaleRoomTariffsByFreeRoom() throws DuplicateInstanceException, InstanceNotFoundException, PriceNotBetweenMinAndMaxValueException {
+	public void tesSaleRoomTariffsByFreeRoom() throws DuplicateInstanceException, InstanceNotFoundException, PriceNotBetweenMinAndMaxValueException, FreeRoomsLessThanRoomTypeQuantityException {
 
-		Tariff newTariff = createTariff("name", "CODE");
+		Tariff newTariff = createTariff("name", "CODE", "description");
 		Tariff tariff = tariffService.addTariff(newTariff);
-		Tariff newTariff2 = createTariff("name2", "CODE2");
+		Tariff newTariff2 = createTariff("name2", "CODE2", "description");
 		Tariff tariff2 = tariffService.addTariff(newTariff2);
 
-		RoomType roomType = createRoomType("name", 2, new BigDecimal(30), new BigDecimal(100));
+		RoomType roomType = createRoomType("name","description", 2, 10, new BigDecimal(30), new BigDecimal(100));
 		roomTypeService.addRoomType(roomType);
 
 		int freeRooms = 4;
@@ -342,17 +346,17 @@ public class BookingServiceTest {
 	}
 	
 	@Test
-	public void testMakeBooking() throws DuplicateInstanceException, InstanceNotFoundException, PriceNotBetweenMinAndMaxValueException {
+	public void testMakeBooking() throws DuplicateInstanceException, InstanceNotFoundException, PriceNotBetweenMinAndMaxValueException, FreeRoomsLessThanRoomTypeQuantityException, ThereAreNotEnoughtFreeRoomsException, UnsupportedEncodingException, IOException {
 
-		Tariff newTariff = createTariff("name", "CODE");
+		Tariff newTariff = createTariff("name", "CODE", "description");
 		Tariff tariff = tariffService.addTariff(newTariff);
 
-		RoomType roomType = createRoomType("name", 2, new BigDecimal(30), new BigDecimal(100));
+		RoomType roomType = createRoomType("name","description", 2, 20, new BigDecimal(30), new BigDecimal(100));
 		roomTypeService.addRoomType(roomType);
 
 		Calendar date = Calendar.getInstance();
 
-		int freeRooms = 4;
+		int freeRooms = 10;
 		BigDecimal price = new BigDecimal(90);
 
 		List<SaleRoomTariff> saleRoomTariffs = new ArrayList<>();
@@ -425,7 +429,7 @@ public class BookingServiceTest {
 		assertEquals(1,foundBooking.get().getBookingRooms().size());
 		assertEquals(3,foundBooking.get().getBookingRooms().iterator().next().getBookingDays().size());
 	
-		int newfreeRooms = 3;
+		int newfreeRooms = 9;
 		
 		assertEquals(newfreeRooms, saleRoom1.getFreeRooms());
 		assertEquals(newfreeRooms, saleRoom2.getFreeRooms());
@@ -433,17 +437,17 @@ public class BookingServiceTest {
 	}
 	
 	@Test
-	public void testMakeBookingAndFindByLocator() throws DuplicateInstanceException, InstanceNotFoundException, PriceNotBetweenMinAndMaxValueException {
+	public void testMakeBookingAndFindByLocator() throws DuplicateInstanceException, InstanceNotFoundException, PriceNotBetweenMinAndMaxValueException, FreeRoomsLessThanRoomTypeQuantityException, ThereAreNotEnoughtFreeRoomsException, UnsupportedEncodingException, IOException {
 
-		Tariff newTariff = createTariff("name", "CODE");
+		Tariff newTariff = createTariff("name", "CODE", "description");
 		Tariff tariff = tariffService.addTariff(newTariff);
 
-		RoomType roomType = createRoomType("name", 2, new BigDecimal(30), new BigDecimal(100));
+		RoomType roomType = createRoomType("name","description", 2, 10, new BigDecimal(30), new BigDecimal(100));
 		roomTypeService.addRoomType(roomType);
 
 		Calendar date = Calendar.getInstance();
 
-		int freeRooms = 4;
+		int freeRooms = 10;
 		BigDecimal price = new BigDecimal(90);
 
 		List<SaleRoomTariff> saleRoomTariffs = new ArrayList<>();
@@ -511,12 +515,12 @@ public class BookingServiceTest {
 	}
 	
 	@Test
-	public void testMakeBookingAndFindLocatorAndKey() throws DuplicateInstanceException, InstanceNotFoundException, PriceNotBetweenMinAndMaxValueException {
+	public void testMakeBookingAndFindLocatorAndKey() throws DuplicateInstanceException, InstanceNotFoundException, PriceNotBetweenMinAndMaxValueException, FreeRoomsLessThanRoomTypeQuantityException, ThereAreNotEnoughtFreeRoomsException, UnsupportedEncodingException, IOException {
 
-		Tariff newTariff = createTariff("name", "CODE");
+		Tariff newTariff = createTariff("name", "CODE", "description");
 		Tariff tariff = tariffService.addTariff(newTariff);
 
-		RoomType roomType = createRoomType("name", 2, new BigDecimal(30), new BigDecimal(100));
+		RoomType roomType = createRoomType("name","description", 2, 10, new BigDecimal(30), new BigDecimal(100));
 		roomTypeService.addRoomType(roomType);
 
 		Calendar date = Calendar.getInstance();
@@ -534,17 +538,19 @@ public class BookingServiceTest {
 		
 		
 		//BookingDay2
-		date.add(Calendar.DAY_OF_YEAR, 1);
-		saleRoomService.addSaleRoom(roomType.getId(), date, freeRooms);
+		Calendar date2 = Calendar.getInstance();
+		date2.add(Calendar.DAY_OF_YEAR, 1);
+		saleRoomService.addSaleRoom(roomType.getId(), date2, freeRooms);
 		SaleRoomTariff saleRoomTariff2 = saleRoomTariffService.uploadSaleRoomTariff(price, tariff.getId(),
-				roomType.getId(), date);
+				roomType.getId(), date2);
 		saleRoomTariffs.add(saleRoomTariff2);
 		
 		//BookingDay3
-		date.add(Calendar.DAY_OF_YEAR, 1);
-		saleRoomService.addSaleRoom(roomType.getId(), date, freeRooms);
+		Calendar date3 = Calendar.getInstance();
+		date3.add(Calendar.DAY_OF_YEAR, 2);
+		saleRoomService.addSaleRoom(roomType.getId(), date3, freeRooms);
 		SaleRoomTariff saleRoomTariff3 = saleRoomTariffService.uploadSaleRoomTariff(price, tariff.getId(),
-				roomType.getId(), date);
+				roomType.getId(), date3);
 		saleRoomTariffs.add(saleRoomTariff3);
 			
 		//Booking
@@ -589,12 +595,12 @@ public class BookingServiceTest {
 	}
 	
 	@Test
-	public void testMakeBookingAndCancel() throws DuplicateInstanceException, InstanceNotFoundException, PriceNotBetweenMinAndMaxValueException {
+	public void testMakeBookingAndCancel() throws DuplicateInstanceException, InstanceNotFoundException, PriceNotBetweenMinAndMaxValueException, FreeRoomsLessThanRoomTypeQuantityException, ThereAreNotEnoughtFreeRoomsException, UnsupportedEncodingException, IOException {
 
-		Tariff newTariff = createTariff("name", "CODE");
+		Tariff newTariff = createTariff("name", "CODE", "description");
 		Tariff tariff = tariffService.addTariff(newTariff);
 
-		RoomType roomType = createRoomType("name", 2, new BigDecimal(30), new BigDecimal(100));
+		RoomType roomType = createRoomType("name","description", 2, 10, new BigDecimal(30), new BigDecimal(100));
 		roomTypeService.addRoomType(roomType);
 
 		Calendar date = Calendar.getInstance();
@@ -612,17 +618,19 @@ public class BookingServiceTest {
 		
 		
 		//BookingDay2
-		date.add(Calendar.DAY_OF_YEAR, 1);
-		saleRoomService.addSaleRoom(roomType.getId(), date, freeRooms);
+		Calendar date2 = Calendar.getInstance();
+		date2.add(Calendar.DAY_OF_YEAR, 1);
+		saleRoomService.addSaleRoom(roomType.getId(), date2, freeRooms);
 		SaleRoomTariff saleRoomTariff2 = saleRoomTariffService.uploadSaleRoomTariff(price, tariff.getId(),
-				roomType.getId(), date);
+				roomType.getId(), date2);
 		saleRoomTariffs.add(saleRoomTariff2);
 		
 		//BookingDay3
-		date.add(Calendar.DAY_OF_YEAR, 1);
-		saleRoomService.addSaleRoom(roomType.getId(), date, freeRooms);
+		Calendar date3 = Calendar.getInstance();
+		date3.add(Calendar.DAY_OF_YEAR, 2);
+		saleRoomService.addSaleRoom(roomType.getId(), date3, freeRooms);
 		SaleRoomTariff saleRoomTariff3 = saleRoomTariffService.uploadSaleRoomTariff(price, tariff.getId(),
-				roomType.getId(), date);
+				roomType.getId(), date3);
 		saleRoomTariffs.add(saleRoomTariff3);
 			
 		//Booking
@@ -654,17 +662,17 @@ public class BookingServiceTest {
 	
 	
 	@Test
-	public void testMakeBookingAndFind() throws DuplicateInstanceException, InstanceNotFoundException, PriceNotBetweenMinAndMaxValueException {
+	public void testMakeBookingAndFind() throws DuplicateInstanceException, InstanceNotFoundException, PriceNotBetweenMinAndMaxValueException, FreeRoomsLessThanRoomTypeQuantityException, ThereAreNotEnoughtFreeRoomsException, UnsupportedEncodingException, IOException {
 
-		Tariff newTariff = createTariff("name", "CODE");
+		Tariff newTariff = createTariff("name", "CODE", "description");
 		Tariff tariff = tariffService.addTariff(newTariff);
 
-		RoomType roomType = createRoomType("name", 2, new BigDecimal(30), new BigDecimal(100));
+		RoomType roomType = createRoomType("name","description", 2, 10, new BigDecimal(30), new BigDecimal(100));
 		roomTypeService.addRoomType(roomType);
 
 		Calendar date = Calendar.getInstance();
 
-		int freeRooms = 4;
+		int freeRooms = 10;
 		BigDecimal price = new BigDecimal(90);
 
 		List<SaleRoomTariff> saleRoomTariffs = new ArrayList<>();
@@ -677,17 +685,19 @@ public class BookingServiceTest {
 		
 		
 		//BookingDay2
-		date.add(Calendar.DAY_OF_YEAR, 1);
-		saleRoomService.addSaleRoom(roomType.getId(), date, freeRooms);
+		Calendar date2 = Calendar.getInstance();
+		date2.add(Calendar.DAY_OF_YEAR, 1);
+		saleRoomService.addSaleRoom(roomType.getId(), date2, freeRooms);
 		SaleRoomTariff saleRoomTariff2 = saleRoomTariffService.uploadSaleRoomTariff(price, tariff.getId(),
-				roomType.getId(), date);
+				roomType.getId(), date2);
 		saleRoomTariffs.add(saleRoomTariff2);
 		
 		//BookingDay3
-		date.add(Calendar.DAY_OF_YEAR, 1);
-		saleRoomService.addSaleRoom(roomType.getId(), date, freeRooms);
+		Calendar date3 = Calendar.getInstance();
+		date3.add(Calendar.DAY_OF_YEAR, 2);
+		saleRoomService.addSaleRoom(roomType.getId(), date3, freeRooms);
 		SaleRoomTariff saleRoomTariff3 = saleRoomTariffService.uploadSaleRoomTariff(price, tariff.getId(),
-				roomType.getId(), date);
+				roomType.getId(), date3);
 		saleRoomTariffs.add(saleRoomTariff3);
 			
 		//Booking

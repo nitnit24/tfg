@@ -1,7 +1,9 @@
 package es.udc.tfg.backend.model.services;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +11,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import es.udc.tfg.backend.model.common.exceptions.InstanceNotFoundException;
+import es.udc.tfg.backend.model.entities.RoomTable;
+import es.udc.tfg.backend.model.entities.RoomTableDay;
+import es.udc.tfg.backend.model.entities.RoomTableTariff;
 import es.udc.tfg.backend.model.entities.RoomType;
 import es.udc.tfg.backend.model.entities.RoomTypeDao;
 import es.udc.tfg.backend.model.entities.SaleRoom;
@@ -84,18 +89,72 @@ public class SaleRoomTariffServiceImpl implements SaleRoomTariffService {
 		}
 	}
 	
-	@Override
-	public SaleRoomTariff findByTariffIdAnRoomTypeIdAndDate(Long tariffId, Long roomTypeId, Calendar date) throws InstanceNotFoundException{
-		
-		Optional<SaleRoomTariff> saleRoomTariff = saleRoomTariffDao. findByTariffIdAndSaleRoomRoomTypeIdAndSaleRoomDate(tariffId, roomTypeId, date);
-
-		if (!saleRoomTariff.isPresent()) {
-			throw new InstanceNotFoundException("project.entities.roomType", roomTypeId );
-		}
-
-		return saleRoomTariff.get();
-	}
+//	@Override
+//	public SaleRoomTariff findByTariffIdAndRoomTypeIdAndDate(Long tariffId, Long roomTypeId, Calendar date) throws InstanceNotFoundException{
+//		
+//		Optional<SaleRoomTariff> saleRoomTariff = saleRoomTariffDao. findByTariffIdAndSaleRoomRoomTypeIdAndSaleRoomDate(tariffId, roomTypeId, date);
+//
+//		if (!saleRoomTariff.isPresent()) {
+//			throw new InstanceNotFoundException("project.entities.roomType", roomTypeId );
+//		}
+//
+//		return saleRoomTariff.get();
+//	}
 	
+	@Override
+	public List<RoomTable> findDailyPanel (Calendar initialDate){
+		
+		Iterable<RoomType> roomTypes = roomTypeDao.findAll();
+		
+		Iterable<Tariff> tariffs = tariffDao.findAll();
+		
+		List<RoomTable> roomTables = new ArrayList<>();
+		
+		for (RoomType roomType:roomTypes) {
+			
+			List<RoomTableDay> roomTableDays = new ArrayList<>();
+			
+			for (int i = 0 ; i < 31; i++) {
+				Calendar date = Calendar.getInstance();
+				Long millis = initialDate.getTimeInMillis();
+				date.setTimeInMillis(millis);
+				date.add(Calendar.DATE, i);
+				
+				Optional<SaleRoom> saleRoom = saleRoomDao.findByRoomTypeIdAndDate(roomType.getId(), date);
+				
+				List<RoomTableTariff> roomTableTariffs = new ArrayList<>();
+					
+				
+				for(Tariff tariff:tariffs) {
+					Optional<SaleRoomTariff> saleRoomTariff= saleRoomTariffDao.findByTariffIdAndSaleRoomRoomTypeIdAndSaleRoomDate(tariff.getId(), roomType.getId(), date);
+					
+					if (saleRoomTariff.isPresent()) {
+						roomTableTariffs.add(new RoomTableTariff(tariff.getId(), saleRoomTariff.get().getPrice()));
+					}
+					else {
+						roomTableTariffs.add(new RoomTableTariff(tariff.getId(), null));
+					}
+				}
+				
+				if(saleRoom.isPresent()) {
+					roomTableDays.add(new RoomTableDay(date, saleRoom.get().getFreeRooms(),roomTableTariffs));
 
+				}
+				else {
+					roomTableDays.add(new RoomTableDay(date, null , roomTableTariffs));
+				}
+			}
+			 
+			List<Tariff> tariffsList = new ArrayList<>();
+			tariffs.iterator().forEachRemaining(tariffsList::add);
+	  
+	        
+			roomTables.add(new RoomTable(roomType.getId(), roomType.getName(), roomType.getQuantity(),
+					roomType.getMinPrice(), roomType.getMaxPrice(), tariffsList, roomTableDays));
+		}
+		
+		return roomTables;
+	
+	}
 
 }

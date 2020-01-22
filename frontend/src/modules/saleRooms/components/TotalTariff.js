@@ -1,9 +1,8 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import {FormattedNumber} from 'react-intl';
 import {connect} from 'react-redux';
 
-import {Errors} from '../../common';
+
 import * as selectors from '../selectors';
 import * as actions from '../actions';
 import  backend from '../../../backend';
@@ -67,7 +66,7 @@ class TotalTariff extends React.Component {
             this.props.removeRooms(room),
             this.props.addRooms(room)
         }
-        if (this.state.quantity == 0 ){
+        if (this.state.quantity === 0 ){
             var room ={
                 saleRoomTariffs: this.state.saleRoomTariffs,
                 quantity: this.state.quantity

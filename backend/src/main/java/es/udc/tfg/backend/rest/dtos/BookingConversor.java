@@ -28,9 +28,9 @@ public class BookingConversor {
 		
 		bookingRooms.sort(Comparator.comparing(BookingRoomDto::getId));
 		
-		return new BookingDto(booking.getId(), booking.getKey(), booking.getLocator(), bookingRooms, booking.getDate(), 
-				booking.getStartDate(), booking.getDuration(), booking.getEndDate(), booking.getState(), booking.getCancelDate(), 
-				booking.getUpdateDate(), booking.getName(), booking.getSurName(),booking.getPhone(), booking.getEmail(), booking.getPetition(),
+		return new BookingDto(booking.getId(), booking.getKey(), booking.getLocator(), bookingRooms, toMillis(booking.getDate()), 
+				toMillis(booking.getStartDate()), booking.getDuration(), toMillis(booking.getEndDate()), booking.getState(), toMillis(booking.getCancelDate()), 
+				toMillis(booking.getUpdateDate()), booking.getName(), booking.getSurName(),booking.getPhone(), booking.getEmail(), booking.getPetition(),
 				booking.getTotalPrice());
 		
 	}
@@ -60,17 +60,22 @@ public class BookingConversor {
 	
 	private final static BookingDayDto toBookingDayDto(BookingDay bookingDay) {
 		
-		return new BookingDayDto(bookingDay.getId(),  bookingDay.getDayPrice(), bookingDay.getDay(), bookingDay.getSaleRoomTariff().getId(),
+		return new BookingDayDto(bookingDay.getId(),  bookingDay.getDayPrice(), toMillis(bookingDay.getDay()), bookingDay.getSaleRoomTariff().getId(),
 				bookingDay.getBookingRoom().getId());
 		
 	}
 	
 	
-	private final static long toMillis(Calendar calendar) {
+	private final static Long toMillis(Calendar calendar) {
+		if (calendar != null) {
 	      TimeZone tz = calendar.getTimeZone();
 	      ZoneId zid = tz == null ? ZoneId.systemDefault() : tz.toZoneId();
 	      LocalDateTime date =  LocalDateTime.ofInstant(calendar.toInstant(), zid);
 		return date.truncatedTo(ChronoUnit.MINUTES).atZone(ZoneOffset.systemDefault()).toInstant().toEpochMilli();
+		}
+		else {
+			return null;
+		}
 	}
 	
 

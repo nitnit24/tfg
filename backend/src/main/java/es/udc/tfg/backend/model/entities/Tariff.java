@@ -12,19 +12,22 @@ public class Tariff {
 	private Long id;
 	private String name;
 	private String code;
+	private String description;
 
 	public Tariff() {
 	}
 
-	public Tariff(String name, String code) {
+	public Tariff(String name, String code, String description) {
 		this.name = name;
 		this.code = code;
+		this.description = description;
 	}
 	
-	public Tariff(Long id, String name, String code) {
+	public Tariff(Long id, String name, String code, String description) {
 		this.id = id;
 		this.name = name;
 		this.code = code;
+		this.description = description;
 	}
 
 	@Id
@@ -55,4 +58,14 @@ public class Tariff {
 		this.code = code;
 	}
 
+	@Column(name = "tariffDescription")
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	
 }

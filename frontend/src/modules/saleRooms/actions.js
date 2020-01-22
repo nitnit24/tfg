@@ -1,6 +1,4 @@
 import * as actionTypes from './actionTypes';
-import backend from '../../backend';
-import { removeRoomType } from '../../backend/roomTypeService';
 
 
 const addStartDateCompleted = startDate => ({

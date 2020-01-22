@@ -8,8 +8,8 @@ import es.udc.tfg.backend.model.entities.SaleRoom;
 
 public interface SaleRoomService {
 
-	SaleRoom addSaleRoom(Long roomTypeId, Calendar date, int freeRooms) throws DuplicateInstanceException, InstanceNotFoundException;
+	SaleRoom addSaleRoom(Long roomTypeId, Calendar date, int freeRooms) throws DuplicateInstanceException, InstanceNotFoundException, FreeRoomsLessThanRoomTypeQuantityException;
 
-	SaleRoom findByRoomTypeIdAndDate(Long idRoomType, Calendar date) throws InstanceNotFoundException;
+//	SaleRoom findByRoomTypeIdAndDate(Long idRoomType, Calendar date) throws InstanceNotFoundException;
 
 }

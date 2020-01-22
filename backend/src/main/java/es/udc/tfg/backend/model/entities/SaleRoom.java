@@ -9,6 +9,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 public class SaleRoom {
@@ -56,6 +58,7 @@ public class SaleRoom {
 		this.idSaleRoom = idSaleRoom;
 	}
 
+	@Temporal(TemporalType.DATE)
 	public Calendar getDate() {
 		return date;
 	}

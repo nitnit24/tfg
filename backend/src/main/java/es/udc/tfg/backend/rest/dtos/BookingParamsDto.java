@@ -8,6 +8,8 @@ import es.udc.tfg.backend.model.entities.BookingRoomSummary;
 
 public class BookingParamsDto {
 	
+	private Long startDate;
+	private Long endDate;
 	private List<BookingRoomSummary> bookingRoomSummarys;
 	private String name;
 	private String surname;
@@ -17,6 +19,24 @@ public class BookingParamsDto {
 	
 	public BookingParamsDto() {}
 	
+	@NotNull
+	public Long getStartDate() {
+		return startDate;
+	}
+
+	public void setStartDate(Long startDate) {
+		this.startDate = startDate;
+	}
+
+	@NotNull
+	public Long getEndDate() {
+		return endDate;
+	}
+
+	public void setEndDate(Long endDate) {
+		this.endDate = endDate;
+	}
+
 	@NotNull
 	public List<BookingRoomSummary> getBookingRoomSummarys() {
 		return bookingRoomSummarys;

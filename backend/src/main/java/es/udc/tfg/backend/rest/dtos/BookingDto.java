@@ -1,7 +1,6 @@
 package es.udc.tfg.backend.rest.dtos;
 
 import java.math.BigDecimal;
-import java.util.Calendar;
 import java.util.List;
 
 import es.udc.tfg.backend.model.entities.State;
@@ -15,13 +14,13 @@ public class BookingDto {
 	private String key;
 	private String locator;
 	private List<BookingRoomDto> bookingRooms;
-	private Calendar date;
-	private Calendar startDate;
+	private Long date;
+	private Long startDate;
 	private int duration;
-	private Calendar endDate;
+	private Long endDate;
 	private State state;
-	private Calendar cancelDate;
-	private Calendar updateDate;
+	private Long cancelDate;
+	private Long updateDate;
 	private String name;
 	private String surname;
 	private String phone;
@@ -32,8 +31,8 @@ public class BookingDto {
 	public BookingDto() {
 	}
 
-	public BookingDto(Long id, String key, String locator, List<BookingRoomDto> bookingRooms, Calendar date,
-			Calendar startDate, int duration, Calendar endDate, State state, Calendar cancelDate, Calendar updateDate,
+	public BookingDto(Long id, String key, String locator, List<BookingRoomDto> bookingRooms, Long date,
+			Long startDate, int duration, Long endDate, State state, Long cancelDate, Long updateDate,
 			String name, String surname, String phone, String email,
 			String petition, BigDecimal totalPrice) {
 		this.id = id;
@@ -89,19 +88,19 @@ public class BookingDto {
 		this.bookingRooms = bookingRooms;
 	}
 
-	public Calendar getDate() {
+	public Long getDate() {
 		return date;
 	}
 
-	public void setDate(Calendar date) {
+	public void setDate(Long date) {
 		this.date = date;
 	}
 
-	public Calendar getStartDate() {
+	public Long getStartDate() {
 		return startDate;
 	}
 
-	public void setStartDate(Calendar startDate) {
+	public void setStartDate(Long startDate) {
 		this.startDate = startDate;
 	}
 
@@ -113,11 +112,11 @@ public class BookingDto {
 		this.duration = duration;
 	}
 
-	public Calendar getEndDate() {
+	public Long getEndDate() {
 		return endDate;
 	}
 
-	public void setEndDate(Calendar endDate) {
+	public void setEndDate(Long endDate) {
 		this.endDate = endDate;
 	}
 
@@ -131,19 +130,19 @@ public class BookingDto {
 	}
 
 	
-	public Calendar getCancelDate() {
+	public Long getCancelDate() {
 		return cancelDate;
 	}
 
-	public void setCancelDate(Calendar cancelDate) {
+	public void setCancelDate(Long cancelDate) {
 		this.cancelDate = cancelDate;
 	}
 
-	public Calendar getUpdateDate() {
+	public Long getUpdateDate() {
 		return updateDate;
 	}
 
-	public void setUpdateDate(Calendar updateDate) {
+	public void setUpdateDate(Long updateDate) {
 		this.updateDate = updateDate;
 	}
 

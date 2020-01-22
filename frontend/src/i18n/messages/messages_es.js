@@ -28,9 +28,12 @@ export default {
     'project.global.validator.email': 'Introduzca una dirección de correo electrónico correcta',
     'project.global.validator.passwordsDoNotMatch': 'Las contraseñas no coinciden',
     'project.global.validator.required': 'Campo obligatorio',
+    
 
     'project.global.buttons.add': 'Añadir',
     'project.global.fields.code': 'Código',
+    'project.global.fields.description': 'Description',
+    'project.global.fields.quantity': 'Cantidad',
     'project.global.fields.capacity': 'Capacidad',
     'project.global.fields.minPrice': 'Precio mínimo',
     'project.global.fields.maxPrice': 'Precio máximo',
@@ -41,18 +44,20 @@ export default {
     'project.users.ChangePassword.fields.oldPassword': 'Contraseña antigua',
     'project.users.ChangePassword.title': 'Cambiar contraseña',
     'project.users.Login.title': 'Autenticarse',
+    'project.users.Login.titleAdmin': '¿Eres administrador? Autentícate',
     'project.users.SignUp.fields.confirmPassword': 'Confirmar contraseña',
     'project.users.SignUp.title': 'Registrarse',
     'project.users.UpdateProfile.title': 'Actualizar perfil',
 
     'project.tariffs.TariffForm.title': 'Añadir tarifa',
     'project.tariffs.TariffUpdateForm.title': 'Modificar tarifa',
-    'project.tariff.TariffItemList.empty': 'Vacío',
+    'project.tariff.TariffItemList.empty': 'No hay tarifas',
     'project.tariffs.TariffItemList.title': 'Tarifas',
 
     'project.roomtypes.RoomTypeForm.title' : 'Añadir tipo de Habitación',
     'project.roomTypes.RoomTypeUpdateForm.title' : 'Actualizar Tipo de habitación',
     'project.roomTypes.RoomTypeItemList.title' : 'Tipos de Habitación',
+    'project.tariff.RoomTypeItemList.empty': 'No hay tipos de habitaicón',
     
     'project.dailyPanel.dailyPanelTable.title' : 'Panel Diario',
     "project.app.Header.dailyPanel": 'Panel Diario',
@@ -63,6 +68,7 @@ export default {
     'project.shopping.SaleRoomsFindForm.title' : 'Buscar habitación',
 
     'project.saleRooms.SaleRoomItemList.capacity': 'Capacidad: ',
+    'project.saleRooms.SaleRoomItemList.noSaleRoomsFound': 'No se han encontrado habitaciones de ese tipo para esas fechas',
 
     'project.saleRooms.Total.total':'Total: ',
     'project.saleRooms.ClientForm.title':'Datos de la reserva',

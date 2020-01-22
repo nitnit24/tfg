@@ -11,7 +11,7 @@ public class SaleRoomDto {
 	}
 
 	private Long saleRoomId;
-	private Calendar date;
+	private Long date;
 	private int freeRooms;
 	private Long roomTypeId;
 
@@ -19,15 +19,15 @@ public class SaleRoomDto {
 	}
 
 	
-	public SaleRoomDto(Long saleRoomId, Calendar date, int freeRooms, Long roomTypeId) {
+	public SaleRoomDto(Long saleRoomId, Long date, int freeRooms, Long roomTypeId) {
 		this.saleRoomId = saleRoomId;
 		this.date = date;
-		if (date != null) {
-			this.date.set(Calendar.MILLISECOND, 0);
-			this.date.set(Calendar.SECOND, 0);
-			this.date.set(Calendar.MINUTE, 0);
-			this.date.set(Calendar.HOUR_OF_DAY, 00);
-		}
+//		if (date != null) {
+//			this.date.set(Calendar.MILLISECOND, 0);
+//			this.date.set(Calendar.SECOND, 0);
+//			this.date.set(Calendar.MINUTE, 0);
+//			this.date.set(Calendar.HOUR_OF_DAY, 00);
+//		}
 		this.freeRooms = freeRooms;
 		this.roomTypeId = roomTypeId;
 	}
@@ -42,23 +42,23 @@ public class SaleRoomDto {
 	}
 
 	@NotNull
-	public Calendar getDate() {
-		this.date.set(Calendar.MILLISECOND, 0);
-		this.date.set(Calendar.SECOND, 0);
-		this.date.set(Calendar.MINUTE, 0);
-		this.date.set(Calendar.HOUR_OF_DAY, 00);
+	public Long getDate() {
+//		this.date.set(Calendar.MILLISECOND, 0);
+//		this.date.set(Calendar.SECOND, 0);
+//		this.date.set(Calendar.MINUTE, 0);
+//		this.date.set(Calendar.HOUR_OF_DAY, 00);
 		return date;
 	}
 
 
-	public void setDate(Calendar date) {
+	public void setDate(Long date) {
 		this.date = date;
-		if (date != null) {
-			this.date.set(Calendar.MILLISECOND, 0);
-			this.date.set(Calendar.SECOND, 0);
-			this.date.set(Calendar.MINUTE, 0);
-			this.date.set(Calendar.HOUR_OF_DAY, 00);
-		}
+//		if (date != null) {
+//			this.date.set(Calendar.MILLISECOND, 0);
+//			this.date.set(Calendar.SECOND, 0);
+//			this.date.set(Calendar.MINUTE, 0);
+//			this.date.set(Calendar.HOUR_OF_DAY, 00);
+//		}
 	}
 
 

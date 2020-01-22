@@ -13,24 +13,30 @@ public class RoomType {
 
 	private Long id;
 	private String name;
+	private String description;
 	private int capacity;
+	private int quantity;
 	private BigDecimal minPrice;
 	private BigDecimal maxPrice;
 
 	public RoomType() {
 	}
 
-	public RoomType(String name, int capacity, BigDecimal minPrice, BigDecimal maxPrice) {
+	public RoomType(String name, String description, int capacity, int quantity, BigDecimal minPrice, BigDecimal maxPrice) {
 		this.name = name;
+		this.description = description;
 		this.capacity = capacity;
+		this.quantity = quantity;
 		this.minPrice = minPrice;
 		this.maxPrice = maxPrice;
 	}
 	
-	public RoomType(Long id, String name, int capacity, BigDecimal minPrice, BigDecimal maxPrice) {
+	public RoomType(Long id, String name, String description, int capacity, int quantity, BigDecimal minPrice, BigDecimal maxPrice) {
 		this.id = id;
 		this.name = name;
+		this.description = description;
 		this.capacity = capacity;
+		this.quantity = quantity;
 		this.minPrice = minPrice;
 		this.maxPrice = maxPrice;
 	}
@@ -54,12 +60,28 @@ public class RoomType {
 		this.name = name;
 	}
 
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
 	public int getCapacity() {
 		return capacity;
 	}
 
 	public void setCapacity(int capacity) {
 		this.capacity = capacity;
+	}
+
+	public int getQuantity() {
+		return quantity;
+	}
+
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
 	}
 
 	public BigDecimal getMinPrice() {

@@ -1,12 +1,11 @@
 import '../dailyPanel.css';
-import  backend from '../../../backend';
-
-import {FormattedMessage} from 'react-intl';
+import {connect} from 'react-redux';
+import * as actions from '../actions';
 import React from 'react';
 
 const initialState = {
     freeRooms: '',
-
+    freeRoomsError: '',
     backendErrors: null
 }
 
@@ -16,54 +15,39 @@ class FreeRoomsDayItem extends React.Component {
     constructor(props) {
         super(props);
         this.state = initialState;
-
         this.handleChange = this.handleChange.bind(this);
 
     }
 
     componentDidMount() {
-        this.find();
+        this.setState({freeRooms: this.props.freeRooms});
     }
 
-    componentDidUpdate(prevProps, prevState) {
-        if (this.props.day !== prevProps.day) {
-            this.find()
-        }
-        if ((this.props.day === prevProps.day) && (this.state.freeRooms !== prevState.freeRooms) &&
-          (this.state.freeRooms !== ''))
-            {
-            this.add();
-            }
-      }
-
-    add(){
-        const idRoomType = this.props.roomTypeId;
+    add(freeRooms){
+        const roomTypeId = this.props.roomTypeId;
         const date = this.props.day;
-        const freeRooms = this.state.freeRooms;
 
-        console.log("ADDDDDDDDDDDD " + date)
-        backend.dailyPanelService.addSaleRoom(idRoomType, date, freeRooms,
-        null,
-        errors => this.setBackendErrors(errors))
-    }
+        this.props.uploadFreeRooms(roomTypeId, date, freeRooms,
+             null,
+             errors => this.setBackendErrors(errors))
 
-    find(){
-        const day = this.props.day;
-        let date = day.getDate();
-        let month = day.getMonth() + 1;
-        let year = day.getFullYear();
-        
-        backend.dailyPanelService.findSaleRoom(this.props.roomTypeId, 
-            year + '-'+ month + '-' + date ,
-            saleRoom => this.setState({freeRooms:saleRoom.freeRooms}),
-            errors => { this.setBackendErrors(errors),
-                    errors ?  this.setState({freeRooms:''}) : "";
-            });
     }
 
     handleChange(event) {
         this.setState({freeRooms: event.target.value});
+
+        if( event.target.value <= this.props.quantity){
+            this.add(event.target.value);
+        }
     }
+
+    validateFreeRooms = () => {
+        const { freeRooms } = this.state;
+        this.setState({
+          freeRoomsError:
+            (freeRooms <= this.props.quantity || !freeRooms) ? null : 'El número de habitaciones libres debe ser menor de ' + this.props.freeRooms
+        });
+      }
 
     setBackendErrors(backendErrors) {
         this.setState({backendErrors});
@@ -71,15 +55,15 @@ class FreeRoomsDayItem extends React.Component {
 
 
     render(){
-       // this.setState({day: this.props.day})
         return (
             <td className = "p-0" style={{width: '2.6%'}}>
-                 <form >
-                <input type="text" id="" className=" border-0 table-input text-center" 
+                <form >
+                <input type="text" 
+                   className={` border-0 table-input text-center  ${this.state.freeRoomsError ? ' bg-danger text-white' : ''}`}
                     value={this.state.freeRooms}  
                     onChange={(e) => this.handleChange(e)} 
-                    autoFocus
-                    min= "0"      
+                    onBlur={this.validateFreeRooms}
+                    data-toggle="tooltip" data-placement="right" title={this.state.freeRoomsError}  
                 />
                 </form>
             </td>
@@ -88,6 +72,11 @@ class FreeRoomsDayItem extends React.Component {
     }
 }
 
+const mapStateToProps = (state) => ({
 
+});
 
-export default FreeRoomsDayItem;
+const mapDispatchToProps = {
+    uploadFreeRooms: actions.uploadFreeRooms
+};
+export default connect( mapStateToProps, mapDispatchToProps)(FreeRoomsDayItem);

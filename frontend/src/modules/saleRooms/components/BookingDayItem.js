@@ -1,5 +1,5 @@
 import React from 'react';
-import {FormattedMessage, FormattedDate,  FormattedTime} from 'react-intl';
+import { FormattedDate} from 'react-intl';
 
 import '../../styles.css';
 

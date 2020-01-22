@@ -14,7 +14,9 @@ class RoomTypeUpdateForm extends React.Component {
 
         this.state = {
             name: props.roomType.name,
+            description: props.roomType.description,
             capacity: props.roomType.capacity,
+            quantity: props.roomType.quantity,
             minPrice: props.roomType.minPrice,
             maxPrice: props.roomType.maxPrice,
             
@@ -27,8 +29,16 @@ class RoomTypeUpdateForm extends React.Component {
         this.setState({name: event.target.value});
     }
 
+    handleDescriptionChange(event) {
+        this.setState({description: event.target.value});
+    }
+
     handleCapacityChange(event) {
         this.setState({capacity: event.target.value});
+    }
+
+    handleQuantityChange(event) {
+        this.setState({quantity: event.target.value});
     }
 
     handleMinPriceChange(event) {
@@ -58,7 +68,9 @@ class RoomTypeUpdateForm extends React.Component {
         this.props.updateRoomType(
             {id: this.props.roomType.id,
             name: this.state.name.trim(),
+            description: this.state.description.trim(),
             capacity: this.state.capacity,
+            quantity: this.state.quantity,
             minPrice: this.state.minPrice,
             maxPrice: this.state.maxPrice
         },
@@ -103,6 +115,20 @@ class RoomTypeUpdateForm extends React.Component {
                                 </div>
                             </div>
                             <div className="form-group row">
+                                <label htmlFor="description" className="col-md-3 col-form-label">
+                                    <FormattedMessage id="project.global.fields.description"/>
+                                </label>
+                                <div className="col-md-4">
+                                    <input type="text" id="name" className="form-control"
+                                        value={this.state.description}
+                                        onChange={(e) => this.handleDescriptionChange(e)}
+                                        autoFocus/>
+                                    <div className="invalid-feedback">
+                                        <FormattedMessage id='project.global.validator.required'/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="form-group row">
                                 <label htmlFor="capacity" className="col-md-3 col-form-label">
                                     <FormattedMessage id="project.global.fields.capacity"/>
                                 </label>
@@ -111,6 +137,20 @@ class RoomTypeUpdateForm extends React.Component {
                                     
                                         value={this.state.capacity}
                                         onChange={(e) => this.handleCapacityChange(e)}
+                                        required/>
+                                    <div className="invalid-feedback">
+                                        <FormattedMessage id='project.global.validator.required'/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="form-group row">
+                                <label htmlFor="quantity" className="col-md-3 col-form-label">
+                                    <FormattedMessage id="project.global.fields.quantity"/>
+                                </label>
+                                <div className="col-md-4">
+                                    <input type="number" id="quantity" className="form-control"
+                                        value={this.state.quantity}
+                                        onChange={(e) => this.handleQuantityChange(e)}
                                         required/>
                                     <div className="invalid-feedback">
                                         <FormattedMessage id='project.global.validator.required'/>

@@ -7,12 +7,12 @@ import static es.udc.tfg.backend.rest.dtos.RoomTypeConversor.toRoomTypeDtos;
 import static es.udc.tfg.backend.rest.dtos.SaleRoomTariffConversor.toSaleRoomTariffDtos;
 import static es.udc.tfg.backend.rest.dtos.TariffConversor.toTariffDtos;
 
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,6 +29,7 @@ import es.udc.tfg.backend.model.entities.Booking;
 import es.udc.tfg.backend.model.services.Block;
 import es.udc.tfg.backend.model.services.BookingService;
 import es.udc.tfg.backend.model.services.IncorrectFindLocatorKeyException;
+import es.udc.tfg.backend.model.services.ThereAreNotEnoughtFreeRoomsException;
 import es.udc.tfg.backend.rest.dtos.BlockDto;
 import es.udc.tfg.backend.rest.dtos.BookingDto;
 import es.udc.tfg.backend.rest.dtos.BookingParamsDto;
@@ -47,14 +48,12 @@ public class BookingController {
 
 	@PostMapping("/makeBooking")
 	public BookingDto makeBooking(
-			@RequestParam("startDate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
-			@RequestParam("endDate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDate,
 			@Validated @RequestBody BookingParamsDto params
-			) throws InstanceNotFoundException{
+			) throws InstanceNotFoundException, ThereAreNotEnoughtFreeRoomsException, UnsupportedEncodingException, IOException{
 		Calendar startCalendar = Calendar.getInstance();
-		startCalendar.setTime(startDate);
+		startCalendar.setTimeInMillis(params.getStartDate());
 		Calendar endCalendar = Calendar.getInstance();
-		endCalendar.setTime(endDate);
+		endCalendar.setTimeInMillis(params.getEndDate());
 		return toBookingDto(bookingService.makeBooking(params.getBookingRoomSummarys(), startCalendar, endCalendar, params.getName(), params.getSurname(), 
 				params.getPhone(), params.getEmail(), params.getPetition()));
 	}
@@ -62,39 +61,39 @@ public class BookingController {
 
 	@GetMapping("/findFreeRooms")
 	public List<RoomTypeDto> findFreeRooms(
-			@RequestParam("startDate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
-			@RequestParam("endDate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDate,
+			@RequestParam Long startDate,
+			@RequestParam Long endDate,
 			@RequestParam int people , 
 			@RequestParam int rooms){
 		Calendar startCalendar = Calendar.getInstance();
-		startCalendar.setTime(startDate);
+		startCalendar.setTimeInMillis(startDate);
 		Calendar endCalendar = Calendar.getInstance();
-		endCalendar.setTime(endDate);
+		endCalendar.setTimeInMillis(endDate);
 		return toRoomTypeDtos(bookingService.findFreeRooms(startCalendar, endCalendar, people, rooms));
 	}
 	
 	@GetMapping("/findTariffsByFreeRoom")
 	public List<TariffDto> findTariffsByFreeRoom(
-			@RequestParam("startDate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
-			@RequestParam("endDate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDate,
+			@RequestParam Long startDate,
+			@RequestParam Long endDate,
 			@RequestParam Long roomTypeId){
 		Calendar startCalendar = Calendar.getInstance();
-		startCalendar.setTime(startDate);
+		startCalendar.setTimeInMillis(startDate);
 		Calendar endCalendar = Calendar.getInstance();
-		endCalendar.setTime(endDate);
+		endCalendar.setTimeInMillis(endDate);
 		return toTariffDtos(bookingService.findTariffsByFreeRoom(startCalendar, endCalendar, roomTypeId));
 	}
 	
 	@GetMapping("/findSaleRoomTariffsByFreeRoom")
 	public List<SaleRoomTariffDto> findSaleRoomTariffsByFreeRoom(
-			@RequestParam("startDate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
-			@RequestParam("endDate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDate,
+			@RequestParam Long startDate,
+			@RequestParam Long endDate,
 			@RequestParam Long tariffId,
 			@RequestParam Long roomTypeId){
 		Calendar startCalendar = Calendar.getInstance();
-		startCalendar.setTime(startDate);
+		startCalendar.setTimeInMillis(startDate);
 		Calendar endCalendar = Calendar.getInstance();
-		endCalendar.setTime(endDate);
+		endCalendar.setTimeInMillis(endDate);
 		return toSaleRoomTariffDtos(bookingService.findSaleRoomTariffsByFreeRoom(startCalendar, endCalendar, roomTypeId, tariffId));
 	}
 
@@ -119,15 +118,15 @@ public class BookingController {
 	@GetMapping("/bookings")
 	public BlockDto<BookingSummaryDto> findBookings(
 		@RequestParam(required=true) String dateType,
-		@RequestParam("minDate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date minDate,
-		@RequestParam("maxDate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date maxDate,
+		@RequestParam(required=false) Long minDate,
+		@RequestParam(required=false) Long maxDate,
 		@RequestParam(required=false) String keywords, 
 		@RequestParam(defaultValue="0") int page) {
 		
 		Calendar minCalendar = Calendar.getInstance();
-		minCalendar.setTime(minDate);
+		minCalendar.setTimeInMillis(minDate);
 		Calendar maxCalendar = Calendar.getInstance();
-		maxCalendar.setTime(maxDate);
+		maxCalendar.setTimeInMillis(maxDate);
 		
 		Block<Booking> bookingBlock = bookingService.findBookings(dateType, minCalendar, maxCalendar, keywords, page, 10);
 		

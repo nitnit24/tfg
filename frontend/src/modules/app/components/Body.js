@@ -8,7 +8,7 @@ import {Login, SignUp, UpdateProfile, ChangePassword} from '../../users';
 import users from '../../users';
 import {Tariff, TariffUpdateForm} from '../../tariffs';
 import {RoomType, RoomTypeUpdateForm} from '../../roomTypes';
-import {SaleRoom, BookingData, BookingCompleted} from '../../saleRooms';
+import {SaleRoom, BookingData, BookingCompleted, BookingFindForm} from '../../saleRooms';
 import {BookingsFind,  BookingDetails} from '../../bookings';
 import {DailyPanel} from '../../dailyPanel';
 
@@ -32,7 +32,7 @@ const Body = ({user}) => (
             <Route exact path="/saleRooms/find-saleRooms" component={SaleRoom}/>
             <Route exact path="/booking/client-form" component={BookingData}/>
             <Route exact path="/booking/booking-completed" component={BookingCompleted}/>
-            <Route exact path="/booking/booking-find" component={BookingsFind}/>
+            <Route exact path="/booking/booking-find" component={BookingFindForm}/>
             <Route exact path="/booking/booking-details/:locator" component={BookingDetails}/>
         </Switch>
     </div>

@@ -57,7 +57,9 @@ public class RoomTypeServiceImpl implements RoomTypeService {
 		}
 
 		existingRoomTypeItem.get().setName(roomType.getName());
+		existingRoomTypeItem.get().setDescription(roomType.getDescription());
 		existingRoomTypeItem.get().setCapacity(roomType.getCapacity());
+		existingRoomTypeItem.get().setQuantity(roomType.getQuantity());
 		existingRoomTypeItem.get().setMinPrice(roomType.getMinPrice());
 		existingRoomTypeItem.get().setMaxPrice(roomType.getMaxPrice());
 		roomTypeDao.save(existingRoomTypeItem.get());

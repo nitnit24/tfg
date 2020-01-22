@@ -49,6 +49,7 @@ public class TariffServiceImpl implements TariffService {
 
 		existingTariffItem.get().setName(tariff.getName());
 		existingTariffItem.get().setCode(tariff.getCode());
+		existingTariffItem.get().setDescription(tariff.getDescription());
 
 		tariffDao.save(existingTariffItem.get());
 

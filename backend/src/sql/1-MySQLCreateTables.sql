@@ -29,6 +29,7 @@ CREATE TABLE Tariff (
     id BIGINT NOT NULL AUTO_INCREMENT,
     tariffName VARCHAR(60) COLLATE latin1_bin NOT NULL,
     tariffCode VARCHAR(60) COLLATE latin1_bin NOT NULL,
+    tariffDescription VARCHAR(240) COLLATE latin1_bin NOT NULL,
     CONSTRAINT TariffPK PRIMARY KEY (id),
     CONSTRAINT TariffNameUniqueKey UNIQUE (tariffName),
     CONSTRAINT TariffCodeUniqueKey UNIQUE (tariffCode)
@@ -36,8 +37,10 @@ CREATE TABLE Tariff (
 
 CREATE TABLE RoomType (
     id BIGINT NOT NULL AUTO_INCREMENT,
-    typeName VARCHAR(60) NOT NULL,
+    typeName VARCHAR(60) COLLATE latin1_bin NOT NULL,
+    description VARCHAR(240) COLLATE latin1_bin,
     capacity SMALLINT NOT NULL,
+    quantity SMALLINT NOT NULL,
     minPrice DECIMAL(11, 2),
     maxPrice DECIMAL(11, 2),
     CONSTRAINT RoomTypePK PRIMARY KEY (id),
@@ -68,8 +71,8 @@ CREATE TABLE SaleRoomTariff (
 
 CREATE TABLE Booking (
 	id BIGINT NOT NULL AUTO_INCREMENT,
-	bookingKey VARCHAR(15),
-	locator VARCHAR(15),
+	bookingKey VARCHAR(15) COLLATE latin1_bin,
+	locator VARCHAR(15) COLLATE latin1_bin,
     date DATETIME NOT NULL,
 	startDate DATE NOT NULL,
 	endDate DATE NOT NULL,
@@ -77,11 +80,11 @@ CREATE TABLE Booking (
 	state SMALLINT,
 	cancelDate DATETIME,
 	updateDate DATETIME,
-	name VARCHAR(60) NOT NULL,
-	surName VARCHAR(60) NOT NULL,
-	phone VARCHAR(20) NOT NULL,
-	email VARCHAR(60) NOT NULL,
-	petition VARCHAR(299),
+	name VARCHAR(60) NOT NULL COLLATE latin1_bin,
+	surName VARCHAR(60) NOT NULL COLLATE latin1_bin,
+	phone VARCHAR(20) NOT NULL COLLATE latin1_bin,
+	email VARCHAR(60) NOT NULL COLLATE latin1_bin,
+	petition VARCHAR(299)COLLATE latin1_bin,
 	totalPrice DECIMAL(11,2),
 	CONSTRAINT BookingItemPK PRIMARY KEY (id)
 ) Engine = InnoDB;
@@ -91,14 +94,14 @@ CREATE TABLE Booking (
 	roomTotalPrice DECIMAL(11,2),
 	idBooking BIGINT NOT NULL,
 	quantity SMALLINT NOT NULL,
-	roomTypeName VARCHAR(60),
+	roomTypeName VARCHAR(60) COLLATE latin1_bin,
 	roomTypeCapacity SMALLINT,
-	tariffName VARCHAR(60),
+	tariffName VARCHAR(60) COLLATE latin1_bin,
 	CONSTRAINT BookingRoomPK PRIMARY KEY (id),
 	CONSTRAINT idBookingFK FOREIGN KEY(idBooking) REFERENCES Booking (id)
 ) Engine = InnoDB;
 
-	CREATE TABLE BookingDay (
+CREATE TABLE BookingDay (
 	id BIGINT NOT NULL AUTO_INCREMENT,
 	dayPrice DECIMAL(11,2),
 	day DATE NOT NULL,

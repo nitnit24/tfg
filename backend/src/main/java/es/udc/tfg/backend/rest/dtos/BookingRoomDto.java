@@ -34,10 +34,6 @@ public class BookingRoomDto {
 	}
 
 
-
-
-
-
 	public Long getId() {
 		return id;
 	}

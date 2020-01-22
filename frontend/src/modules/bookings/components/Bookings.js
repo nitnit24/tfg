@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import {FormattedMessage, FormattedDate, FormattedNumber} from 'react-intl';
-import * as selectors from '../selectors';
 import {Link} from 'react-router-dom';
 
 const Bookings = ({bookings}) => (

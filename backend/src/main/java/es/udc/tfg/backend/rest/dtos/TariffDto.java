@@ -11,14 +11,16 @@ public class TariffDto {
 	private Long id;
 	private String name;
 	private String code;
+	private String description;
 
 	public TariffDto() {
 	}
 
-	public TariffDto(Long id, String name, String code) {
+	public TariffDto(Long id, String name, String code, String description) {
 		this.id = id;
 		this.name = name;
 		this.code = code;
+		this.description = description;
 
 	}
 
@@ -49,5 +51,15 @@ public class TariffDto {
 	public void setCode(String code) {
 		this.code = code;
 	}
+	
+	@Size(min = 0, max = 240, groups = { AllValidations.class })
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
 
 }

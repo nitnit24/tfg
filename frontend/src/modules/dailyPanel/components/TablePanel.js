@@ -4,9 +4,6 @@ import DayItem from './DayItem';
 import FreeRoomsDayItem from './FreeRoomsDayItem';
 import TariffDayItem from './TariffDayItem';
 
-
-import roomTypes from '../../roomTypes';
-import tariffs from '../../tariffs';
 import * as selectors from '../selectors';
 
 import '../dailyPanel.css'
@@ -16,76 +13,44 @@ import {FormattedMessage} from 'react-intl';
 
 class TablePanel extends React.Component {
 
-    componentDidMount() {
-  
-        this.props.findAllTariffs();
-        this.props.findAllRoomTypes();
-
-    }
-
     constructor(props) {
         super(props);
         this.state = {
-            days: []
+          
         };
 
       }
 
-
-    getCalendar(){
-        const days = new Array(31);
-
-        for(var i=0;i<31;i++){
-            days[i] = new Date();
-            days[i].setDate(days[i].getDate()+i);
-        }
-        return days;
-    }
-
-    getCalendarDate(date){
-        const res = date.split('-',3);
-        const days = new Array(31);
-
-        for(var i=0;i<31;i++){
-            days[i] = new Date(res[0],res[1]-1, res[2]);
-            days[i].setDate(days[i].getDate()+i);
-        }
-        return days;
-    }
-
-
-
     render(){
+        
+        const roomTables = this.props.roomTables;
 
-        var days = [];
-        if (this.props.datePanel === ''){
-            days = this.getCalendar();
+        if (roomTables === null) {
+            return (
+                <div>
+                </div>
+            );
         }
-        else
-        {
-            days = this.getCalendarDate(this.props.datePanel);
-        }
-        
-        const tariffs = this.props.tariffs;
-        const roomTypes = this.props.roomTypes;
-        
 
         return (
              <div>
-                {roomTypes.map(roomType => 
+                {roomTables.map(roomTable => 
                     <table className="table table-bordered">
                         <thead>
                             <tr>
                                 <th className = "p-1 room text-center" scope="col" style={{width: '8%'}}> 
                                     <span className = " m-1 text-panel">    
-                                        {roomType.name}   
+                                        {roomTable.roomTypeName}   
                                     </span> 
                                 </th>
-                                    {days.map(day => 
+                                    {roomTable.roomTableDays.map(roomTableDay => 
                                         <DayItem 
-                                            key={days.indexOf(day)} item={day} pos ={days.indexOf(day)}
+                                            key={roomTable.roomTableDays.indexOf(roomTableDay)}
+                                             item={roomTableDay.day} 
+                                             pos={roomTable.roomTableDays.indexOf(roomTableDay)}
                                         />
-                                     )} 
+                                   
+                                    )} 
                             </tr>
                         </thead>
                     
@@ -94,21 +59,30 @@ class TablePanel extends React.Component {
                                 <td className= "p-0" style={{width: '8%'}}> 
                                     <span  className = " m-1 text-panel"><FormattedMessage id="project.dailyPanel.dailyPanel.freeRooms"/></span>
                                 </td>
-                                {days.map(day => 
+                                {roomTable.roomTableDays.map(roomTableDay => 
                                         <FreeRoomsDayItem
-                                            key={days.indexOf(day)} day={day} roomTypeId={roomType.id}
-                                        
+                                            key={roomTable.roomTableDays.indexOf(roomTableDay)}
+                                             day={roomTableDay.day}
+                                             roomTypeId={roomTable.roomTypeId} 
+                                             quantity={roomTable.quantity}
+                                             freeRooms={roomTableDay.freeRooms}
                                         />
                                      )} 
                             </tr>
-                            {tariffs.map(tariff => 
-                                <tr key={tariffs.indexOf(tariff)}>
+                            {roomTable.tariffs.map(tariff => 
+                                <tr key={roomTable.tariffs.indexOf(tariff)}>
                                     <td className = "p-0" style={{width: '8%'}}>
                                         <span className = "m-1 text-panel ">{tariff.name}</span>
                                     </td>
-                                    {days.map(day => 
+                                    {roomTable.roomTableDays.map(roomTableDay => 
                                         <TariffDayItem
-                                            key={days.indexOf(day)} day={day} roomTypeId={roomType.id} tariffId={tariff.id}
+                                        key={roomTable.roomTableDays.indexOf(roomTableDay)}
+                                        day={roomTableDay.day} 
+                                        roomTypeId={roomTable.roomTypeId}  
+                                        minPrice = {roomTable.minPrice}
+                                        maxPrice = {roomTable.maxPrice}
+                                        tariffId={roomTableDay.roomTableTariffs[roomTable.tariffs.indexOf(tariff)].tariffId}
+                                        price={roomTableDay.roomTableTariffs[roomTable.tariffs.indexOf(tariff)].price}
                                         />
                                      )} 
                                 </tr>
@@ -125,15 +99,12 @@ class TablePanel extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-    datePanel: selectors.getDate(state),
-    roomTypes : roomTypes.selectors.getRoomTypes(state),
-    tariffs : tariffs.selectors.getTariffs(state),
+    roomTables: selectors.getRoomTables(state),
     
 });
 
 const mapDispatchToProps = {
-    findAllRoomTypes: roomTypes.actions.findAllRoomTypes,
-    findAllTariffs: tariffs.actions.findAllTariffs,
+
 };
 
 TablePanel = connect(

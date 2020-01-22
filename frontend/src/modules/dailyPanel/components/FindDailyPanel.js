@@ -13,7 +13,7 @@ class FindPanel extends React.Component {
          this.handleChange = this.handleChange.bind(this);
       }
 
-      componentDidUpdate(){
+    componentDidUpdate(){
         this.saveDatePanel();
     }
 
@@ -22,8 +22,13 @@ class FindPanel extends React.Component {
     }
 
     saveDatePanel(){
-        const datePanel = this.state.datePanel;
-        this.props.addDate(datePanel);
+        const datePanelString = this.state.datePanel;
+        const datePanelMillis = Date.parse(datePanelString);
+        const datePanel = new Date(datePanelMillis)
+        const date = new Date(datePanel.getFullYear(),(datePanel.getMonth()),datePanel.getDate());
+     
+        //this.props.addDate(date.getTime());
+        this.props.findRoomTables(date.getTime())
     }
 
     render(){
@@ -63,6 +68,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {
     addDate: actions.addDate,
+    findRoomTables: actions.findRoomTables
 
 };
 

@@ -2,7 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 
 import RoomTypeForm from './RoomTypeForm';
-import RoomTypeItemList from './RoomTypeItemList';
+import RoomTypeList from './RoomTypeList';
 import * as selectors from '../selectors';
 import * as actions from '../actions';
 import {SimpleModal} from '../../common';
@@ -46,7 +46,7 @@ class RoomType extends React.Component {
                     </div>
                 &nbsp;
                 &nbsp;
-                <RoomTypeItemList list={this.props.roomTypes} history={this.props.history}/> 
+                <RoomTypeList list={this.props.roomTypes} history={this.props.history}/> 
              
             </div>
         );

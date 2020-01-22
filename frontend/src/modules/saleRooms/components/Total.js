@@ -1,6 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import {FormattedMessage, FormattedDate} from 'react-intl';
+import {FormattedMessage} from 'react-intl';
 import * as selectors from '../selectors';
 
 

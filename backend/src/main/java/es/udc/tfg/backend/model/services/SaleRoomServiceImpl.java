@@ -25,12 +25,16 @@ public class SaleRoomServiceImpl implements SaleRoomService {
 	private RoomTypeDao roomTypeDao;
 
 	@Override
-	public SaleRoom addSaleRoom(Long roomTypeId, Calendar date, int freeRooms) throws DuplicateInstanceException, InstanceNotFoundException {
+	public SaleRoom addSaleRoom(Long roomTypeId, Calendar date, int freeRooms) throws DuplicateInstanceException, InstanceNotFoundException, FreeRoomsLessThanRoomTypeQuantityException {
 
 		Optional<RoomType> roomType = roomTypeDao.findById(roomTypeId);
 
 		if (!roomType.isPresent()) {
 			throw new InstanceNotFoundException("project.entities.roomType", roomTypeId);
+		}
+		
+		if (roomType.get().getQuantity() < freeRooms) {
+			throw new  FreeRoomsLessThanRoomTypeQuantityException(roomType.get().getQuantity());
 		}
 		
 		Optional<SaleRoom> saleRoom = saleRoomDao.findByRoomTypeIdAndDate(roomTypeId, date);
@@ -53,18 +57,18 @@ public class SaleRoomServiceImpl implements SaleRoomService {
 	}
 	
 	
-	@Override
-	public SaleRoom findByRoomTypeIdAndDate(Long roomTypeId, Calendar date) throws InstanceNotFoundException {
-		
-		Optional<SaleRoom> saleRoom = saleRoomDao.findByRoomTypeIdAndDate(roomTypeId, date);
-
-		if (!saleRoom.isPresent()) {
-			throw new InstanceNotFoundException("project.entities.roomType", roomTypeId );
-		}
-
-		return saleRoom.get();
-
-	}
+//	@Override
+//	public SaleRoom findByRoomTypeIdAndDate(Long roomTypeId, Calendar date) throws InstanceNotFoundException {
+//		
+//		Optional<SaleRoom> saleRoom = saleRoomDao.findByRoomTypeIdAndDate(roomTypeId, date);
+//
+//		if (!saleRoom.isPresent()) {
+//			throw new InstanceNotFoundException("project.entities.roomType", roomTypeId );
+//		}
+//
+//		return saleRoom.get();
+//
+//	}
 
 
 
