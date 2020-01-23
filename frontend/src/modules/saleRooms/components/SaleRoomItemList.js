@@ -5,14 +5,12 @@ import DetailsRoom from './DetailsRoom';
 import { TariffsItemList } from '..';
 import {Errors} from '../../common';
 import * as selectors from '../selectors';
-import { Roller } from 'react-awesome-spinners';
 
 import {FormattedMessage} from 'react-intl';
 
 import '../../styles.css';
 
 const initialState = {
-    loading: true, 
     backendErrors: null
 };
 
@@ -26,15 +24,6 @@ class SaleRoomItemList extends React.Component {
 
     }
 
-    setBackendErrors(backendErrors) {
-        this.setState({backendErrors});
-    }
-
-    handleErrorsClose() {
-        this.setState({backendErrors: null});
-    }
-
-
     render() {
 
         const list = this.props.freeRoomTypes;
@@ -47,7 +36,6 @@ class SaleRoomItemList extends React.Component {
             return (
                 <div className="text-center">
                  <FormattedMessage id='project.saleRooms.SaleRoomItemList.noSaleRoomsFound'/>
-                 {this.state.loading === true && <Roller  />}
                 </div>
                 
             );
@@ -56,12 +44,21 @@ class SaleRoomItemList extends React.Component {
         return (
 
             <div>
-                <Errors errors={this.state.backendErrors}
-                    onClose={() => this.handleErrorsClose()}/>
                      {list.map(room => 
-                     <div className= "border rounded ">
-                        <DetailsRoom key={room.id} item={room} />
-                        <TariffsItemList roomType= {room}></TariffsItemList>
+                     <div>
+                        <div className= "border rounded ">
+                            <DetailsRoom 
+                                name={room.roomTypeName} 
+                                description= {room.roomTypeDescription} 
+                                capacity ={room.capacity} />
+                            <TariffsItemList
+                                tariffs= {room.freeRoomTypeTariffs}
+                                roomTypeId={room.roomTypeId}
+                                maxFreeRooms = {room.maxFreeRooms}
+                                capacity ={room.capacity} 
+                                roomTypeName={room.roomTypeName} />
+                        </div>
+                        <br/>
                     </div>
                     )} 
 

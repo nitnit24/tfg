@@ -1,11 +1,11 @@
 import React from 'react';
 import {connect} from 'react-redux';
-
+import {FormattedNumber} from 'react-intl';
 
 import * as selectors from '../selectors';
 import  backend from '../../../backend';
 
-import TotalTariff from './TotalTariff';
+import QuantitySelect from './QuantitySelect';
 
 import '../../styles.css';
 
@@ -24,11 +24,11 @@ class TariffsItemList extends React.Component {
 
     }
 
-    componentDidMount() {
-        backend.bookingService.findTariffsByFreeRoom(this.props.startDate, this.props.endDate, this.props.roomType.id,
-           tariffs =>  this.setState({tariffsByFreeRoom: tariffs}));
+    // componentDidMount() {
+    //     backend.bookingService.findTariffsByFreeRoom(this.props.startDate, this.props.endDate, this.props.roomType.id,
+    //        tariffs =>  this.setState({tariffsByFreeRoom: tariffs}));
 
-    }
+    // }
 
     setBackendErrors(backendErrors) {
         this.setState({backendErrors});
@@ -41,24 +41,34 @@ class TariffsItemList extends React.Component {
 
     render() {
 
-        const list = this.state.tariffsByFreeRoom;
+        const tariffs = this.props.tariffs;
+        const roomTypeId = this.props.roomTypeId;
+        const  maxFreeRooms = this.props.maxFreeRooms;
+        const capacity = this.props.capacity;
+        const roomTypeName = this.props.roomTypeName;
 
         return (
             <div>
-                {list.map(tariff =>
+                {tariffs.map(tariff =>
                     <div className=" m-3 row justify-content-center"> 
                         <div className= "col-4 align-self-end">
                         <div className= "align-self-end">
-                            <b>{tariff.name}</b>
+                            <b>{tariff.tariffName}</b>
                         </div>
                         <div className= "align-self-end">
-                            {tariff.description}
+                            {tariff.tariffDescription}
                         </div>
                         </div>
-                     
-                        <div className= "col-8 align-self-end">
-                        <TotalTariff tariff = {tariff} roomType = {this.props.roomType}></TotalTariff>
-                        </div>  
+                        <div className= "col-3 align-self-end">
+                            <FormattedNumber value={tariff.totalPrice}/> €
+                        </div>
+                        <QuantitySelect 
+                            roomTypeId = {roomTypeId} 
+                            tariff = {tariff}
+                            maxFreeRooms = { maxFreeRooms}
+                            capacity = {capacity}
+                            roomTypeName = {roomTypeName}
+                        />
                     </div>
                 )}
             </div>
@@ -67,12 +77,6 @@ class TariffsItemList extends React.Component {
 
     }
 
-}
-
-
-TariffsItemList.propTypes = {
-     //list: PropTypes.array.isRequired,
-     //history: PropTypes.object.isRequired
 }
 
 const mapStateToProps = (state) => ({

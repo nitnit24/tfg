@@ -25,6 +25,8 @@ import es.udc.tfg.backend.model.entities.BookingDayDao;
 import es.udc.tfg.backend.model.entities.BookingRoom;
 import es.udc.tfg.backend.model.entities.BookingRoomDao;
 import es.udc.tfg.backend.model.entities.BookingRoomSummary;
+import es.udc.tfg.backend.model.entities.FreeRoomType;
+import es.udc.tfg.backend.model.entities.FreeRoomTypeTariffs;
 import es.udc.tfg.backend.model.entities.RoomType;
 import es.udc.tfg.backend.model.entities.SaleRoom;
 import es.udc.tfg.backend.model.entities.SaleRoomDao;
@@ -57,14 +59,15 @@ public class BookingServiceImpl implements BookingService {
 	@Autowired
 	private SaleRoomTariffDao saleRoomTariffDao;
 
-	
-	public List<RoomType> findFreeRooms(Calendar startDate, Calendar endDate, int people, int rooms) {
+	@Override
+	public List<FreeRoomType> findFreeRooms(Calendar startDate, Calendar endDate, int people, int rooms) {
 
 		// diferents
 		Optional<List<SaleRoom>> freeSaleRooms = saleRoomDao.findByDate(startDate);
 
 		List<RoomType> freeRoomTypes = new ArrayList<>();
-
+		List<Integer> freeRooms = new ArrayList<>();
+		
 		if (freeSaleRooms.isPresent()) {
 			for (SaleRoom freeSaleRoom : freeSaleRooms.get()) {
 
@@ -84,16 +87,51 @@ public class BookingServiceImpl implements BookingService {
 
 						if (date.compareTo(endDate) == 0) {
 							freeRoomTypes.add(saleRoom.get().getRoomType());
+							freeRooms.add(saleRoom.get().getFreeRooms());
 						}
 					}
 				}
 			}
 		}
+		
+		List<FreeRoomType> free = new ArrayList<>();
+		
+		for (RoomType freeRT : freeRoomTypes) {
+			
+			List <Tariff> availableTariffs = findTariffsByFreeRoom (startDate, endDate, freeRT.getId());
+			
+			List<FreeRoomTypeTariffs> freeRoomsTypeTariffs = new ArrayList<>();
+			
+			
+			for (Tariff aTariff : availableTariffs) {
 
-		return freeRoomTypes;
+				List<SaleRoomTariff> saleRoomTariffs = findSaleRoomTariffsByFreeRoom(startDate, endDate, freeRT.getId(),
+						aTariff.getId());
+
+				BigDecimal totalPrice = BigDecimal.ZERO;
+
+				totalPrice = saleRoomTariffs.stream().map(i -> i.getPrice()).reduce(new BigDecimal(0),
+						(a, b) -> a.add(b));
+
+				freeRoomsTypeTariffs.add(new FreeRoomTypeTariffs(aTariff.getId(), aTariff.getName(),
+						aTariff.getDescription(), totalPrice, saleRoomTariffs));
+			}
+			
+			int maxFreeRooms = 0;
+			for (int x = 0; x < freeRooms.size(); x++) {
+				if (freeRooms.get(x) > maxFreeRooms) {
+					maxFreeRooms = freeRooms.get(x);
+				}
+			}
+			
+			free.add(new FreeRoomType(freeRT.getId(), freeRT.getName(), freeRT.getDescription(), freeRT.getCapacity(),
+					maxFreeRooms, freeRoomsTypeTariffs));
+		}
+		
+		return free;
 	}
 	
-	public List<Tariff> findTariffsByFreeRoom(Calendar startDate, Calendar endDate, Long roomTypeId){
+	private List<Tariff> findTariffsByFreeRoom(Calendar startDate, Calendar endDate, Long roomTypeId){
 			
 		Iterable<Tariff> tariffs = tariffDao.findAll(new Sort(Sort.Direction.ASC, "id"));
 		List<Tariff> tariffsAsList = new ArrayList<>();
@@ -133,7 +171,7 @@ public class BookingServiceImpl implements BookingService {
 	}
 
 	
-	public List<SaleRoomTariff> findSaleRoomTariffsByFreeRoom(Calendar startDate, Calendar endDate, Long roomTypeId,
+	private List<SaleRoomTariff> findSaleRoomTariffsByFreeRoom(Calendar startDate, Calendar endDate, Long roomTypeId,
 			Long tariffId) {
 
 		List<SaleRoomTariff> saleRoomTariffList = new ArrayList<>();
@@ -184,13 +222,13 @@ public class BookingServiceImpl implements BookingService {
 		return sRandom;
 	}
 
+	@Override
 	@Transactional (rollbackFor= {ThereAreNotEnoughtFreeRoomsException.class, InstanceNotFoundException.class,
 			UnsupportedEncodingException.class, IOException.class})
 	public Booking makeBooking(List<BookingRoomSummary> bookingRoomSummarys, Calendar startDate, Calendar endDate,
 			String name, String surName, String phone, String email, String petition)
 			throws InstanceNotFoundException, ThereAreNotEnoughtFreeRoomsException, UnsupportedEncodingException, IOException{
 
-		//try {
 			Calendar now = Calendar.getInstance();
 
 			int startDay = startDate.get(Calendar.DAY_OF_YEAR);
@@ -264,15 +302,10 @@ public class BookingServiceImpl implements BookingService {
 			sendMsgBooking(newBooking);
 
 			return newBooking;
-
-//		} catch (ThereAreNotEnoughtFreeRoomsException exception) {
-//			
-//			throw new ThereAreNotEnoughtFreeRoomsException();
-//		}
-		
 	
 	}
 	
+	@Override
 	public Booking findByLocator (String locator) throws InstanceNotFoundException {
 		
 		Optional<Booking> booking = bookingDao.findByLocator(locator);
@@ -285,6 +318,7 @@ public class BookingServiceImpl implements BookingService {
 		
 	}
 	
+	@Override
 	public Booking findByLocatorAndKey(String locator, String key) throws IncorrectFindLocatorKeyException {
 		
 		Optional<Booking> booking = bookingDao.findByLocatorAndKey(locator, key);

@@ -1,23 +1,18 @@
 import React from 'react';
-import {FormattedNumber} from 'react-intl';
 import {connect} from 'react-redux';
-
 
 import * as selectors from '../selectors';
 import * as actions from '../actions';
-import  backend from '../../../backend';
 
 import '../../styles.css';
 
 const initialState = {
     backendErrors: null,
-    saleRoomTariffs :[],
-    maxPrice: '',
     quantity: 0,
     checked: false
 };
 
-class TotalTariff extends React.Component {
+class QuantitySelect extends React.Component {
 
     constructor(props) {
 
@@ -27,13 +22,13 @@ class TotalTariff extends React.Component {
 
     }
 
-    componentDidMount() {
-        this.props.cleanRooms(),
-        this.props.cleanSummaryRooms(),
-        backend.bookingService.findSaleRoomTariffsByFreeRoom(this.props.startDate, this.props.endDate, 
-            this.props.roomType.id, this.props.tariff.id,
-            saleRoomTariffs =>  this.setState({saleRoomTariffs: saleRoomTariffs}));
-    }
+    // componentDidMount() {
+    //     this.props.cleanRooms(),
+    //     this.props.cleanSummaryRooms(),
+    //     backend.bookingService.findSaleRoomTariffsByFreeRoom(this.props.startDate, this.props.endDate, 
+    //         this.props.roomType.id, this.props.tariff.id,
+    //         saleRoomTariffs =>  this.setState({saleRoomTariffs: saleRoomTariffs}));
+    // }
 
     setBackendErrors(backendErrors) {
         this.setState({backendErrors});
@@ -50,15 +45,15 @@ class TotalTariff extends React.Component {
     componentDidUpdate(prevProps, prevState) {
         if (this.state.quantity !== 0){
             var summaryRoom = {
-                id: this.props.roomType.id,
+                id: this.props.roomTypeId,
                 quantity: this.state.quantity,
-                name: this.props.roomType.name,
-                capacity: this.props.roomType.capacity,
-                tariff: this.props.tariff.name,
-                price: this.totalPrice()
+                name: this.props.roomTypeName,
+                capacity: this.props.capacity,
+                tariff: this.props.tariff.tariffName,
+                price: this.props.tariff.totalPrice
             }
             var room ={
-                saleRoomTariffs: this.state.saleRoomTariffs,
+                saleRoomTariffs: this.props.tariff.saleRoomTariffs,
                 quantity: this.state.quantity
             }
             this.props.removeSummaryRooms(summaryRoom),
@@ -68,46 +63,21 @@ class TotalTariff extends React.Component {
         }
         if (this.state.quantity === 0 ){
             var room ={
-                saleRoomTariffs: this.state.saleRoomTariffs,
+                saleRoomTariffs: this.props.saleRoomTariffs,
                 quantity: this.state.quantity
             }
             this.props.removeRooms(room)
         }
       }
 
-    totalPrice(){
-        var lista= this.state.saleRoomTariffs;
-        const suma = lista.reduce((total, saleRoomTariff) =>
-            {return total + saleRoomTariff.price},0);
-       return suma;
-    
-    }
-
-    mayor() {
-        var lista= this.state.saleRoomTariffs;
-        var mayor= lista.reduce(function(resultado,saleRoomTariffs,indice,array) {
-            if (indice< array.length){
-       
-                console.log(saleRoomTariffs)}
-                //  if (resultado<saleRoomTariffs.saleRoom.freeRooms) resultado=saleRoomTariffs.saleRoom.freeRooms;
-                //  }
-             return resultado;
-      }, 0 )
-      console.log(mayor);
-    }
-
     render() {
-
+        const maxFreeRooms = this.props.maxFreeRooms;
         return (
-            <div className=" row justify-content-center">
-                <div className= "col-3 align-self-end">
-                    <FormattedNumber value={this.totalPrice()}/> €
-                </div>
-                <div className= "col-3 h-100 align-self-end">
+                <div className= "col-2 h-100 align-self-end">
                         <div className= " align-self-center">
                         <span className="text-secondary small"> Cantidad habt.</span>
                         </div>
-                        <div className= "col-11  align-self-center">
+                        <div className= " align-self-center">
                             <select class="h-25 form-control " id="Quantity"  value={this.state.quantity} 
                                 onChange={(e) => this.handleChangeQuantity(e)}>
                                     <option value="0">0 </option>
@@ -115,10 +85,11 @@ class TotalTariff extends React.Component {
                                     <option value="2">2 </option>
                                     <option value="3">3 </option>
                                     <option value="4">4 </option> 
+
                             </select>
+
                         </div>
                 </div>
-            </div>
         );
 
     }
@@ -142,4 +113,4 @@ const mapDispatchToProps = {
 };
 
 
-export default connect (mapStateToProps, mapDispatchToProps)(TotalTariff);
+export default connect (mapStateToProps, mapDispatchToProps)(QuantitySelect);

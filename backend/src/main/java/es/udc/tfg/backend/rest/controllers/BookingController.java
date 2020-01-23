@@ -6,6 +6,7 @@ import static es.udc.tfg.backend.rest.dtos.BookingConversor.toBookingSummaryDtos
 import static es.udc.tfg.backend.rest.dtos.RoomTypeConversor.toRoomTypeDtos;
 import static es.udc.tfg.backend.rest.dtos.SaleRoomTariffConversor.toSaleRoomTariffDtos;
 import static es.udc.tfg.backend.rest.dtos.TariffConversor.toTariffDtos;
+import static es.udc.tfg.backend.rest.dtos.FreeRoomTypeConversor.toFreeRoomTypeDtos;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -34,6 +35,7 @@ import es.udc.tfg.backend.rest.dtos.BlockDto;
 import es.udc.tfg.backend.rest.dtos.BookingDto;
 import es.udc.tfg.backend.rest.dtos.BookingParamsDto;
 import es.udc.tfg.backend.rest.dtos.BookingSummaryDto;
+import es.udc.tfg.backend.rest.dtos.FreeRoomTypeDto;
 import es.udc.tfg.backend.rest.dtos.RoomTypeDto;
 import es.udc.tfg.backend.rest.dtos.SaleRoomTariffDto;
 import es.udc.tfg.backend.rest.dtos.TariffDto;
@@ -60,7 +62,7 @@ public class BookingController {
 	
 
 	@GetMapping("/findFreeRooms")
-	public List<RoomTypeDto> findFreeRooms(
+	public List<FreeRoomTypeDto> findFreeRooms(
 			@RequestParam Long startDate,
 			@RequestParam Long endDate,
 			@RequestParam int people , 
@@ -69,33 +71,33 @@ public class BookingController {
 		startCalendar.setTimeInMillis(startDate);
 		Calendar endCalendar = Calendar.getInstance();
 		endCalendar.setTimeInMillis(endDate);
-		return toRoomTypeDtos(bookingService.findFreeRooms(startCalendar, endCalendar, people, rooms));
+		return toFreeRoomTypeDtos(bookingService.findFreeRooms(startCalendar, endCalendar, people, rooms));
 	}
 	
-	@GetMapping("/findTariffsByFreeRoom")
-	public List<TariffDto> findTariffsByFreeRoom(
-			@RequestParam Long startDate,
-			@RequestParam Long endDate,
-			@RequestParam Long roomTypeId){
-		Calendar startCalendar = Calendar.getInstance();
-		startCalendar.setTimeInMillis(startDate);
-		Calendar endCalendar = Calendar.getInstance();
-		endCalendar.setTimeInMillis(endDate);
-		return toTariffDtos(bookingService.findTariffsByFreeRoom(startCalendar, endCalendar, roomTypeId));
-	}
-	
-	@GetMapping("/findSaleRoomTariffsByFreeRoom")
-	public List<SaleRoomTariffDto> findSaleRoomTariffsByFreeRoom(
-			@RequestParam Long startDate,
-			@RequestParam Long endDate,
-			@RequestParam Long tariffId,
-			@RequestParam Long roomTypeId){
-		Calendar startCalendar = Calendar.getInstance();
-		startCalendar.setTimeInMillis(startDate);
-		Calendar endCalendar = Calendar.getInstance();
-		endCalendar.setTimeInMillis(endDate);
-		return toSaleRoomTariffDtos(bookingService.findSaleRoomTariffsByFreeRoom(startCalendar, endCalendar, roomTypeId, tariffId));
-	}
+//	@GetMapping("/findTariffsByFreeRoom")
+//	public List<TariffDto> findTariffsByFreeRoom(
+//			@RequestParam Long startDate,
+//			@RequestParam Long endDate,
+//			@RequestParam Long roomTypeId){
+//		Calendar startCalendar = Calendar.getInstance();
+//		startCalendar.setTimeInMillis(startDate);
+//		Calendar endCalendar = Calendar.getInstance();
+//		endCalendar.setTimeInMillis(endDate);
+//		return toTariffDtos(bookingService.findTariffsByFreeRoom(startCalendar, endCalendar, roomTypeId));
+//	}
+//	
+//	@GetMapping("/findSaleRoomTariffsByFreeRoom")
+//	public List<SaleRoomTariffDto> findSaleRoomTariffsByFreeRoom(
+//			@RequestParam Long startDate,
+//			@RequestParam Long endDate,
+//			@RequestParam Long tariffId,
+//			@RequestParam Long roomTypeId){
+//		Calendar startCalendar = Calendar.getInstance();
+//		startCalendar.setTimeInMillis(startDate);
+//		Calendar endCalendar = Calendar.getInstance();
+//		endCalendar.setTimeInMillis(endDate);
+//		return toSaleRoomTariffDtos(bookingService.findSaleRoomTariffsByFreeRoom(startCalendar, endCalendar, roomTypeId, tariffId));
+//	}
 
 	@GetMapping("/{locator}")
 	public BookingDto findBookingByLocator(@PathVariable("locator") String locator) throws InstanceNotFoundException {

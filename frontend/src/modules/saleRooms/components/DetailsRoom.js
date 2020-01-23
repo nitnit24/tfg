@@ -38,7 +38,9 @@ class DetailsRoom extends React.Component {
 
         const { showModal } = this.state;
 
-        const item = this.props.item;
+        const name = this.props.name;
+        const description = this.props.description;
+        const capacity = this.props.capacity;
 
         return (
                 <div className="row m-3">
@@ -46,10 +48,10 @@ class DetailsRoom extends React.Component {
                         <img src={Bed}  className="img-thumbnail"  alt="Hab"/>
                     </div>
                     <div className="col-md-9">
-                        <h5 class="lead"><b>{item.name}</b></h5>
+                        <h5 class="lead"><b>{name}</b></h5>
                             <div className= "m-3">
                                 <FormattedMessage id="project.saleRooms.SaleRoomItemList.capacity"/>
-                                {item.capacity} 
+                                {capacity} 
                             </div>
                             <div className= "m-3">
                                 <button type="button" className="btn  btn-link btn-sm text-secondary"
@@ -60,7 +62,7 @@ class DetailsRoom extends React.Component {
                             </button>
                             {showModal &&
                             <SimpleModal onCloseRequest={() => this.handleToggleModal()}>
-                                <p>{item.description}</p>
+                                <p>{description}</p>
                             </SimpleModal>
                             }
                             </div>

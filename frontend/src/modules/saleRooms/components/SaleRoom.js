@@ -5,9 +5,13 @@ import SaleRoomsFindForm from './SaleRoomsFindForm';
 import SaleRoomItemList from './SaleRoomItemList';
 import Total from './Total';
 import {Link} from 'react-router-dom';
+import Reserva from'../reserva.png';
 
 const SaleRoom = ({history}) => (
     <div>
+        {/* <div className="col-md-3 ">
+            <img src={Reserva}   alt="Hab"/>
+        </div> */}
         <SaleRoomsFindForm history={history}/>
         &nbsp;
         <div className= "row  m-1 justify-content-end">

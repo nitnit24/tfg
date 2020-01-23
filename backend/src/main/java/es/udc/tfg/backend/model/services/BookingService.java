@@ -8,17 +8,15 @@ import java.util.List;
 import es.udc.tfg.backend.model.common.exceptions.InstanceNotFoundException;
 import es.udc.tfg.backend.model.entities.Booking;
 import es.udc.tfg.backend.model.entities.BookingRoomSummary;
-import es.udc.tfg.backend.model.entities.RoomType;
-import es.udc.tfg.backend.model.entities.SaleRoomTariff;
-import es.udc.tfg.backend.model.entities.Tariff;
+import es.udc.tfg.backend.model.entities.FreeRoomType;
 
 public interface BookingService {
 
-	List<RoomType> findFreeRooms(Calendar startDate, Calendar endDate, int people, int rooms);
+	List<FreeRoomType> findFreeRooms(Calendar startDate, Calendar endDate, int people, int rooms);
 	
-	List<Tariff> findTariffsByFreeRoom(Calendar startDate, Calendar endDate, Long roomTypeId);
+	//List<Tariff> findTariffsByFreeRoom(Calendar startDate, Calendar endDate, Long roomTypeId);
 	
-	List<SaleRoomTariff> findSaleRoomTariffsByFreeRoom(Calendar startDate, Calendar endDate, Long roomTypeId, Long tariffId);
+	//List<SaleRoomTariff> findSaleRoomTariffsByFreeRoom(Calendar startDate, Calendar endDate, Long roomTypeId, Long tariffId);
 
 	Booking makeBooking(List<BookingRoomSummary> bookingRoomSummarys, Calendar startDate, Calendar endDate, String name, 
 			String surName, String phone, String email, String petition) throws InstanceNotFoundException, ThereAreNotEnoughtFreeRoomsException, UnsupportedEncodingException, IOException;
