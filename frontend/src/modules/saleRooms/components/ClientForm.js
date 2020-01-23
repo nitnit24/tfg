@@ -1,5 +1,6 @@
 import React from 'react';
 import {FormattedMessage} from 'react-intl';
+import { Roller } from 'react-awesome-spinners';
 
 import {Errors} from '../../common';
 import * as actions from '../actions';
@@ -14,6 +15,7 @@ const initialState = {
     email: '',
     phone: '',
     petition: '',
+    loading: false, 
     
     backendErrors: null
 };
@@ -50,7 +52,7 @@ class ClientForm extends React.Component {
 
     handleSubmit(event) {
         event.preventDefault();
-
+        this.setState({loading: true})
         if (this.form.checkValidity()) {
             this.booking();
         } else {
@@ -84,9 +86,9 @@ class ClientForm extends React.Component {
     
 
     render() {
+        const loading = this.state.loading;
 
-        return (
-
+        return (  
             <div>
                  <Errors errors={this.state.backendErrors} handleClose={() => this.handleErrorsClose()}/>
                 <div className=" border rounded p-4">
@@ -192,6 +194,9 @@ class ClientForm extends React.Component {
                                     <button type="submit" className="btn btn-dark disabled" >
                                         <FormattedMessage id="project.global.buttons.booking"/>
                                     </button>
+                                </div>
+                                <div >
+                                    {this.state.loading === true && <Roller size="10" />}
                                 </div>
                             </div>
                             }

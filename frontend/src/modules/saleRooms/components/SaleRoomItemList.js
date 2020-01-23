@@ -5,12 +5,14 @@ import DetailsRoom from './DetailsRoom';
 import { TariffsItemList } from '..';
 import {Errors} from '../../common';
 import * as selectors from '../selectors';
+import { Roller } from 'react-awesome-spinners';
 
 import {FormattedMessage} from 'react-intl';
 
 import '../../styles.css';
 
 const initialState = {
+    loading: true, 
     backendErrors: null
 };
 
@@ -45,7 +47,9 @@ class SaleRoomItemList extends React.Component {
             return (
                 <div className="text-center">
                  <FormattedMessage id='project.saleRooms.SaleRoomItemList.noSaleRoomsFound'/>
+                 {this.state.loading === true && <Roller  />}
                 </div>
+                
             );
         }
 

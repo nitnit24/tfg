@@ -14,8 +14,7 @@ export const findFreeRooms = (sDate, eDate, people, rooms, onSuccess) => {
     path += people ? `&people=${people}` : "";
     
     path += rooms ? `&rooms=${rooms}` : "";
-    
-    console.log(path)
+  
     appFetch(path, config('GET'), onSuccess);
 
 }
