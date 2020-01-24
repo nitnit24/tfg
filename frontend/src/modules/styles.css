@@ -8,4 +8,26 @@
 
 .h4{
     text-align: center;
+    font-family: 'Lobster', cursive;
+}
+
+
+.btn{
+    font-family: 'Lobster', cursive;
+}
+
+.col-form-label{
+    font-family: 'Lobster', cursive;
+}
+
+.card-header{
+    font-family: 'Lobster', cursive;
+    text-transform: uppercase;
+    text-align:center;
+    background-color: rgb(47, 12, 128);
+    color: #ffffff;
+}
+
+.card-body{
+    background-color: rgba(203, 216, 250, 0.938);
 }

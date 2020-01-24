@@ -16,6 +16,7 @@ public class RoomType {
 
 	private Long id;
 	private User user;
+	private String image;
 	private String name;
 	private String description;
 	private int capacity;
@@ -26,8 +27,9 @@ public class RoomType {
 	public RoomType() {
 	}
 
-	public RoomType(User user, String name, String description, int capacity, int quantity, BigDecimal minPrice, BigDecimal maxPrice) {
+	public RoomType(User user, String image, String name, String description, int capacity, int quantity, BigDecimal minPrice, BigDecimal maxPrice) {
 		this.user = user;
+		this.image = image;
 		this.name = name;
 		this.description = description;
 		this.capacity = capacity;
@@ -36,8 +38,9 @@ public class RoomType {
 		this.maxPrice = maxPrice;
 	}
 	
-	public RoomType(Long id, String name, String description, int capacity, int quantity, BigDecimal minPrice, BigDecimal maxPrice) {
+	public RoomType(Long id, String image, String name, String description, int capacity, int quantity, BigDecimal minPrice, BigDecimal maxPrice) {
 		this.id = id;
+		this.image = image;
 		this.name = name;
 		this.description = description;
 		this.capacity = capacity;
@@ -64,6 +67,15 @@ public class RoomType {
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+
+	
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
 	}
 
 	@Column(name = "typeName")

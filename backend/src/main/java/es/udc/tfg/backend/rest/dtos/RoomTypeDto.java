@@ -6,12 +6,15 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public class RoomTypeDto {
 
 	public interface AllValidations {
 	}
 
 	private Long id;
+	private String image;
 	private String name;
 	private String description;
 	private int capacity;
@@ -22,8 +25,9 @@ public class RoomTypeDto {
 	public RoomTypeDto() {
 	}
 
-	public RoomTypeDto(Long id, String name,String description, int capacity, int quantity, BigDecimal minPrice, BigDecimal maxPrice) {
+	public RoomTypeDto(Long id, String image,String name,String description, int capacity, int quantity, BigDecimal minPrice, BigDecimal maxPrice) {
 		this.id = id;
+		this.image = image;
 		this.name = name;
 		this.description = description;
 		this.capacity = capacity;
@@ -39,6 +43,14 @@ public class RoomTypeDto {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
 	}
 
 	@NotNull(groups = { AllValidations.class })

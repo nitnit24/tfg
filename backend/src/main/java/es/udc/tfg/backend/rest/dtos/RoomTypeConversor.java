@@ -1,5 +1,7 @@
 package es.udc.tfg.backend.rest.dtos;
 
+import java.nio.charset.StandardCharsets;
+import java.util.Base64;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -11,12 +13,16 @@ public class RoomTypeConversor {
 	}
 
 	public final static RoomTypeDto toRoomTypeDto(RoomType roomType) {
-		return new RoomTypeDto(roomType.getId(), roomType.getName(), roomType.getDescription(), roomType.getCapacity(), 
+		//String img = Base64.getEncoder().encodeToString(roomType.getImage());
+		return new RoomTypeDto(roomType.getId(), roomType.getImage(), roomType.getName(), roomType.getDescription(), roomType.getCapacity(), 
 				roomType.getQuantity(), roomType.getMinPrice(), roomType.getMaxPrice());
 	}
 
 	public final static RoomType toRoomType(RoomTypeDto roomTypeDto) {
-		return new RoomType(roomTypeDto.getId(), roomTypeDto.getName(), roomTypeDto.getDescription(), roomTypeDto.getCapacity(),
+		
+		//byte[] img = roomTypeDto.getImage().getBytes(StandardCharsets.UTF_8);
+		
+		return new RoomType(roomTypeDto.getId(),roomTypeDto.getImage(), roomTypeDto.getName(), roomTypeDto.getDescription(), roomTypeDto.getCapacity(),
 				 roomTypeDto.getQuantity(), roomTypeDto.getMinPrice(), roomTypeDto.getMaxPrice());
 	}
 

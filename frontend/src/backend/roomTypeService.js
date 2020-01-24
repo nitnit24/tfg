@@ -2,9 +2,11 @@
 import {config, appFetch } from './appFetch';
 
 
-export const addRoomType = (roomType, onSuccess, onErrors) => 
-    appFetch('/roomTypes/addRoomType', config('POST', roomType), 
-    onSuccess, onErrors);
+export const addRoomType = (roomType, onSuccess, onErrors) => {
+    let path = `/roomTypes/addRoomType`;
+    console.log(path)
+    appFetch(path, config('POST',  roomType), 
+    onSuccess, onErrors)};
 
 export const findAllRoomTypes = (onSuccess,onErrors) => 
     appFetch('/roomTypes/roomTypes', config('GET'),

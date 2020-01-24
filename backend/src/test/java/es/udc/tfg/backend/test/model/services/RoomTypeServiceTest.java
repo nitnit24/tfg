@@ -37,7 +37,7 @@ public class RoomTypeServiceTest {
 
 	private RoomType createRoomType(User user, String name, String description, int capacity, int quantity, BigDecimal minPrice, BigDecimal maxPrice) 
 			throws DuplicateInstanceException {
-		return new RoomType(user, name, description, capacity, quantity,  minPrice, maxPrice);
+		return new RoomType(user, null, name, description, capacity, quantity,  minPrice, maxPrice);
 	}
 	
 	private User signUpUser(String userName) {

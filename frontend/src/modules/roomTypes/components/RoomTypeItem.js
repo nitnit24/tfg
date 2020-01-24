@@ -4,6 +4,8 @@ import * as actions from '../actions';
 import * as selectors from '../selectors';
 import {connect} from 'react-redux';
 
+import Image from'../image.png';
+
 
 class RoomTypeItem extends React.Component {
 
@@ -44,7 +46,13 @@ class RoomTypeItem extends React.Component {
     render() {
         const item = this.props.item;
         return (
-            <tr>                   
+            <tr>   
+                { (!item.image) ?
+                    <td> <img src = {Image}  className="img-thumbnail"  alt="Hab" /></td> 
+                
+                :
+                    <td> <img src={item.image}  className="img-thumbnail"  alt="Hab" /></td> 
+                }      
                 <td>{item.name}</td>
                 <td>{item.description}</td>
                 <td>{item.capacity}</td>

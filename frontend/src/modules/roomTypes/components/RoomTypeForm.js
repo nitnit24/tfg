@@ -5,14 +5,17 @@ import PropTypes from 'prop-types';
 import {Errors} from '../../common';
 import * as actions from '../actions';
 import {connect} from 'react-redux';
+import FileBase64 from 'react-file-base64';
 
 const initialState = {
+    image: '',
     name: '',
     description:'',
     capacity: '',
     quantity:'',
     minPrice: '',
     maxPrice: '',
+    image: '',
     
     backendErrors: null
 };
@@ -51,6 +54,11 @@ class RoomTypeForm extends React.Component {
         this.setState({maxPrice: event.target.value});
     }
 
+    getFile(file){
+        this.setState({ image: file})
+    }
+
+
     handleSubmit(event) {
         event.preventDefault();
 
@@ -64,6 +72,7 @@ class RoomTypeForm extends React.Component {
     }
 
     add() {
+        const imagen = this.state.image;
         const roomType = {
             name : this.state.name.trim(),
             description : this.state.description.trim(),
@@ -71,9 +80,10 @@ class RoomTypeForm extends React.Component {
             quantity: this.state.quantity.trim(),
             minPrice: this.state.minPrice.trim(),
             maxPrice: this.state.maxPrice.trim(),
+            image: this.state.image.base64
         }
         
-        this.props.addRoomType(roomType,  errors => this.setBackendErrors(errors))
+        this.props.addRoomType( roomType,  errors => this.setBackendErrors(errors))
 
     }
 
@@ -188,6 +198,14 @@ class RoomTypeForm extends React.Component {
                                 </div>
                             </div>
                             <div className="form-group row">
+                                <label htmlFor="imagen" className="col-md-3 col-form-label">
+                                    <FormattedMessage id="project.global.fields.image"/>
+                                </label>
+                                <div className="col-md-4">
+                                    <FileBase64 multiple={ false } onDone={ this.getFile.bind(this) } />
+                                </div>
+                            </div>
+                            <div className="form-group row">
                                 <div className="offset-md-3 col-md-1">
                                     <button type="submit" className="btn btn-primary" >
                                         <FormattedMessage id="project.global.buttons.add"/>
@@ -195,6 +213,7 @@ class RoomTypeForm extends React.Component {
                                 </div>
                             </div>
                         </form>
+
                     </div>
                 </div>
             </div>

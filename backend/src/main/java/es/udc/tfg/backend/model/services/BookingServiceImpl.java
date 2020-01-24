@@ -117,9 +117,9 @@ public class BookingServiceImpl implements BookingService {
 						aTariff.getDescription(), totalPrice, saleRoomTariffs));
 			}
 			
-			int maxFreeRooms = 0;
+			int maxFreeRooms = 100000;
 			for (int x = 0; x < freeRooms.size(); x++) {
-				if (freeRooms.get(x) > maxFreeRooms) {
+				if (freeRooms.get(x) < maxFreeRooms) {
 					maxFreeRooms = freeRooms.get(x);
 				}
 			}

@@ -43,6 +43,7 @@ CREATE TABLE Tariff (
 CREATE TABLE RoomType (
     id BIGINT NOT NULL AUTO_INCREMENT,
     userId BIGINT NOT NULL,
+    image MEDIUMTEXT,
     typeName VARCHAR(60) COLLATE latin1_bin NOT NULL,
     description VARCHAR(240) COLLATE latin1_bin,
     capacity SMALLINT NOT NULL,

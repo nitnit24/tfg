@@ -42,7 +42,7 @@ class QuantitySelect extends React.Component {
         this.setState({quantity: e.target.value});
      }
 
-    componentDidUpdate(prevProps, prevState) {
+    componentDidUpdate() {
         if (this.state.quantity !== 0){
             var summaryRoom = {
                 id: this.props.roomTypeId,
@@ -70,8 +70,16 @@ class QuantitySelect extends React.Component {
         }
       }
 
+    getNumberRooms (maxFreeRooms){
+        let rooms = [];
+        for (let i=0;(i<=maxFreeRooms); i++){
+            rooms.push(i);
+        } 
+        return rooms;
+    }
     render() {
         const maxFreeRooms = this.props.maxFreeRooms;
+        const max = this.getNumberRooms(maxFreeRooms)
         return (
                 <div className= "col-2 h-100 align-self-end">
                         <div className= " align-self-center">
@@ -80,11 +88,14 @@ class QuantitySelect extends React.Component {
                         <div className= " align-self-center">
                             <select class="h-25 form-control " id="Quantity"  value={this.state.quantity} 
                                 onChange={(e) => this.handleChangeQuantity(e)}>
-                                    <option value="0">0 </option>
+                                   { max.map (i =>
+                                        <option key={i} value={i}>{i}</option>
+                                    )}
+                                    {/* <option value="0">0 </option>
                                     <option value="1">1 </option>
                                     <option value="2">2 </option>
                                     <option value="3">3 </option>
-                                    <option value="4">4 </option> 
+                                    <option value="4">4 </option>  */}
 
                             </select>
 

@@ -56,6 +56,9 @@ class RoomTypeList extends React.Component {
                 <table className="table .table-hover">
                     <thead>
                         <tr>
+                        <th scope="col" style={{width: '10%'}}>
+                                <FormattedMessage id='project.global.fields.image'/>
+                            </th>
                             <th scope="col" style={{width: '30%'}}>
                                 <FormattedMessage id='project.global.fields.name'/>
                             </th>

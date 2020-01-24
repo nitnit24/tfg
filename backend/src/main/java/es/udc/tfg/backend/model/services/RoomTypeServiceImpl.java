@@ -72,6 +72,7 @@ public class RoomTypeServiceImpl implements RoomTypeService {
 			throw new PermissionException();
 		}
 		
+		existingRoomTypeItem.get().setImage(roomType.getImage());
 		existingRoomTypeItem.get().setName(roomType.getName());
 		existingRoomTypeItem.get().setDescription(roomType.getDescription());
 		existingRoomTypeItem.get().setCapacity(roomType.getCapacity());

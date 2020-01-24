@@ -39,6 +39,7 @@ export default {
     'project.global.fields.minPrice': 'Precio mínimo',
     'project.global.fields.maxPrice': 'Precio máximo',
     'project.global.fields.since':  'Desde:',
+    'project.global.fields.image': 'Imagen',
 
     'project.users.ChangePassword.fields.confirmNewPassword': 'Confirmar contraseña nueva',
     'project.users.ChangePassword.fields.newPassword': 'Contraseña nueva',
@@ -55,6 +56,7 @@ export default {
     'project.tariff.TariffItemList.empty': 'No hay tarifas',
     'project.tariffs.TariffItemList.title': 'Tarifas',
 
+    
     'project.roomtypes.RoomTypeForm.title' : 'Añadir tipo de Habitación',
     'project.roomTypes.RoomTypeUpdateForm.title' : 'Actualizar Tipo de habitación',
     'project.roomTypes.RoomTypeItemList.title' : 'Tipos de Habitación',

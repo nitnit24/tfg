@@ -6,6 +6,8 @@ import {Errors} from '../../common';
 import * as actions from '../actions';
 import * as selectors from '../selectors';
 
+import FileBase64 from 'react-file-base64';
+
 class RoomTypeUpdateForm extends React.Component {
 
     constructor(props) {
@@ -14,12 +16,12 @@ class RoomTypeUpdateForm extends React.Component {
 
         this.state = {
             name: props.roomType.name,
+            image: props.roomType.image,
             description: props.roomType.description,
             capacity: props.roomType.capacity,
             quantity: props.roomType.quantity,
             minPrice: props.roomType.minPrice,
             maxPrice: props.roomType.maxPrice,
-            
             backendErrors: null
         };
 
@@ -49,6 +51,10 @@ class RoomTypeUpdateForm extends React.Component {
         this.setState({maxPrice: event.target.value});
     }
 
+    getFile(file){
+        this.setState({ image: file.base64})
+        console.log(file)
+    }
 
     handleSubmit(event) {
 
@@ -67,16 +73,19 @@ class RoomTypeUpdateForm extends React.Component {
 
         this.props.updateRoomType(
             {id: this.props.roomType.id,
+            image: this.state.image,
             name: this.state.name.trim(),
             description: this.state.description.trim(),
             capacity: this.state.capacity,
             quantity: this.state.quantity,
             minPrice: this.state.minPrice,
-            maxPrice: this.state.maxPrice
+            maxPrice: this.state.maxPrice,
+           
         },
             () => this.props.history.push('/roomTypes/roomType-management'),
             errors => this.setBackendErrors(errors));
         
+        console.log(this.state.image)
     }
 
     setBackendErrors(backendErrors) {
@@ -93,76 +102,77 @@ class RoomTypeUpdateForm extends React.Component {
             <div>
                 <Errors errors={this.state.backendErrors} onClose={() => this.handleErrorsClose()}/>
                 <div className="card bg-light border-dark">
-                    <h5 className="card-header">
+                    <h5 className="card-header h5">
                         <FormattedMessage id="project.roomTypes.RoomTypeUpdateForm.title"/>
                     </h5>
-                    <div className="card-body">
-                        <form ref={node => this.form = node} 
-                            className="needs-validation" noValidate onSubmit={(e) => this.handleSubmit(e)}>
-                            <div className="form-group row">
-                                <label htmlFor="name" className="col-md-3 col-form-label">
-                                    <FormattedMessage id="project.global.fields.name"/>
-                                </label>
-                                <div className="col-md-4">
-                                    <input type="text" id="name" className="form-control"
-                                        value={this.state.name}
-                                        onChange={(e) => this.handleNameChange(e)}
-                                        autoFocus
-                                        required/>
-                                    <div className="invalid-feedback">
-                                        <FormattedMessage id='project.global.validator.required'/>
+                        <div className=" card-body">
+                            <form ref={node => this.form = node} 
+                                className="needs-validation" noValidate onSubmit={(e) => this.handleSubmit(e)}>
+                                    <div className= "row">
+                                        <div className = "col-7">  
+                                            < div className="form-group row">
+                                                <label htmlFor="name" className="col-md-3 col-form-label">
+                                                    <FormattedMessage id="project.global.fields.name"/>
+                                                </label>
+                                            <div className="col-md-8">
+                                                <input type="text" id="name" className="form-control"
+                                                value={this.state.name}
+                                                onChange={(e) => this.handleNameChange(e)}
+                                                autoFocus
+                                                required/>
+                                                <div className="invalid-feedback">
+                                                    <FormattedMessage id='project.global.validator.required'/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="form-group row">
+                                            <label htmlFor="description" className="col-md-3 col-form-label">
+                                                <FormattedMessage id="project.global.fields.description"/>
+                                            </label>
+                                            <div className="col-md-8">
+                                                <input type="text" id="name" className="form-control"
+                                                value={this.state.description}
+                                                onChange={(e) => this.handleDescriptionChange(e)}
+                                                autoFocus/>
+                                                <div className="invalid-feedback">
+                                                    <FormattedMessage id='project.global.validator.required'/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="form-group row">
+                                            <label htmlFor="capacity" className="col-md-3 col-form-label">
+                                                <FormattedMessage id="project.global.fields.capacity"/>
+                                            </label>
+                                            <div className="col-md-8">
+                                                <input type="number" id="capacity" className="form-control"
+                                            value={this.state.capacity}
+                                            onChange={(e) => this.handleCapacityChange(e)}
+                                            required/>
+                                            <div className="invalid-feedback">
+                                                <FormattedMessage id='project.global.validator.required'/>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                            </div>
-                            <div className="form-group row">
-                                <label htmlFor="description" className="col-md-3 col-form-label">
-                                    <FormattedMessage id="project.global.fields.description"/>
-                                </label>
-                                <div className="col-md-4">
-                                    <input type="text" id="name" className="form-control"
-                                        value={this.state.description}
-                                        onChange={(e) => this.handleDescriptionChange(e)}
-                                        autoFocus/>
-                                    <div className="invalid-feedback">
-                                        <FormattedMessage id='project.global.validator.required'/>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="form-group row">
-                                <label htmlFor="capacity" className="col-md-3 col-form-label">
-                                    <FormattedMessage id="project.global.fields.capacity"/>
-                                </label>
-                                <div className="col-md-4">
-                                    <input type="number" id="capacity" className="form-control"
-                                    
-                                        value={this.state.capacity}
-                                        onChange={(e) => this.handleCapacityChange(e)}
-                                        required/>
-                                    <div className="invalid-feedback">
-                                        <FormattedMessage id='project.global.validator.required'/>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="form-group row">
-                                <label htmlFor="quantity" className="col-md-3 col-form-label">
-                                    <FormattedMessage id="project.global.fields.quantity"/>
-                                </label>
-                                <div className="col-md-4">
-                                    <input type="number" id="quantity" className="form-control"
-                                        value={this.state.quantity}
-                                        onChange={(e) => this.handleQuantityChange(e)}
-                                        required/>
-                                    <div className="invalid-feedback">
-                                        <FormattedMessage id='project.global.validator.required'/>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="form-group row">
-                                <label htmlFor="minPrice" className="col-md-3 col-form-label">
-                                    <FormattedMessage id="project.global.fields.minPrice"/>
-                                </label>
-                                <div className="col-md-4">
-                                    <input type="text" id="minPrice" className="form-control"
+                                        <div className="form-group row">
+                                            <label htmlFor="quantity" className="col-md-3 col-form-label">
+                                                <FormattedMessage id="project.global.fields.quantity"/>
+                                            </label>
+                                        <div className="col-md-8">
+                                            <input type="number" id="quantity" className="form-control"
+                                             value={this.state.quantity}
+                                            onChange={(e) => this.handleQuantityChange(e)}
+                                            required/>
+                                            <div className="invalid-feedback">
+                                                <FormattedMessage id='project.global.validator.required'/>
+                                            </div>
+                                        </div>
+                                        </div>
+                                            <div className="form-group row">
+                                                <label htmlFor="minPrice" className="col-md-3 col-form-label">
+                                                <FormattedMessage id="project.global.fields.minPrice"/>
+                                                </label>
+                                            <div className="col-md-8">
+                                        <input type="text" id="minPrice" className="form-control"
                                         //type="number"
                                         value={this.state.minPrice}
                                         onChange={(e) => this.handleMinPriceChange(e)}
@@ -170,14 +180,13 @@ class RoomTypeUpdateForm extends React.Component {
                                         <div className="invalid-feedback">
                                             <FormattedMessage id='project.global.validator.min'/>
                                         </div>
-                                  
-                                </div>
+                                    </div>
                             </div>
                             <div className="form-group row">
                                 <label htmlFor="maxPrice" className="col-md-3 col-form-label">
                                     <FormattedMessage id="project.global.fields.maxPrice"/>
                                 </label>
-                                <div className="col-md-4">
+                                <div className="col-md-8">
                                     <input type="text" id="maxPrice" className="form-control"
                                         //type="number"
                                         value={this.state.maxPrice}
@@ -189,16 +198,36 @@ class RoomTypeUpdateForm extends React.Component {
                                  
                                 </div>
                             </div>
-                            <div className="form-group row">
+                            
+                            </div>
+                            <div className="col-5">
+                                <div className = "col-8">
+                                    <img src={ this.state.image}  className="img-thumbnail"  alt="Hab" />
+                                </div>
+                                <br/>
+                                <div>
+                                    <FileBase64 multiple={ false } onDone={ this.getFile.bind(this) } />
+                                </div>
+                            </div>    
+                        </div>
+                        <div className=" btn-group row justify-content-end">
                                 <div className="offset-md-3 col-md-1">
                                     <button type="submit" className="btn btn-primary">
                                         <FormattedMessage id="project.global.buttons.save"/>
                                     </button>
                                 </div>
+                                <div className="offset-md-3 col-md-1">
+                                    <button type="button" className="btn btn-danger" 
+                                    onClick={() => this.props.history.goBack()}>
+                                        <FormattedMessage id="project.global.buttons.cancel"/>
+                                    </button>
+                                </div>
                             </div>
-                        </form>
+                            </form>
+                            </div>
+                            
                     </div>
-                </div>
+             
             </div>
         );
 
