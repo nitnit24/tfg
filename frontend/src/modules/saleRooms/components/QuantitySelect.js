@@ -22,13 +22,13 @@ class QuantitySelect extends React.Component {
 
     }
 
-    // componentDidMount() {
-    //     this.props.cleanRooms(),
-    //     this.props.cleanSummaryRooms(),
-    //     backend.bookingService.findSaleRoomTariffsByFreeRoom(this.props.startDate, this.props.endDate, 
-    //         this.props.roomType.id, this.props.tariff.id,
-    //         saleRoomTariffs =>  this.setState({saleRoomTariffs: saleRoomTariffs}));
-    // }
+    componentDidMount() {
+        this.props.cleanRooms(),
+        this.props.cleanSummaryRooms()
+        // backend.bookingService.findSaleRoomTariffsByFreeRoom(this.props.startDate, this.props.endDate, 
+        //     this.props.roomType.id, this.props.tariff.id,
+        //     saleRoomTariffs =>  this.setState({saleRoomTariffs: saleRoomTariffs}));
+    }
 
     setBackendErrors(backendErrors) {
         this.setState({backendErrors});
@@ -61,11 +61,12 @@ class QuantitySelect extends React.Component {
             this.props.removeRooms(room),
             this.props.addRooms(room)
         }
-        if (this.state.quantity === 0 ){
+        if (this.state.quantity === "0" ){
             var room ={
                 saleRoomTariffs: this.props.saleRoomTariffs,
                 quantity: this.state.quantity
             }
+            console.log("hola")
             this.props.removeRooms(room)
         }
       }

@@ -28,6 +28,7 @@ import es.udc.tfg.backend.model.entities.BookingRoomSummary;
 import es.udc.tfg.backend.model.entities.FreeRoomType;
 import es.udc.tfg.backend.model.entities.FreeRoomTypeTariffs;
 import es.udc.tfg.backend.model.entities.RoomType;
+import es.udc.tfg.backend.model.entities.RoomTypeDao;
 import es.udc.tfg.backend.model.entities.SaleRoom;
 import es.udc.tfg.backend.model.entities.SaleRoomDao;
 import es.udc.tfg.backend.model.entities.SaleRoomTariff;
@@ -52,6 +53,8 @@ public class BookingServiceImpl implements BookingService {
 	@Autowired
 	private TariffDao tariffDao;
 	
+	@Autowired
+	private RoomTypeDao roomTypeDao;
 	
 	@Autowired
 	private SaleRoomDao saleRoomDao;
@@ -82,7 +85,12 @@ public class BookingServiceImpl implements BookingService {
 						if (saleRoom.get().getFreeRooms() < rooms) {
 							break;
 						} else {
+							Optional<RoomType> rt = roomTypeDao.findById(saleRoom.get().getRoomType().getId());
+							if (rt.get().getCapacity() != people){
+								break;
+							}else {
 							date.add(Calendar.DAY_OF_YEAR, 1);
+							}
 						}
 
 						if (date.compareTo(endDate) == 0) {

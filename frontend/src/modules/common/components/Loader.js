@@ -15,8 +15,8 @@ const Loader = ({loading}) => loading && (
     </div>
 );
 
-Loader.propTypes = {
-    loading: PropTypes.bool.isRequired
-};
+// Loader.propTypes = {
+//     loading: PropTypes.bool.isRequired
+// };
 
 export default Loader;

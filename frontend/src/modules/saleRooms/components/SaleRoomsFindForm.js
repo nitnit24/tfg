@@ -103,7 +103,7 @@ class SaleRoomsFindForm extends React.Component {
                         <form
                             className="needs-validation" noValidate 
                             onSubmit={(e) => this.handleSubmit(e)}>
-                                <div className="row justify-content-start">
+                                <div className="row justify-content-center">
                                     <div className="col-3 input-group mb-2" >  
                                         <div class="input-group-prepend">
                                             <div className= "input-group-text" >

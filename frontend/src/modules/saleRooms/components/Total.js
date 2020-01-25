@@ -8,6 +8,7 @@ import {connect} from 'react-redux';
 import RoomsList from './RoomsList';
 
 import '../../styles.css';
+import * as actions from '../actions';
 
 
 
@@ -22,6 +23,11 @@ class Total extends React.Component {
            
         }
 
+    }
+
+    componentDidMount() {
+        this.props.cleanRooms();
+        this.props.cleanSummaryRooms();
     }
 
     setBackendErrors(backendErrors) {
@@ -89,6 +95,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = {
+   cleanRooms: actions.cleanRooms,
+   cleanSummaryRooms : actions.cleanSummaryRooms
 };
 
 export default connect (mapStateToProps, mapDispatchToProps)(Total);

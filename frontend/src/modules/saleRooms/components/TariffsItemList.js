@@ -56,7 +56,7 @@ class TariffsItemList extends React.Component {
                             <b>{tariff.tariffName}</b>
                         </div>
                         <div className= "align-self-end">
-                            {tariff.tariffDescription}
+                            <small>{tariff.tariffDescription}</small>
                         </div>
                         </div>
                         <div className= "col-3 align-self-end">

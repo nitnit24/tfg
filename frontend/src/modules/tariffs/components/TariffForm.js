@@ -115,7 +115,7 @@ class TariffForm extends React.Component {
                                     <FormattedMessage id="project.global.fields.description"/>
                                 </label>
                                 <div className="col-md-8">
-                                    <input type="text" id="description" className="form-control"
+                                    <textarea type="text" id="description" className="form-control"
                                         value={this.state.description}
                                         onChange={(e) => this.handleDescriptionChange(e)}
                                         />

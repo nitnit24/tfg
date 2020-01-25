@@ -3,12 +3,13 @@ import {connect} from 'react-redux';
 
 import DetailsRoom from './DetailsRoom';
 import { TariffsItemList } from '..';
-import {Errors} from '../../common';
+import * as actions from '../actions';
 import * as selectors from '../selectors';
 
 import {FormattedMessage} from 'react-intl';
 
 import '../../styles.css';
+import { bindActionCreators } from 'redux';
 
 const initialState = {
     backendErrors: null
@@ -22,6 +23,10 @@ class SaleRoomItemList extends React.Component {
 
         this.state = initialState
 
+    }
+
+    componentWillUnmount() {
+        this.props.cleanFreeRoomTypes();
     }
 
     render() {
@@ -78,7 +83,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = {
-
+    cleanFreeRoomTypes: actions.cleanFreeRoomTypes
 };
 
 

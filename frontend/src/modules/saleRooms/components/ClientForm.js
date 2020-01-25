@@ -2,7 +2,7 @@ import React from 'react';
 import {FormattedMessage} from 'react-intl';
 import { Roller } from 'react-awesome-spinners';
 
-import {Errors} from '../../common';
+import {Errors, Loader} from '../../common';
 import * as actions from '../actions';
 import {connect} from 'react-redux';
 
@@ -15,7 +15,7 @@ const initialState = {
     email: '',
     phone: '',
     petition: '',
-    loading: false, 
+    loading: 'false', 
     
     backendErrors: null
 };
@@ -86,8 +86,7 @@ class ClientForm extends React.Component {
     
 
     render() {
-        const loading = this.state.loading;
-
+        const load = this.props.loading;
         return (  
             <div>
                  <Errors errors={this.state.backendErrors} handleClose={() => this.handleErrorsClose()}/>
@@ -173,13 +172,13 @@ class ClientForm extends React.Component {
                                     </small>
                             </label>
                             <div className="col-md-8">
-                                    <input type="text" id="petition" className="form-control" 
+                                    <textarea type="text" id="petition" className="form-control" 
                                         value={this.state.petition} 
                                         onChange={(e) => this.handlePetitionChange(e)}
                                         />
                                 </div>
                             </div>
-                            {/* <div className="form-group row">
+                            <div className="form-group row">
                                 <label htmlFor="comments" className="col-md-3 col-form-label">
                                 </label>
                                 <div className="col-md-8">
@@ -187,7 +186,7 @@ class ClientForm extends React.Component {
                                     El establecimiento intentará atender sus peticiones, pero no podemos garantizarlo
                                 </em> </small></span>
                                 </div>
-                            </div> */}
+                            </div>
                             { (this.props.rooms.length !== 0) && 
                             <div className="form-group row">
                                 <div className="offset-md-3 col-md-1">
@@ -195,9 +194,13 @@ class ClientForm extends React.Component {
                                         <FormattedMessage id="project.global.buttons.booking"/>
                                     </button>
                                 </div>
-                                <div >
-                                    {this.state.loading === true && <Roller size="10" />}
-                                </div>
+                                <br/>
+                                <br/>
+                            </div>
+                            }
+                            { (load !== "false") &&
+                            <div >
+                                 <Loader loading = "true" ></Loader>
                             </div>
                             }
                             <span> <small><em> <FormattedMessage id='project.saleRooms.ClientForm.confirmation'/>{this.state.email}</em> </small></span>
