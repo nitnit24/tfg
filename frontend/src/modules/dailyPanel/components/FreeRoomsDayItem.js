@@ -45,7 +45,7 @@ class FreeRoomsDayItem extends React.Component {
         const { freeRooms } = this.state;
         this.setState({
           freeRoomsError:
-            (freeRooms <= this.props.quantity || !freeRooms) ? null : 'El número de habitaciones libres debe ser menor de ' + this.props.freeRooms
+            (freeRooms <= this.props.quantity || !freeRooms) ? null : 'El número de habitaciones libres debe ser menor de ' + this.props.quantity
         });
       }
 

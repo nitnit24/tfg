@@ -7,6 +7,7 @@ import * as actions from '../actions';
 import * as selectors from '../selectors';
 
 import FileBase64 from 'react-file-base64';
+import Image from'../image.png';
 
 class RoomTypeUpdateForm extends React.Component {
 
@@ -202,7 +203,11 @@ class RoomTypeUpdateForm extends React.Component {
                             </div>
                             <div className="col-5">
                                 <div className = "col-8">
-                                    <img src={ this.state.image}  className="img-thumbnail"  alt="Hab" />
+                                    { (!this.state.image) ?
+                                        <td> <img src = {Image}  className="img-thumbnail"  alt="Hab" /></td> 
+                                             :
+                                        <td> <img src={this.state.image}  className="img-thumbnail"  alt="Hab" /></td> 
+                                    }
                                 </div>
                                 <br/>
                                 <div>
@@ -210,7 +215,9 @@ class RoomTypeUpdateForm extends React.Component {
                                 </div>
                             </div>    
                         </div>
-                        <div className=" btn-group row justify-content-end">
+                        <br/>
+                        <div className = " row justify-content-center ">
+                        <div className=" btn-group">
                                 <div className="offset-md-3 col-md-1">
                                     <button type="submit" className="btn btn-primary">
                                         <FormattedMessage id="project.global.buttons.save"/>
@@ -222,6 +229,7 @@ class RoomTypeUpdateForm extends React.Component {
                                         <FormattedMessage id="project.global.buttons.cancel"/>
                                     </button>
                                 </div>
+                            </div>
                             </div>
                             </form>
                             </div>

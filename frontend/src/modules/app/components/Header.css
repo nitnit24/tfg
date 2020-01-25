@@ -1,12 +1,12 @@
 
 .navbar {
   /* background-color: rgb(94, 161, 224);  */
-  background-color:#cfe9fc
-  /* background-color: rgb(47, 12, 128); */
+  /* background-color:#cfe9fc */
+  background-color: rgb(47, 12, 128);
 }
 
 /* When you mouse over the navigation links, change their color */
 .nav-link:hover{
   /* background-color: #7cc3f3; */
-  background-color: #ffffff
+  background-color: #5235d4a8
 }

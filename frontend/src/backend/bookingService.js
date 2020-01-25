@@ -2,11 +2,10 @@ import {config, appFetch } from './appFetch';
 
 
 export const findFreeRooms = (sDate, eDate, people, rooms, onSuccess) => {
-    console.log(sDate)
     const startDate = (new Date(sDate)).getTime();
-    console.log(startDate)
+   
     const endDate = (new Date(eDate)).getTime()
-    
+
     let path = `/booking/findFreeRooms?startDate=${startDate}`;
 
     path += endDate ? `&endDate=${endDate}` : "";
@@ -14,7 +13,7 @@ export const findFreeRooms = (sDate, eDate, people, rooms, onSuccess) => {
     path += people ? `&people=${people}` : "";
     
     path += rooms ? `&rooms=${rooms}` : "";
-  
+
     appFetch(path, config('GET'), onSuccess);
 
 }

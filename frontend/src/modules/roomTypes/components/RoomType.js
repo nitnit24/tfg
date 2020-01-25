@@ -7,20 +7,22 @@ import * as selectors from '../selectors';
 import * as actions from '../actions';
 import {SimpleModal} from '../../common';
 import {FormattedMessage} from 'react-intl';
+import Modal from 'react-bootstrap-modal';
+//var Modal = require('react-bootstrap-modal')
 
 
 class RoomType extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-          showModal: false
+          showModal: false,
         };
       }
     
     handleToggleModal() {
         this.setState({ showModal: !this.state.showModal });
     }
-
+    
     componentDidMount() {
         this.props.findRoomTypes();
     }

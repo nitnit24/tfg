@@ -70,8 +70,8 @@ class TariffForm extends React.Component {
     render() {
 
         return (
-
-            <div>
+            <div className = "row justify-content-md-center">
+            <div className="col-8 ">
                  <Errors errors={this.state.backendErrors} handleClose={() => this.handleErrorsClose()}/>
                 <div className="card bg-light border-dark">
                     <h5 className="card-header">
@@ -85,7 +85,7 @@ class TariffForm extends React.Component {
                                 <label htmlFor="name" className="col-md-3 col-form-label">
                                     <FormattedMessage id="project.global.fields.name"/>
                                 </label>
-                                <div className="col-md-4">
+                                <div className="col-md-8">
                                     <input type="text" id="name" className="form-control"
                                         value={this.state.name}
                                         onChange={(e) => this.handleNameChange(e)}
@@ -100,7 +100,7 @@ class TariffForm extends React.Component {
                                 <label htmlFor="code" className="col-md-3 col-form-label">
                                     <FormattedMessage id="project.global.fields.code"/>
                                 </label>
-                                <div className="col-md-4">
+                                <div className="col-md-8">
                                     <input type="text" id="code" className="form-control"
                                         value={this.state.code}
                                         onChange={(e) => this.handleCodeChange(e)}
@@ -114,7 +114,7 @@ class TariffForm extends React.Component {
                                 <label htmlFor="description" className="col-md-3 col-form-label">
                                     <FormattedMessage id="project.global.fields.description"/>
                                 </label>
-                                <div className="col-md-4">
+                                <div className="col-md-8">
                                     <input type="text" id="description" className="form-control"
                                         value={this.state.description}
                                         onChange={(e) => this.handleDescriptionChange(e)}
@@ -134,6 +134,7 @@ class TariffForm extends React.Component {
                         </form>
                     </div>
                 </div>
+            </div>
             </div>
 
         );

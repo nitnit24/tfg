@@ -22,7 +22,7 @@ public class FreeRoomTypeConversor {
 										i -> toFreeRoomTypeTariffsDto(i)).collect(Collectors.toList());
 		
 	 return new FreeRoomTypeDto(freeRoomType.getRoomTypeId(), freeRoomType.getRoomTypeName(), freeRoomType.getRoomTypeDescription(),
-				 freeRoomType.getCapacity(), freeRoomType.getMaxFreeRooms(), freeRoomTypeTariffs);
+				 freeRoomType.getImage(), freeRoomType.getCapacity(), freeRoomType.getMaxFreeRooms(), freeRoomTypeTariffs);
 		 
 	}
 	

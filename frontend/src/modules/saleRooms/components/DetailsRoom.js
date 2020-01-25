@@ -41,13 +41,18 @@ class DetailsRoom extends React.Component {
         const name = this.props.name;
         const description = this.props.description;
         const capacity = this.props.capacity;
+        const image = this.props.image;
 
         return (
                 <div className="row m-3">
-                    <div className="col-md-3 ">
-                        <img src={Bed}  className="img-thumbnail"  alt="Hab"/>
+                    <div className="col-md-5 ">
+                        { (!image) ?
+                            <td> <img src = {Bed}  className="img-thumbnail"  alt="Hab" /></td> 
+                                :
+                            <td> <img src={image}  className="img-thumbnail"  alt="Hab" /></td> 
+                        }
                     </div>
-                    <div className="col-md-9">
+                    <div className="col-md-7">
                         <h5 class="lead"><b>{name}</b></h5>
                             <div className= "m-3">
                                 <FormattedMessage id="project.saleRooms.SaleRoomItemList.capacity"/>

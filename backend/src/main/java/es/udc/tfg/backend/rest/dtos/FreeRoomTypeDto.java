@@ -10,6 +10,7 @@ public class FreeRoomTypeDto {
 	private Long roomTypeId;
 	private String roomTypeName;
 	private String roomTypeDescription;
+	private String image;
 	private int capacity;
 	private int maxFreeRooms;
 	private List<FreeRoomTypeTariffsDto> freeRoomTypeTariffs;
@@ -17,11 +18,12 @@ public class FreeRoomTypeDto {
 	public FreeRoomTypeDto() {
 	}
 
-	public FreeRoomTypeDto(Long roomTypeId, String roomTypeName, String roomTypeDescription, int capacity,
-			int maxFreeRooms, List<FreeRoomTypeTariffsDto> freeRoomTypeTariffs) {
+	public FreeRoomTypeDto(Long roomTypeId, String roomTypeName, String roomTypeDescription, 
+			String image, int capacity, int maxFreeRooms, List<FreeRoomTypeTariffsDto> freeRoomTypeTariffs) {
 		this.roomTypeId = roomTypeId;
 		this.roomTypeName = roomTypeName;
 		this.roomTypeDescription = roomTypeDescription;
+		this.image = image;
 		this.capacity = capacity;
 		this.maxFreeRooms = maxFreeRooms;
 		this.freeRoomTypeTariffs = freeRoomTypeTariffs;
@@ -49,6 +51,15 @@ public class FreeRoomTypeDto {
 
 	public void setRoomTypeDescription(String roomTypeDescription) {
 		this.roomTypeDescription = roomTypeDescription;
+	}
+	
+
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
 	}
 
 	public int getCapacity() {

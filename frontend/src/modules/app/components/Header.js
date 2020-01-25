@@ -2,15 +2,15 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {Link, NavLink, withRouter} from 'react-router-dom';
 import {FormattedMessage} from 'react-intl';
+import Roomnit from'../roomnit.png';
 
 
 import users from '../../users';
 import './Header.css';
 
 const Header = ({user, handleLogout}) => (
-
-    <nav className="navbar navbar-expand-lg navbar-light border">
-        <Link className="navbar-brand" to="/">TFG Project</Link>
+    <nav className="navbar navbar-expand-lg navbar-dark border">
+        <Link className="navbar-brand" to="/"> <img src={Roomnit}  width="100" height="100" alt="Hab" /></Link>
         <button className="navbar-toggler" type="button" 
             data-toggle="collapse" data-target="#navbarSupportedContent" 
             aria-controls="navbarSupportedContent" aria-expanded="false" 
@@ -18,11 +18,11 @@ const Header = ({user, handleLogout}) => (
             <span className="navbar-toggler-icon"></span>
         </button>
 
-        <div className="collapse navbar-collapse" id="navbarSupportedContent">
+        <div className="navbar-collapse collapse justify-content-center order-2" id="navbarSupportedContent">
 
             {user ?
 
-            <ul className="navbar-nav mr-auto text-uppercase">     
+            <ul className="navbar-nav mr-auto text-uppercase navbar-center">     
                 <li className="nav-item">
                     <NavLink exact className="nav-link" to="/tariffs/tariff-management">
                         <span></span>
@@ -104,7 +104,6 @@ const Header = ({user, handleLogout}) => (
 
         </div>
     </nav>
-
 );
 
 const mapStateToProps = (state, ownProps) => ({

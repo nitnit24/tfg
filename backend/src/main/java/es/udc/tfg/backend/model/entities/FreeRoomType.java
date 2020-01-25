@@ -8,6 +8,7 @@ public class FreeRoomType {
 	private Long roomTypeId;
 	private String roomTypeName;
 	private String roomTypeDescription;
+	private String image;
 	private int capacity;
 	private int maxFreeRooms;
 	private List<FreeRoomTypeTariffs> freeRoomTypeTariffs;
@@ -18,11 +19,12 @@ public class FreeRoomType {
 	}
 
 
-	public FreeRoomType(Long roomTypeId, String roomTypeName, String roomTypeDescription, int capacity,
-			int maxFreeRooms, List<FreeRoomTypeTariffs> freeRoomTypeTariffs) {
+	public FreeRoomType(Long roomTypeId, String roomTypeName, String roomTypeDescription, String image, 
+			int capacity, int maxFreeRooms, List<FreeRoomTypeTariffs> freeRoomTypeTariffs) {
 		this.roomTypeId = roomTypeId;
 		this.roomTypeName = roomTypeName;
 		this.roomTypeDescription = roomTypeDescription;
+		this.image = image;
 		this.capacity = capacity;
 		this.maxFreeRooms = maxFreeRooms;
 		this.freeRoomTypeTariffs = freeRoomTypeTariffs;
@@ -56,6 +58,17 @@ public class FreeRoomType {
 
 	public void setRoomTypeDescription(String roomTypeDescription) {
 		this.roomTypeDescription = roomTypeDescription;
+	}
+	
+
+
+	public String getImage() {
+		return image;
+	}
+
+
+	public void setImage(String image) {
+		this.image = image;
 	}
 
 

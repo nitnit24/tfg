@@ -90,6 +90,9 @@ public class BookingServiceImpl implements BookingService {
 							freeRooms.add(saleRoom.get().getFreeRooms());
 						}
 					}
+					else {
+						break;
+					}
 				}
 			}
 		}
@@ -124,8 +127,8 @@ public class BookingServiceImpl implements BookingService {
 				}
 			}
 			
-			free.add(new FreeRoomType(freeRT.getId(), freeRT.getName(), freeRT.getDescription(), freeRT.getCapacity(),
-					maxFreeRooms, freeRoomsTypeTariffs));
+			free.add(new FreeRoomType(freeRT.getId(), freeRT.getName(), freeRT.getDescription(), 
+					freeRT.getImage(), freeRT.getCapacity(),maxFreeRooms, freeRoomsTypeTariffs));
 		}
 		
 		return free;

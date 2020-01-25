@@ -6,6 +6,7 @@ import {Errors} from '../../common';
 import * as actions from '../actions';
 import {connect} from 'react-redux';
 import FileBase64 from 'react-file-base64';
+import Image from'../image.png';
 
 const initialState = {
     image: '',
@@ -110,11 +111,13 @@ class RoomTypeForm extends React.Component {
                         <form ref={node => this.form = node}
                             className="needs-validation" noValidate 
                             onSubmit={(e) => this.handleSubmit(e)}>
+                            <div className = "row">
+                            <div className=" col-7 ">
                             <div className="form-group row">
                                 <label htmlFor="name" className="col-md-3 col-form-label">
                                     <FormattedMessage id="project.global.fields.name"/>
                                 </label>
-                                <div className="col-md-4">
+                                <div className="col-md-8">
                                     <input type="text" id="name" className="form-control"
                                         value={this.state.name}
                                         onChange={(e) => this.handleNameChange(e)}
@@ -129,7 +132,7 @@ class RoomTypeForm extends React.Component {
                                 <label htmlFor="description" className="col-md-3 col-form-label">
                                     <FormattedMessage id="project.global.fields.description"/>
                                 </label>
-                                <div className="col-md-4">
+                                <div className="col-md-8">
                                     <input type="text" id="description" className="form-control"
                                         value={this.state.description}
                                         onChange={(e) => this.handleDescriptionChange(e)}
@@ -143,7 +146,7 @@ class RoomTypeForm extends React.Component {
                                 <label htmlFor="capacity" className="col-md-3 col-form-label">
                                     <FormattedMessage id="project.global.fields.capacity"/>
                                 </label>
-                                <div className="col-md-4">
+                                <div className="col-md-8">
                                     <input type="number" id="capacity" className="form-control" 
                                         value={this.state.capacity}
                                         onChange={(e) => this.handleCapacityChange(e)}
@@ -158,7 +161,7 @@ class RoomTypeForm extends React.Component {
                                 <label htmlFor="quantity" className="col-md-3 col-form-label">
                                     <FormattedMessage id="project.global.fields.quantity"/>
                                 </label>
-                                <div className="col-md-4">
+                                <div className="col-md-8">
                                     <input type="number" id="quantity" className="form-control" 
                                         value={this.state.quantity}
                                         onChange={(e) => this.handleQuantityChange(e)}
@@ -173,7 +176,7 @@ class RoomTypeForm extends React.Component {
                                 <label htmlFor="minPrice" className="col-md-3 col-form-label">
                                     <FormattedMessage id="project.global.fields.minPrice"/>
                                 </label>
-                                <div className="col-md-4">
+                                <div className="col-md-8">
                                     <input type="text" id="minPrice" className="form-control"
                                         value={this.state.minPrice}
                                         onChange={(e) => this.handleMinPriceChange(e)}
@@ -187,7 +190,7 @@ class RoomTypeForm extends React.Component {
                                 <label htmlFor="maxPrice" className="col-md-3 col-form-label">
                                     <FormattedMessage id="project.global.fields.maxPrice"/>
                                 </label>
-                                <div className="col-md-4">
+                                <div className="col-md-8">
                                     <input type="text" id="maxPrice" className="form-control"
                                         value={this.state.maxPrice}
                                         onChange={(e) => this.handleMaxPriceChange(e)}
@@ -197,21 +200,52 @@ class RoomTypeForm extends React.Component {
                                     </div>
                                 </div>
                             </div>
-                            <div className="form-group row">
+                            {/* <div className="form-group row">
                                 <label htmlFor="imagen" className="col-md-3 col-form-label">
                                     <FormattedMessage id="project.global.fields.image"/>
                                 </label>
-                                <div className="col-md-4">
+                                <div className="col-md-8">
                                     <FileBase64 multiple={ false } onDone={ this.getFile.bind(this) } />
                                 </div>
+                            </div> */}
                             </div>
-                            <div className="form-group row">
+                            <div className="col-5">
+                                <div className = "col-8">
+                                    { (!this.state.image) ?
+                                        <td> <img src = {Image}  className="img-thumbnail"  alt="Hab" /></td> 
+                                             :
+                                        <td> <img src={this.state.image.base64}  className="img-thumbnail"  alt="Hab" /></td> 
+                                    }
+                                </div>
+                                <br/>
+                                <div>
+                                    <FileBase64 multiple={ false } onDone={ this.getFile.bind(this) } />
+                                </div>
+                            </div>    
+                            {/* <div className="form-group row">
                                 <div className="offset-md-3 col-md-1">
                                     <button type="submit" className="btn btn-primary" >
                                         <FormattedMessage id="project.global.buttons.add"/>
                                     </button>
                                 </div>
+                            </div> */}
                             </div>
+                            <br/> 
+                            <div className = " row justify-content-center ">
+                            <div className=" btn-group">
+                                <div className="offset-md-3 col-md-1">
+                                    <button type="submit" className="btn btn-primary" >
+                                        <FormattedMessage id="project.global.buttons.add"/>
+                                    </button>
+                                </div>
+                                <div className="offset-md-3 col-md-1">
+                                    <button type="button" className="btn btn-danger" 
+                                   onClick={() => this.props.history.goBack()}>
+                                        <FormattedMessage id="project.global.buttons.cancel"/>
+                                    </button>
+                                </div>
+                            </div>        
+                            </div>                
                         </form>
 
                     </div>

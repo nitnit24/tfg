@@ -52,6 +52,7 @@ class SaleRoomsFindForm extends React.Component {
 
     findFreeRooms() {
         this.props.cleanFreeRoomTypes();
+        console.log("find")
         backend.bookingService.findFreeRooms(this.state.startDate, this.state.endDate, 
             this.state.people, this.state.rooms, 
             roomTypes =>  this.props.addFreeRoomTypes(roomTypes))

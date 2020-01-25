@@ -102,6 +102,8 @@ export default {
 
     'project.roomtypes.BookingFindForm.title': 'Buscar reserva',
 
+    'project.bookings.BookingsFind.bookings' :'Reservas',
+
     'project.bookings.FindBookingsResult.noBookingsFound': 'No se han encontrado reservas',
 
     'project.global.fields.startDate' : 'Fecha Entrada',

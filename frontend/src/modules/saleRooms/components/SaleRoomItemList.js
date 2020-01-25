@@ -50,7 +50,8 @@ class SaleRoomItemList extends React.Component {
                             <DetailsRoom 
                                 name={room.roomTypeName} 
                                 description= {room.roomTypeDescription} 
-                                capacity ={room.capacity} />
+                                capacity ={room.capacity}
+                                image = {room.image} />
                             <TariffsItemList
                                 tariffs= {room.freeRoomTypeTariffs}
                                 roomTypeId={room.roomTypeId}
