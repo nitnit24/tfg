@@ -40,3 +40,13 @@ export const findBookingByLocator = locator => dispatch => {
 export const clearBooking = () => ({
     type: actionTypes.CLEAR_BOOKING
 });
+
+const bookingCompleted = booking => ({
+    type: actionTypes.FIND_BOOKING_COMPLETED,
+    booking
+});
+      
+
+export const booking= (booking) => (dispatch) => {
+    dispatch(bookingCompleted(booking));
+}

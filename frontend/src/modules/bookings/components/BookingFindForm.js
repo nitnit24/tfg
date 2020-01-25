@@ -47,7 +47,7 @@ class BookingFindForm extends React.Component {
 
     find() {
         backend.bookingService.findBookingByLocatorAndKey(this.state.locator, this.state.key,
-            (booking) => {this.props.history.push('/booking/booking-completed'),
+            (booking) => {this.props.history.push('/booking/booking-details-client'),
                     this.props.booking(booking)},
                     errors => this.setBackendErrors(errors))
  

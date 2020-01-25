@@ -12,7 +12,6 @@ export {default as Total} from './components/Total';
 export {default as BookingData} from './components/BookingData';
 export {default as ClientForm} from './components/ClientForm';
 export {default as BookingCompleted} from './components/BookingCompleted';
-export {default as BookingFindForm} from './components/BookingFindForm';
 export {default as RoomsList} from './components/RoomsList';
 export {default as BookingRoomItem} from './components/BookingRoomItem';
 

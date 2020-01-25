@@ -33,6 +33,9 @@ const booking = (state = initialState.booking, action) => {
         case actionTypes.FIND_BOOKING_BY_LOCATOR_COMPLETED:
             return action.booking;
 
+        case actionTypes.FIND_BOOKING_COMPLETED:
+            return action.booking;
+
         case actionTypes.CLEAR_BOOKING:
             return initialState.booking;
 

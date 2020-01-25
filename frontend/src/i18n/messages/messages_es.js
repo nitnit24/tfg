@@ -29,6 +29,7 @@ export default {
     'project.global.validator.email': 'Introduzca una dirección de correo electrónico correcta',
     'project.global.validator.passwordsDoNotMatch': 'Las contraseñas no coinciden',
     'project.global.validator.required': 'Campo obligatorio',
+    'project.global.validator.min': 'Debe ser mayor que 0',
     
 
     'project.global.buttons.add': 'Añadir',

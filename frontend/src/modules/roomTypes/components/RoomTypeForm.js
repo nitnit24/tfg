@@ -180,9 +180,10 @@ class RoomTypeForm extends React.Component {
                                     <input type="text" id="minPrice" className="form-control"
                                         value={this.state.minPrice}
                                         onChange={(e) => this.handleMinPriceChange(e)}
-                                        min= "0"/>
+                                        min= "0"
+                                        required/>
                                     <div className="invalid-feedback">
-                                        <FormattedMessage id='project.global.validator.min'/>
+                                        <FormattedMessage id='project.global.validator.required'/>
                                     </div>
                                 </div>
                             </div>
@@ -194,9 +195,10 @@ class RoomTypeForm extends React.Component {
                                     <input type="text" id="maxPrice" className="form-control"
                                         value={this.state.maxPrice}
                                         onChange={(e) => this.handleMaxPriceChange(e)}
-                                        min= "0"/>
+                                        min= "0"
+                                        required/>
                                     <div className="invalid-feedback">
-                                        <FormattedMessage id='project.global.validator.min'/>
+                                        <FormattedMessage id='project.global.validator.required'/>
                                     </div>
                                 </div>
                             </div>
