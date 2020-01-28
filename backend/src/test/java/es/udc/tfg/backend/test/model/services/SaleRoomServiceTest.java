@@ -20,11 +20,11 @@ import es.udc.tfg.backend.model.common.exceptions.InstanceNotFoundException;
 import es.udc.tfg.backend.model.entities.RoomType;
 import es.udc.tfg.backend.model.entities.SaleRoom;
 import es.udc.tfg.backend.model.entities.SaleRoomDao;
-import es.udc.tfg.backend.model.entities.User;
+import es.udc.tfg.backend.model.entities.Hotel;
 import es.udc.tfg.backend.model.services.FreeRoomsLessThanRoomTypeQuantityException;
 import es.udc.tfg.backend.model.services.RoomTypeService;
 import es.udc.tfg.backend.model.services.SaleRoomService;
-import es.udc.tfg.backend.model.services.UserService;
+import es.udc.tfg.backend.model.services.HotelService;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -43,11 +43,11 @@ public class SaleRoomServiceTest {
 	private SaleRoomDao saleRoomDao;
 	
 	@Autowired
-	private UserService userService;
+	private HotelService userService;
 
-	private User signUpUser(String userName) {
+	private Hotel signUpUser(String userName) {
 		
-		User user = new User(userName, "password", null,  "hotelName", "address", userName + "@" + userName + ".com", "666666666");
+		Hotel user = new Hotel(userName, "password", null,  "hotelName", "address", userName + "@" + userName + ".com", "666666666");
 		
 		try {
 			userService.signUp(user);
@@ -59,14 +59,14 @@ public class SaleRoomServiceTest {
 		
 	}
 
-	private RoomType createRoomType(User user, String name, String description, int capacity, int quantity, BigDecimal minPrice, BigDecimal maxPrice) 
+	private RoomType createRoomType(Hotel user, String name, String description, int capacity, int quantity, BigDecimal minPrice, BigDecimal maxPrice) 
 			throws DuplicateInstanceException {
 		return new RoomType(user,null,  name,description, capacity, quantity, minPrice, maxPrice);
 	}
 	
 	@Test
 	public void testAdd() throws DuplicateInstanceException, InstanceNotFoundException, FreeRoomsLessThanRoomTypeQuantityException {
-		User user = signUpUser("user");
+		Hotel user = signUpUser("user");
 		
 		RoomType roomType = createRoomType(user, "name","description", 2, 10, new BigDecimal (30), new BigDecimal (100));
 		roomTypeService.addRoomType(user.getId(), roomType);
@@ -93,7 +93,7 @@ public class SaleRoomServiceTest {
 
 	@Test
 	public void testAddAndUpdate() throws DuplicateInstanceException, InstanceNotFoundException, FreeRoomsLessThanRoomTypeQuantityException {
-		User user = signUpUser("user");
+		Hotel user = signUpUser("user");
 		
 		RoomType roomType = createRoomType(user, "name","description", 2, 10, new BigDecimal (30), new BigDecimal (100));
 		roomTypeService.addRoomType(user.getId(), roomType);

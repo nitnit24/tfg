@@ -24,7 +24,7 @@ class App extends React.Component {
 
         return (
             <Router>
-                {/* <div style={{background:"#e6f2ff"}} > */}
+                {/* <div style={{background:"#e6f2ff"}} >  */}
                 <div>
                     <Header/>
                     <Body/>

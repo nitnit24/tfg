@@ -13,44 +13,44 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import es.udc.tfg.backend.model.common.exceptions.DuplicateInstanceException;
 import es.udc.tfg.backend.model.common.exceptions.InstanceNotFoundException;
-import es.udc.tfg.backend.model.entities.User;
+import es.udc.tfg.backend.model.entities.Hotel;
 import es.udc.tfg.backend.model.services.IncorrectLoginException;
 import es.udc.tfg.backend.model.services.IncorrectPasswordException;
-import es.udc.tfg.backend.model.services.UserService;
+import es.udc.tfg.backend.model.services.HotelService;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @ActiveProfiles("test")
 @Transactional
-public class UserServiceTest {
+public class HotelServiceTest {
 	
 	private final Long NON_EXISTENT_ID = new Long(-1);
 	
 	@Autowired
-	private UserService userService;
+	private HotelService userService;
 	
-	private User createUser(String userName) {
-		return new User(userName, "password", null, "hotelName", "address", userName + "@" + userName + ".com", "666666666");
+	private Hotel createUser(String userName) {
+		return new Hotel(userName, "password", null, "hotelName", "address", userName + "@" + userName + ".com", "666666666");
 	}
 	
 	@Test
 	public void testSignUpAndLoginFromId() throws DuplicateInstanceException, InstanceNotFoundException {
 		
-		User user = createUser("user");
+		Hotel user = createUser("user");
 		
 		userService.signUp(user);
 		
-		User loggedInUser = userService.loginFromId(user.getId());
+		Hotel loggedInUser = userService.loginFromId(user.getId());
 		
 		assertEquals(user, loggedInUser);
-		assertEquals(User.RoleType.USER, user.getRole());
+		assertEquals(Hotel.RoleType.USER, user.getRole());
 		
 	}
 	
 	@Test(expected = DuplicateInstanceException.class)
 	public void testSignUpDuplicatedUserName() throws DuplicateInstanceException {
 		
-		User user = createUser("user");
+		Hotel user = createUser("user");
 		
 		userService.signUp(user);
 		userService.signUp(user);
@@ -65,12 +65,12 @@ public class UserServiceTest {
 	@Test
 	public void testLogin() throws DuplicateInstanceException, IncorrectLoginException {
 		
-		User user = createUser("user");
+		Hotel user = createUser("user");
 		String clearPassword = user.getPassword();
 				
 		userService.signUp(user);
 		
-		User loggedInUser = userService.login(user.getUserName(), clearPassword);
+		Hotel loggedInUser = userService.login(user.getUserName(), clearPassword);
 		
 		assertEquals(user, loggedInUser);
 		
@@ -79,7 +79,7 @@ public class UserServiceTest {
 	@Test(expected = IncorrectLoginException.class)
 	public void testLoginWithIncorrectPassword() throws DuplicateInstanceException, IncorrectLoginException {
 		
-		User user = createUser("user");
+		Hotel user = createUser("user");
 		String clearPassword = user.getPassword();
 		
 		userService.signUp(user);
@@ -95,7 +95,7 @@ public class UserServiceTest {
 	@Test
 	public void testUpdateProfile() throws InstanceNotFoundException, DuplicateInstanceException {
 		
-		User user = createUser("user");
+		Hotel user = createUser("user");
 		
 		userService.signUp(user);
 		
@@ -108,7 +108,7 @@ public class UserServiceTest {
 		userService.updateProfile(user.getId(), 'X' + user.getImage(), 'X' + user.getHotelName(), 'X' + user.getAddress(),
 			'X' + user.getEmail(), 'X' + user.getPhone());
 		
-		User updatedUser = userService.loginFromId(user.getId());
+		Hotel updatedUser = userService.loginFromId(user.getId());
 		
 		assertEquals(user, updatedUser);
 		
@@ -123,7 +123,7 @@ public class UserServiceTest {
 	public void testChangePassword() throws DuplicateInstanceException, InstanceNotFoundException,
 		IncorrectPasswordException, IncorrectLoginException {
 		
-		User user = createUser("user");
+		Hotel user = createUser("user");
 		String oldPassword = user.getPassword();
 		String newPassword = 'X' + oldPassword;
 		
@@ -142,7 +142,7 @@ public class UserServiceTest {
 	public void testChangePasswordWithIncorrectPassword() throws DuplicateInstanceException, InstanceNotFoundException,
 		IncorrectPasswordException {
 		
-		User user = createUser("user");
+		Hotel user = createUser("user");
 		String oldPassword = user.getPassword();
 		String newPassword = 'X' + oldPassword;
 		

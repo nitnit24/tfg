@@ -13,8 +13,8 @@ import es.udc.tfg.backend.model.common.exceptions.DuplicateInstanceException;
 import es.udc.tfg.backend.model.common.exceptions.InstanceNotFoundException;
 import es.udc.tfg.backend.model.entities.RoomType;
 import es.udc.tfg.backend.model.entities.RoomTypeDao;
-import es.udc.tfg.backend.model.entities.User;
-import es.udc.tfg.backend.model.entities.UserDao;
+import es.udc.tfg.backend.model.entities.Hotel;
+import es.udc.tfg.backend.model.entities.HotelDao;
 
 @Service
 @Transactional
@@ -24,22 +24,22 @@ public class RoomTypeServiceImpl implements RoomTypeService {
 	private RoomTypeDao roomTypeDao;
 	
 	@Autowired
-	private UserDao userDao;
+	private HotelDao userDao;
 
 	@Override
-	public RoomType addRoomType(Long userId, RoomType roomType) throws DuplicateInstanceException, InstanceNotFoundException {
+	public RoomType addRoomType(Long hotelId, RoomType roomType) throws DuplicateInstanceException, InstanceNotFoundException {
 
-		Optional<User> existingUser = userDao.findById(userId);
+		Optional<Hotel> existingUser = userDao.findById(hotelId);
 		
 		if (!existingUser.isPresent()) {
-			throw new InstanceNotFoundException("project.entities.user", userId);
+			throw new InstanceNotFoundException("project.entities.user", hotelId);
 		}
 		
 		if (roomTypeDao.existsByName(roomType.getName())) {
 			throw new DuplicateInstanceException("project.entities.roomType", roomType.getName());
 		}
 		
-		roomType.setUser(existingUser.get());
+		roomType.setHotel(existingUser.get());
 		roomTypeDao.save(roomType);
 
 		return roomType;
@@ -68,7 +68,7 @@ public class RoomTypeServiceImpl implements RoomTypeService {
 			throw new InstanceNotFoundException("project.entities.roomType", roomType.getId());
 		}
 
-		if (!existingRoomTypeItem.get().getUser().getId().equals(userId)) {
+		if (!existingRoomTypeItem.get().getHotel().getId().equals(userId)) {
 			throw new PermissionException();
 		}
 		
@@ -86,14 +86,14 @@ public class RoomTypeServiceImpl implements RoomTypeService {
 	}
 	
 	@Override
-	public void removeRoomType(Long userId, Long roomTypeId) throws InstanceNotFoundException, PermissionException {
+	public void removeRoomType(Long hotelId, Long roomTypeId) throws InstanceNotFoundException, PermissionException {
 		Optional<RoomType> existingRoomTypeItem = roomTypeDao.findById(roomTypeId);
 
 		if (!existingRoomTypeItem.isPresent()) {
 			throw new InstanceNotFoundException("project.entities.roomType", roomTypeId);
 		}
 		
-		if (!existingRoomTypeItem.get().getUser().getId().equals(userId)) {
+		if (!existingRoomTypeItem.get().getHotel().getId().equals(hotelId)) {
 			throw new PermissionException();
 		}
 

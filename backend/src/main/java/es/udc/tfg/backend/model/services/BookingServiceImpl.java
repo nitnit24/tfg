@@ -1,6 +1,7 @@
 package es.udc.tfg.backend.model.services;
 
 import static es.udc.tfg.backend.model.entities.SendEmail.sendMsgBooking;
+import static es.udc.tfg.backend.model.entities.SendEmail.sendMsgUpdateBooking;
 import static es.udc.tfg.backend.model.entities.SendEmail.sendMsgFreeRoomsZero;
 
 import java.io.IOException;
@@ -36,6 +37,7 @@ import es.udc.tfg.backend.model.entities.SaleRoomTariffDao;
 import es.udc.tfg.backend.model.entities.State;
 import es.udc.tfg.backend.model.entities.Tariff;
 import es.udc.tfg.backend.model.entities.TariffDao;
+import es.udc.tfg.backend.model.entities.Hotel;
 
 @Service
 @Transactional
@@ -360,6 +362,7 @@ public class BookingServiceImpl implements BookingService {
 			
 			bookingDao.save(booking.get());
 			
+			
 			for (BookingRoomSummary bookingRoomSummary : bookingRoomSummarys) {
 
 				List<SaleRoomTariff> SaleRTs = bookingRoomSummary.getSaleRoomTariffs();
@@ -413,7 +416,8 @@ public class BookingServiceImpl implements BookingService {
 			booking.get().setTotalPrice(totalPrice);
 			bookingDao.save(booking.get());
 			
-			//sendMsgBooking(newBooking);
+			Hotel hotel = booking.get().getBookingRooms().iterator().next().getBookingDays().iterator().next().getSaleRoomTariff().getTariff().getHotel();
+			sendMsgUpdateBooking(booking.get(), hotel);
 
 			return booking.get();
 	

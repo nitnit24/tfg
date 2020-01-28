@@ -30,7 +30,7 @@ import es.udc.tfg.backend.model.entities.SaleRoomTariff;
 import es.udc.tfg.backend.model.entities.SaleRoomTariffDao;
 import es.udc.tfg.backend.model.entities.State;
 import es.udc.tfg.backend.model.entities.Tariff;
-import es.udc.tfg.backend.model.entities.User;
+import es.udc.tfg.backend.model.entities.Hotel;
 import es.udc.tfg.backend.model.services.Block;
 import es.udc.tfg.backend.model.services.BookingService;
 import es.udc.tfg.backend.model.services.FreeRoomsLessThanRoomTypeQuantityException;
@@ -40,7 +40,7 @@ import es.udc.tfg.backend.model.services.SaleRoomService;
 import es.udc.tfg.backend.model.services.SaleRoomTariffService;
 import es.udc.tfg.backend.model.services.TariffService;
 import es.udc.tfg.backend.model.services.ThereAreNotEnoughtFreeRoomsException;
-import es.udc.tfg.backend.model.services.UserService;
+import es.udc.tfg.backend.model.services.HotelService;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -71,11 +71,11 @@ public class BookingServiceTest {
 	private BookingDao bookingDao;
 	
 	@Autowired
-	private UserService userService;
+	private HotelService userService;
 
-	private User signUpUser(String userName) {
+	private Hotel signUpUser(String userName) {
 		
-		User user = new User(userName, "password",null,  "hotelName", "address", userName + "@" + userName + ".com", "666666666");
+		Hotel user = new Hotel(userName, "password",null,  "hotelName", "address", userName + "@" + userName + ".com", "666666666");
 		
 		try {
 			userService.signUp(user);
@@ -87,11 +87,11 @@ public class BookingServiceTest {
 		
 	}
 	
-	private Tariff createTariff(User user, String name, String code,String description) throws DuplicateInstanceException {
+	private Tariff createTariff(Hotel user, String name, String code,String description) throws DuplicateInstanceException {
 		return new Tariff(user, name, code, description);
 	}
 	
-	private RoomType createRoomType(User user, String name,String description, int capacity, int quantity, BigDecimal minPrice, BigDecimal maxPrice) 
+	private RoomType createRoomType(Hotel user, String name,String description, int capacity, int quantity, BigDecimal minPrice, BigDecimal maxPrice) 
 			throws DuplicateInstanceException {
 		return new RoomType(user,null, name, description, capacity, quantity, minPrice, maxPrice);
 	}
@@ -366,7 +366,7 @@ public class BookingServiceTest {
 	
 	@Test
 	public void testMakeBooking() throws DuplicateInstanceException, InstanceNotFoundException, PriceNotBetweenMinAndMaxValueException, FreeRoomsLessThanRoomTypeQuantityException, ThereAreNotEnoughtFreeRoomsException, UnsupportedEncodingException, IOException {
-		User user = signUpUser("user");
+		Hotel user = signUpUser("user");
 		Tariff newTariff = createTariff(user, "name", "CODE", "description");
 		Tariff tariff = tariffService.addTariff(user.getId(), newTariff);
 
@@ -457,7 +457,7 @@ public class BookingServiceTest {
 	
 	@Test
 	public void testMakeBookingAndFindByLocator() throws DuplicateInstanceException, InstanceNotFoundException, PriceNotBetweenMinAndMaxValueException, FreeRoomsLessThanRoomTypeQuantityException, ThereAreNotEnoughtFreeRoomsException, UnsupportedEncodingException, IOException {
-		User user = signUpUser("user");
+		Hotel user = signUpUser("user");
 		Tariff newTariff = createTariff(user, "name", "CODE", "description");
 		Tariff tariff = tariffService.addTariff(user.getId(), newTariff);
 
@@ -535,7 +535,7 @@ public class BookingServiceTest {
 	
 	@Test
 	public void testMakeBookingAndFindLocatorAndKey() throws DuplicateInstanceException, InstanceNotFoundException, PriceNotBetweenMinAndMaxValueException, FreeRoomsLessThanRoomTypeQuantityException, ThereAreNotEnoughtFreeRoomsException, UnsupportedEncodingException, IOException {
-		User user = signUpUser("user");
+		Hotel user = signUpUser("user");
 		Tariff newTariff = createTariff(user, "name", "CODE", "description");
 		Tariff tariff = tariffService.addTariff(user.getId(), newTariff);
 
@@ -615,7 +615,7 @@ public class BookingServiceTest {
 	
 	@Test
 	public void testMakeBookingAndCancel() throws DuplicateInstanceException, InstanceNotFoundException, PriceNotBetweenMinAndMaxValueException, FreeRoomsLessThanRoomTypeQuantityException, ThereAreNotEnoughtFreeRoomsException, UnsupportedEncodingException, IOException {
-		User user = signUpUser("user");
+		Hotel user = signUpUser("user");
 		
 		Tariff newTariff = createTariff(user, "name", "CODE", "description");
 		Tariff tariff = tariffService.addTariff(user.getId(), newTariff);
@@ -683,7 +683,7 @@ public class BookingServiceTest {
 	
 	@Test
 	public void testMakeBookingAndFind() throws DuplicateInstanceException, InstanceNotFoundException, PriceNotBetweenMinAndMaxValueException, FreeRoomsLessThanRoomTypeQuantityException, ThereAreNotEnoughtFreeRoomsException, UnsupportedEncodingException, IOException {
-		User user = signUpUser("user");
+		Hotel user = signUpUser("user");
 		
 		Tariff newTariff = createTariff(user, "name", "CODE", "description");
 		Tariff tariff = tariffService.addTariff(user.getId(), newTariff);

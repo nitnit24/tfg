@@ -8,13 +8,13 @@ import es.udc.tfg.backend.model.entities.RoomType;
 
 public interface RoomTypeService {
 
-	RoomType addRoomType(Long userId, RoomType roomType) throws DuplicateInstanceException, InstanceNotFoundException;
+	RoomType addRoomType(Long hotelId, RoomType roomType) throws DuplicateInstanceException, InstanceNotFoundException;
 	
 	RoomType findRoomTypeById(Long id) throws InstanceNotFoundException;
 
-	RoomType updateRoomType(Long userId, RoomType roomType) throws InstanceNotFoundException, PermissionException;
+	RoomType updateRoomType(Long hotelId, RoomType roomType) throws InstanceNotFoundException, PermissionException;
 
-	void removeRoomType(Long userId, Long roomTypeId) throws InstanceNotFoundException, PermissionException;
+	void removeRoomType(Long hotelId, Long roomTypeId) throws InstanceNotFoundException, PermissionException;
 
 	List<RoomType> findAllRoomTypes();
 

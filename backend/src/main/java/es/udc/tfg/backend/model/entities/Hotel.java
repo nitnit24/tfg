@@ -6,7 +6,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
-public class User {
+public class Hotel {
 	
 	public enum RoleType {USER};
 
@@ -20,9 +20,9 @@ public class User {
 	private String phone;
 	private RoleType role;
 
-	public User() {}
+	public Hotel() {}
 
-	public User(String userName, String password,String image, String hotelName, String address, String email, String phone) {
+	public Hotel(String userName, String password,String image, String hotelName, String address, String email, String phone) {
 		this.userName = userName;
 		this.password = password;
 		this.image = image;

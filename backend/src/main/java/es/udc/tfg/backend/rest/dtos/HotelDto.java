@@ -3,7 +3,7 @@ package es.udc.tfg.backend.rest.dtos;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-public class UserDto {
+public class HotelDto {
 	
 	public interface AllValidations {}
 	
@@ -19,9 +19,9 @@ public class UserDto {
 	private String phone;
 	private String role;
 
-	public UserDto() {}
+	public HotelDto() {}
 
-	public UserDto(Long id, String userName, String image,  String hotelName, String address, String email, String phone, String role) {
+	public HotelDto(Long id, String userName, String image,  String hotelName, String address, String email, String phone, String role) {
 
 		this.id = id;
 		this.userName = userName != null ? userName.trim() : null;

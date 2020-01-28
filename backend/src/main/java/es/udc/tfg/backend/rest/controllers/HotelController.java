@@ -1,8 +1,8 @@
 package es.udc.tfg.backend.rest.controllers;
 
-import static es.udc.tfg.backend.rest.dtos.UserConversor.toAuthenticatedUserDto;
-import static es.udc.tfg.backend.rest.dtos.UserConversor.toUser;
-import static es.udc.tfg.backend.rest.dtos.UserConversor.toUserDto;
+import static es.udc.tfg.backend.rest.dtos.HotelConversor.toAuthenticatedUserDto;
+import static es.udc.tfg.backend.rest.dtos.HotelConversor.toHotel;
+import static es.udc.tfg.backend.rest.dtos.HotelConversor.toHotelDto;
 
 import java.net.URI;
 import java.util.Locale;
@@ -26,22 +26,22 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import es.udc.tfg.backend.model.common.exceptions.DuplicateInstanceException;
 import es.udc.tfg.backend.model.common.exceptions.InstanceNotFoundException;
-import es.udc.tfg.backend.model.entities.User;
+import es.udc.tfg.backend.model.entities.Hotel;
 import es.udc.tfg.backend.model.services.IncorrectLoginException;
 import es.udc.tfg.backend.model.services.IncorrectPasswordException;
 import es.udc.tfg.backend.model.services.PermissionException;
-import es.udc.tfg.backend.model.services.UserService;
+import es.udc.tfg.backend.model.services.HotelService;
 import es.udc.tfg.backend.rest.common.ErrorsDto;
 import es.udc.tfg.backend.rest.common.JwtGenerator;
 import es.udc.tfg.backend.rest.common.JwtInfo;
 import es.udc.tfg.backend.rest.dtos.AuthenticatedUserDto;
 import es.udc.tfg.backend.rest.dtos.ChangePasswordParamsDto;
 import es.udc.tfg.backend.rest.dtos.LoginParamsDto;
-import es.udc.tfg.backend.rest.dtos.UserDto;
+import es.udc.tfg.backend.rest.dtos.HotelDto;
 
 @RestController
 @RequestMapping("/users")
-public class UserController {
+public class HotelController {
 	
 	private final static String INCORRECT_LOGIN_EXCEPTION_CODE = "project.exceptions.IncorrectLoginException";
 	private final static String INCORRECT_PASSWORD_EXCEPTION_CODE = "project.exceptions.IncorrectPasswordException";
@@ -53,7 +53,7 @@ public class UserController {
 	private JwtGenerator jwtGenerator;
 	
 	@Autowired
-	private UserService userService;
+	private HotelService hotelService;
 	
 	@ExceptionHandler(IncorrectLoginException.class)
 	@ResponseStatus(HttpStatus.NOT_FOUND)
@@ -79,29 +79,29 @@ public class UserController {
 		
 	}
 
-	@PostMapping("/signUp")
-	public ResponseEntity<AuthenticatedUserDto> signUp(
-		@Validated({UserDto.AllValidations.class}) @RequestBody UserDto userDto) throws DuplicateInstanceException {
-		
-		User user = toUser(userDto);
-		
-		userService.signUp(user);
-		
-		URI location = ServletUriComponentsBuilder
-			.fromCurrentRequest().path("/{id}")
-			.buildAndExpand(user.getId()).toUri();
-	
-		return ResponseEntity.created(location).body(toAuthenticatedUserDto(generateServiceToken(user), user));
-
-	}
+//	@PostMapping("/signUp")
+//	public ResponseEntity<AuthenticatedUserDto> signUp(
+//		@Validated({UserDto.AllValidations.class}) @RequestBody UserDto userDto) throws DuplicateInstanceException {
+//		
+//		Hotel user = toUser(userDto);
+//		
+//		userService.signUp(user);
+//		
+//		URI location = ServletUriComponentsBuilder
+//			.fromCurrentRequest().path("/{id}")
+//			.buildAndExpand(user.getId()).toUri();
+//	
+//		return ResponseEntity.created(location).body(toAuthenticatedUserDto(generateServiceToken(user), user));
+//
+//	}
 	
 	@PostMapping("/login")
 	public AuthenticatedUserDto login(@Validated @RequestBody LoginParamsDto params)
 		throws IncorrectLoginException {
 		
-		User user = userService.login(params.getUserName(), params.getPassword());
+		Hotel hotel = hotelService.login(params.getUserName(), params.getPassword());
 			
-		return toAuthenticatedUserDto(generateServiceToken(user), user);
+		return toAuthenticatedUserDto(generateServiceToken(hotel), hotel);
 		
 	}
 	
@@ -109,23 +109,23 @@ public class UserController {
 	public AuthenticatedUserDto loginFromServiceToken(@RequestAttribute Long userId, 
 		@RequestAttribute String serviceToken) throws InstanceNotFoundException {
 		
-		User user = userService.loginFromId(userId);
+		Hotel hotel = hotelService.loginFromId(userId);
 		
-		return toAuthenticatedUserDto(serviceToken, user);
+		return toAuthenticatedUserDto(serviceToken, hotel);
 		
 	}
 
 	@PutMapping("/{id}")
-	public UserDto updateProfile(@RequestAttribute Long userId, @PathVariable("id") Long id, 
-		@Validated({UserDto.UpdateValidations.class}) @RequestBody UserDto userDto) 
+	public HotelDto updateProfile(@RequestAttribute Long userId, @PathVariable("id") Long id, 
+		@Validated({HotelDto.UpdateValidations.class}) @RequestBody HotelDto hotelDto) 
 		throws InstanceNotFoundException, PermissionException {
 				
 		if (!id.equals(userId)) {
 			throw new PermissionException();
 		}
 		
-		return toUserDto(userService.updateProfile(id, userDto.getImage(), userDto.getHotelName(), userDto.getAddress(),
-			userDto.getEmail(), userDto.getPhone()));
+		return toHotelDto(hotelService.updateProfile(id, hotelDto.getImage(), hotelDto.getHotelName(), hotelDto.getAddress(),
+			hotelDto.getEmail(), hotelDto.getPhone()));
 		
 	}
 	
@@ -139,11 +139,11 @@ public class UserController {
 			throw new PermissionException();
 		}
 		
-		userService.changePassword(id, params.getOldPassword(), params.getNewPassword());
+		hotelService.changePassword(id, params.getOldPassword(), params.getNewPassword());
 		
 	}
 	
-	private String generateServiceToken(User user) {
+	private String generateServiceToken(Hotel user) {
 		
 		JwtInfo jwtInfo = new JwtInfo(user.getId(), user.getUserName(), user.getRole().toString());
 		

@@ -8,10 +8,10 @@ DROP TABLE SaleRoomTariff;
 DROP TABLE Tariff;
 DROP TABLE SaleRoom;
 DROP TABLE RoomType;
-DROP TABLE User;
+DROP TABLE Hotel;
 
 
-CREATE TABLE User (
+CREATE TABLE Hotel (
     id BIGINT NOT NULL AUTO_INCREMENT,
     userName VARCHAR(60) COLLATE latin1_bin NOT NULL,
     password VARCHAR(60) NOT NULL, 
@@ -21,29 +21,29 @@ CREATE TABLE User (
     email VARCHAR(60) NOT NULL,
     phone VARCHAR(60) COLLATE latin1_bin NOT NULL, 
     role TINYINT NOT NULL,
-    CONSTRAINT UserPK PRIMARY KEY (id),
-    CONSTRAINT UserNameUniqueKey UNIQUE (userName)
+    CONSTRAINT HotelPK PRIMARY KEY (id),
+    CONSTRAINT userNameUniqueKey UNIQUE (userName)
 ) ENGINE = InnoDB;
 
-CREATE INDEX UserIndexByUserName ON User (userName);
+CREATE INDEX HotelIndexByUserName ON Hotel (userName);
 
 
 CREATE TABLE Tariff (
     id BIGINT NOT NULL AUTO_INCREMENT,
-    userId BIGINT NOT NULL,
+    hotelId BIGINT NOT NULL,
     tariffName VARCHAR(60) COLLATE latin1_bin NOT NULL,
     tariffCode VARCHAR(60) COLLATE latin1_bin NOT NULL,
     tariffDescription VARCHAR(240) COLLATE latin1_bin NOT NULL,
     CONSTRAINT TariffPK PRIMARY KEY (id),
     CONSTRAINT TariffNameUniqueKey UNIQUE (tariffName),
     CONSTRAINT TariffCodeUniqueKey UNIQUE (tariffCode),
-    CONSTRAINT idUserFKTariff FOREIGN KEY(userId)
-        REFERENCES User (id)
+    CONSTRAINT idUserFKTariff FOREIGN KEY(hotelId)
+        REFERENCES Hotel (id)
 ) ENGINE = InnoDB;
 
 CREATE TABLE RoomType (
     id BIGINT NOT NULL AUTO_INCREMENT,
-    userId BIGINT NOT NULL,
+    hotelId BIGINT NOT NULL,
     image MEDIUMTEXT,
     typeName VARCHAR(60) COLLATE latin1_bin NOT NULL,
     description VARCHAR(240) COLLATE latin1_bin,
@@ -53,8 +53,8 @@ CREATE TABLE RoomType (
     maxPrice DECIMAL(11, 2),
     CONSTRAINT RoomTypePK PRIMARY KEY (id),
     CONSTRAINT TypeNameUniqueKey UNIQUE (typeName),
-     CONSTRAINT idUserFKRoomType FOREIGN KEY(userId)
-        REFERENCES User (id)
+     CONSTRAINT idUserFKRoomType FOREIGN KEY(hotelId)
+        REFERENCES Hotel (id)
 ) ENGINE = InnoDB;
 
 CREATE TABLE SaleRoom (

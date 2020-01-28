@@ -13,7 +13,7 @@ import javax.persistence.ManyToOne;
 public class Tariff {
 
 	private Long id;
-	private User user;
+	private Hotel hotel;
 	private String name;
 	private String code;
 	private String description;
@@ -21,8 +21,8 @@ public class Tariff {
 	public Tariff() {
 	}
 
-	public Tariff(User user, String name, String code, String description) {
-		this.user = user;
+	public Tariff(Hotel hotel, String name, String code, String description) {
+		this.hotel = hotel;
 		this.name = name;
 		this.code = code;
 		this.description = description;
@@ -46,13 +46,13 @@ public class Tariff {
 	}
 
 	@ManyToOne(optional=false, fetch=FetchType.LAZY)
-	@JoinColumn(name= "userId")
-	public User getUser() {
-		return user;
+	@JoinColumn(name= "hotelId")
+	public Hotel getHotel() {
+		return hotel;
 	}
 
-	public void setUser(User user) {
-		this.user = user;
+	public void setHotel(Hotel hotel) {
+		this.hotel = hotel;
 	}
 	
 	@Column(name = "tariffName")

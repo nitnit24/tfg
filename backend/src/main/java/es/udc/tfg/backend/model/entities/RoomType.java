@@ -15,7 +15,7 @@ import javax.persistence.ManyToOne;
 public class RoomType {
 
 	private Long id;
-	private User user;
+	private Hotel hotel;
 	private String image;
 	private String name;
 	private String description;
@@ -27,8 +27,8 @@ public class RoomType {
 	public RoomType() {
 	}
 
-	public RoomType(User user, String image, String name, String description, int capacity, int quantity, BigDecimal minPrice, BigDecimal maxPrice) {
-		this.user = user;
+	public RoomType(Hotel hotel, String image, String name, String description, int capacity, int quantity, BigDecimal minPrice, BigDecimal maxPrice) {
+		this.hotel = hotel;
 		this.image = image;
 		this.name = name;
 		this.description = description;
@@ -60,13 +60,13 @@ public class RoomType {
 	}
 
 	@ManyToOne(optional=false, fetch=FetchType.LAZY)
-	@JoinColumn(name= "userId")
-	public User getUser() {
-		return user;
+	@JoinColumn(name= "hotelId")
+	public Hotel getHotel() {
+		return hotel;
 	}
 
-	public void setUser(User user) {
-		this.user = user;
+	public void setHotel(Hotel hotel) {
+		this.hotel = hotel;
 	}
 
 	

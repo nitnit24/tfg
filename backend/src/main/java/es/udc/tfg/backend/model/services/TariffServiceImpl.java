@@ -13,8 +13,8 @@ import es.udc.tfg.backend.model.common.exceptions.DuplicateInstanceException;
 import es.udc.tfg.backend.model.common.exceptions.InstanceNotFoundException;
 import es.udc.tfg.backend.model.entities.Tariff;
 import es.udc.tfg.backend.model.entities.TariffDao;
-import es.udc.tfg.backend.model.entities.User;
-import es.udc.tfg.backend.model.entities.UserDao;
+import es.udc.tfg.backend.model.entities.Hotel;
+import es.udc.tfg.backend.model.entities.HotelDao;
 
 @Service
 @Transactional
@@ -24,15 +24,15 @@ public class TariffServiceImpl implements TariffService {
 	private TariffDao tariffDao;
 	
 	@Autowired
-	private UserDao userDao;
+	private HotelDao userDao;
 
 	@Override
-	public Tariff addTariff(Long userId, Tariff tariff) throws DuplicateInstanceException, InstanceNotFoundException {
+	public Tariff addTariff(Long hotelId, Tariff tariff) throws DuplicateInstanceException, InstanceNotFoundException {
 
-		Optional<User> existingUser = userDao.findById(userId);
+		Optional<Hotel> existingUser = userDao.findById(hotelId);
 		
 		if (!existingUser.isPresent()) {
-			throw new InstanceNotFoundException("project.entities.user", userId);
+			throw new InstanceNotFoundException("project.entities.user", hotelId);
 		}
 		
 		if (tariffDao.existsByName(tariff.getName())) {
@@ -44,7 +44,7 @@ public class TariffServiceImpl implements TariffService {
 		}
 		
 		
-		tariff.setUser(existingUser.get());
+		tariff.setHotel(existingUser.get());
 		tariffDao.save(tariff);
 
 		return tariff;
@@ -52,7 +52,7 @@ public class TariffServiceImpl implements TariffService {
 	}
 
 	@Override
-	public Tariff updateTariff(Long userId, Tariff tariff) throws InstanceNotFoundException, PermissionException {
+	public Tariff updateTariff(Long hotelId, Tariff tariff) throws InstanceNotFoundException, PermissionException {
 
 		Optional<Tariff> existingTariffItem = tariffDao.findById(tariff.getId());
 
@@ -60,7 +60,7 @@ public class TariffServiceImpl implements TariffService {
 			throw new InstanceNotFoundException("project.entities.tariff", tariff.getId());
 		}
 		
-		if (!existingTariffItem.get().getUser().getId().equals(userId)) {
+		if (!existingTariffItem.get().getHotel().getId().equals(hotelId)) {
 			throw new PermissionException();
 		}
 
@@ -75,14 +75,14 @@ public class TariffServiceImpl implements TariffService {
 	}
 
 	@Override
-	public void removeTariff(Long userId, Long tariffId) throws InstanceNotFoundException, PermissionException {
+	public void removeTariff(Long hotelId, Long tariffId) throws InstanceNotFoundException, PermissionException {
 		Optional<Tariff> existingTariffItem = tariffDao.findById(tariffId);
 
 		if (!existingTariffItem.isPresent()) {
 			throw new InstanceNotFoundException("project.entities.tariff", tariffId);
 		}
 		
-		if (!existingTariffItem.get().getUser().getId().equals(userId)) {
+		if (!existingTariffItem.get().getHotel().getId().equals(hotelId)) {
 			throw new PermissionException();
 		}
 

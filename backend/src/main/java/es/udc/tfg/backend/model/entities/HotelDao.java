@@ -4,10 +4,10 @@ import java.util.Optional;
 
 import org.springframework.data.repository.PagingAndSortingRepository;
 
-public interface UserDao extends PagingAndSortingRepository<User, Long> {
+public interface HotelDao extends PagingAndSortingRepository<Hotel, Long> {
 	
 	boolean existsByUserName(String userName);
 
-	Optional<User> findByUserName(String userName);
+	Optional<Hotel> findByUserName(String userName);
 	
 }

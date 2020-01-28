@@ -12,9 +12,13 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,6 +26,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 
@@ -30,7 +36,9 @@ import es.udc.tfg.backend.model.entities.Booking;
 import es.udc.tfg.backend.model.services.Block;
 import es.udc.tfg.backend.model.services.BookingService;
 import es.udc.tfg.backend.model.services.IncorrectFindLocatorKeyException;
+import es.udc.tfg.backend.model.services.IncorrectLoginException;
 import es.udc.tfg.backend.model.services.ThereAreNotEnoughtFreeRoomsException;
+import es.udc.tfg.backend.rest.common.ErrorsDto;
 import es.udc.tfg.backend.rest.dtos.BlockDto;
 import es.udc.tfg.backend.rest.dtos.BookingDto;
 import es.udc.tfg.backend.rest.dtos.BookingParamsDto;
@@ -44,9 +52,28 @@ import es.udc.tfg.backend.rest.dtos.TariffDto;
 @RestController
 @RequestMapping("/booking")
 public class BookingController {
-
+	
+	private final static String INCORRECT_FIND_LOCATOR_KEY_EXCEPTION_CODE = "project.exception.IncorrectFindLocatorKeyException";
+	
+	@Autowired
+	private MessageSource messageSource;
+	
 	@Autowired
 	private BookingService bookingService;
+	
+	
+	
+	@ExceptionHandler(IncorrectFindLocatorKeyException.class)
+	@ResponseStatus(HttpStatus.NOT_FOUND)
+	@ResponseBody
+	public ErrorsDto handleIncorrectFindLocatorKeyException(IncorrectFindLocatorKeyException exception, Locale locale) {
+		
+		String errorMessage = messageSource.getMessage(INCORRECT_FIND_LOCATOR_KEY_EXCEPTION_CODE, null,
+				INCORRECT_FIND_LOCATOR_KEY_EXCEPTION_CODE, locale);
+
+		return new ErrorsDto(errorMessage);
+		
+	}
 	
 
 	@PostMapping("/makeBooking")

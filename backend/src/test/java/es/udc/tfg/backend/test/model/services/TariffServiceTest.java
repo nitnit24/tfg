@@ -16,10 +16,10 @@ import org.springframework.test.context.junit4.SpringRunner;
 import es.udc.tfg.backend.model.common.exceptions.DuplicateInstanceException;
 import es.udc.tfg.backend.model.common.exceptions.InstanceNotFoundException;
 import es.udc.tfg.backend.model.entities.Tariff;
-import es.udc.tfg.backend.model.entities.User;
+import es.udc.tfg.backend.model.entities.Hotel;
 import es.udc.tfg.backend.model.services.PermissionException;
 import es.udc.tfg.backend.model.services.TariffService;
-import es.udc.tfg.backend.model.services.UserService;
+import es.udc.tfg.backend.model.services.HotelService;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -30,14 +30,14 @@ public class TariffServiceTest {
 	private final Long NON_EXISTENT_ID = new Long(-1);
 
 	@Autowired
-	private UserService userService;
+	private HotelService userService;
 	
 	@Autowired
 	private TariffService tariffService;
 	
-	private User signUpUser(String userName) {
+	private Hotel signUpUser(String userName) {
 		
-		User user = new User(userName, "password", null, "hotelName", "address", userName + "@" + userName + ".com", "666666666");
+		Hotel user = new Hotel(userName, "password", null, "hotelName", "address", userName + "@" + userName + ".com", "666666666");
 		
 		try {
 			userService.signUp(user);
@@ -49,14 +49,14 @@ public class TariffServiceTest {
 		
 	}
 
-	private Tariff createTariff(User user, String name, String code, String description) throws DuplicateInstanceException {
+	private Tariff createTariff(Hotel user, String name, String code, String description) throws DuplicateInstanceException {
 		return new Tariff(user, name, code, description);
 	}
 	
 
 	@Test
 	public void testAddTariffAndFind() throws DuplicateInstanceException, InstanceNotFoundException {
-		User user = signUpUser("user");
+		Hotel user = signUpUser("user");
 		
 		Tariff tariff = createTariff(user,"name", "CODE", "description");
 		tariffService.addTariff(user.getId(), tariff);
@@ -68,7 +68,7 @@ public class TariffServiceTest {
 
 	@Test(expected = DuplicateInstanceException.class)
 	public void testAddTariffNameDuplicate() throws DuplicateInstanceException, InstanceNotFoundException {
-		User user = signUpUser("user");
+		Hotel user = signUpUser("user");
 		
 		Tariff tariff = createTariff(user, "name", "CODE", "description");
 		tariffService.addTariff(user.getId(), tariff);
@@ -79,7 +79,7 @@ public class TariffServiceTest {
 
 	@Test(expected = DuplicateInstanceException.class)
 	public void testAddTariffCodeDuplicate() throws DuplicateInstanceException, InstanceNotFoundException {
-		User user = signUpUser("user");
+		Hotel user = signUpUser("user");
 		
 		Tariff tariff = createTariff(user, "name", "CODE", "description");
 		tariffService.addTariff(user.getId(), tariff);
@@ -97,7 +97,7 @@ public class TariffServiceTest {
 
 	@Test
 	public void testAddTariffAndUpdate() throws DuplicateInstanceException, InstanceNotFoundException, PermissionException {
-		User user = signUpUser("user");
+		Hotel user = signUpUser("user");
 		Tariff tariff = createTariff(user, "name", "CODE", "description");
 		tariffService.addTariff(user.getId(), tariff);
 
@@ -121,7 +121,7 @@ public class TariffServiceTest {
 
 	@Test
 	public void testFindAllTariffs() throws DuplicateInstanceException, InstanceNotFoundException {
-		User user = signUpUser("user");
+		Hotel user = signUpUser("user");
 		
 		Tariff tariff1 = createTariff(user, "name", "CODE", "description");
 		tariffService.addTariff(user.getId(), tariff1);
