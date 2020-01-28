@@ -12,6 +12,7 @@ public class UserDto {
 	private Long id;
 	private String userName;
 	private String password;
+	private String image;
 	private String hotelName;
 	private String address;
 	private String email;
@@ -20,10 +21,11 @@ public class UserDto {
 
 	public UserDto() {}
 
-	public UserDto(Long id, String userName, String hotelName, String address, String email, String phone, String role) {
+	public UserDto(Long id, String userName, String image,  String hotelName, String address, String email, String phone, String role) {
 
 		this.id = id;
 		this.userName = userName != null ? userName.trim() : null;
+		this.image = image;
 		this.hotelName = hotelName.trim();
 		this.address = address.trim();
 		this.email = email.trim();
@@ -58,6 +60,15 @@ public class UserDto {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+	
+
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
 	}
 
 	@NotNull(groups={AllValidations.class, UpdateValidations.class})

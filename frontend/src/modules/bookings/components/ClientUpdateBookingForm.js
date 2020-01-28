@@ -1,5 +1,6 @@
 import React from 'react';
 import {FormattedMessage} from 'react-intl';
+import { Roller } from 'react-awesome-spinners';
 
 import {Errors, Loader} from '../../common';
 import * as actions from '../actions';
@@ -7,25 +8,25 @@ import {connect} from 'react-redux';
 
 import  backend from '../../../backend';
 import * as selectors from '../selectors';
+import * as selectorsSaleRooms from '../../saleRooms/selectors'
 
-const initialState = {
-    name: '',
-    surname: '',
-    email: '',
-    phone: '',
-    petition: '',
-    loading: 0, 
-    
-    backendErrors: null
-};
 
-class ClientForm extends React.Component {
+class ClientUpdateBookingForm extends React.Component {
     
     constructor(props) {
 
         super(props);
 
-        this.state = initialState;
+        this.state = {
+            name: props.clientData.name,
+            surname: props.clientData.surname,
+            email: props.clientData.email,
+            phone: props.clientData.phone,
+            petition: props.clientData.petition,
+            loading: 0, 
+            
+            backendErrors: null
+        }
 
     }
 
@@ -53,23 +54,24 @@ class ClientForm extends React.Component {
         event.preventDefault();
         this.setState({loading: 1})
         if (this.form.checkValidity()) {
-            this.booking();
+            this.updateBooking();
         } else {
             this.setBackendErrors(null);
             this.form.classList.add('was-validated');
         }
     }
 
-    booking() {
-        const name = this.state.name.trim();
-        const surname = this.state.surname.trim();
+    updateBooking() {
         const email = this.state.email.trim();
         const phone = this.state.phone.trim();
         const petition = this.state.petition.trim();
-
-        backend.bookingService.makeBooking(this.props.rooms,this.props.startDate, this.props.endDate, name, surname,
+        const locator = this.props.clientData.locator;
+        const key = this.props.clientData.key;
+        
+        console.log("updateBooking")
+        backend.bookingService.updateBooking(this.props.rooms,this.props.startDate, this.props.endDate, locator, key,
              phone, email, petition,
-             (booking) => {this.props.history.push('/booking/booking-completed'),
+             (booking) => {this.props.history.push('/booking/booking-details-client'),
                 this.props.booking(booking)} ,      
              errors => this.setBackendErrors(errors))
 
@@ -109,7 +111,8 @@ class ClientForm extends React.Component {
                                         value={this.state.name}
                                         onChange={(e) => this.handleNameChange(e)}
                                         autoFocus
-                                        required/>
+                                        required
+                                        disabled="disabled"/>
                                     <div className="invalid-feedback">
                                         <FormattedMessage id='project.global.validator.required'/>
                                     </div>
@@ -125,7 +128,8 @@ class ClientForm extends React.Component {
                                     <input type="text" id="surname" className="form-control" 
                                         value={this.state.surname}
                                         onChange={(e) => this.handleSurnameChange(e)}
-                                        required/>
+                                        required
+                                        disabled="disabled"/>
                                     <div className="invalid-feedback">
                                         <FormattedMessage id='project.global.validator.required'/>
                                     </div>
@@ -190,7 +194,7 @@ class ClientForm extends React.Component {
                             <div className="form-group row">
                                 <div className="offset-md-3 col-md-1">
                                     <button type="submit" className="btn btn-dark disabled" >
-                                        <FormattedMessage id="project.global.buttons.booking"/>
+                                        <FormattedMessage id="project.global.buttons.update"/>
                                     </button>
                                 </div>
                                 <br/>
@@ -215,14 +219,16 @@ class ClientForm extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-    startDate: selectors.getStartDate(state),
-    endDate: selectors.getEndDate(state),
-    rooms: selectors.getRooms(state)
+    startDate: selectorsSaleRooms.getStartDate(state),
+    endDate: selectorsSaleRooms.getEndDate(state),
+    rooms: selectorsSaleRooms.getRooms(state),
+    clientData: selectors.getClientData(state)
 
 });
 
 const mapDispatchToProps = {
-    booking: actions.booking
+    booking: actions.booking,
+    updateBooking: actions.updateBooking
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ClientForm);
+export default connect(mapStateToProps, mapDispatchToProps)(ClientUpdateBookingForm);

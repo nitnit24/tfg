@@ -1,8 +1,8 @@
 import React from 'react';
 import {FormattedMessage} from 'react-intl';
-import {NavLink} from 'react-router-dom';
 import {connect } from 'react-redux';
 import {withRouter} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 
 import users from '../../users';
 
@@ -17,9 +17,9 @@ const Footer = ({user}) => (
             </p>
             {!user &&
              <p className="text-center"> 
-                <NavLink exact className="nav-link bg-light" to="/users/login">
+                <Link  to="/users/login">
                         <FormattedMessage id="project.users.Login.titleAdmin"/>
-                </NavLink>
+                </Link>
             </p> 
             }
         </footer>
@@ -27,7 +27,7 @@ const Footer = ({user}) => (
 
 );
 
-const mapStateToProps = (state, ownProps) => ({
+const mapStateToProps = (state) => ({
     user: users.selectors.getUser(state)
 });
 

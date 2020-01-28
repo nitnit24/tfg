@@ -63,11 +63,20 @@ class QuantitySelect extends React.Component {
         }
         if (this.state.quantity === "0" ){
             var room ={
-                saleRoomTariffs: this.props.saleRoomTariffs,
+                saleRoomTariffs: this.props.tariff.saleRoomTariffs,
                 quantity: this.state.quantity
             }
             console.log("hola")
             this.props.removeRooms(room)
+            var summaryRoom = {
+                id: this.props.roomTypeId,
+                quantity: this.state.quantity,
+                name: this.props.roomTypeName,
+                capacity: this.props.capacity,
+                tariff: this.props.tariff.tariffName,
+                price: this.props.tariff.totalPrice
+            }
+            this.props.removeSummaryRooms(summaryRoom)
         }
       }
 

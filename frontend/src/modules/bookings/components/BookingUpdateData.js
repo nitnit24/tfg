@@ -1,16 +1,16 @@
 import React from 'react';
 
-import ClientForm from './ClientForm';
-import BookingSummary from './BookingSummary';
+import ClientUpdateBookingForm from './ClientUpdateBookingForm';
+import BookingUpdateSummary from './BookingUpdateSummary';
 
 const BookingUpdateData = ({history}) => (
     <div>
         <div className = "row">
             <div className= "col-6">
-                <ClientForm history={history}/> 
+                <ClientUpdateBookingForm history={history}/> 
             </div>
             <div className= "col-6">
-                <BookingSummary history={history}/> 
+                <BookingUpdateSummary history={history}/> 
             </div>
         </div>
     </div>

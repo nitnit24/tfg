@@ -47,6 +47,38 @@ class BookingDetailsClient extends React.Component {
           })
         }
 
+
+    handleClickUpdate(){
+        const clientData = {
+            name : this.props.bookingFound.name,
+            surname : this.props.bookingFound.surname,
+            email : this.props.bookingFound.email,
+            phone : this.props.bookingFound.phone,
+            petition : this.props.bookingFound.petition,
+            locator : this.props.bookingFound.locator,
+            key : this.props.bookingFound.key
+        };
+
+        this.props.addClientData(clientData),
+        this.props.history.push('/saleRooms/find-saleRooms')
+
+    }
+
+    
+    getCurrentDate(separator='-'){
+
+        let newDate = new Date()
+        let date = newDate.getDate();
+        let month = newDate.getMonth();
+        let year = newDate.getFullYear();
+
+        
+        let nowDay = new Date(year,month,date);
+        let now = nowDay.getTime();
+        return now;
+    }
+
+
     setBackendErrors(backendErrors) {
         this.setState({backendErrors});
     }
@@ -58,7 +90,8 @@ class BookingDetailsClient extends React.Component {
     render() {
 
         const booking = this.props.bookingFound;
-
+        const now = this.getCurrentDate();
+        
         if (!booking) {
             return null;
         } 
@@ -68,6 +101,11 @@ class BookingDetailsClient extends React.Component {
                     {booking.state === "CONFIRMADA" &&
                     <h4 className= "text-center"><b>
                         <FormattedMessage id="project.saleRooms.BookingCompleted.title"/>
+                    </b></h4>
+                    }
+                    {booking.state === "MODIFICADA" &&
+                    <h4 className= "text-center"><b>
+                        <FormattedMessage id="project.saleRooms.BookingCompleted.title3"/>
                     </b></h4>
                     }
                     {booking.state === "CANCELADA" &&
@@ -83,7 +121,7 @@ class BookingDetailsClient extends React.Component {
                         </div>
                         {booking.state === "MODIFICADA" &&
                             <div className="row justify-content-center">
-                                <span> <FormattedMessage id="project.saleRooms.BookingCompleted.updatelDate"/></span>
+                                <span> <FormattedMessage id="project.saleRooms.BookingCompleted.updateDate"/></span>
                                 <span>: <FormattedDate value={new Date(booking.updateDate)}/> - <FormattedTime value={new Date(booking.updateDate)}/></span> 
                             </div>
                         }
@@ -182,7 +220,7 @@ class BookingDetailsClient extends React.Component {
                     </h5>
                 </div>
                 &nbsp;
-                {booking.state === "CONFIRMADA" &&
+                {((booking.state === "CONFIRMADA" || booking.state === "MODIFICADA") && (booking.startDate >= now )) &&
                 <div className="row justify-content-center">
                     <button type="button" className="btn  btn-link btn-sm"
                         onClick={this.deleteBookingNotification.bind(this)}>
@@ -190,7 +228,7 @@ class BookingDetailsClient extends React.Component {
                     </button>
                     |
                     <button type="button" className="btn  btn-link btn-sm"
-                        onClick={() => this.handleToggleModal()}>
+                        onClick={() => this.handleClickUpdate()}>
                         <FormattedMessage id="project.global.buttons.bookingUpdate"/>
                     </button> 
                 </div>
@@ -211,7 +249,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = {
-    booking: actions.booking
+    booking: actions.booking,
+    addClientData: actions.addClientData
     
 };
 

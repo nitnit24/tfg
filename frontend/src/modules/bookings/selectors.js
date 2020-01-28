@@ -5,3 +5,6 @@ export const getBookingSearch = state =>
 
 export const getBooking = state =>
     getModuleState(state).booking;
+
+export const getClientData = state =>
+    getModuleState(state).clientData;

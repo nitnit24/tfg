@@ -35,6 +35,7 @@ import es.udc.tfg.backend.rest.dtos.BlockDto;
 import es.udc.tfg.backend.rest.dtos.BookingDto;
 import es.udc.tfg.backend.rest.dtos.BookingParamsDto;
 import es.udc.tfg.backend.rest.dtos.BookingSummaryDto;
+import es.udc.tfg.backend.rest.dtos.BookingUpdateParamsDto;
 import es.udc.tfg.backend.rest.dtos.FreeRoomTypeDto;
 import es.udc.tfg.backend.rest.dtos.RoomTypeDto;
 import es.udc.tfg.backend.rest.dtos.SaleRoomTariffDto;
@@ -60,6 +61,17 @@ public class BookingController {
 				params.getPhone(), params.getEmail(), params.getPetition()));
 	}
 	
+	@PostMapping("/updateBooking")
+	public BookingDto updateBooking(
+			@Validated @RequestBody BookingUpdateParamsDto params
+			) throws InstanceNotFoundException, ThereAreNotEnoughtFreeRoomsException, UnsupportedEncodingException, IOException{
+		Calendar startCalendar = Calendar.getInstance();
+		startCalendar.setTimeInMillis(params.getStartDate());
+		Calendar endCalendar = Calendar.getInstance();
+		endCalendar.setTimeInMillis(params.getEndDate());
+		return toBookingDto(bookingService.updateBooking(params.getBookingRoomSummarys(), startCalendar, endCalendar, params.getLocator(), params.getKey(), 
+				params.getPhone(), params.getEmail(), params.getPetition()));
+	}
 
 	@GetMapping("/findFreeRooms")
 	public List<FreeRoomTypeDto> findFreeRooms(

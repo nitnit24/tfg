@@ -13,6 +13,7 @@ public class User {
 	private Long id;
 	private String userName;
 	private String password;
+	private String image;
 	private String hotelName;
 	private String address;
 	private String email;
@@ -21,9 +22,10 @@ public class User {
 
 	public User() {}
 
-	public User(String userName, String password, String hotelName, String address, String email, String phone) {
+	public User(String userName, String password,String image, String hotelName, String address, String email, String phone) {
 		this.userName = userName;
 		this.password = password;
+		this.image = image;
 		this.hotelName = hotelName;
 		this.address = address;
 		this.email = email;
@@ -38,6 +40,15 @@ public class User {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
 	}
 
 	public String getUserName() {

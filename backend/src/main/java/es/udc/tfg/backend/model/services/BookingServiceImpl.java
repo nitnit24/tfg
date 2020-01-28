@@ -317,6 +317,109 @@ public class BookingServiceImpl implements BookingService {
 	}
 	
 	@Override
+	@Transactional (rollbackFor= {ThereAreNotEnoughtFreeRoomsException.class, InstanceNotFoundException.class,
+			UnsupportedEncodingException.class, IOException.class})
+	public Booking updateBooking(List<BookingRoomSummary> bookingRoomSummarys, Calendar startDate, Calendar endDate,
+			String locator, String key, String phone, String email, String petition)
+			throws InstanceNotFoundException, ThereAreNotEnoughtFreeRoomsException, UnsupportedEncodingException, IOException{
+
+			Optional<Booking> booking = bookingDao.findByLocatorAndKey(locator, key);
+			
+			if (!booking.isPresent()) {
+				throw new InstanceNotFoundException("project.entities.booking", locator);
+			}
+	
+			for (BookingRoom bookingRoomsOld : booking.get().getBookingRooms()) {
+				int quantity = bookingRoomsOld.getQuantity();
+				for (BookingDay bookingDayOld : bookingRoomsOld.getBookingDays()) {
+			
+					int roomsOld = bookingDayOld.getSaleRoomTariff().getSaleRoom().getFreeRooms();
+					bookingDayOld.getSaleRoomTariff().getSaleRoom().setFreeRooms(roomsOld + quantity);
+					bookingDayDao.delete(bookingDayOld);
+				}
+				bookingRoomDao.delete(bookingRoomsOld);
+			}
+			
+			booking.get().getBookingRooms().clear();
+			
+			Calendar now = Calendar.getInstance();
+
+			int startDay = startDate.get(Calendar.DAY_OF_YEAR);
+			int endDay = endDate.get(Calendar.DAY_OF_YEAR);
+			int duration = (endDay - startDay);
+			State state = State.MODIFICADA;
+			
+			booking.get().setPhone(phone);
+			booking.get().setEmail(email);
+			booking.get().setPetition(petition);
+			booking.get().setStartDate(startDate);
+			booking.get().setEndDate(endDate);
+			booking.get().setDuration(duration);
+			booking.get().setState(state);
+			booking.get().setUpdateDate(now);
+			
+			bookingDao.save(booking.get());
+			
+			for (BookingRoomSummary bookingRoomSummary : bookingRoomSummarys) {
+
+				List<SaleRoomTariff> SaleRTs = bookingRoomSummary.getSaleRoomTariffs();
+				Optional<SaleRoomTariff> saleRT = saleRoomTariffDao.findById(SaleRTs.get(0).getId());
+
+				BookingRoom newBookingRoom = new BookingRoom(bookingRoomSummary.getQuantity(),
+						saleRT.get().getSaleRoom().getRoomType().getName(),
+						saleRT.get().getSaleRoom().getRoomType().getCapacity(), saleRT.get().getTariff().getName());
+
+				booking.get().addBookingRoom(newBookingRoom);
+				bookingRoomDao.save(newBookingRoom);
+
+				for (SaleRoomTariff saleRoomTariff : bookingRoomSummary.getSaleRoomTariffs()) {
+
+					Optional<SaleRoomTariff> saleRoomT = saleRoomTariffDao.findById(saleRoomTariff.getId());
+					Optional<SaleRoom> saleRoom = saleRoomDao.findById(saleRoomT.get().getSaleRoom().getIdSaleRoom());
+
+					if (saleRoom.get().getFreeRooms() >= bookingRoomSummary.getQuantity()) {
+						
+						int oldFreeRooms = saleRoom.get().getFreeRooms();
+						saleRoom.get().setFreeRooms(oldFreeRooms - bookingRoomSummary.getQuantity());
+						saleRoomDao.save(saleRoom.get());
+						
+					} else {
+						throw new ThereAreNotEnoughtFreeRoomsException();
+					}
+
+					BookingDay newBookingDay = new BookingDay(saleRoomTariff.getPrice(), saleRoom.get().getDate(),
+							saleRoomTariff);
+
+					newBookingRoom.addBookingDay(newBookingDay);
+					bookingDayDao.save(newBookingDay);
+					
+					if (saleRoom.get().getFreeRooms() == 0) {
+						sendMsgFreeRoomsZero(saleRoom.get().getRoomType(), saleRoom.get().getDate());
+					}
+
+				}
+
+				BigDecimal roomTotalPrice = newBookingRoom.getBookingDays().stream().map(i -> i.getDayPrice())
+						.reduce(new BigDecimal(0), (a, b) -> a.add(b));
+				newBookingRoom.setRoomTotalPrice(roomTotalPrice);
+				bookingRoomDao.save(newBookingRoom);
+
+			}
+
+			BigDecimal totalPrice = booking.get().getBookingRooms().stream()
+					.map(i -> i.getRoomTotalPrice().multiply(new BigDecimal(i.getQuantity())))
+					.reduce(new BigDecimal(0), (a, b) -> a.add(b));
+
+			booking.get().setTotalPrice(totalPrice);
+			bookingDao.save(booking.get());
+			
+			//sendMsgBooking(newBooking);
+
+			return booking.get();
+	
+	}
+	
+	@Override
 	public Booking findByLocator (String locator) throws InstanceNotFoundException {
 		
 		Optional<Booking> booking = bookingDao.findByLocator(locator);

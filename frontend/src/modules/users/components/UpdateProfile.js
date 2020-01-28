@@ -6,6 +6,9 @@ import {Errors} from '../../common';
 import * as actions from '../actions';
 import * as selectors from '../selectors';
 
+import Image from'../image.png';
+import FileBase64 from 'react-file-base64';
+
 class UpdateProfile extends React.Component {
 
     constructor(props) {
@@ -13,6 +16,7 @@ class UpdateProfile extends React.Component {
         super(props);
 
         this.state = {
+            image: props.user.image,
             hotelName: props.user.hotelName,
             address: props.user.address,
             email: props.user.email,
@@ -39,6 +43,11 @@ class UpdateProfile extends React.Component {
         this.setState({phone: event.target.value});
     }
 
+    getFile(file){
+        this.setState({ image: file.base64})
+        console.log(file)
+    }
+
     handleSubmit(event) {
 
         event.preventDefault();
@@ -56,6 +65,7 @@ class UpdateProfile extends React.Component {
 
         this.props.updateProfile(
             {id: this.props.user.id,
+            image: this.state.image,
             hotelName: this.state.hotelName.trim(),
             address: this.state.address.trim(),
             email: this.state.email.trim(),
@@ -85,6 +95,24 @@ class UpdateProfile extends React.Component {
                     <div className="card-body">
                         <form ref={node => this.form = node} 
                             className="needs-validation" noValidate onSubmit={(e) => this.handleSubmit(e)}>
+                            <div className="form-group row">
+                                <label htmlFor="hotelName" className="col-md-3 col-form-label">
+                                    <FormattedMessage id="project.global.fields.hotelImage"/>
+                                </label>
+                                <div className="col-5">
+                                    <div className = "col-8">
+                                        { (!this.state.image) ?
+                                            <td> <img src = {Image}  className="img-thumbnail"  alt="Hab" /></td> 
+                                             :
+                                            <td> <img src={this.state.image}  className="img-thumbnail"  alt="Hab" /></td> 
+                                        }
+                                    </div>
+                                    <br/>
+                                    <div>
+                                        <FileBase64 multiple={ false } onDone={ this.getFile.bind(this) } />
+                                    </div>
+                                </div> 
+                            </div>  
                             <div className="form-group row">
                                 <label htmlFor="hotelName" className="col-md-3 col-form-label">
                                     <FormattedMessage id="project.global.fields.hotelName"/>

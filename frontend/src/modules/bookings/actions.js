@@ -50,3 +50,23 @@ const bookingCompleted = booking => ({
 export const booking= (booking) => (dispatch) => {
     dispatch(bookingCompleted(booking));
 }
+
+const addClientDataCompleted = clientData => ({
+    type: actionTypes.ADD_CLIENTDATA_COMPLETED,
+    clientData
+});
+      
+
+export const addClientData= (clientData) => (dispatch) => {
+    dispatch(addClientDataCompleted(clientData));
+}
+
+const updateBookingCompleted = booking => ({
+    type: actionTypes.UPDATE_BOOKING_COMPLETED,
+    booking
+});
+      
+
+export const updateBooking= (booking) => (dispatch) => {
+    dispatch(updateBookingCompleted(booking));
+}

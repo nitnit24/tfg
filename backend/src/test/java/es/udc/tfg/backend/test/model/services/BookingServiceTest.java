@@ -75,7 +75,7 @@ public class BookingServiceTest {
 
 	private User signUpUser(String userName) {
 		
-		User user = new User(userName, "password", "hotelName", "address", userName + "@" + userName + ".com", "666666666");
+		User user = new User(userName, "password",null,  "hotelName", "address", userName + "@" + userName + ".com", "666666666");
 		
 		try {
 			userService.signUp(user);

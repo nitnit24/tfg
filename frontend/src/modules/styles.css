@@ -11,6 +11,9 @@
     font-family: 'Lobster', cursive;
 }
 
+.h5{
+    font-family: 'Lobster', cursive;
+}
 
 .btn{
     font-family: 'Lobster', cursive;
@@ -30,4 +33,15 @@
 
 .card-body{
     background-color: rgba(203, 216, 250, 0.938);
+}
+
+.app{
+    background-color: rgba(203, 216, 250, 0.938);
+}
+
+
+.fondoFindSaleRoom{
+    background-image: url('hotelito.jpg');
+    
+
 }

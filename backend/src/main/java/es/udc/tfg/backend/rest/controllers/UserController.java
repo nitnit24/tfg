@@ -124,7 +124,7 @@ public class UserController {
 			throw new PermissionException();
 		}
 		
-		return toUserDto(userService.updateProfile(id, userDto.getHotelName(), userDto.getAddress(),
+		return toUserDto(userService.updateProfile(id, userDto.getImage(), userDto.getHotelName(), userDto.getAddress(),
 			userDto.getEmail(), userDto.getPhone()));
 		
 	}

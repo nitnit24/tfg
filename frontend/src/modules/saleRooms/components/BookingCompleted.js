@@ -1,11 +1,13 @@
 import React from 'react';
 import {FormattedMessage, FormattedDate,  FormattedTime, FormattedNumber} from 'react-intl';
 import * as selectors from '../selectors';
+import * as bookingSelectors from '../../bookings/selectors';
 
 import {connect} from 'react-redux';
 
 import  backend from '../../../backend';
 import * as actions from '../actions';
+import * as bookingActions from '../../bookings/actions';
 
 import { confirmAlert } from 'react-confirm-alert'; 
 import 'react-confirm-alert/src/react-confirm-alert.css' 
@@ -47,6 +49,35 @@ class BookingCompleted extends React.Component {
           })
         }
 
+    handleClickUpdate(){
+        const clientData = {
+            name : this.props.lastBooking.name,
+            surname : this.props.lastBooking.surname,
+            email : this.props.lastBooking.email,
+            phone : this.props.lastBooking.phone,
+            petition : this.props.lastBooking.petition,
+            locator : this.props.lastBooking.locator,
+            key : this.props.lastBooking.key
+        };
+    
+        this.props.addClientData(clientData),
+        this.props.history.push('/saleRooms/find-saleRooms')
+    
+    }
+
+    getCurrentDate(separator='-'){
+
+        let newDate = new Date()
+        let date = newDate.getDate();
+        let month = newDate.getMonth();
+        let year = newDate.getFullYear();
+
+        
+        let nowDay = new Date(year,month,date);
+        let now = nowDay.getTime();
+        return now;
+    }
+    
     setBackendErrors(backendErrors) {
         this.setState({backendErrors});
     }
@@ -56,7 +87,7 @@ class BookingCompleted extends React.Component {
     }
 
     render() {
-
+        const now = this.getCurrentDate();
         const booking = this.props.lastBooking;
 
         return (
@@ -179,7 +210,7 @@ class BookingCompleted extends React.Component {
                     </h5>
                 </div>
                 &nbsp;
-                {booking.state === "CONFIRMADA" &&
+                {((booking.state === "CONFIRMADA" || booking.state === "MODIFICADA") && (booking.startDate >= now )) &&
                 <div className="row justify-content-center">
                     <button type="button" className="btn  btn-link btn-sm"
                         onClick={this.deleteBookingNotification.bind(this)}>
@@ -187,7 +218,7 @@ class BookingCompleted extends React.Component {
                     </button>
                     |
                     <button type="button" className="btn  btn-link btn-sm"
-                        onClick={() => this.handleToggleModal()}>
+                             onClick={() => this.handleClickUpdate()}>
                         <FormattedMessage id="project.global.buttons.bookingUpdate"/>
                     </button> 
                 </div>
@@ -203,12 +234,14 @@ class BookingCompleted extends React.Component {
 
 
 const mapStateToProps = (state) => ({
-    lastBooking: selectors.getLastBooking(state)
+    lastBooking: selectors.getLastBooking(state),
+    clientData: bookingSelectors.getClientData(state)
 
 });
 
 const mapDispatchToProps = {
-    booking: actions.booking
+    booking: actions.booking,
+    addClientData: bookingActions.addClientData
     
 };
 

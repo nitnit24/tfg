@@ -15,6 +15,7 @@ CREATE TABLE User (
     id BIGINT NOT NULL AUTO_INCREMENT,
     userName VARCHAR(60) COLLATE latin1_bin NOT NULL,
     password VARCHAR(60) NOT NULL, 
+    image MEDIUMTEXT,
     hotelName VARCHAR(60) COLLATE latin1_bin NOT NULL,
     address VARCHAR(60) COLLATE latin1_bin NOT NULL, 
     email VARCHAR(60) NOT NULL,

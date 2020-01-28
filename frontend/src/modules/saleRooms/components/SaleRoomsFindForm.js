@@ -110,7 +110,7 @@ class SaleRoomsFindForm extends React.Component {
                                                 <span className="fas fa-calendar-alt" ></span>
                                             </div>
                                             <input type="date" id="startDate" className="form-control "
-                                                value={this.state.startDate} placeholder= "20-11-2019"
+                                                value={this.state.startDate} 
                                                 onChange={(e) => this.handleStartDateChange(e)}
                                                 autoFocus
                                                 min = {today}

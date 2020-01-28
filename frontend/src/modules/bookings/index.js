@@ -9,5 +9,6 @@ export {default as BookingsFindForm} from './components/BookingsFindForm';
 export {default as BookingDetails} from './components/BookingDetails';
 export {default as BookingFindForm} from './components/BookingFindForm';
 export {default as BookingDetailsClient} from './components/BookingDetailsClient';
-
+export {default as ClientUpdateBookingForm} from './components/ClientUpdateBookingForm';
+export {default as BookingUpdateData} from './components/BookingUpdateData';
 export default {actions, actionTypes, reducer, selectors};

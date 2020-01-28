@@ -4,7 +4,8 @@ import * as actionTypes from './actionTypes';
 
 const initialState = {
     bookingSearch: null, 
-    booking: null
+    booking: null,
+    clientData: null
     
 };
 
@@ -36,8 +37,25 @@ const booking = (state = initialState.booking, action) => {
         case actionTypes.FIND_BOOKING_COMPLETED:
             return action.booking;
 
+        case actionTypes.UPDATE_BOOKING_COMPLETED:
+            return action.booking;
+
         case actionTypes.CLEAR_BOOKING:
             return initialState.booking;
+
+        default:
+            return state;
+
+    }
+
+}
+
+const clientData = (state = initialState.clientData, action) => {
+
+    switch (action.type) {
+
+        case actionTypes.ADD_CLIENTDATA_COMPLETED:
+            return action.clientData;
 
         default:
             return state;
@@ -49,7 +67,8 @@ const booking = (state = initialState.booking, action) => {
 
 const reducer = combineReducers({
     bookingSearch,
-    booking
+    booking,
+    clientData
 });
 
 export default reducer;

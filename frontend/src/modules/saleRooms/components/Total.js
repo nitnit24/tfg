@@ -1,6 +1,7 @@
 import React from 'react';
 import {FormattedMessage} from 'react-intl';
 import * as selectors from '../selectors';
+import * as selectorsBooking from '../../bookings/selectors'
 
 
 import {connect} from 'react-redux';
@@ -49,6 +50,13 @@ class Total extends React.Component {
 
     render() {
 
+        
+        const list = this.props.freeRoomTypes;
+
+        if (!list) {
+            return null;
+        }
+
         return (
             <div className=" border rounded p-4">
                 <h5 class="lead"><b>
@@ -59,20 +67,21 @@ class Total extends React.Component {
                 </div>
                 { (this.props.startDate && this.props.endDate && this.props.summaryRooms.length >0) && 
                 <div>
+                    { this.props.clientData ? 
+                         <div className= "row justify-content-center">
+                         <button type="submit" className="btn btn-dark disabled"
+                             onClick={() => this.props.history.push('/booking/booking-update-form')} >
+                             <FormattedMessage id="project.global.buttons.update"/>
+                         </button>
+                     </div>
+                    :
                     <div className= "row justify-content-center">
                         <button type="submit" className="btn btn-dark disabled"
                             onClick={() => this.props.history.push('/booking/client-form')} >
                             <FormattedMessage id="project.global.buttons.continue"/>
                         </button>
                     </div>
-                    {/* <div className= "m-3">
-                        <hr/><hr/>
-                        <p>
-                            <FormattedDate value={new Date(this.props.startDate)}/>
-                            &nbsp;-&nbsp;
-                            <FormattedDate value={new Date(this.props.endDate)}/>
-                        </p>
-                    </div> */}
+                    }
                 </div>
                 }
                 <RoomsList history={this.props.history} list={this.props.summaryRooms}/>
@@ -90,7 +99,9 @@ class Total extends React.Component {
 const mapStateToProps = (state) => ({
     startDate: selectors.getStartDate(state),
     endDate: selectors.getEndDate(state),
-    summaryRooms: selectors.getSummaryRooms(state)
+    summaryRooms: selectors.getSummaryRooms(state),
+    clientData: selectorsBooking.getClientData(state),
+    freeRoomTypes: selectors.getFreeRoomTypes(state)
 
 });
 

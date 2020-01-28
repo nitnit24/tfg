@@ -50,7 +50,7 @@ export const findSaleRoomTariffsByFreeRoom = (sDate, eDate, roomTypeId, tariffId
 
     path += tariffId ? `&tariffId=${tariffId}` : "";
     
-    console.log(path)
+
     appFetch(path, config('GET'), onSuccess);
 
 }
@@ -61,10 +61,21 @@ export const makeBooking = (bookingRoomSummarys, sDate, eDate, name, surname, ph
     const endDate = (new Date(eDate)).getTime()
     let path = `/booking/makeBooking`;
 
+    appFetch(path, config('POST', {bookingRoomSummarys, startDate, endDate, name, surname, phone, email, petition}), 
+    onSuccess, onErrors);
+}
+
+export const updateBooking = (bookingRoomSummarys, sDate, eDate, locator, key, phone, email, petition, onSuccess, onErrors) => {
+
+    const startDate = (new Date(sDate)).getTime();
+    const endDate = (new Date(eDate)).getTime()
+    let path = `/booking/updateBooking`;
+
     console.log(startDate)
     console.log(endDate)
+    console.log("hola")
 
-    appFetch(path, config('POST', {bookingRoomSummarys, startDate, endDate, name, surname, phone, email, petition}), 
+    appFetch(path, config('POST', {bookingRoomSummarys, startDate, endDate, locator, key, phone, email, petition}), 
     onSuccess, onErrors);
 }
 

@@ -10,7 +10,9 @@ import './Header.css';
 
 const Header = ({user, handleLogout}) => (
     <nav className="navbar navbar-expand-lg navbar-dark border">
+
         <Link className="navbar-brand" to="/"> <img src={Roomnit}  width="100" height="100" alt="Hab" /></Link>
+
         <button className="navbar-toggler" type="button" 
             data-toggle="collapse" data-target="#navbarSupportedContent" 
             aria-controls="navbarSupportedContent" aria-expanded="false" 
