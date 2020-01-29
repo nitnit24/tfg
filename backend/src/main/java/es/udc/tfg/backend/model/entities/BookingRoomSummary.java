@@ -5,19 +5,28 @@ import java.util.List;
 
 public class BookingRoomSummary {
 
+	private Long hotelId;
 	private List<SaleRoomTariff> saleRoomTariffs;
 	private int quantity;
+	
 	
 	public BookingRoomSummary(){
 		
 	}
 
-	public BookingRoomSummary(List<SaleRoomTariff> saleRoomTariffs, int quantity) {
+	public BookingRoomSummary(Long hotelId, List<SaleRoomTariff> saleRoomTariffs, int quantity) {
+		this.hotelId = hotelId;
 		this.saleRoomTariffs = saleRoomTariffs;
 		this.quantity = quantity;
 	}
 
+	public Long getHotelId() {
+		return hotelId;
+	}
 
+	public void setHotelId(Long hotelId) {
+		this.hotelId = hotelId;
+	}
 
 	public List<SaleRoomTariff> getSaleRoomTariffs() {
 		return saleRoomTariffs;

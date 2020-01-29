@@ -37,7 +37,7 @@ CREATE TABLE Tariff (
     CONSTRAINT TariffPK PRIMARY KEY (id),
     CONSTRAINT TariffNameUniqueKey UNIQUE (tariffName),
     CONSTRAINT TariffCodeUniqueKey UNIQUE (tariffCode),
-    CONSTRAINT idUserFKTariff FOREIGN KEY(hotelId)
+    CONSTRAINT hotelIdFKTariff FOREIGN KEY(hotelId)
         REFERENCES Hotel (id)
 ) ENGINE = InnoDB;
 
@@ -53,7 +53,7 @@ CREATE TABLE RoomType (
     maxPrice DECIMAL(11, 2),
     CONSTRAINT RoomTypePK PRIMARY KEY (id),
     CONSTRAINT TypeNameUniqueKey UNIQUE (typeName),
-     CONSTRAINT idUserFKRoomType FOREIGN KEY(hotelId)
+     CONSTRAINT hotelIdFKRoomType FOREIGN KEY(hotelId)
         REFERENCES Hotel (id)
 ) ENGINE = InnoDB;
 
@@ -81,6 +81,7 @@ CREATE TABLE SaleRoomTariff (
 
 CREATE TABLE Booking (
 	id BIGINT NOT NULL AUTO_INCREMENT,
+	hotelId BIGINT NOT NULL,
 	bookingKey VARCHAR(15) COLLATE latin1_bin,
 	locator VARCHAR(15) COLLATE latin1_bin,
     date DATETIME NOT NULL,
@@ -96,6 +97,8 @@ CREATE TABLE Booking (
 	email VARCHAR(60) NOT NULL COLLATE latin1_bin,
 	petition VARCHAR(299)COLLATE latin1_bin,
 	totalPrice DECIMAL(11,2),
+	CONSTRAINT hotelIdFKBooking FOREIGN KEY(hotelId)
+        REFERENCES Hotel (id),
 	CONSTRAINT BookingItemPK PRIMARY KEY (id)
 ) Engine = InnoDB;
 

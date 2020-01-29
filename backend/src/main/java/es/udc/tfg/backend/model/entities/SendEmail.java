@@ -22,7 +22,7 @@ public class SendEmail {
 
 	}
 
-	public final static void sendMsgBooking(Booking booking) throws UnsupportedEncodingException, IOException {
+	public final static void sendMsgBooking(Booking booking, Hotel hotel) throws UnsupportedEncodingException, IOException {
 
 		// creando la instancia de properties
 		Properties props = new Properties();
@@ -127,7 +127,7 @@ public class SendEmail {
 	}
 	
 	
-	public final static void sendMsgUpdateBooking(Booking booking, Hotel user) throws UnsupportedEncodingException, IOException {
+	public final static void sendMsgUpdateBooking(Booking booking, Hotel hotel) throws UnsupportedEncodingException, IOException {
 
 		// creando la instancia de properties
 		Properties props = new Properties();
@@ -156,11 +156,11 @@ public class SendEmail {
 			// Seteamos el asunto
 			message.setSubject("Su reserva modificada " + booking.getLocator());
 
-			String userName = user.getHotelName();
-			String userAddress = user.getAddress();
-			String userPhone = user.getPhone();
-			String userEmail = user.getEmail();
-			String image = user.getImage();
+			String userName = hotel.getHotelName();
+			String userAddress = hotel.getAddress();
+			String userPhone = hotel.getPhone();
+			String userEmail = hotel.getEmail();
+			String image = hotel.getImage();
 			
 			String msg = "<b><h2 style=\"text-align:center;\" >¡Gracias " + booking.getName() + "!</h2></b>";
 			msg += "<b><h1 style=\"text-align:center;\" > Confirmación de modificación reserva </h1></b>";
@@ -233,7 +233,7 @@ public class SendEmail {
 
 	}
 	
-	public final static void sendMsgFreeRoomsZero(RoomType roomType, Calendar date) throws UnsupportedEncodingException, IOException {
+	public final static void sendMsgFreeRoomsZero(RoomType roomType, Calendar date, Hotel hotel) throws UnsupportedEncodingException, IOException {
 
 		//creando la instancia de properties
 		 Properties props = new Properties();
@@ -257,7 +257,7 @@ public class SendEmail {
 			 message.setFrom(new InternetAddress("roomnit@gmail.com"));
 			 
 			//Seteamos el destino de nuestro mensaje
-			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse("natalia.iglesiast@gmail.com")); //USERRRR
+			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(hotel.getEmail())); 
 			
 			//Seteamos el asunto
 			message.setSubject("Alerta: no quedan habitaciones libres");
@@ -292,7 +292,7 @@ public class SendEmail {
 
 	}
 	
-	public final static void sendMsgNewBooking(Booking booking) throws UnsupportedEncodingException, IOException {
+	public final static void sendMsgNewBooking(Booking booking, Hotel hotel) throws UnsupportedEncodingException, IOException {
 
 		// creando la instancia de properties
 		Properties props = new Properties();

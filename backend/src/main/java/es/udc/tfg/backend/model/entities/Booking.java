@@ -7,9 +7,12 @@ import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -19,6 +22,7 @@ public class Booking {
 
 
 	private Long id;
+	private Hotel hotel;
 	private String key;
 	private String locator;
 	private Set<BookingRoom> bookingRooms = new HashSet<>();
@@ -40,8 +44,9 @@ public class Booking {
 		
 	}
 	
-	public Booking(Calendar date, Calendar startDate,int duration, Calendar endDate, State state,
+	public Booking(Hotel hotel, Calendar date, Calendar startDate,int duration, Calendar endDate, State state,
 			String name, String surName, String phone, String email, String petition) {
+		this.hotel= hotel;
 		this.date= date;
 		if (date != null){
 			this.date.set(Calendar.MILLISECOND, 0);
@@ -58,8 +63,9 @@ public class Booking {
 		this.petition = petition;
 	}
 
-	public Booking( String key, String locator, Calendar date, Calendar startDate,int duration, Calendar endDate,
+	public Booking(Hotel hotel,  String key, String locator, Calendar date, Calendar startDate,int duration, Calendar endDate,
 			State state, String name, String surName, String phone, String email, String petition) {
+		this.hotel = hotel;
 		this.key = key;
 		this.locator = locator;
 		this.date= date;
@@ -74,9 +80,10 @@ public class Booking {
 		this.petition = petition;
 	}
 	
-	public Booking(Long id, String key, String locator, Calendar date, Calendar startDate,
+	public Booking(Long id, Hotel hotel, String key, String locator, Calendar date, Calendar startDate,
 			int duration, Calendar endDate, State state, Calendar cancelDate, Calendar updateDate,
 			String name, String surName, String phone, String email, String petition, BigDecimal totalPrice) {
+		this.hotel = hotel;
 		this.id= id;
 		this.key = key;
 		this.locator = locator;
@@ -95,6 +102,7 @@ public class Booking {
 		this.totalPrice = totalPrice;
 	}
 
+	
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -102,6 +110,15 @@ public class Booking {
 		return id;
 	}
 
+	@ManyToOne(optional=false, fetch=FetchType.LAZY)
+	@JoinColumn(name= "hotelId")
+	public Hotel getHotel() {
+		return hotel;
+	}
+
+	public void setHotel(Hotel hotel) {
+		this.hotel = hotel;
+	}
 
 	public void setId(Long id) {
 		this.id = id;

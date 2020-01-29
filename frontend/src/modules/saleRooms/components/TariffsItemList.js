@@ -41,6 +41,7 @@ class TariffsItemList extends React.Component {
 
     render() {
 
+        const hotelId = this.props.hotelId;
         const tariffs = this.props.tariffs;
         const roomTypeId = this.props.roomTypeId;
         const  maxFreeRooms = this.props.maxFreeRooms;
@@ -63,6 +64,7 @@ class TariffsItemList extends React.Component {
                             <FormattedNumber value={tariff.totalPrice}/> €
                         </div>
                         <QuantitySelect 
+                            hotelId = {hotelId}
                             roomTypeId = {roomTypeId} 
                             tariff = {tariff}
                             maxFreeRooms = { maxFreeRooms}

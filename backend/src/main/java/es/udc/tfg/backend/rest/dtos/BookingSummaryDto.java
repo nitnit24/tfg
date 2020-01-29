@@ -7,6 +7,7 @@ import es.udc.tfg.backend.model.entities.State;
 
 public class BookingSummaryDto {
 	
+	private Long hotelId;
 	private String locator;
 	private List<BookingRoomDto> bookingRooms;
 	private long date;
@@ -19,8 +20,9 @@ public class BookingSummaryDto {
 	public BookingSummaryDto() {}
 
 
-	public BookingSummaryDto(String locator, List<BookingRoomDto> bookingRooms, long date, String guest, long startDate,
+	public BookingSummaryDto(Long hotelId, String locator, List<BookingRoomDto> bookingRooms, long date, String guest, long startDate,
 			long endDate, State state, BigDecimal totalPrice) {
+		this.hotelId = hotelId;
 		this.locator = locator;
 		this.bookingRooms = bookingRooms;
 		this.date = date;
@@ -31,6 +33,16 @@ public class BookingSummaryDto {
 		this.totalPrice = totalPrice;
 	}
 
+
+
+	public Long getHotelId() {
+		return hotelId;
+	}
+
+
+	public void setHotelId(Long hotelId) {
+		this.hotelId = hotelId;
+	}
 
 
 	public String getLocator() {

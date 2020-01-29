@@ -7,6 +7,7 @@ public class FreeRoomTypeDto {
 	public interface AllValidations {
 	}
 
+	private Long hotelId;
 	private Long roomTypeId;
 	private String roomTypeName;
 	private String roomTypeDescription;
@@ -18,8 +19,9 @@ public class FreeRoomTypeDto {
 	public FreeRoomTypeDto() {
 	}
 
-	public FreeRoomTypeDto(Long roomTypeId, String roomTypeName, String roomTypeDescription, 
+	public FreeRoomTypeDto(Long hotelId, Long roomTypeId, String roomTypeName, String roomTypeDescription, 
 			String image, int capacity, int maxFreeRooms, List<FreeRoomTypeTariffsDto> freeRoomTypeTariffs) {
+		this.hotelId = hotelId;
 		this.roomTypeId = roomTypeId;
 		this.roomTypeName = roomTypeName;
 		this.roomTypeDescription = roomTypeDescription;
@@ -27,6 +29,15 @@ public class FreeRoomTypeDto {
 		this.capacity = capacity;
 		this.maxFreeRooms = maxFreeRooms;
 		this.freeRoomTypeTariffs = freeRoomTypeTariffs;
+	}
+
+	
+	public Long getHotelId() {
+		return hotelId;
+	}
+
+	public void setHotelId(Long hotelId) {
+		this.hotelId = hotelId;
 	}
 
 	public Long getRoomTypeId() {

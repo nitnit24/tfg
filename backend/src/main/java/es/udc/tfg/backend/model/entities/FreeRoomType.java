@@ -5,6 +5,7 @@ import java.util.List;
 
 public class FreeRoomType {
 
+	private Long hotelId;
 	private Long roomTypeId;
 	private String roomTypeName;
 	private String roomTypeDescription;
@@ -19,8 +20,9 @@ public class FreeRoomType {
 	}
 
 
-	public FreeRoomType(Long roomTypeId, String roomTypeName, String roomTypeDescription, String image, 
+	public FreeRoomType(Long hotelId, Long roomTypeId, String roomTypeName, String roomTypeDescription, String image, 
 			int capacity, int maxFreeRooms, List<FreeRoomTypeTariffs> freeRoomTypeTariffs) {
+		this.hotelId = hotelId;
 		this.roomTypeId = roomTypeId;
 		this.roomTypeName = roomTypeName;
 		this.roomTypeDescription = roomTypeDescription;
@@ -28,6 +30,17 @@ public class FreeRoomType {
 		this.capacity = capacity;
 		this.maxFreeRooms = maxFreeRooms;
 		this.freeRoomTypeTariffs = freeRoomTypeTariffs;
+	}
+
+	
+
+	public Long getHotelId() {
+		return hotelId;
+	}
+
+
+	public void setHotelId(Long hotelId) {
+		this.hotelId = hotelId;
 	}
 
 

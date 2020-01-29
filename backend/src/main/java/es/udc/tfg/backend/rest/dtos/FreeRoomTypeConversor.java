@@ -21,7 +21,7 @@ public class FreeRoomTypeConversor {
 		List<FreeRoomTypeTariffsDto> freeRoomTypeTariffs = freeRoomType.getFreeRoomTypeTariffs().stream().map(
 										i -> toFreeRoomTypeTariffsDto(i)).collect(Collectors.toList());
 		
-	 return new FreeRoomTypeDto(freeRoomType.getRoomTypeId(), freeRoomType.getRoomTypeName(), freeRoomType.getRoomTypeDescription(),
+	 return new FreeRoomTypeDto(freeRoomType.getHotelId(), freeRoomType.getRoomTypeId(), freeRoomType.getRoomTypeName(), freeRoomType.getRoomTypeDescription(),
 				 freeRoomType.getImage(), freeRoomType.getCapacity(), freeRoomType.getMaxFreeRooms(), freeRoomTypeTariffs);
 		 
 	}

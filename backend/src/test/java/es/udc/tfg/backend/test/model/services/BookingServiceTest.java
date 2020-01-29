@@ -24,25 +24,25 @@ import es.udc.tfg.backend.model.common.exceptions.InstanceNotFoundException;
 import es.udc.tfg.backend.model.entities.Booking;
 import es.udc.tfg.backend.model.entities.BookingDao;
 import es.udc.tfg.backend.model.entities.BookingRoomSummary;
+import es.udc.tfg.backend.model.entities.Hotel;
 import es.udc.tfg.backend.model.entities.RoomType;
 import es.udc.tfg.backend.model.entities.SaleRoom;
 import es.udc.tfg.backend.model.entities.SaleRoomTariff;
 import es.udc.tfg.backend.model.entities.SaleRoomTariffDao;
 import es.udc.tfg.backend.model.entities.State;
 import es.udc.tfg.backend.model.entities.Tariff;
-import es.udc.tfg.backend.model.entities.Hotel;
 import es.udc.tfg.backend.model.services.Block;
 import es.udc.tfg.backend.model.services.BookingService;
 import es.udc.tfg.backend.model.services.FreeRoomsLessThanRoomTypeQuantityException;
+import es.udc.tfg.backend.model.services.HotelService;
+import es.udc.tfg.backend.model.services.OldBookingException;
+import es.udc.tfg.backend.model.services.PriceMinGreaterThanMaxValueException;
 import es.udc.tfg.backend.model.services.PriceNotBetweenMinAndMaxValueException;
 import es.udc.tfg.backend.model.services.RoomTypeService;
 import es.udc.tfg.backend.model.services.SaleRoomService;
 import es.udc.tfg.backend.model.services.SaleRoomTariffService;
 import es.udc.tfg.backend.model.services.TariffService;
 import es.udc.tfg.backend.model.services.ThereAreNotEnoughtFreeRoomsException;
-import es.udc.tfg.backend.model.services.HotelService;
-import es.udc.tfg.backend.model.services.OldBookingException;
-import es.udc.tfg.backend.model.services.PriceMinGreaterThanMaxValueException;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -413,7 +413,7 @@ public class BookingServiceTest {
 //		
 		//Booking
 		int quantity = 1;
-		BookingRoomSummary bookingRoomSummary = new BookingRoomSummary(saleRoomTariffs, quantity);
+		BookingRoomSummary bookingRoomSummary = new BookingRoomSummary(user.getId(), saleRoomTariffs, quantity);
 		List<BookingRoomSummary> bookingRoomSummarys = new ArrayList<>();
 		bookingRoomSummarys.add(bookingRoomSummary);
 		
@@ -496,7 +496,7 @@ public class BookingServiceTest {
 		
 		//Booking
 		int quantity = 2;
-		BookingRoomSummary bookingRoomSummary = new BookingRoomSummary(saleRoomTariffs, quantity);
+		BookingRoomSummary bookingRoomSummary = new BookingRoomSummary(user.getId(),saleRoomTariffs, quantity);
 		List<BookingRoomSummary> bookingRoomSummarys = new ArrayList<>();
 		bookingRoomSummarys.add(bookingRoomSummary);
 		
@@ -576,7 +576,7 @@ public class BookingServiceTest {
 			
 		//Booking
 		int quantity = 2;
-		BookingRoomSummary bookingRoomSummary = new BookingRoomSummary(saleRoomTariffs, quantity);
+		BookingRoomSummary bookingRoomSummary = new BookingRoomSummary(user.getId(),saleRoomTariffs, quantity);
 		List<BookingRoomSummary> bookingRoomSummarys = new ArrayList<>();
 		bookingRoomSummarys.add(bookingRoomSummary);
 		
@@ -657,7 +657,7 @@ public class BookingServiceTest {
 			
 		//Booking
 		int quantity = 2;
-		BookingRoomSummary bookingRoomSummary = new BookingRoomSummary(saleRoomTariffs, quantity);
+		BookingRoomSummary bookingRoomSummary = new BookingRoomSummary(user.getId(),saleRoomTariffs, quantity);
 		List<BookingRoomSummary> bookingRoomSummarys = new ArrayList<>();
 		bookingRoomSummarys.add(bookingRoomSummary);
 		
@@ -725,7 +725,7 @@ public class BookingServiceTest {
 			
 		//Booking
 		int quantity = 2;
-		BookingRoomSummary bookingRoomSummary = new BookingRoomSummary(saleRoomTariffs, quantity);
+		BookingRoomSummary bookingRoomSummary = new BookingRoomSummary(user.getId(),saleRoomTariffs, quantity);
 		List<BookingRoomSummary> bookingRoomSummarys = new ArrayList<>();
 		bookingRoomSummarys.add(bookingRoomSummary);
 		

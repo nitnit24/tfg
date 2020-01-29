@@ -41,7 +41,7 @@ public class BookingConversor {
 		
 		bookingRooms.sort(Comparator.comparing(BookingRoomDto::getId));
 		
-		 return new BookingSummaryDto(booking.getLocator(), bookingRooms, toMillis(booking.getDate()),  guest, toMillis(booking.getStartDate()),
+		 return new BookingSummaryDto(booking.getHotel().getId(), booking.getLocator(), bookingRooms, toMillis(booking.getDate()),  guest, toMillis(booking.getStartDate()),
 				 toMillis(booking.getEndDate()), booking.getState(), booking.getTotalPrice());
 		 
 	}

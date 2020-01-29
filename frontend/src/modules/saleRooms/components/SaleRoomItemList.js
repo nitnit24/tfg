@@ -58,6 +58,7 @@ class SaleRoomItemList extends React.Component {
                                 capacity ={room.capacity}
                                 image = {room.image} />
                             <TariffsItemList
+                                hotelId = {room.hotelId}
                                 tariffs= {room.freeRoomTypeTariffs}
                                 roomTypeId={room.roomTypeId}
                                 maxFreeRooms = {room.maxFreeRooms}

@@ -38,6 +38,7 @@ import es.udc.tfg.backend.model.entities.State;
 import es.udc.tfg.backend.model.entities.Tariff;
 import es.udc.tfg.backend.model.entities.TariffDao;
 import es.udc.tfg.backend.model.entities.Hotel;
+import es.udc.tfg.backend.model.entities.HotelDao;
 
 @Service
 @Transactional
@@ -63,6 +64,9 @@ public class BookingServiceImpl implements BookingService {
 
 	@Autowired
 	private SaleRoomTariffDao saleRoomTariffDao;
+	
+	@Autowired
+	private HotelDao hotelDao;
 
 	@Override
 	public List<FreeRoomType> findFreeRooms(Calendar startDate, Calendar endDate, int people, int rooms) {
@@ -137,8 +141,8 @@ public class BookingServiceImpl implements BookingService {
 				}
 			}
 			
-			free.add(new FreeRoomType(freeRT.getId(), freeRT.getName(), freeRT.getDescription(), 
-					freeRT.getImage(), freeRT.getCapacity(),maxFreeRooms, freeRoomsTypeTariffs));
+			free.add(new FreeRoomType(freeRT.getHotel().getId(), freeRT.getId(), freeRT.getName(), freeRT.getDescription(), 
+					freeRT.getImage(), freeRT.getCapacity(), maxFreeRooms, freeRoomsTypeTariffs));
 		}
 		
 		return free;
@@ -249,8 +253,14 @@ public class BookingServiceImpl implements BookingService {
 			int duration = (endDay - startDay);
 			State state = State.CONFIRMADA;
 
+			Optional <Hotel> hotel = hotelDao.findById(bookingRoomSummarys.get(0).getHotelId());
+			
+			if (!hotel.isPresent()) {
+				throw new InstanceNotFoundException("project.entities.hotel", hotel.get().getId());
+			}
+			
 			Booking newBooking = bookingDao
-					.save(new Booking(now, startDate, duration, endDate, state, name, surName, phone, email, petition));
+					.save(new Booking(hotel.get(), now, startDate, duration, endDate, state, name, surName, phone, email, petition));
 
 			String locator = now.get(Calendar.YEAR) + "0" + now.get(Calendar.DAY_OF_WEEK) + "00"
 					+ now.get(Calendar.DAY_OF_YEAR) + newBooking.getId().toString();
@@ -293,7 +303,7 @@ public class BookingServiceImpl implements BookingService {
 					bookingDayDao.save(newBookingDay);
 					
 					if (saleRoom.get().getFreeRooms() == 0) {
-						sendMsgFreeRoomsZero(saleRoom.get().getRoomType(), saleRoom.get().getDate());
+						sendMsgFreeRoomsZero(saleRoom.get().getRoomType(), saleRoom.get().getDate(), hotel.get());
 					}
 
 				}
@@ -312,7 +322,7 @@ public class BookingServiceImpl implements BookingService {
 			newBooking.setTotalPrice(totalPrice);
 			bookingDao.save(newBooking);
 			
-			sendMsgBooking(newBooking);
+			sendMsgBooking(newBooking, hotel.get());
 
 			return newBooking;
 	
@@ -335,6 +345,12 @@ public class BookingServiceImpl implements BookingService {
 			
 			if(booking.get().getStartDate().before(now) || booking.get().getStartDate().equals(now)) {
 				throw new OldBookingException();
+			}
+			
+			Optional <Hotel> hotel = hotelDao.findById(bookingRoomSummarys.get(0).getHotelId());
+			
+			if (!hotel.isPresent()) {
+				throw new InstanceNotFoundException("project.entities.hotel", hotel.get().getId());
 			}
 	
 			for (BookingRoom bookingRoomsOld : booking.get().getBookingRooms()) {
@@ -401,7 +417,7 @@ public class BookingServiceImpl implements BookingService {
 					bookingDayDao.save(newBookingDay);
 					
 					if (saleRoom.get().getFreeRooms() == 0) {
-						sendMsgFreeRoomsZero(saleRoom.get().getRoomType(), saleRoom.get().getDate());
+						sendMsgFreeRoomsZero(saleRoom.get().getRoomType(), saleRoom.get().getDate(), hotel.get());
 					}
 
 				}
@@ -420,8 +436,8 @@ public class BookingServiceImpl implements BookingService {
 			booking.get().setTotalPrice(totalPrice);
 			bookingDao.save(booking.get());
 			
-			Hotel hotel = booking.get().getBookingRooms().iterator().next().getBookingDays().iterator().next().getSaleRoomTariff().getTariff().getHotel();
-			sendMsgUpdateBooking(booking.get(), hotel);
+			
+			sendMsgUpdateBooking(booking.get(), hotel.get());
 
 			return booking.get();
 	
