@@ -323,12 +323,18 @@ public class BookingServiceImpl implements BookingService {
 			UnsupportedEncodingException.class, IOException.class})
 	public Booking updateBooking(List<BookingRoomSummary> bookingRoomSummarys, Calendar startDate, Calendar endDate,
 			String locator, String key, String phone, String email, String petition)
-			throws InstanceNotFoundException, ThereAreNotEnoughtFreeRoomsException, UnsupportedEncodingException, IOException{
+			throws InstanceNotFoundException, ThereAreNotEnoughtFreeRoomsException, UnsupportedEncodingException, IOException, OldBookingException{
 
 			Optional<Booking> booking = bookingDao.findByLocatorAndKey(locator, key);
 			
+			Calendar now = Calendar.getInstance();
+			
 			if (!booking.isPresent()) {
 				throw new InstanceNotFoundException("project.entities.booking", locator);
+			}
+			
+			if(booking.get().getStartDate().before(now) || booking.get().getStartDate().equals(now)) {
+				throw new OldBookingException();
 			}
 	
 			for (BookingRoom bookingRoomsOld : booking.get().getBookingRooms()) {
@@ -343,8 +349,6 @@ public class BookingServiceImpl implements BookingService {
 			}
 			
 			booking.get().getBookingRooms().clear();
-			
-			Calendar now = Calendar.getInstance();
 
 			int startDay = startDate.get(Calendar.DAY_OF_YEAR);
 			int endDay = endDate.get(Calendar.DAY_OF_YEAR);
@@ -449,17 +453,22 @@ public class BookingServiceImpl implements BookingService {
 	}
 	
 	
-	public Booking cancel(String locator, String key) throws InstanceNotFoundException {
+	public Booking cancel(String locator, String key) throws InstanceNotFoundException, OldBookingException {
 
 		Optional<Booking> existingBookingItem = bookingDao.findByLocatorAndKey(locator, key);
 
 		if (!existingBookingItem.isPresent()) {
 			throw new InstanceNotFoundException("project.entities.booking", locator);
 		}
+		
+		Calendar now = Calendar.getInstance();
+		
+		if(existingBookingItem.get().getStartDate().before(now) || existingBookingItem.get().getStartDate().equals(now)) {
+			throw new OldBookingException();
+		}
 
 		existingBookingItem.get().setState(State.CANCELADA);
 		
-		Calendar now = Calendar.getInstance();
 		existingBookingItem.get().setCancelDate(now);
 
 		bookingDao.save(existingBookingItem.get());

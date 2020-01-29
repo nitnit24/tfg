@@ -19,6 +19,7 @@ import es.udc.tfg.backend.model.common.exceptions.InstanceNotFoundException;
 import es.udc.tfg.backend.model.entities.RoomType;
 import es.udc.tfg.backend.model.entities.Hotel;
 import es.udc.tfg.backend.model.services.PermissionException;
+import es.udc.tfg.backend.model.services.PriceMinGreaterThanMaxValueException;
 import es.udc.tfg.backend.model.services.RoomTypeService;
 import es.udc.tfg.backend.model.services.HotelService;
 
@@ -55,7 +56,7 @@ public class RoomTypeServiceTest {
 	}
 
 	@Test
-	public void testAddRoomTypeAndFind() throws DuplicateInstanceException, InstanceNotFoundException {
+	public void testAddRoomTypeAndFind() throws DuplicateInstanceException, InstanceNotFoundException, PriceMinGreaterThanMaxValueException {
 		Hotel user = signUpUser("user");
 		
 		RoomType roomType = createRoomType(user, "name", "description", 2,10, new BigDecimal (30), new BigDecimal (100));
@@ -67,7 +68,7 @@ public class RoomTypeServiceTest {
 	}
 
 	@Test(expected = DuplicateInstanceException.class)
-	public void testAddRoomTypeNameDuplicate() throws DuplicateInstanceException, InstanceNotFoundException {
+	public void testAddRoomTypeNameDuplicate() throws DuplicateInstanceException, InstanceNotFoundException, PriceMinGreaterThanMaxValueException {
 		Hotel user = signUpUser("user"); 
 		
 		RoomType roomType = createRoomType(user, "name", "description", 2, 10,  new BigDecimal (30), new BigDecimal (100));
@@ -87,7 +88,7 @@ public class RoomTypeServiceTest {
 	}
 	
 	@Test
-	public void testAddRoomTypeAndUpdate() throws DuplicateInstanceException, InstanceNotFoundException, PermissionException {
+	public void testAddRoomTypeAndUpdate() throws DuplicateInstanceException, InstanceNotFoundException, PermissionException, PriceMinGreaterThanMaxValueException {
 		Hotel user = signUpUser("user");
 		
 		RoomType roomType = createRoomType(user, "name", "description", 2, 10, new BigDecimal (30), new BigDecimal (100));
@@ -120,7 +121,7 @@ public class RoomTypeServiceTest {
 	}
 
 	@Test
-	public void testFindAllRoomTypes() throws DuplicateInstanceException, InstanceNotFoundException {
+	public void testFindAllRoomTypes() throws DuplicateInstanceException, InstanceNotFoundException, PriceMinGreaterThanMaxValueException {
 		Hotel user = signUpUser("user");
 		
 		RoomType roomType = createRoomType(user, "name", "description", 2, 10, new BigDecimal (30), new BigDecimal (100));
@@ -134,7 +135,7 @@ public class RoomTypeServiceTest {
 	
 
 	@Test(expected = InstanceNotFoundException.class)
-	public void testFindRoomTypeAndRemove() throws DuplicateInstanceException, InstanceNotFoundException, PermissionException {
+	public void testFindRoomTypeAndRemove() throws DuplicateInstanceException, InstanceNotFoundException, PermissionException, PriceMinGreaterThanMaxValueException {
 		Hotel user = signUpUser("user");
 		
 		RoomType roomType = createRoomType(user, "name", "description", 2, 10, new BigDecimal (30), new BigDecimal (100));
@@ -148,7 +149,7 @@ public class RoomTypeServiceTest {
 	}
 	
 	@Test
-	public void testRemoveAndFindAllRoomTypes() throws DuplicateInstanceException, InstanceNotFoundException, PermissionException {
+	public void testRemoveAndFindAllRoomTypes() throws DuplicateInstanceException, InstanceNotFoundException, PermissionException, PriceMinGreaterThanMaxValueException {
 		Hotel user = signUpUser("user");
 		
 		RoomType roomType = createRoomType(user, "name", "description", 2, 10, new BigDecimal (30), new BigDecimal (100));

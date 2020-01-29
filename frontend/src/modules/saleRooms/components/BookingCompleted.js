@@ -2,6 +2,7 @@ import React from 'react';
 import {FormattedMessage, FormattedDate,  FormattedTime, FormattedNumber} from 'react-intl';
 import * as selectors from '../selectors';
 import * as bookingSelectors from '../../bookings/selectors';
+import {Errors} from '../../common';
 
 import {connect} from 'react-redux';
 
@@ -91,6 +92,8 @@ class BookingCompleted extends React.Component {
         const booking = this.props.lastBooking;
 
         return (
+            <div>
+            <Errors errors={this.state.backendErrors} handleClose={() => this.handleErrorsClose()}/>
             <div className=" border rounded p-4">
                 <div >
                     {booking.state === "CONFIRMADA" &&
@@ -225,7 +228,7 @@ class BookingCompleted extends React.Component {
                 }
 
             </div>
-
+        </div>
         );
 
     }

@@ -7,12 +7,15 @@ import static es.udc.tfg.backend.rest.dtos.RoomTypeConversor.toRoomTypeDtos;
 import java.awt.PageAttributes.MediaType;
 import java.io.IOException;
 import java.util.List;
+import java.util.Locale;
 import java.util.logging.Logger;
 
 import org.hibernate.annotations.common.util.impl.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -29,21 +33,42 @@ import org.springframework.http.ResponseEntity;
 
 import es.udc.tfg.backend.model.common.exceptions.DuplicateInstanceException;
 import es.udc.tfg.backend.model.common.exceptions.InstanceNotFoundException;
+import es.udc.tfg.backend.model.services.IncorrectFindLocatorKeyException;
 import es.udc.tfg.backend.model.services.PermissionException;
+import es.udc.tfg.backend.model.services.PriceMinGreaterThanMaxValueException;
 import es.udc.tfg.backend.model.services.RoomTypeService;
+import es.udc.tfg.backend.rest.common.ErrorsDto;
 import es.udc.tfg.backend.rest.dtos.RoomTypeDto;
 
 @RestController
 @RequestMapping("/roomTypes")
 public class RoomTypeController {
 
+	private final static String INCORRECT_PRICEMIN_GREATER_THAN_PRICEMAX = "project.exception.PriceMinGreaterThanMaxValueException";
+	
+	@Autowired
+	private MessageSource messageSource;
+	
+	
 	@Autowired
 	private RoomTypeService roomTypeService;
 
+	@ExceptionHandler(PriceMinGreaterThanMaxValueException.class)
+	@ResponseStatus(HttpStatus.NOT_FOUND)
+	@ResponseBody
+	public ErrorsDto handlePriceMinGreaterThanMaxValueException(PriceMinGreaterThanMaxValueException exception, Locale locale) {
+		
+		String errorMessage = messageSource.getMessage(INCORRECT_PRICEMIN_GREATER_THAN_PRICEMAX, null,
+				INCORRECT_PRICEMIN_GREATER_THAN_PRICEMAX, locale);
+
+		return new ErrorsDto(errorMessage);
+		
+	}
+	
 	@PostMapping("/addRoomType")
 	public RoomTypeDto addRoomType(@Validated({ RoomTypeDto.AllValidations.class })  @RequestBody RoomTypeDto roomTypeDto,
 			@RequestAttribute Long userId)
-			throws DuplicateInstanceException, InstanceNotFoundException {
+			throws DuplicateInstanceException, InstanceNotFoundException, PriceMinGreaterThanMaxValueException {
 		return toRoomTypeDto(roomTypeService.addRoomType(userId, toRoomType(roomTypeDto)));
 	}
 
@@ -58,7 +83,7 @@ public class RoomTypeController {
 	public RoomTypeDto updateRoomType(@PathVariable("id") Long id,
 			 @RequestBody RoomTypeDto roomTypeDto,
 			 @RequestAttribute Long userId) 
-					throws InstanceNotFoundException, PermissionException {
+					throws InstanceNotFoundException, PermissionException, PriceMinGreaterThanMaxValueException {
 		return toRoomTypeDto(roomTypeService.updateRoomType(userId, toRoomType(roomTypeDto)));
 	}
 	

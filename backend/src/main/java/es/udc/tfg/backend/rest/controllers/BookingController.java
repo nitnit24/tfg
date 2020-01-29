@@ -37,6 +37,7 @@ import es.udc.tfg.backend.model.services.Block;
 import es.udc.tfg.backend.model.services.BookingService;
 import es.udc.tfg.backend.model.services.IncorrectFindLocatorKeyException;
 import es.udc.tfg.backend.model.services.IncorrectLoginException;
+import es.udc.tfg.backend.model.services.OldBookingException;
 import es.udc.tfg.backend.model.services.ThereAreNotEnoughtFreeRoomsException;
 import es.udc.tfg.backend.rest.common.ErrorsDto;
 import es.udc.tfg.backend.rest.dtos.BlockDto;
@@ -55,13 +56,27 @@ public class BookingController {
 	
 	private final static String INCORRECT_FIND_LOCATOR_KEY_EXCEPTION_CODE = "project.exception.IncorrectFindLocatorKeyException";
 	
+	private final static String OLD_BOOKING_EXCEPTION_CODE = "project.exception.OldBookingException";
+	
+	private final static String NOT_ENOUGHT_FREE_ROOMS_EXCEPTION_CODE = "project.exception.ThereAreNotEnoughtFreeRoomsException";
+	
 	@Autowired
 	private MessageSource messageSource;
 	
 	@Autowired
 	private BookingService bookingService;
 	
-	
+	@ExceptionHandler(ThereAreNotEnoughtFreeRoomsException.class)
+	@ResponseStatus(HttpStatus.NOT_FOUND)
+	@ResponseBody
+	public ErrorsDto handleThereAreNotEnoughtFreeRoomsException(ThereAreNotEnoughtFreeRoomsException exception, Locale locale) {
+		
+		String errorMessage = messageSource.getMessage(NOT_ENOUGHT_FREE_ROOMS_EXCEPTION_CODE, null,
+				NOT_ENOUGHT_FREE_ROOMS_EXCEPTION_CODE, locale);
+
+		return new ErrorsDto(errorMessage);
+		
+	}
 	
 	@ExceptionHandler(IncorrectFindLocatorKeyException.class)
 	@ResponseStatus(HttpStatus.NOT_FOUND)
@@ -70,6 +85,18 @@ public class BookingController {
 		
 		String errorMessage = messageSource.getMessage(INCORRECT_FIND_LOCATOR_KEY_EXCEPTION_CODE, null,
 				INCORRECT_FIND_LOCATOR_KEY_EXCEPTION_CODE, locale);
+
+		return new ErrorsDto(errorMessage);
+		
+	}
+	
+	@ExceptionHandler(OldBookingException.class)
+	@ResponseStatus(HttpStatus.FORBIDDEN)
+	@ResponseBody
+	public ErrorsDto oldBookingException(OldBookingException exception, Locale locale) {
+		
+		String errorMessage = messageSource.getMessage(OLD_BOOKING_EXCEPTION_CODE, null,
+				OLD_BOOKING_EXCEPTION_CODE, locale);
 
 		return new ErrorsDto(errorMessage);
 		
@@ -91,7 +118,7 @@ public class BookingController {
 	@PostMapping("/updateBooking")
 	public BookingDto updateBooking(
 			@Validated @RequestBody BookingUpdateParamsDto params
-			) throws InstanceNotFoundException, ThereAreNotEnoughtFreeRoomsException, UnsupportedEncodingException, IOException{
+			) throws InstanceNotFoundException, ThereAreNotEnoughtFreeRoomsException, UnsupportedEncodingException, IOException, OldBookingException{
 		Calendar startCalendar = Calendar.getInstance();
 		startCalendar.setTimeInMillis(params.getStartDate());
 		Calendar endCalendar = Calendar.getInstance();
@@ -152,7 +179,7 @@ public class BookingController {
 	@PutMapping("/{locator}/cancel")
 	public BookingDto cancelBooking(@PathVariable("locator") String locator,
 			@RequestParam String key)	
-			throws InstanceNotFoundException {
+			throws InstanceNotFoundException, OldBookingException {
 		return toBookingDto(bookingService.cancel(locator, key));
 	}
 	

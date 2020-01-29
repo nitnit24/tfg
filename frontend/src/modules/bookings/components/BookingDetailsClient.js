@@ -1,6 +1,7 @@
 import React from 'react';
 import {FormattedMessage, FormattedDate,  FormattedTime, FormattedNumber} from 'react-intl';
 import * as selectors from '../selectors';
+import {Errors} from '../../common';
 
 import {connect} from 'react-redux';
 
@@ -96,6 +97,8 @@ class BookingDetailsClient extends React.Component {
             return null;
         } 
         return (
+            <div>
+            <Errors errors={this.state.backendErrors} handleClose={() => this.handleErrorsClose()}/>
             <div className=" border rounded p-4">
                 <div >
                     {booking.state === "CONFIRMADA" &&
@@ -220,7 +223,7 @@ class BookingDetailsClient extends React.Component {
                     </h5>
                 </div>
                 &nbsp;
-                {((booking.state === "CONFIRMADA" || booking.state === "MODIFICADA") && (booking.startDate >= now )) &&
+                {/* {((booking.state === "CONFIRMADA" || booking.state === "MODIFICADA") && (booking.startDate >= now )) && */}
                 <div className="row justify-content-center">
                     <button type="button" className="btn  btn-link btn-sm"
                         onClick={this.deleteBookingNotification.bind(this)}>
@@ -232,10 +235,10 @@ class BookingDetailsClient extends React.Component {
                         <FormattedMessage id="project.global.buttons.bookingUpdate"/>
                     </button> 
                 </div>
-                }
+                // }
 
             </div>
-
+        </div>
         );
 
     }

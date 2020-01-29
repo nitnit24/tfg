@@ -25,6 +25,7 @@ import es.udc.tfg.backend.model.services.FreeRoomsLessThanRoomTypeQuantityExcept
 import es.udc.tfg.backend.model.services.RoomTypeService;
 import es.udc.tfg.backend.model.services.SaleRoomService;
 import es.udc.tfg.backend.model.services.HotelService;
+import es.udc.tfg.backend.model.services.PriceMinGreaterThanMaxValueException;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -65,7 +66,7 @@ public class SaleRoomServiceTest {
 	}
 	
 	@Test
-	public void testAdd() throws DuplicateInstanceException, InstanceNotFoundException, FreeRoomsLessThanRoomTypeQuantityException {
+	public void testAdd() throws DuplicateInstanceException, InstanceNotFoundException, FreeRoomsLessThanRoomTypeQuantityException, PriceMinGreaterThanMaxValueException {
 		Hotel user = signUpUser("user");
 		
 		RoomType roomType = createRoomType(user, "name","description", 2, 10, new BigDecimal (30), new BigDecimal (100));
@@ -92,7 +93,7 @@ public class SaleRoomServiceTest {
 	
 
 	@Test
-	public void testAddAndUpdate() throws DuplicateInstanceException, InstanceNotFoundException, FreeRoomsLessThanRoomTypeQuantityException {
+	public void testAddAndUpdate() throws DuplicateInstanceException, InstanceNotFoundException, FreeRoomsLessThanRoomTypeQuantityException, PriceMinGreaterThanMaxValueException {
 		Hotel user = signUpUser("user");
 		
 		RoomType roomType = createRoomType(user, "name","description", 2, 10, new BigDecimal (30), new BigDecimal (100));

@@ -27,7 +27,7 @@ public class RoomTypeServiceImpl implements RoomTypeService {
 	private HotelDao userDao;
 
 	@Override
-	public RoomType addRoomType(Long hotelId, RoomType roomType) throws DuplicateInstanceException, InstanceNotFoundException {
+	public RoomType addRoomType(Long hotelId, RoomType roomType) throws DuplicateInstanceException, InstanceNotFoundException, PriceMinGreaterThanMaxValueException {
 
 		Optional<Hotel> existingUser = userDao.findById(hotelId);
 		
@@ -37,6 +37,10 @@ public class RoomTypeServiceImpl implements RoomTypeService {
 		
 		if (roomTypeDao.existsByName(roomType.getName())) {
 			throw new DuplicateInstanceException("project.entities.roomType", roomType.getName());
+		}
+		
+		if(roomType.getMinPrice().compareTo(roomType.getMaxPrice()) == 1) {
+			throw new  PriceMinGreaterThanMaxValueException();
 		}
 		
 		roomType.setHotel(existingUser.get());
@@ -60,7 +64,7 @@ public class RoomTypeServiceImpl implements RoomTypeService {
 	}
 	
 	@Override
-	public RoomType updateRoomType(Long userId, RoomType roomType) throws InstanceNotFoundException, PermissionException {
+	public RoomType updateRoomType(Long userId, RoomType roomType) throws InstanceNotFoundException, PermissionException, PriceMinGreaterThanMaxValueException {
 
 		Optional<RoomType> existingRoomTypeItem = roomTypeDao.findById(roomType.getId());
 
@@ -71,6 +75,11 @@ public class RoomTypeServiceImpl implements RoomTypeService {
 		if (!existingRoomTypeItem.get().getHotel().getId().equals(userId)) {
 			throw new PermissionException();
 		}
+		
+		if(roomType.getMinPrice().compareTo(roomType.getMaxPrice()) == 1) {
+			throw new  PriceMinGreaterThanMaxValueException();
+		}
+		
 		
 		existingRoomTypeItem.get().setImage(roomType.getImage());
 		existingRoomTypeItem.get().setName(roomType.getName());

@@ -18,13 +18,13 @@ public interface BookingService {
 			String surName, String phone, String email, String petition) throws InstanceNotFoundException, ThereAreNotEnoughtFreeRoomsException, UnsupportedEncodingException, IOException;
 	
 	Booking updateBooking(List<BookingRoomSummary> bookingRoomSummarys, Calendar startDate, Calendar endDate,
-			String locator, String key, String phone, String email, String petition) throws InstanceNotFoundException, ThereAreNotEnoughtFreeRoomsException, UnsupportedEncodingException, IOException;
+			String locator, String key, String phone, String email, String petition) throws InstanceNotFoundException, ThereAreNotEnoughtFreeRoomsException, UnsupportedEncodingException, IOException, OldBookingException;
 	
 	Booking findByLocator(String locator) throws InstanceNotFoundException;
 	
 	Booking findByLocatorAndKey(String locator, String key) throws IncorrectFindLocatorKeyException;
 	
-	Booking cancel(String locator, String key) throws InstanceNotFoundException;
+	Booking cancel(String locator, String key) throws InstanceNotFoundException, OldBookingException;
 	
 	Block<Booking> findBookings(String dataType, Calendar minDate, Calendar maxDate, String keywords, int page, int size);
 	
