@@ -20,6 +20,10 @@ class BookingsFindForm extends React.Component {
         };
     }
 
+    componentDidMount() {
+        this.props.clearBookingSearch();
+    }
+
     handleMinDateChange(event) {
         this.setState({minDate: event.target.value});
     }
@@ -46,8 +50,13 @@ class BookingsFindForm extends React.Component {
             page: 0
         };
         event.preventDefault();
-        this.props.findBookings(criteria);
     
+        if (this.form.checkValidity()) {
+            this.props.findBookings(criteria);
+        } else {
+            this.setBackendErrors(null);
+           this.form.classList.add('was-validated');
+        }
     }
 
     getCurrentDate(){
@@ -61,6 +70,16 @@ class BookingsFindForm extends React.Component {
         return `${year}${separator}${month<10?`0${month}`:`${month}`}${separator}${date<10?`0${date}`:`${date}`}`
     }
 
+    
+    setBackendErrors(backendErrors) {
+        this.setState({backendErrors});
+    }
+
+    handleErrorsClose() {
+        this.setState({backendErrors: null});
+    }
+    
+
     render() {
         var untilMin = this.getCurrentDate();
 
@@ -69,7 +88,7 @@ class BookingsFindForm extends React.Component {
                 <Errors errors={this.state.backendErrors}
                     onClose={() => this.handleErrorsClose()}/>
                     <div className="container"> 
-                        <form
+                        <form ref={node => this.form = node}
                             className="needs-validation" noValidate 
                             onSubmit={(e) => this.handleSubmit(e)}>
                                 <div className="row justify-content-start">
@@ -102,6 +121,9 @@ class BookingsFindForm extends React.Component {
                                                 onChange={(e) => this.handleMinDateChange(e)}
                                                 autoFocus
                                                 required/>
+                                            <div className="invalid-feedback">
+                                                <FormattedMessage id='project.global.validator.required'/>
+                                            </div>
                                         </div>
                                     </div>                                
                                     <div className="col-3 input-group mb-2" >  
@@ -112,6 +134,9 @@ class BookingsFindForm extends React.Component {
                                                 autoFocus
                                                 min= {untilMin}
                                                 required/>
+                                            <div className="invalid-feedback">
+                                                <FormattedMessage id='project.global.validator.required'/>
+                                            </div>
                                         </div>
                                     </div>
                                     <div className="col-3 input-group mb-2" >  
@@ -145,7 +170,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = {
-    findBookings : actions.findBookings
+    findBookings : actions.findBookings,
+    clearBookingSearch : actions.clearBookingSearch
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(BookingsFindForm);

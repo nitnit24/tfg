@@ -91,6 +91,10 @@ class SaleRoomsFindForm extends React.Component {
         return `${year}${separator}${month<10?`0${month}`:`${month}`}${separator}${date<10?`0${date}`:`${date}`}`
     }
 
+    componentDidMount() {
+        this.props.cleanRooms(),
+        this.props.cleanSummaryRooms()
+    }
 
     render() {
         var today = this.getCurrentDate();
@@ -184,7 +188,9 @@ const mapDispatchToProps = {
     addFreeRoomTypes: actions.addFreeRoomTypes,
     cleanFreeRoomTypes: actions.cleanFreeRoomTypes,
     addStartDate: actions.addStartDate,
-    addEndDate: actions.addEndDate
+    addEndDate: actions.addEndDate,
+    cleanRooms: actions.cleanRooms,
+    cleanSummaryRooms: actions.cleanSummaryRooms
 
 };
 

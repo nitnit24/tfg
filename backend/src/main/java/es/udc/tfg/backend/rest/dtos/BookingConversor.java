@@ -36,12 +36,12 @@ public class BookingConversor {
 	}
 	
 	private final static BookingSummaryDto toBookingSummaryDto(Booking booking) {
-		String guest = booking.getName() + " " + booking.getSurName(); 
 		List<BookingRoomDto> bookingRooms = booking.getBookingRooms().stream().map(i -> toBookingRoomDto(i)).collect(Collectors.toList());
 		
 		bookingRooms.sort(Comparator.comparing(BookingRoomDto::getId));
 		
-		 return new BookingSummaryDto(booking.getHotel().getId(), booking.getLocator(), bookingRooms, toMillis(booking.getDate()),  guest, toMillis(booking.getStartDate()),
+		 return new BookingSummaryDto(booking.getHotel().getId(), booking.getLocator(), bookingRooms, toMillis(booking.getDate()),  booking.getName(),
+				 booking.getSurName(), toMillis(booking.getStartDate()),
 				 toMillis(booking.getEndDate()), booking.getState(), booking.getTotalPrice());
 		 
 	}

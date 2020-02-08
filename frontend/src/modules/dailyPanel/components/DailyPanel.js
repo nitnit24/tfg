@@ -5,6 +5,7 @@ import {connect} from 'react-redux';
 
 import TablePanel from './TablePanel';
 import FindDailyPanel from './FindDailyPanel';
+import NextDayDailyPanel from './NextDayDailyPanel'
 import * as selectors from '../selectors';
 import * as actions from '../actions';
 
@@ -38,6 +39,7 @@ class DailyPanel extends React.Component {
                 <br/>
                 <FindDailyPanel />
                 <br/>
+                <NextDayDailyPanel />
                 <TablePanel />
             </div>
         );

@@ -17,6 +17,9 @@ const bookingSearch = (state = initialState.bookingSearch, action) => {
         case actionTypes.FIND_BOOKINGS_COMPLETED:
             return action.bookingSearch;
 
+        case actionTypes.FIND_BOOKINGS_BY_LOCATOR_COMPLETED:
+            return action.bookingSearch;
+
         case actionTypes.CLEAR_BOOKING_SEARCH:
             return initialState.bookingSearch;
 

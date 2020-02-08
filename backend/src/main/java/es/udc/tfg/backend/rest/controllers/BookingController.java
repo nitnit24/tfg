@@ -3,9 +3,6 @@ package es.udc.tfg.backend.rest.controllers;
 
 import static es.udc.tfg.backend.rest.dtos.BookingConversor.toBookingDto;
 import static es.udc.tfg.backend.rest.dtos.BookingConversor.toBookingSummaryDtos;
-import static es.udc.tfg.backend.rest.dtos.RoomTypeConversor.toRoomTypeDtos;
-import static es.udc.tfg.backend.rest.dtos.SaleRoomTariffConversor.toSaleRoomTariffDtos;
-import static es.udc.tfg.backend.rest.dtos.TariffConversor.toTariffDtos;
 import static es.udc.tfg.backend.rest.dtos.FreeRoomTypeConversor.toFreeRoomTypeDtos;
 
 import java.io.IOException;
@@ -30,13 +27,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-
 import es.udc.tfg.backend.model.common.exceptions.InstanceNotFoundException;
 import es.udc.tfg.backend.model.entities.Booking;
 import es.udc.tfg.backend.model.services.Block;
 import es.udc.tfg.backend.model.services.BookingService;
 import es.udc.tfg.backend.model.services.IncorrectFindLocatorKeyException;
-import es.udc.tfg.backend.model.services.IncorrectLoginException;
 import es.udc.tfg.backend.model.services.OldBookingException;
 import es.udc.tfg.backend.model.services.ThereAreNotEnoughtFreeRoomsException;
 import es.udc.tfg.backend.rest.common.ErrorsDto;
@@ -46,9 +41,6 @@ import es.udc.tfg.backend.rest.dtos.BookingParamsDto;
 import es.udc.tfg.backend.rest.dtos.BookingSummaryDto;
 import es.udc.tfg.backend.rest.dtos.BookingUpdateParamsDto;
 import es.udc.tfg.backend.rest.dtos.FreeRoomTypeDto;
-import es.udc.tfg.backend.rest.dtos.RoomTypeDto;
-import es.udc.tfg.backend.rest.dtos.SaleRoomTariffDto;
-import es.udc.tfg.backend.rest.dtos.TariffDto;
 
 @RestController
 @RequestMapping("/booking")
@@ -60,11 +52,26 @@ public class BookingController {
 	
 	private final static String NOT_ENOUGHT_FREE_ROOMS_EXCEPTION_CODE = "project.exception.ThereAreNotEnoughtFreeRoomsException";
 	
+	private final static String INSTANCE_NOT_FOUND_EXCEPTION_CODE = "project.exception.InstanceNotFoundException";
+	
 	@Autowired
 	private MessageSource messageSource;
 	
 	@Autowired
 	private BookingService bookingService;
+	
+	@ExceptionHandler(InstanceNotFoundException.class)
+	@ResponseStatus(HttpStatus.NOT_FOUND)
+	@ResponseBody
+	public ErrorsDto handleInstanceNotFoundException(InstanceNotFoundException exception, Locale locale) {
+		
+		String errorMessage = messageSource.getMessage(INSTANCE_NOT_FOUND_EXCEPTION_CODE, null,
+				INSTANCE_NOT_FOUND_EXCEPTION_CODE, locale);
+
+		return new ErrorsDto(errorMessage);
+		
+	}
+	
 	
 	@ExceptionHandler(ThereAreNotEnoughtFreeRoomsException.class)
 	@ResponseStatus(HttpStatus.NOT_FOUND)

@@ -10,7 +10,6 @@ import ModificaReserva from'../modificaReserva.png';
 import * as bookingSelectors from '../../bookings/selectors';
 import {connect } from 'react-redux';
 import {withRouter} from 'react-router-dom';
-import OldBookingSummary from './OldBookingSummary';
 
 const SaleRoom = ({history, clientData}) => (
     <div>

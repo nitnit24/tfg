@@ -1,16 +1,13 @@
 package es.udc.tfg.backend.rest.controllers;
 
 import static es.udc.tfg.backend.rest.dtos.HotelConversor.toAuthenticatedUserDto;
-import static es.udc.tfg.backend.rest.dtos.HotelConversor.toHotel;
 import static es.udc.tfg.backend.rest.dtos.HotelConversor.toHotelDto;
 
-import java.net.URI;
 import java.util.Locale;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,22 +19,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import es.udc.tfg.backend.model.common.exceptions.DuplicateInstanceException;
 import es.udc.tfg.backend.model.common.exceptions.InstanceNotFoundException;
 import es.udc.tfg.backend.model.entities.Hotel;
+import es.udc.tfg.backend.model.services.HotelService;
 import es.udc.tfg.backend.model.services.IncorrectLoginException;
 import es.udc.tfg.backend.model.services.IncorrectPasswordException;
 import es.udc.tfg.backend.model.services.PermissionException;
-import es.udc.tfg.backend.model.services.HotelService;
 import es.udc.tfg.backend.rest.common.ErrorsDto;
 import es.udc.tfg.backend.rest.common.JwtGenerator;
 import es.udc.tfg.backend.rest.common.JwtInfo;
 import es.udc.tfg.backend.rest.dtos.AuthenticatedUserDto;
 import es.udc.tfg.backend.rest.dtos.ChangePasswordParamsDto;
-import es.udc.tfg.backend.rest.dtos.LoginParamsDto;
 import es.udc.tfg.backend.rest.dtos.HotelDto;
+import es.udc.tfg.backend.rest.dtos.LoginParamsDto;
 
 @RestController
 @RequestMapping("/users")

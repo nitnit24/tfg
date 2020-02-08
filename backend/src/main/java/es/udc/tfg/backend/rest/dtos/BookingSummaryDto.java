@@ -11,7 +11,8 @@ public class BookingSummaryDto {
 	private String locator;
 	private List<BookingRoomDto> bookingRooms;
 	private long date;
-	private String guest;
+	private String name;
+	private String surname;
 	private long startDate;
 	private long endDate;
 	private State state;
@@ -20,13 +21,14 @@ public class BookingSummaryDto {
 	public BookingSummaryDto() {}
 
 
-	public BookingSummaryDto(Long hotelId, String locator, List<BookingRoomDto> bookingRooms, long date, String guest, long startDate,
-			long endDate, State state, BigDecimal totalPrice) {
+	public BookingSummaryDto(Long hotelId, String locator, List<BookingRoomDto> bookingRooms, long date, String name, String surname,
+			long startDate, long endDate, State state, BigDecimal totalPrice) {
 		this.hotelId = hotelId;
 		this.locator = locator;
 		this.bookingRooms = bookingRooms;
 		this.date = date;
-		this.guest = guest;
+		this.name =  name;
+		this.surname =  surname;
 		this.startDate = startDate;
 		this.endDate = endDate;
 		this.state = state;
@@ -70,13 +72,26 @@ public class BookingSummaryDto {
 		this.date = date;
 	}
 
-	public String getGuest() {
-		return guest;
+
+	public String getName() {
+		return name;
 	}
 
-	public void setGuest(String guest) {
-		this.guest = guest;
+
+	public void setName(String name) {
+		this.name = name;
 	}
+
+
+	public String getSurname() {
+		return surname;
+	}
+
+
+	public void setSurname(String surname) {
+		this.surname = surname;
+	}
+
 
 	public long getStartDate() {
 		return startDate;

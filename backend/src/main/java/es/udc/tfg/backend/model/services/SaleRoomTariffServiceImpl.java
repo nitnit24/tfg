@@ -114,7 +114,7 @@ public class SaleRoomTariffServiceImpl implements SaleRoomTariffService {
 			
 			List<RoomTableDay> roomTableDays = new ArrayList<>();
 			
-			for (int i = 0 ; i < 31; i++) {
+			for (int i = 0 ; i < 21; i++) {
 				Calendar date = Calendar.getInstance();
 				Long millis = initialDate.getTimeInMillis();
 				date.setTimeInMillis(millis);

@@ -101,7 +101,7 @@ class RoomTypeForm extends React.Component {
 
         return (
 
-            <div>
+            <div className= "col-12">
                  <Errors errors={this.state.backendErrors} handleClose={() => this.handleErrorsClose()}/>
                 <div className="card bg-light border-dark">
                     <h5 className="card-header">

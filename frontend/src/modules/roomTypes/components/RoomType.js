@@ -7,8 +7,6 @@ import * as selectors from '../selectors';
 import * as actions from '../actions';
 import {SimpleModal} from '../../common';
 import {FormattedMessage} from 'react-intl';
-import Modal from 'react-bootstrap-modal';
-//var Modal = require('react-bootstrap-modal')
 
 
 class RoomType extends React.Component {
@@ -33,7 +31,7 @@ class RoomType extends React.Component {
 
         return (
              <div>
-                 <div>
+                <div>
                     <button type="button" className="btn  btn-link btn-sm"
                     onClick={() => this.handleToggleModal()}>
                      <span className="fas fa-plus" ></span> 
@@ -45,7 +43,7 @@ class RoomType extends React.Component {
                     <SimpleModal onCloseRequest={() => this.handleToggleModal()}>
                         <RoomTypeForm history={this.props.history} />
                     </SimpleModal>}
-                    </div>
+                </div>
                 &nbsp;
                 &nbsp;
                 <RoomTypeList list={this.props.roomTypes} history={this.props.history}/> 

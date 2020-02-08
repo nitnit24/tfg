@@ -45,7 +45,7 @@ const Bookings = ({bookings}) => (
                             {booking.locator}
                         </Link>     
                     </td>
-                    <td>{booking.guest}</td>
+                    <td>{booking.name} {booking.surname} </td>
                     <td>  <FormattedDate value={new Date(booking.startDate)}/></td>
                     <td>  <FormattedDate value={new Date(booking.endDate)}/></td>
                     <td>{booking.bookingRooms.map(room =>

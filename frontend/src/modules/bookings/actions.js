@@ -7,14 +7,13 @@ const findBookingsCompleted = bookingSearch => ({
 });
 
 export const findBookings = criteria => dispatch => {
-    
     dispatch(clearBookingSearch());
     backend.bookingService.findBookings(criteria,
         result => dispatch(findBookingsCompleted({criteria, result})));
 
 }
 
-const clearBookingSearch = () => ({
+export const clearBookingSearch = () => ({
     type: actionTypes.CLEAR_BOOKING_SEARCH
 });
 
@@ -69,4 +68,26 @@ const updateBookingCompleted = booking => ({
 
 export const updateBooking= (booking) => (dispatch) => {
     dispatch(updateBookingCompleted(booking));
+}
+
+
+const findBookingsByLocatorCompleted = bookingSearch => ({
+    type: actionTypes.FIND_BOOKINGS_BY_LOCATOR_COMPLETED,
+    bookingSearch
+});
+
+
+export const findBookingsByLocator = locator => dispatch => {
+    dispatch(clearBookingSearch());
+    let page = 0;
+    let criteria = {locator,page};
+    let items = [];
+    let existMoreItems= false;
+    let result = {items,existMoreItems}
+    backend.bookingService.findBookingByLocator(locator, 
+        booking =>{
+            items.push(booking)
+            dispatch(findBookingsByLocatorCompleted({criteria, result}))
+        }
+    );
 }

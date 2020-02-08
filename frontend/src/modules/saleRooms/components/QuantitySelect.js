@@ -22,13 +22,10 @@ class QuantitySelect extends React.Component {
 
     }
 
-    componentDidMount() {
-        this.props.cleanRooms(),
-        this.props.cleanSummaryRooms()
-        // backend.bookingService.findSaleRoomTariffsByFreeRoom(this.props.startDate, this.props.endDate, 
-        //     this.props.roomType.id, this.props.tariff.id,
-        //     saleRoomTariffs =>  this.setState({saleRoomTariffs: saleRoomTariffs}));
-    }
+    // componentDidMount() {
+    //     this.props.cleanRooms(),
+    //     this.props.cleanSummaryRooms()
+    // }
 
     setBackendErrors(backendErrors) {
         this.setState({backendErrors});
@@ -103,11 +100,6 @@ class QuantitySelect extends React.Component {
                                    { max.map (i =>
                                         <option key={i} value={i}>{i}</option>
                                     )}
-                                    {/* <option value="0">0 </option>
-                                    <option value="1">1 </option>
-                                    <option value="2">2 </option>
-                                    <option value="3">3 </option>
-                                    <option value="4">4 </option>  */}
 
                             </select>
 
@@ -130,9 +122,9 @@ const mapDispatchToProps = {
     addRooms: actions.addRooms,
     removeRooms: actions.removeRooms,
     addSummaryRooms: actions.addSummaryRooms,
-    removeSummaryRooms: actions.removeSummaryRooms,
-    cleanRooms: actions.cleanRooms,
-    cleanSummaryRooms: actions.cleanSummaryRooms
+    removeSummaryRooms: actions.removeSummaryRooms
+    // cleanRooms: actions.cleanRooms,
+    // cleanSummaryRooms: actions.cleanSummaryRooms
 };
 
 
