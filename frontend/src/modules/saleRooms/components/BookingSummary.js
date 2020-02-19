@@ -88,17 +88,17 @@ class BookingSummary extends React.Component {
     render() {
 
         return (
-            <div className=" border rounded p-4">
-                <h5>
+            <div className=" border rounded p-4 card-body">
+                 <h5 className= "h5">
                     <FormattedMessage id="project.saleRooms.BookingSummary.title"/>
                 </h5>
                 { (this.props.startDate && this.props.endDate ) && 
                 <div className= "m-3">
                     <div className="row">
-                        <div className="col-6">
+                        <div className="col-6 letra">
                             <span>Entrada</span>
                         </div>
-                        <div className="col-6">
+                        <div className="col-6 letra">
                             <span>Salida</span>   
                         </div> 
                     </div>
@@ -116,7 +116,7 @@ class BookingSummary extends React.Component {
                 </div>
                 }
                 <div>
-                    <div className= " row m-3 align-items-center">
+                    <div className= " row m-3 align-items-center letra">
                         <span> <FormattedMessage id="project.saleRooms.Total.total"/></span>
                         &nbsp;&nbsp;
                         <h4>  <b>{this.totalPrice()} € </b></h4>

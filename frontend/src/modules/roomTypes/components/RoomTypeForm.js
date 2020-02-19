@@ -7,6 +7,7 @@ import * as actions from '../actions';
 import {connect} from 'react-redux';
 import FileBase64 from 'react-file-base64';
 import Image from'../image.png';
+import Button from 'react-bootstrap/Button';
 
 const initialState = {
     image: '',
@@ -128,7 +129,7 @@ class RoomTypeForm extends React.Component {
                                     </div>
                                 </div>
                             </div>
-                            <div className="form-group row">
+                            <div className="form-group row h-20">
                                 <label htmlFor="description" className="col-md-3 col-form-label">
                                     <FormattedMessage id="project.global.fields.description"/>
                                 </label>
@@ -236,7 +237,7 @@ class RoomTypeForm extends React.Component {
                             <div className = " row justify-content-center ">
                             <div className=" btn-group">
                                 <div className="offset-md-3 col-md-1">
-                                    <button type="submit" className="btn btn-primary" >
+                                    <button type="submit" className="btn btn-add" >
                                         <FormattedMessage id="project.global.buttons.add"/>
                                     </button>
                                 </div>

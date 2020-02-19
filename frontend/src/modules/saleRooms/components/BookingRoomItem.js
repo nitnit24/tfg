@@ -50,7 +50,7 @@ class BookingRoomItem extends React.Component {
                 <div className=" row  justify-content-end">
                     <div className = "col-4 ">
                         <table class="table border rounded ">
-                            <thead>
+                            <thead className = "thead-table">
                                 <tr>
                                     <th scope="col text-center ">Fecha</th>
                                     <th scope="col text-center">Precio por noche</th>

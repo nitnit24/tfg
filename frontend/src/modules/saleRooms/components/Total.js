@@ -58,25 +58,25 @@ class Total extends React.Component {
         }
 
         return (
-            <div className=" border rounded p-4">
+            <div className=" border rounded p-4 bg-white letra border-secondary">
                 <h5 class="lead"><b>
                     <FormattedMessage id="project.saleRooms.Total.total"/>
                 </b></h5>
                 <div className= "m-3">
-                    <h4>{this.totalPrice()}€</h4>
+                    <h3 className="text-success">{this.totalPrice()}€</h3>
                 </div>
                 { (this.props.startDate && this.props.endDate && this.props.summaryRooms.length >0) && 
                 <div>
                     { this.props.clientData ? 
                          <div className= "row justify-content-center">
-                         <button type="submit" className="btn btn-dark disabled"
+                         <button type="submit" className="btn btn-warning"
                              onClick={() => this.props.history.push('/booking/booking-update-form')} >
                              <FormattedMessage id="project.global.buttons.update"/>
                          </button>
                      </div>
                     :
                     <div className= "row justify-content-center">
-                        <button type="submit" className="btn btn-dark disabled"
+                        <button type="submit" className="btn btn-warning"
                             onClick={() => this.props.history.push('/booking/client-form')} >
                             <FormattedMessage id="project.global.buttons.continue"/>
                         </button>

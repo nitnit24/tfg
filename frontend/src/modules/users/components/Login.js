@@ -77,24 +77,25 @@ class Login extends React.Component {
 
         return (
             <div>
-                <p className="text-center">
+                {/* <p className="text-center">
                     <Link to="/users/signup">
                         <FormattedMessage id="project.users.SignUp.title"/>
                     </Link>
-                </p> 
+                </p>  */}
                 <Errors errors={this.state.backendErrors} handleClose={() => this.handleErrorsClose()}/>
-                <div className="card bg-light border-dark">
+                <div className=" card bg-light border-dark">
                     <h5 className="card-header">
                         <FormattedMessage id="project.users.Login.title"/>
                     </h5>
-                    <div className="card-body">
+                    <div className="card-body text-center letra">
                         <form id="login-form" className="needs-validation" noValidate onSubmit={(e) => this.handleSubmit(e)}>
-                            <div className="form-group row">
-                                <label htmlFor="userName" className="col-md-3 col-form-label">
+                            <div className="form-group row justify-content-center">
+                                <span htmlFor="userName" className="col-md-3 ">
                                     <FormattedMessage id="project.global.fields.userName"/>
-                                </label>
+                                </span>
                                 <div className="col-md-4">
-                                    <input type="text" id="userName" className="form-control"
+                                    <input type="text" id="userName" className="form-control" 
+                                        style={{ "size": "1.2rem"}}
                                         value={this.state.userName}
                                         onChange={(e) => this.handleUserNameChange(e)}
                                         autoFocus
@@ -104,10 +105,10 @@ class Login extends React.Component {
                                     </div>
                                 </div>
                             </div>
-                            <div className="form-group row">
-                                <label htmlFor="password" className="col-md-3 col-form-label">
+                            <div className="form-group row justify-content-center">
+                                <span htmlFor="password" className="col-md-3 ">
                                     <FormattedMessage id="project.global.fields.password"/>
-                                </label>
+                                </span>
                                 <div className="col-md-4">
                                     <input type="password" id="password" className="form-control"
                                         value={this.state.password}
@@ -118,8 +119,8 @@ class Login extends React.Component {
                                     </div>
                                 </div>
                             </div>
-                            <div className="form-group row">
-                                <div className="offset-md-3 col-md-1">
+                            <div className="form-group row justify-content-center">
+                                <div className="col-md-1">
                                     <button type="submit" className="btn btn-primary">
                                         <FormattedMessage id="project.users.Login.title"/>
                                     </button>

@@ -47,7 +47,10 @@ class QuantitySelect extends React.Component {
                 name: this.props.roomTypeName,
                 capacity: this.props.capacity,
                 tariff: this.props.tariff.tariffName,
-                price: this.props.tariff.totalPrice
+                price: this.props.tariff.totalPrice,
+                hotelId: this.props.hotelId,
+                saleRoomTariffs: this.props.tariff.saleRoomTariffs,
+                quantity: this.state.quantity
             }
             var room ={
                 hotelId: this.props.hotelId,
@@ -73,7 +76,10 @@ class QuantitySelect extends React.Component {
                 name: this.props.roomTypeName,
                 capacity: this.props.capacity,
                 tariff: this.props.tariff.tariffName,
-                price: this.props.tariff.totalPrice
+                price: this.props.tariff.totalPrice,
+                hotelId: this.props.hotelId,
+                saleRoomTariffs: this.props.tariff.saleRoomTariffs,
+                quantity: this.state.quantity
             }
             this.props.removeSummaryRooms(summaryRoom)
         }

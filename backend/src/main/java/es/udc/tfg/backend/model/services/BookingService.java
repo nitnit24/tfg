@@ -24,9 +24,11 @@ public interface BookingService {
 	
 	Booking findByLocatorAndKey(String locator, String key) throws IncorrectFindLocatorKeyException;
 	
-	Booking cancel(String locator, String key) throws InstanceNotFoundException, OldBookingException;
+	Booking cancel(String locator, String key) throws InstanceNotFoundException, OldBookingException, UnsupportedEncodingException, IOException;
 	
 	Block<Booking> findBookings(String dataType, Calendar minDate, Calendar maxDate, String keywords, int page, int size);
 	
+	Block<Booking> findBookingsByLocator(String string, int page, int size);
 	
+		
 }

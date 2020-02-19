@@ -13,12 +13,11 @@ import {BookingsFind,  BookingDetails, BookingFindForm, BookingDetailsClient, Bo
 import {DailyPanel} from '../../dailyPanel';
 
 const Body = ({user}) => (
-
-    <div className="container">
+    <div className={`container  ${!user ? '' : ''}`}>
         <br/>
         <Route path="/" component={AppGlobalComponents}/>
         <Switch>
-            <Route exact path="/" component={Home}/>
+            <Route exact path="/" component={SaleRoom}/>
             {user && <Route exact path="/tariffs/tariff-management" component={Tariff}/>}
             {user && <Route exact path="/tariffs/tariff-update" component={TariffUpdateForm}/>}
             {user && <Route exact path="/roomTypes/roomType-management" component={RoomType}/>}

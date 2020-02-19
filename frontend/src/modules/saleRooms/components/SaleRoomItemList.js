@@ -9,7 +9,6 @@ import * as selectors from '../selectors';
 import {FormattedMessage} from 'react-intl';
 
 import '../../styles.css';
-import { bindActionCreators } from 'redux';
 
 const initialState = {
     backendErrors: null
@@ -51,7 +50,7 @@ class SaleRoomItemList extends React.Component {
             <div>
                      {list.map(room => 
                      <div>
-                        <div className= "border rounded ">
+                        <div className= "border rounded bg-white border-secondary">
                             <DetailsRoom 
                                 name={room.roomTypeName} 
                                 description= {room.roomTypeDescription} 

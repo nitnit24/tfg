@@ -114,7 +114,7 @@ export default {
     'project.global.fields.roomsNum' :  'Habitaciones',
     'project.global.fields.peopleNum' : 'Personas',
     'project.global.fields.locator' : 'Localizador',
-    'project.global.fields.key' : 'Key',
+    'project.global.fields.key' : 'Clave',
     'project.global.fields.rooms' : 'Habitaciones',
     'project.global.fields.bookingDate' : 'Fecha Reserva',
     'project.global.fields.state': 'Estado',
@@ -125,9 +125,11 @@ export default {
     'project.global.buttons.continue': 'Continuar',
     'project.global.buttons.update' : 'Modificar',
     'project.global.buttons.booking' :'Reservar',
-    'project.global.buttons.showBooking' : 'Ver/Cancelar reserva',
+    'project.global.buttons.showBooking' : 'Ver/Cancelar/Modificar reserva',
     'project.global.buttons.bookingCancel' :'Cancelar reserva',
     'project.global.buttons.bookingUpdate' :'Modificar reserva',
+
+    'project.global.buttons.delete': 'Eliminar'
 
 
 }   

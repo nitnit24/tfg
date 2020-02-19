@@ -71,14 +71,14 @@ class BookingFindForm extends React.Component {
                <h5 className="card-header">
                    <FormattedMessage id="project.roomtypes.BookingFindForm.title"/>
                </h5>
-               <div className=" card-body">
+               <div className=" card-body text-center letra">
                    <form ref={node => this.form = node}
                        className="needs-validation" noValidate 
                        onSubmit={(e) => this.handleSubmit(e)}>
-                       <div className="form-group row">
-                           <label htmlFor="locator" className="col-md-3 col-form-label">
+                       <div className="form-group row justify-content-center">
+                           <span htmlFor="locator" className="col-md-3 ">
                                <FormattedMessage id="project.global.fields.locator"/>
-                           </label>
+                           </span>
                            <div className="col-md-4">
                                <input type="text" id="locator" className="form-control"
                                    value={this.state.locator}
@@ -90,10 +90,10 @@ class BookingFindForm extends React.Component {
                                </div>
                            </div>
                        </div>
-                       <div className="form-group row">
-                           <label htmlFor="key" className="col-md-3 col-form-label">
+                       <div className="form-group row justify-content-center">
+                           <span className="col-md-3 ">
                                <FormattedMessage id="project.global.fields.key"/>
-                           </label>
+                           </span>
                            <div className="col-md-4">
                                <input type="text" id="key" className="form-control" 
                                    value={this.state.key}
@@ -105,8 +105,8 @@ class BookingFindForm extends React.Component {
                            </div>
                        </div>
                       
-                       <div className="form-group row">
-                           <div className="offset-md-3 col-md-1">
+                       <div className="form-group row justify-content-center">
+                           <div className="col-md-1">
                                <button type="submit" className="btn btn-primary" >
                                    <FormattedMessage id="project.global.buttons.find"/>
                                </button>

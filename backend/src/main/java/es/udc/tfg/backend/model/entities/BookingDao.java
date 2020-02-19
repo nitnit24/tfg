@@ -2,6 +2,8 @@ package es.udc.tfg.backend.model.entities;
 
 import java.util.Optional;
 
+import org.springframework.data.domain.Slice;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
 public interface BookingDao extends PagingAndSortingRepository<Booking, Long>, CustomizedBookingDao {
@@ -9,5 +11,4 @@ public interface BookingDao extends PagingAndSortingRepository<Booking, Long>, C
 	Optional<Booking> findByLocatorAndKey(String locator, String key);
 	
 	Optional<Booking> findByLocator(String locator);
-	
 }

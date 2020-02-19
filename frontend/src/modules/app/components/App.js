@@ -24,8 +24,8 @@ class App extends React.Component {
 
         return (
             <Router>
-                {/* <div style={{background:"#e6f2ff"}} >  */}
-                <div>
+                {/* <div style={{background:"#e6f2ff"}} >   */}
+                <div className= {`${!this.props.user ? '' : ''}`}>
                     <Header/>
                     <Body/>
                     <Footer/>
@@ -37,4 +37,8 @@ class App extends React.Component {
 
 }
 
-export default connect()(App);
+const mapStateToProps = (state, ownProps) => ({
+    user: users.selectors.getUser(state)
+});
+
+export default (connect(mapStateToProps)(App));

@@ -33,14 +33,13 @@ import es.udc.tfg.backend.model.entities.State;
 import es.udc.tfg.backend.model.entities.Tariff;
 import es.udc.tfg.backend.model.services.Block;
 import es.udc.tfg.backend.model.services.BookingService;
+import es.udc.tfg.backend.model.services.DailyPanelService;
 import es.udc.tfg.backend.model.services.FreeRoomsLessThanRoomTypeQuantityException;
 import es.udc.tfg.backend.model.services.HotelService;
 import es.udc.tfg.backend.model.services.OldBookingException;
 import es.udc.tfg.backend.model.services.PriceMinGreaterThanMaxValueException;
 import es.udc.tfg.backend.model.services.PriceNotBetweenMinAndMaxValueException;
 import es.udc.tfg.backend.model.services.RoomTypeService;
-import es.udc.tfg.backend.model.services.SaleRoomService;
-import es.udc.tfg.backend.model.services.SaleRoomTariffService;
 import es.udc.tfg.backend.model.services.TariffService;
 import es.udc.tfg.backend.model.services.ThereAreNotEnoughtFreeRoomsException;
 
@@ -58,10 +57,8 @@ public class BookingServiceTest {
 	private RoomTypeService roomTypeService;
 	
 	@Autowired
-	private SaleRoomService saleRoomService;
+	private DailyPanelService dailyPanelService;
 	
-	@Autowired
-	private SaleRoomTariffService saleRoomTariffService;
 	
 	@Autowired
 	private BookingService bookingService;
@@ -383,8 +380,8 @@ public class BookingServiceTest {
 		List<SaleRoomTariff> saleRoomTariffs = new ArrayList<>();
 
 		//BookingDay1
-		SaleRoom saleRoom1 = saleRoomService.addSaleRoom(roomType.getId(), date, freeRooms);
-		SaleRoomTariff saleRoomTariff = saleRoomTariffService.uploadSaleRoomTariff(price, tariff.getId(),
+		SaleRoom saleRoom1 = dailyPanelService.addSaleRoom(roomType.getId(), date, freeRooms);
+		SaleRoomTariff saleRoomTariff = dailyPanelService.uploadSaleRoomTariff(price, tariff.getId(),
 				roomType.getId(), date);
 		saleRoomTariffs.add(saleRoomTariff);
 		
@@ -392,16 +389,16 @@ public class BookingServiceTest {
 		//BookingDay2
 		Calendar date2 = Calendar.getInstance();
 		date2.add(Calendar.DAY_OF_YEAR, 1);
-		SaleRoom saleRoom2 =saleRoomService.addSaleRoom(roomType.getId(), date2, freeRooms);
-		SaleRoomTariff saleRoomTariff2 = saleRoomTariffService.uploadSaleRoomTariff(price, tariff.getId(),
+		SaleRoom saleRoom2 =dailyPanelService.addSaleRoom(roomType.getId(), date2, freeRooms);
+		SaleRoomTariff saleRoomTariff2 = dailyPanelService.uploadSaleRoomTariff(price, tariff.getId(),
 				roomType.getId(), date2);
 		saleRoomTariffs.add(saleRoomTariff2);
 		
 		//BookingDay3
 		Calendar date3 = Calendar.getInstance();
 		date3.add(Calendar.DAY_OF_YEAR, 2);
-		SaleRoom saleRoom3 = saleRoomService.addSaleRoom(roomType.getId(), date3, 6);
-		SaleRoomTariff saleRoomTariff3 = saleRoomTariffService.uploadSaleRoomTariff(price, tariff.getId(),
+		SaleRoom saleRoom3 = dailyPanelService.addSaleRoom(roomType.getId(), date3, 6);
+		SaleRoomTariff saleRoomTariff3 = dailyPanelService.uploadSaleRoomTariff(price, tariff.getId(),
 				roomType.getId(), date3);
 		saleRoomTariffs.add(saleRoomTariff3);
 		
@@ -474,23 +471,23 @@ public class BookingServiceTest {
 		List<SaleRoomTariff> saleRoomTariffs = new ArrayList<>();
 
 		//BookingDay1
-		saleRoomService.addSaleRoom(roomType.getId(), date, freeRooms);
-		SaleRoomTariff saleRoomTariff = saleRoomTariffService.uploadSaleRoomTariff(price, tariff.getId(),
+		dailyPanelService.addSaleRoom(roomType.getId(), date, freeRooms);
+		SaleRoomTariff saleRoomTariff = dailyPanelService.uploadSaleRoomTariff(price, tariff.getId(),
 				roomType.getId(), date);
 		saleRoomTariffs.add(saleRoomTariff);
 		
 		
 		//BookingDay2
 		date.add(Calendar.DAY_OF_YEAR, 1);
-		saleRoomService.addSaleRoom(roomType.getId(), date, freeRooms);
-		SaleRoomTariff saleRoomTariff2 = saleRoomTariffService.uploadSaleRoomTariff(price, tariff.getId(),
+		dailyPanelService.addSaleRoom(roomType.getId(), date, freeRooms);
+		SaleRoomTariff saleRoomTariff2 = dailyPanelService.uploadSaleRoomTariff(price, tariff.getId(),
 				roomType.getId(), date);
 		saleRoomTariffs.add(saleRoomTariff2);
 		
 		//BookingDay3
 		date.add(Calendar.DAY_OF_YEAR, 1);
-		saleRoomService.addSaleRoom(roomType.getId(), date, freeRooms);
-		SaleRoomTariff saleRoomTariff3 = saleRoomTariffService.uploadSaleRoomTariff(price, tariff.getId(),
+		dailyPanelService.addSaleRoom(roomType.getId(), date, freeRooms);
+		SaleRoomTariff saleRoomTariff3 = dailyPanelService.uploadSaleRoomTariff(price, tariff.getId(),
 				roomType.getId(), date);
 		saleRoomTariffs.add(saleRoomTariff3);
 		
@@ -552,8 +549,8 @@ public class BookingServiceTest {
 		List<SaleRoomTariff> saleRoomTariffs = new ArrayList<>();
 
 		//BookingDay1
-		saleRoomService.addSaleRoom(roomType.getId(), date, freeRooms);
-		SaleRoomTariff saleRoomTariff = saleRoomTariffService.uploadSaleRoomTariff(price, tariff.getId(),
+		dailyPanelService.addSaleRoom(roomType.getId(), date, freeRooms);
+		SaleRoomTariff saleRoomTariff = dailyPanelService.uploadSaleRoomTariff(price, tariff.getId(),
 				roomType.getId(), date);
 		saleRoomTariffs.add(saleRoomTariff);
 		
@@ -561,16 +558,16 @@ public class BookingServiceTest {
 		//BookingDay2
 		Calendar date2 = Calendar.getInstance();
 		date2.add(Calendar.DAY_OF_YEAR, 1);
-		saleRoomService.addSaleRoom(roomType.getId(), date2, freeRooms);
-		SaleRoomTariff saleRoomTariff2 = saleRoomTariffService.uploadSaleRoomTariff(price, tariff.getId(),
+		dailyPanelService.addSaleRoom(roomType.getId(), date2, freeRooms);
+		SaleRoomTariff saleRoomTariff2 = dailyPanelService.uploadSaleRoomTariff(price, tariff.getId(),
 				roomType.getId(), date2);
 		saleRoomTariffs.add(saleRoomTariff2);
 		
 		//BookingDay3
 		Calendar date3 = Calendar.getInstance();
 		date3.add(Calendar.DAY_OF_YEAR, 2);
-		saleRoomService.addSaleRoom(roomType.getId(), date3, freeRooms);
-		SaleRoomTariff saleRoomTariff3 = saleRoomTariffService.uploadSaleRoomTariff(price, tariff.getId(),
+		dailyPanelService.addSaleRoom(roomType.getId(), date3, freeRooms);
+		SaleRoomTariff saleRoomTariff3 = dailyPanelService.uploadSaleRoomTariff(price, tariff.getId(),
 				roomType.getId(), date3);
 		saleRoomTariffs.add(saleRoomTariff3);
 			
@@ -633,8 +630,8 @@ public class BookingServiceTest {
 		List<SaleRoomTariff> saleRoomTariffs = new ArrayList<>();
 
 		//BookingDay1
-		saleRoomService.addSaleRoom(roomType.getId(), date, freeRooms);
-		SaleRoomTariff saleRoomTariff = saleRoomTariffService.uploadSaleRoomTariff(price, tariff.getId(),
+		dailyPanelService.addSaleRoom(roomType.getId(), date, freeRooms);
+		SaleRoomTariff saleRoomTariff = dailyPanelService.uploadSaleRoomTariff(price, tariff.getId(),
 				roomType.getId(), date);
 		saleRoomTariffs.add(saleRoomTariff);
 		
@@ -642,16 +639,16 @@ public class BookingServiceTest {
 		//BookingDay2
 		Calendar date2 = Calendar.getInstance();
 		date2.add(Calendar.DAY_OF_YEAR, 1);
-		saleRoomService.addSaleRoom(roomType.getId(), date2, freeRooms);
-		SaleRoomTariff saleRoomTariff2 = saleRoomTariffService.uploadSaleRoomTariff(price, tariff.getId(),
+		dailyPanelService.addSaleRoom(roomType.getId(), date2, freeRooms);
+		SaleRoomTariff saleRoomTariff2 = dailyPanelService.uploadSaleRoomTariff(price, tariff.getId(),
 				roomType.getId(), date2);
 		saleRoomTariffs.add(saleRoomTariff2);
 		
 		//BookingDay3
 		Calendar date3 = Calendar.getInstance();
 		date3.add(Calendar.DAY_OF_YEAR, 2);
-		saleRoomService.addSaleRoom(roomType.getId(), date3, freeRooms);
-		SaleRoomTariff saleRoomTariff3 = saleRoomTariffService.uploadSaleRoomTariff(price, tariff.getId(),
+		dailyPanelService.addSaleRoom(roomType.getId(), date3, freeRooms);
+		SaleRoomTariff saleRoomTariff3 = dailyPanelService.uploadSaleRoomTariff(price, tariff.getId(),
 				roomType.getId(), date3);
 		saleRoomTariffs.add(saleRoomTariff3);
 			
@@ -701,8 +698,8 @@ public class BookingServiceTest {
 		List<SaleRoomTariff> saleRoomTariffs = new ArrayList<>();
 
 		//BookingDay1
-		saleRoomService.addSaleRoom(roomType.getId(), date, freeRooms);
-		SaleRoomTariff saleRoomTariff = saleRoomTariffService.uploadSaleRoomTariff(price, tariff.getId(),
+		dailyPanelService.addSaleRoom(roomType.getId(), date, freeRooms);
+		SaleRoomTariff saleRoomTariff = dailyPanelService.uploadSaleRoomTariff(price, tariff.getId(),
 				roomType.getId(), date);
 		saleRoomTariffs.add(saleRoomTariff);
 		
@@ -710,16 +707,16 @@ public class BookingServiceTest {
 		//BookingDay2
 		Calendar date2 = Calendar.getInstance();
 		date2.add(Calendar.DAY_OF_YEAR, 1);
-		saleRoomService.addSaleRoom(roomType.getId(), date2, freeRooms);
-		SaleRoomTariff saleRoomTariff2 = saleRoomTariffService.uploadSaleRoomTariff(price, tariff.getId(),
+		dailyPanelService.addSaleRoom(roomType.getId(), date2, freeRooms);
+		SaleRoomTariff saleRoomTariff2 = dailyPanelService.uploadSaleRoomTariff(price, tariff.getId(),
 				roomType.getId(), date2);
 		saleRoomTariffs.add(saleRoomTariff2);
 		
 		//BookingDay3
 		Calendar date3 = Calendar.getInstance();
 		date3.add(Calendar.DAY_OF_YEAR, 2);
-		saleRoomService.addSaleRoom(roomType.getId(), date3, freeRooms);
-		SaleRoomTariff saleRoomTariff3 = saleRoomTariffService.uploadSaleRoomTariff(price, tariff.getId(),
+		dailyPanelService.addSaleRoom(roomType.getId(), date3, freeRooms);
+		SaleRoomTariff saleRoomTariff3 = dailyPanelService.uploadSaleRoomTariff(price, tariff.getId(),
 				roomType.getId(), date3);
 		saleRoomTariffs.add(saleRoomTariff3);
 			

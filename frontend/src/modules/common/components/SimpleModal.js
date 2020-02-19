@@ -13,9 +13,9 @@ render () {
         </div>
       </div>
 
-      <button type="button"  className="btn btn-light btn-sm"
-        onClick={onCloseRequest} 
-      />
+      {/* <button type="button"  className="btn btn-light btn-sm"
+        onClick={onCloseRequest} >Cerrar</button> */}
+
     </div>
   );
 

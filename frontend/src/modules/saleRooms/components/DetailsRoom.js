@@ -44,7 +44,7 @@ class DetailsRoom extends React.Component {
         const image = this.props.image;
 
         return (
-                <div className="row m-3">
+                <div className="row m-3 letra">
                     <div className="col-md-5 ">
                         { (!image) ?
                             <td> <img src = {Bed}  className="img-thumbnail"  alt="Hab" /></td> 
@@ -53,10 +53,10 @@ class DetailsRoom extends React.Component {
                         }
                     </div>
                     <div className="col-md-7">
-                        <h5 class="lead"><b>{name}</b></h5>
+                        <h4 className= " text-uppercase ">{name}</h4>
                             <div className= "m-3">
                                 <FormattedMessage id="project.saleRooms.SaleRoomItemList.capacity"/>
-                                {capacity} 
+                                {capacity} adultos
                             </div>
                             <div className= "m-3">
                                 <button type="button" className="btn  btn-link btn-sm text-secondary"

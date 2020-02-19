@@ -19,10 +19,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import es.udc.tfg.backend.model.common.exceptions.DuplicateInstanceException;
 import es.udc.tfg.backend.model.common.exceptions.InstanceNotFoundException;
+import es.udc.tfg.backend.model.services.DailyPanelService;
 import es.udc.tfg.backend.model.services.FreeRoomsLessThanRoomTypeQuantityException;
 import es.udc.tfg.backend.model.services.PriceNotBetweenMinAndMaxValueException;
-import es.udc.tfg.backend.model.services.SaleRoomService;
-import es.udc.tfg.backend.model.services.SaleRoomTariffService;
 import es.udc.tfg.backend.rest.dtos.AddToSaleRoomParamsDto;
 import es.udc.tfg.backend.rest.dtos.AddToSaleRoomTariffParamsDto;
 import es.udc.tfg.backend.rest.dtos.RoomTableDto;
@@ -34,10 +33,7 @@ import es.udc.tfg.backend.rest.dtos.SaleRoomTariffDto;
 public class DailyPanelController {
 
 	@Autowired
-	private SaleRoomService saleRoomService;
-	
-	@Autowired
-	private SaleRoomTariffService saleRoomTariffService;
+	private DailyPanelService dailyPanelService;
 
 	@GetMapping("/findDailyPanel")
 	public List<RoomTableDto> findSaleRoom( 
@@ -45,44 +41,23 @@ public class DailyPanelController {
 					throws InstanceNotFoundException {
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTimeInMillis(date);
-		return toRoomTableDtos(saleRoomTariffService.findDailyPanel(calendar));
+		return toRoomTableDtos(dailyPanelService.findDailyPanel(calendar));
 	}
 	
 	@PostMapping("/addSaleRoom")
 	public SaleRoomDto addSaleRoom(@Validated @RequestBody AddToSaleRoomParamsDto params) throws InstanceNotFoundException, DuplicateInstanceException, FreeRoomsLessThanRoomTypeQuantityException {
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTimeInMillis(params.getDate());
-		return toSaleRoomDto(saleRoomService.addSaleRoom(params.getIdRoomType(), calendar, params.getFreeRooms()));
+		return toSaleRoomDto(dailyPanelService.addSaleRoom(params.getIdRoomType(), calendar, params.getFreeRooms()));
 	}
 	
-
-//	@GetMapping("/findSaleRoom")
-//	public SaleRoomDto findSaleRoom(
-//			@RequestParam Long roomTypeId , 
-//			@RequestParam Long date)
-//					throws InstanceNotFoundException {
-//		Calendar calendar = Calendar.getInstance();
-//		calendar.setTimeInMillis(date);
-//		return toSaleRoomDto(saleRoomService.findByRoomTypeIdAndDate(roomTypeId, calendar));
-//	}
 	
 	@PostMapping("/uploadSaleRoomTariff")
 	public SaleRoomTariffDto uploadSaleRoomTariff(@Validated @RequestBody AddToSaleRoomTariffParamsDto params) throws InstanceNotFoundException, DuplicateInstanceException, PriceNotBetweenMinAndMaxValueException {
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTimeInMillis(params.getDate());
-		return toSaleRoomTariffDto(saleRoomTariffService.uploadSaleRoomTariff(params.getPrice(), params.getTariffId(), params.getRoomTypeId(), calendar));
+		return toSaleRoomTariffDto(dailyPanelService.uploadSaleRoomTariff(params.getPrice(), params.getTariffId(), params.getRoomTypeId(), calendar));
 	}
 	
-
-//	@GetMapping("/findSaleRoomTariff")
-//	public SaleRoomTariffDto findSaleRoomTariff(
-//			@RequestParam Long tariffId , 
-//			@RequestParam Long roomTypeId , 
-//			@RequestParam Long date) 
-//					throws InstanceNotFoundException {
-//		Calendar calendar = Calendar.getInstance();
-//		calendar.setTimeInMillis(date);
-//		return toSaleRoomTariffDto(saleRoomTariffService.findByTariffIdAndRoomTypeIdAndDate(tariffId, roomTypeId, calendar));
-//	}
 
 }

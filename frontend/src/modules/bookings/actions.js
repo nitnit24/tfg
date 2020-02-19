@@ -23,6 +23,25 @@ export const previousFindBookingsResultPage = criteria =>
 export const nextFindBookingsResultPage = criteria =>
     findBookings({...criteria, page: criteria.page+1});
 
+const findBookingsByLocatorCompleted = bookingSearch => ({
+    type: actionTypes.FIND_BOOKINGS_BY_LOCATOR_COMPLETED,
+    bookingSearch
+});
+
+export const findBookingsByLocator = criteria => dispatch => {
+    dispatch(clearBookingSearch());
+    backend.bookingService.findBookingsByLocator(criteria,
+    result => dispatch(findBookingsByLocatorCompleted({criteria, result})));
+    
+}
+
+
+export const previousFindBookingsResultByLocatorPage = criteria =>
+    findBookingsByLocator({...criteria, page: criteria.page-1});
+
+export const nextFindBookingsResultByLocatorPage = criteria =>
+    findBookingsByLocator({...criteria, page: criteria.page+1});
+
 
 const findBookingByLocatorCompleted = booking => ({
     type: actionTypes.FIND_BOOKING_BY_LOCATOR_COMPLETED,
@@ -71,23 +90,3 @@ export const updateBooking= (booking) => (dispatch) => {
 }
 
 
-const findBookingsByLocatorCompleted = bookingSearch => ({
-    type: actionTypes.FIND_BOOKINGS_BY_LOCATOR_COMPLETED,
-    bookingSearch
-});
-
-
-export const findBookingsByLocator = locator => dispatch => {
-    dispatch(clearBookingSearch());
-    let page = 0;
-    let criteria = {locator,page};
-    let items = [];
-    let existMoreItems= false;
-    let result = {items,existMoreItems}
-    backend.bookingService.findBookingByLocator(locator, 
-        booking =>{
-            items.push(booking)
-            dispatch(findBookingsByLocatorCompleted({criteria, result}))
-        }
-    );
-}

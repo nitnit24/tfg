@@ -89,9 +89,10 @@ class ClientForm extends React.Component {
         return (  
             <div>
                  <Errors errors={this.state.backendErrors} handleClose={() => this.handleErrorsClose()}/>
-                <div className=" border rounded p-4">
-                    <h5>
-                        <FormattedMessage id="project.saleRooms.ClientForm.title"/>
+                <div className="card-body border rounded p-4">
+                    <h5 className= "h5">
+                        Datos del titular de la reseva
+                        {/* <FormattedMessage id="project.saleRooms.ClientForm.title"/> */}
                     </h5>
                     <span> <small><em>* Los campos marcados con un asterisco (*) son obligatorios.</em> </small></span>
                     <div className="card-body">

@@ -28,9 +28,12 @@ class BookingFindByLocatorForm extends React.Component {
 
     handleSubmit(event) {
         event.preventDefault();
-
+        const criteria= {
+            locator : this.state.locator.trim(),
+            page: 0
+        };
         if (this.form.checkValidity()) {
-            this.props.findBookingsByLocator(this.state.locator);
+            this.props.findBookingsByLocator(criteria);
         } else {
             this.setBackendErrors(null);
            this.form.classList.add('was-validated');
@@ -50,7 +53,7 @@ class BookingFindByLocatorForm extends React.Component {
     render() {
 
         return (
-            <div className=" border rounded p-4">
+            <div className=" border rounded p-4 find">
                 <Errors errors={this.state.backendErrors}
                     onClose={() => this.handleErrorsClose()}/>
                     <div className="container"> 
@@ -74,7 +77,7 @@ class BookingFindByLocatorForm extends React.Component {
                                         </div>
                                     </div>                                
                                     <div className="col-md-1 ">  
-                                            <button type="submit" className="btn btn-dark disabled" >
+                                            <button type="submit" className="btn btn-find" >
                                                 <FormattedMessage id="project.global.buttons.find"/>
                                             </button>
                                     </div>

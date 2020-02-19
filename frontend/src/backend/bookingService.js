@@ -112,3 +112,14 @@ export const findBookings = ({dateType, minDate, maxDate, keywords, page},
     appFetch(path, config('GET'), onSuccess);
     
 }   
+
+export const findBookingsByLocator = ({locator, page}, 
+    onSuccess) => {
+    
+    let path = `/booking/bookings/locator?page=${page}`;  
+
+    path += locator ? `&string=${locator}` : "";
+    
+    appFetch(path, config('GET'), onSuccess);
+    
+}   

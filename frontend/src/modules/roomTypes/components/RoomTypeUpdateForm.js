@@ -126,12 +126,12 @@ class RoomTypeUpdateForm extends React.Component {
                                                 </div>
                                             </div>
                                         </div>
-                                        <div className="form-group row">
+                                        <div className="form-group row h-20">
                                             <label htmlFor="description" className="col-md-3 col-form-label">
                                                 <FormattedMessage id="project.global.fields.description"/>
                                             </label>
                                             <div className="col-md-8">
-                                                <input type="text" id="name" className="form-control"
+                                                <textarea type="text" id="name" className="form-control"
                                                 value={this.state.description}
                                                 onChange={(e) => this.handleDescriptionChange(e)}
                                                 autoFocus/>
@@ -219,7 +219,7 @@ class RoomTypeUpdateForm extends React.Component {
                         <div className = " row justify-content-center ">
                         <div className=" btn-group">
                                 <div className="offset-md-3 col-md-1">
-                                    <button type="submit" className="btn btn-primary">
+                                    <button type="submit" className="btn-add">
                                         <FormattedMessage id="project.global.buttons.save"/>
                                     </button>
                                 </div>

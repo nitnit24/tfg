@@ -35,7 +35,7 @@ class TablePanel extends React.Component {
         return (
              <div>
                 {roomTables.map(roomTable => 
-                    <table className="table table-bordered">
+                    <table className="table table-bordered ">
                         <thead>
                             <tr>
                                 <th className = "p-1 room text-center" scope="col" style={{width: '8%'}}> 
@@ -54,10 +54,10 @@ class TablePanel extends React.Component {
                             </tr>
                         </thead>
                     
-                        <tbody>
+                        <tbody className = "body-table">
                             <tr>
-                                <td className= "p-0" style={{width: '8%'}}> 
-                                    <span  className = " m-1 text-panel"><FormattedMessage id="project.dailyPanel.dailyPanel.freeRooms"/></span>
+                                <td className= "p-1 text-center" style={{width: '8%'}}> 
+                                   <b> <span  className = " m-1 text-panel"><FormattedMessage id="project.dailyPanel.dailyPanel.freeRooms"/></span></b>
                                 </td>
                                 {roomTable.roomTableDays.map(roomTableDay => 
                                         <FreeRoomsDayItem
@@ -71,8 +71,8 @@ class TablePanel extends React.Component {
                             </tr>
                             {roomTable.tariffs.map(tariff => 
                                 <tr key={roomTable.tariffs.indexOf(tariff)}>
-                                    <td className = "p-0" style={{width: '8%'}}>
-                                        <span className = "m-1 text-panel ">{tariff.name}</span>
+                                    <td className = "p-1 text-center" style={{width: '8%'}}>
+                                        <span className = "p-2 text-panel  ">{tariff.name}</span>
                                     </td>
                                     {roomTable.roomTableDays.map(roomTableDay => 
                                         <TariffDayItem

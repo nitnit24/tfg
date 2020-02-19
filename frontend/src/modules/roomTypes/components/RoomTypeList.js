@@ -53,8 +53,9 @@ class RoomTypeList extends React.Component {
                 <h4 className="h4">
                      <FormattedMessage id='project.roomTypes.RoomTypeItemList.title' /> 
                 </h4>
+                <br/>
                 <table className="table .table-hover">
-                    <thead>
+                    <thead className = "thead-table" >
                         <tr>
                         <th scope="col" style={{width: '10%'}}>
                                 <FormattedMessage id='project.global.fields.image'/>
@@ -82,7 +83,7 @@ class RoomTypeList extends React.Component {
                         </tr>
                     </thead>
 
-                    <tbody>
+                    <tbody className = "body-table">
 
                         {list.map(item => 
                             <RoomTypeItem roomTypeItemListId={list.id}

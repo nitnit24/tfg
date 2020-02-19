@@ -147,30 +147,6 @@ public class BookingController {
 		return toFreeRoomTypeDtos(bookingService.findFreeRooms(startCalendar, endCalendar, people, rooms));
 	}
 	
-//	@GetMapping("/findTariffsByFreeRoom")
-//	public List<TariffDto> findTariffsByFreeRoom(
-//			@RequestParam Long startDate,
-//			@RequestParam Long endDate,
-//			@RequestParam Long roomTypeId){
-//		Calendar startCalendar = Calendar.getInstance();
-//		startCalendar.setTimeInMillis(startDate);
-//		Calendar endCalendar = Calendar.getInstance();
-//		endCalendar.setTimeInMillis(endDate);
-//		return toTariffDtos(bookingService.findTariffsByFreeRoom(startCalendar, endCalendar, roomTypeId));
-//	}
-//	
-//	@GetMapping("/findSaleRoomTariffsByFreeRoom")
-//	public List<SaleRoomTariffDto> findSaleRoomTariffsByFreeRoom(
-//			@RequestParam Long startDate,
-//			@RequestParam Long endDate,
-//			@RequestParam Long tariffId,
-//			@RequestParam Long roomTypeId){
-//		Calendar startCalendar = Calendar.getInstance();
-//		startCalendar.setTimeInMillis(startDate);
-//		Calendar endCalendar = Calendar.getInstance();
-//		endCalendar.setTimeInMillis(endDate);
-//		return toSaleRoomTariffDtos(bookingService.findSaleRoomTariffsByFreeRoom(startCalendar, endCalendar, roomTypeId, tariffId));
-//	}
 
 	@GetMapping("/{locator}")
 	public BookingDto findBookingByLocator(@PathVariable("locator") String locator) throws InstanceNotFoundException {
@@ -186,7 +162,7 @@ public class BookingController {
 	@PutMapping("/{locator}/cancel")
 	public BookingDto cancelBooking(@PathVariable("locator") String locator,
 			@RequestParam String key)	
-			throws InstanceNotFoundException, OldBookingException {
+			throws InstanceNotFoundException, OldBookingException, UnsupportedEncodingException, IOException {
 		return toBookingDto(bookingService.cancel(locator, key));
 	}
 	
@@ -204,6 +180,18 @@ public class BookingController {
 		maxCalendar.setTimeInMillis(maxDate);
 		
 		Block<Booking> bookingBlock = bookingService.findBookings(dateType, minCalendar, maxCalendar, keywords, page, 10);
+		
+		return new BlockDto<>(toBookingSummaryDtos(bookingBlock.getItems()), bookingBlock.getExistMoreItems());
+		
+	}
+	
+	@GetMapping("/bookings/locator")
+	public BlockDto<BookingSummaryDto> findBookingsByLocator(
+		@RequestParam(required=true) String string,
+		@RequestParam(required=false) String keywords, 
+		@RequestParam(defaultValue="0") int page) {
+
+		Block<Booking> bookingBlock = bookingService.findBookingsByLocator(string, page, 10);
 		
 		return new BlockDto<>(toBookingSummaryDtos(bookingBlock.getItems()), bookingBlock.getExistMoreItems());
 		

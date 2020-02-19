@@ -62,14 +62,14 @@ class RoomTypeItem extends React.Component {
                 <td> 
                 <button type="button" className="btn btn-light btn-sm"
                             onClick={() => this.handleRemoveItem()}>
-                            <span className="fas fa-trash-alt"></span>
+                            <i className="fas fa-trash-alt" style={{color: "red"}}></i>
                 </button>
                 </td>
                 <td> 
 
                 <button type="button" className="btn btn-light btn-sm"
                             onClick={() => this.handleClick()}>
-                            <span className="fas fa-edit"></span>
+                            <i className="fas fa-edit" style={{color: "CornflowerBlue"}}></i>
                 </button>
                 </td>
             </tr>

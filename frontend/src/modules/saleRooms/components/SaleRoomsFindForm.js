@@ -2,6 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 
 import {FormattedMessage} from 'react-intl';
+import * as selectors from '../selectors';
 
 import {Errors} from '../../common';
 import  backend from '../../../backend';
@@ -52,7 +53,6 @@ class SaleRoomsFindForm extends React.Component {
 
     findFreeRooms() {
         this.props.cleanFreeRoomTypes();
-        console.log("find")
         backend.bookingService.findFreeRooms(this.state.startDate, this.state.endDate, 
             this.state.people, this.state.rooms, 
             roomTypes =>  this.props.addFreeRoomTypes(roomTypes))
@@ -100,7 +100,7 @@ class SaleRoomsFindForm extends React.Component {
         var today = this.getCurrentDate();
         var dateMin = this.getCurrentDateMin();
         return (
-            <div className=" border rounded p-4">
+            <div className=" border rounded p-4 letra border-secondary" style={{background: "#16235c87"}} >
                 <Errors errors={this.state.backendErrors}
                     onClose={() => this.handleErrorsClose()}/>
                     <div className="container"> 
@@ -108,10 +108,11 @@ class SaleRoomsFindForm extends React.Component {
                             className="needs-validation" noValidate 
                             onSubmit={(e) => this.handleSubmit(e)}>
                                 <div className="row justify-content-center">
+                                     {( this.props.summaryRooms.length  === 0 ) && 
                                     <div className="col-3 input-group mb-2" >  
                                         <div class="input-group-prepend">
-                                            <div className= "input-group-text" >
-                                                <span className="fas fa-calendar-alt" ></span>
+                                            <div className= "input-group-text "  style={{background: ""}}>
+                                            <i class="fas fa-calendar-alt" style={{color: ""}}></i>
                                             </div>
                                             <input type="date" id="startDate" className="form-control "
                                                 value={this.state.startDate} 
@@ -121,7 +122,24 @@ class SaleRoomsFindForm extends React.Component {
                                                 required/>
                                         </div>
                                     </div>
-                               
+                                     }
+                                    {( this.props.summaryRooms.length  !== 0 ) && 
+                                    <div className="col-3 input-group mb-2" >  
+                                        <div class="input-group-prepend">
+                                            <div className= "input-group-text "  style={{background: ""}}>
+                                            <i class="fas fa-calendar-alt" style={{color: ""}}></i>
+                                            </div>
+                                            <input type="date" id="startDate" className="form-control "
+                                                value={this.state.startDate} 
+                                                onChange={(e) => this.handleStartDateChange(e)}
+                                                autoFocus
+                                                min = {today}
+                                                disabled="disabled"
+                                                required/>
+                                        </div>
+                                    </div>
+                                    }
+                                    {( this.props.summaryRooms.length  === 0 ) && 
                                     <div className="col-3 input-group mb-2" >  
                                         <div class="input-group-prepend">
                                             <div className= "input-group-text" >
@@ -135,6 +153,23 @@ class SaleRoomsFindForm extends React.Component {
                                                 required/>
                                         </div>
                                     </div>
+                                    }
+                                    {( this.props.summaryRooms.length  !== 0 ) && 
+                                      <div className="col-3 input-group mb-2" >  
+                                      <div class="input-group-prepend">
+                                          <div className= "input-group-text" >
+                                              <span className="fas fa-calendar-alt" ></span>
+                                          </div>
+                                          <input type="date" id="endDate" className="form-control "
+                                              value={this.state.endDate} placeholder="Check Out"
+                                              onChange={(e) => this.handleEndDateChange(e)}
+                                              autoFocus
+                                              min= {dateMin}
+                                              disabled="disabled"
+                                              required/>
+                                      </div>
+                                    </div>
+                                    }
                                     <div className="col-2 input-group mb-2" >  
                                         <div class="input-group-prepend">
                                             <div className= "input-group-text" >
@@ -163,7 +198,7 @@ class SaleRoomsFindForm extends React.Component {
                                         </div>
                                     </div>
                                     <div className="col-md-1 ">  
-                                            <button type="submit" className="btn btn-dark disabled" >
+                                            <button type="submit" className="btn btn-warning" >
                                                 <FormattedMessage id="project.global.buttons.find"/>
                                             </button>
                                     </div>
@@ -180,7 +215,7 @@ class SaleRoomsFindForm extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-
+    summaryRooms: selectors.getSummaryRooms(state)
     
 });
 

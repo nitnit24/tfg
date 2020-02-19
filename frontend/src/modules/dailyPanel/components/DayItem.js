@@ -51,7 +51,7 @@ class DayItem extends React.Component {
         const pos = this.props.pos;
 
         return (
-            <th className = "p-0 panel" scope="col" style={{width: '2.6%'}}>
+            <th className = "p-0 panel" scope="col" style={{width: '2.6%', height: '4.5px'}}>
                 { (day.getDate() === 1 || pos === 0) && 
                 <span className = " m-0 text-panelWeekDay">  {this.getNameMonth(day)}</span>
                 }

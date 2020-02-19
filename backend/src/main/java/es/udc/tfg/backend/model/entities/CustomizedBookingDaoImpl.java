@@ -80,5 +80,31 @@ public class CustomizedBookingDaoImpl implements CustomizedBookingDao {
 		return new SliceImpl<>(bookings, PageRequest.of(page, size), hasNext);
 		
 	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public Slice<Booking> findByLocator(String cadena, int page, int size){
+		String cadena1 = cadena + "%";
+		String queryString = "SELECT b FROM Booking b WHERE ";
+
+		queryString += "b.locator LIKE " + " :cadena1" ;
+		queryString += " ORDER BY b.locator";
+		
+		Query query = entityManager.createQuery(queryString).setFirstResult(page*size).setMaxResults(size+1);
+		
+		query.setParameter("cadena1", cadena1);
+		
+		List<Booking> bookings = query.getResultList();
+		boolean hasNext = bookings.size() == (size+1);
+		
+		if (hasNext) {
+			bookings.remove(bookings.size()-1);
+		}
+		
+		return new SliceImpl<>(bookings, PageRequest.of(page, size), hasNext);
+		
+	}
+	
+	
 
 }

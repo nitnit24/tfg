@@ -1,8 +1,8 @@
 package es.udc.tfg.backend.model.services;
 
-import static es.udc.tfg.backend.model.entities.SendEmail.sendMsgBooking;
-import static es.udc.tfg.backend.model.entities.SendEmail.sendMsgUpdateBooking;
-import static es.udc.tfg.backend.model.entities.SendEmail.sendMsgFreeRoomsZero;
+//import static es.udc.tfg.backend.model.entities.SendEmail.sendMsgBooking;
+//import static es.udc.tfg.backend.model.entities.SendEmail.sendMsgUpdateBooking;
+//import static es.udc.tfg.backend.model.entities.SendEmail.sendMsgFreeRoomsZero;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -67,6 +67,9 @@ public class BookingServiceImpl implements BookingService {
 	
 	@Autowired
 	private HotelDao hotelDao;
+	
+	@Autowired
+	private EmailService emailService;
 
 	@Override
 	public List<FreeRoomType> findFreeRooms(Calendar startDate, Calendar endDate, int people, int rooms) {
@@ -303,7 +306,7 @@ public class BookingServiceImpl implements BookingService {
 					bookingDayDao.save(newBookingDay);
 					
 					if (saleRoom.get().getFreeRooms() == 0) {
-						sendMsgFreeRoomsZero(saleRoom.get().getRoomType(), saleRoom.get().getDate(), hotel.get());
+						emailService.sendMsgFreeRoomsZero(saleRoom.get().getRoomType(), saleRoom.get().getDate(), hotel.get());
 					}
 
 				}
@@ -322,8 +325,9 @@ public class BookingServiceImpl implements BookingService {
 			newBooking.setTotalPrice(totalPrice);
 			bookingDao.save(newBooking);
 			
-			sendMsgBooking(newBooking, hotel.get());
-
+			emailService.sendMsgBookingToClient(newBooking, hotel.get());
+			emailService.sendMsgBookingToHotel(newBooking, hotel.get());
+			
 			return newBooking;
 	
 	}
@@ -417,7 +421,7 @@ public class BookingServiceImpl implements BookingService {
 					bookingDayDao.save(newBookingDay);
 					
 					if (saleRoom.get().getFreeRooms() == 0) {
-						sendMsgFreeRoomsZero(saleRoom.get().getRoomType(), saleRoom.get().getDate(), hotel.get());
+						emailService.sendMsgFreeRoomsZero(saleRoom.get().getRoomType(), saleRoom.get().getDate(), hotel.get());
 					}
 
 				}
@@ -437,8 +441,9 @@ public class BookingServiceImpl implements BookingService {
 			bookingDao.save(booking.get());
 			
 			
-			sendMsgUpdateBooking(booking.get(), hotel.get());
-
+			emailService.sendMsgUpdateBookingToClient(booking.get(), hotel.get());
+			emailService.sendMsgUpdateBookingToHotel(booking.get(), hotel.get());
+			
 			return booking.get();
 	
 	}
@@ -469,12 +474,18 @@ public class BookingServiceImpl implements BookingService {
 	}
 	
 	
-	public Booking cancel(String locator, String key) throws InstanceNotFoundException, OldBookingException {
+	public Booking cancel(String locator, String key) throws InstanceNotFoundException, OldBookingException, UnsupportedEncodingException, IOException {
 
 		Optional<Booking> existingBookingItem = bookingDao.findByLocatorAndKey(locator, key);
 
 		if (!existingBookingItem.isPresent()) {
 			throw new InstanceNotFoundException("project.entities.booking", locator);
+		}
+		
+		Optional <Hotel> hotel = hotelDao.findById(existingBookingItem.get().getHotel().getId());
+		
+		if (!hotel.isPresent()) {
+			throw new InstanceNotFoundException("project.entities.hotel", hotel.get().getId());
 		}
 		
 		Calendar now = Calendar.getInstance();
@@ -488,6 +499,9 @@ public class BookingServiceImpl implements BookingService {
 		existingBookingItem.get().setCancelDate(now);
 
 		bookingDao.save(existingBookingItem.get());
+		
+		emailService.sendMsgCancelBookingToClient(existingBookingItem.get(), hotel.get());
+		emailService.sendMsgCancelBookingToHotel(existingBookingItem.get(), hotel.get());
 
 		return existingBookingItem.get();
 	}
@@ -499,5 +513,12 @@ public class BookingServiceImpl implements BookingService {
 		
 		return new Block<>(slice.getContent(), slice.hasNext());
 		
+	}
+	
+	@Override 
+	public Block<Booking> findBookingsByLocator(String string, int page, int size){
+		Slice<Booking> slice = bookingDao.findByLocator(string, page, size);
+		
+		return new Block<>(slice.getContent(), slice.hasNext());
 	}
 }

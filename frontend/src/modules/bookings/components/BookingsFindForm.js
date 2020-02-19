@@ -84,7 +84,7 @@ class BookingsFindForm extends React.Component {
         var untilMin = this.getCurrentDate();
 
         return (
-            <div className=" border rounded p-4">
+            <div className=" border rounded p-4  find">
                 <Errors errors={this.state.backendErrors}
                     onClose={() => this.handleErrorsClose()}/>
                     <div className="container"> 
@@ -148,7 +148,7 @@ class BookingsFindForm extends React.Component {
                                         </div>
                                     </div>
                                     <div className="col-md-1 ">  
-                                            <button type="submit" className="btn btn-dark disabled" >
+                                            <button type="submit" className="btn btn-find" >
                                                 <FormattedMessage id="project.global.buttons.find"/>
                                             </button>
                                     </div>

@@ -1,30 +1,51 @@
 span.text-panel {
-    font-size: 0.7em;
+    font-size: 0.8em;
     line-height:0.5;
+    text-align: center;
   }
 
   span.text-panelWeekDay {
-    font-size: 0.5em;
+    font-size: 0.6em;
     line-height:0.5;
   }
 
 input.table-input {
-    font-size: 0.7em;
+    font-size: 0.8em;
     width: 100%; /*Aquí va el ancho de la Celda*/
-    height: 100%; /*Aquí el Alto*/
-    border: rounded;
-  }
+    height: 40px; /*Aquí el Alto*/
+    background-color: rgba(255, 255, 255, 0.938);
+}
+
+.body-table{
+  font-family: 'Lobster', cursive;
+  background-color: rgba(255, 255, 255, 0.938);
+}
+
 
 th.panel{
   text-align: center;
-  background:  #cde0f7;
+  background:rgb(133, 163, 235);
   width: 2%; /*Aquí va el ancho de la Celda*/
   height: 2%; /*Aquí el Alto*/
 }
 
 th.room{
-  text-align: left;
-  background:  #a8cdf8;
+  background:  rgb(47, 12, 128);
+  color: #ffffff;
 
+}
+.table-panel{
+  border:#000000;
+}
+
+table.table-bordered{
+  border:1px solid rgb(152, 152, 156);
+  margin-top:20px;
+}
+table.table-bordered > thead > tr > th{
+  border:1px solid rgb(182, 182, 185);
+}
+table.table-bordered > tbody > tr > td{
+  border:1px solid rgb(152, 152, 156);
 }
 

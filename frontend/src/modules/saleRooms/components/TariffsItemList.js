@@ -51,7 +51,7 @@ class TariffsItemList extends React.Component {
         return (
             <div>
                 {tariffs.map(tariff =>
-                    <div className=" m-3 row justify-content-center"> 
+                    <div className=" m-3 row justify-content-center letra"> 
                         <div className= "col-4 align-self-end">
                         <div className= "align-self-end">
                             <b>{tariff.tariffName}</b>
@@ -60,8 +60,8 @@ class TariffsItemList extends React.Component {
                             <small>{tariff.tariffDescription}</small>
                         </div>
                         </div>
-                        <div className= "col-3 align-self-end">
-                            <FormattedNumber value={tariff.totalPrice}/> €
+                        <div className= "col-3 align-self-end text-success">
+                            <h4><FormattedNumber value={tariff.totalPrice}/> €</h4>
                         </div>
                         <QuantitySelect 
                             hotelId = {hotelId}

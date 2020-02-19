@@ -8,15 +8,63 @@
 
 .h4{
     text-align: center;
-    font-family: 'Lobster', cursive;
+    font-family: 'Lobster', cursive, bold;
 }
 
 .h5{
     font-family: 'Lobster', cursive;
 }
 
+.letra{
+    font-family: 'Lobster', cursive;
+}
+
 .btn{
     font-family: 'Lobster', cursive;
+}
+
+.div.border{
+    border: 5px rgb(47, 12, 128);
+}
+
+.div-icon{
+    background-color: rgb(47, 12, 128);
+    color: #000000;
+}
+.btn-add{
+    font-size: 16px;
+    padding: 6px 12px;
+    margin-bottom: 0;
+    height: 38px;
+    border-radius: 5px;
+
+    font-family: 'Lobster', cursive;
+    background-color: rgb(47, 12, 128);
+    color: #ffffff;
+}
+
+.btn-find{
+    font-size: 16px;
+    padding: 6px 12px;
+    margin-bottom: 0;
+    height: 38px;
+    border-radius: 5px;
+
+    font-family: 'Lobster', cursive;
+    background-color: rgb(247, 55, 205);
+    color: #ffffff;
+}
+
+.btn-cancel{
+    font-size: 16px;
+    padding: 6px 12px;
+    margin-bottom: 0;
+    height: 38px;
+    border-radius: 5px;
+
+    font-family: 'Lobster', cursive;
+    background-color: rgb(233, 22, 22);
+    color: #ffffff;
 }
 
 .col-form-label{
@@ -31,17 +79,61 @@
     color: #ffffff;
 }
 
-.card-body{
+.thead-table{
+    font-family: 'Lobster', cursive;
+    background-color: rgb(47, 12, 128);
+    color: #ffffff;
+}
+
+.body-table{
+    font-family: 'Lobster', cursive;
     background-color: rgba(203, 216, 250, 0.938);
+}
+
+.card-body{
+    background-color: rgba(255, 255, 255, 0.938);
 }
 
 .app{
     background-color: rgba(203, 216, 250, 0.938);
+    font-family: 'Lobster', cursive;
 }
 
 
 .fondoFindSaleRoom{
     background-image: url('hotelito.jpg');
-    
 
+}
+
+.find{
+    background-color: rgb(47, 12, 128);
+    color:#ffff; 
+}
+
+.tab-content{
+    /* background-color:#c8cde9; */
+     background-color: rgba(255, 255, 255, 0.938); 
+    font-family: 'Lobster', cursive;
+    color:#00000;
+    padding:5px
+}
+
+.nav-link-{
+    font-family: 'Lobster', cursive;
+}
+.nav-link.active{
+    /* background: rgba(203, 216, 250, 0.938) !important; */
+    font-family: 'Lobster', cursive;
+}
+
+
+.td-find-cancelada{
+    color:rgb(194, 21, 21); 
+}
+.td-find-modificada{
+    color:rgb(221, 147, 9); 
+}
+
+.td-find-confirmada{
+    color:rgb(18, 153, 36); 
 }

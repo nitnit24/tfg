@@ -53,11 +53,14 @@ const Bookings = ({bookings}) => (
                     )}
                     </td>
                     <td>  <FormattedDate value={new Date(booking.date)}/></td>
-                    { booking.state !== 'CANCELADA' &&
-                        <td>{booking.state}</td>
+                    { booking.state === 'MODIFICADA' &&
+                        <td className = "td-find-modificada">{booking.state}</td>
+                    }
+                    { booking.state === 'CONFIRMADA' &&
+                        <td className = "td-find-confirmada">{booking.state}</td>
                     }
                     { booking.state === 'CANCELADA' &&
-                        <td className = "text-danger">{booking.state}</td>
+                        <td className = "td-find-cancelada">{booking.state}</td>
                     }
                     
                     <td><FormattedNumber value={booking.totalPrice}/>€</td>

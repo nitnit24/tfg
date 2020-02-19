@@ -54,8 +54,9 @@ class TariffItemList extends React.Component {
                 <h4 className="h4">
                      <FormattedMessage id='project.tariffs.TariffItemList.title' /> 
                 </h4>
+                <br/>
                 <table className="table .table-hover">
-                    <thead>
+                    <thead className = "thead-table" >
                         <tr>
                             <th scope="col" style={{width: '30%'}}>
                                 <FormattedMessage id='project.global.fields.code'/>
@@ -71,7 +72,7 @@ class TariffItemList extends React.Component {
                         </tr>
                     </thead>
 
-                    <tbody>
+                    <tbody className = "body-table">
 
                         {list.map(item => 
                             <TariffItem tariffItemListId={list.id}

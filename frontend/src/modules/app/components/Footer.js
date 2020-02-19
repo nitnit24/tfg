@@ -20,8 +20,10 @@ const Footer = ({user}) => (
                 <Link  to="/users/login">
                         <FormattedMessage id="project.users.Login.titleAdmin"/>
                 </Link>
-            </p> 
+            </p>
             }
+            <br/>
+            <br/>
         </footer>
     </div>
 

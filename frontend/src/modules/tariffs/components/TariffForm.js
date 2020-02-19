@@ -126,7 +126,7 @@ class TariffForm extends React.Component {
                             </div>
                             <div className="form-group row">
                                 <div className="offset-md-3 col-md-1">
-                                    <button type="submit" className="btn btn-primary" >
+                                    <button type="submit" className="btn btn-add" >
                                         <FormattedMessage id="project.global.buttons.add"/>
                                     </button>
                                 </div>

@@ -99,7 +99,7 @@ class BookingDetailsClient extends React.Component {
         return (
             <div>
             <Errors errors={this.state.backendErrors} handleClose={() => this.handleErrorsClose()}/>
-            <div className=" border rounded p-4">
+            <div className=" border rounded p-4 bg-white letra">
                 <div >
                     {booking.state === "CONFIRMADA" &&
                     <h4 className= "text-center"><b>
@@ -147,7 +147,9 @@ class BookingDetailsClient extends React.Component {
                 &nbsp;
                 <div className="row">
                     <div className="col-6 border rounded p-4">
-                        <h5 className= "text-center"><FormattedMessage id="project.saleRooms.BookingCompleted.clientData"/></h5>
+                        <div className= "card-header">
+                            <h5 className= "text-center"><FormattedMessage id="project.saleRooms.BookingCompleted.clientData"/></h5>
+                        </div>
                         <hr/>
                         <div className="row">
                             <span  className = "ml-5">  <FormattedMessage id="project.saleRooms.BookingCompleted.name"/></span>
@@ -167,7 +169,9 @@ class BookingDetailsClient extends React.Component {
                         </div>
                     </div>
                     <div className="col-6 border rounded p-4">
-                        <h5 className= "text-center"><FormattedMessage id="project.saleRooms.BookingCompleted.BookingData"/></h5>
+                        <div className= "card-header">
+                            <h5 className= "text-center"><FormattedMessage id="project.saleRooms.BookingCompleted.BookingData"/></h5>
+                        </div>
                         <hr/>
                         <div className="row">
                              <span className = "ml-5"> <FormattedMessage id="project.global.fields.startDate"/></span>
@@ -202,7 +206,9 @@ class BookingDetailsClient extends React.Component {
                 &nbsp;
                 <div className="row">
                     <div className="col-12 border rounded p-4">
-                        <h5 className= "text-center"><FormattedMessage id="project.saleRooms.BookingCompleted.rooms"/></h5>
+                        <div className= "card-header">
+                            <h5 className= "text-center"><FormattedMessage id="project.saleRooms.BookingCompleted.rooms"/></h5>
+                        </div>
                         <hr/>
                         <div>
                             {booking.bookingRooms !== undefined &&
@@ -223,7 +229,7 @@ class BookingDetailsClient extends React.Component {
                     </h5>
                 </div>
                 &nbsp;
-                {/* {((booking.state === "CONFIRMADA" || booking.state === "MODIFICADA") && (booking.startDate >= now )) && */}
+                 {((booking.state === "CONFIRMADA" || booking.state === "MODIFICADA") && (booking.startDate >= now )) && 
                 <div className="row justify-content-center">
                     <button type="button" className="btn  btn-link btn-sm"
                         onClick={this.deleteBookingNotification.bind(this)}>
@@ -235,7 +241,7 @@ class BookingDetailsClient extends React.Component {
                         <FormattedMessage id="project.global.buttons.bookingUpdate"/>
                     </button> 
                 </div>
-                // }
+                }
 
             </div>
         </div>

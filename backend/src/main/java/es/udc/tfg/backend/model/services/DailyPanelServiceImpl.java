@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import es.udc.tfg.backend.model.common.exceptions.DuplicateInstanceException;
 import es.udc.tfg.backend.model.common.exceptions.InstanceNotFoundException;
 import es.udc.tfg.backend.model.entities.RoomTable;
 import es.udc.tfg.backend.model.entities.RoomTableDay;
@@ -25,7 +26,7 @@ import es.udc.tfg.backend.model.entities.TariffDao;
 
 @Service
 @Transactional
-public class SaleRoomTariffServiceImpl implements SaleRoomTariffService {
+public class DailyPanelServiceImpl implements DailyPanelService {
 
 	@Autowired
 	private SaleRoomDao saleRoomDao;
@@ -89,17 +90,38 @@ public class SaleRoomTariffServiceImpl implements SaleRoomTariffService {
 		}
 	}
 	
-//	@Override
-//	public SaleRoomTariff findByTariffIdAndRoomTypeIdAndDate(Long tariffId, Long roomTypeId, Calendar date) throws InstanceNotFoundException{
-//		
-//		Optional<SaleRoomTariff> saleRoomTariff = saleRoomTariffDao. findByTariffIdAndSaleRoomRoomTypeIdAndSaleRoomDate(tariffId, roomTypeId, date);
-//
-//		if (!saleRoomTariff.isPresent()) {
-//			throw new InstanceNotFoundException("project.entities.roomType", roomTypeId );
-//		}
-//
-//		return saleRoomTariff.get();
-//	}
+
+	@Override
+	public SaleRoom addSaleRoom(Long roomTypeId, Calendar date, int freeRooms) throws DuplicateInstanceException, InstanceNotFoundException, FreeRoomsLessThanRoomTypeQuantityException {
+
+		Optional<RoomType> roomType = roomTypeDao.findById(roomTypeId);
+
+		if (!roomType.isPresent()) {
+			throw new InstanceNotFoundException("project.entities.roomType", roomTypeId);
+		}
+		
+		if (roomType.get().getQuantity() < freeRooms) {
+			throw new  FreeRoomsLessThanRoomTypeQuantityException(roomType.get().getQuantity());
+		}
+		
+		Optional<SaleRoom> saleRoom = saleRoomDao.findByRoomTypeIdAndDate(roomTypeId, date);
+		
+		if(!saleRoom.isPresent()) {
+			SaleRoom newSaleRoom = new SaleRoom(date, freeRooms, roomType.get());
+			
+			saleRoomDao.save(newSaleRoom);
+			
+			return newSaleRoom;
+			
+		}else {
+			saleRoom.get().setFreeRooms(freeRooms);
+			saleRoomDao.save(saleRoom.get());
+			
+			return saleRoom.get();
+		}
+		
+		
+	}
 	
 	@Override
 	public List<RoomTable> findDailyPanel (Calendar initialDate){
