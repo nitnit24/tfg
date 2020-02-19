@@ -7,7 +7,7 @@ const findBookingsCompleted = bookingSearch => ({
 });
 
 export const findBookings = criteria => dispatch => {
-    dispatch(clearBookingSearch());
+    // dispatch(clearBookingSearch());
     backend.bookingService.findBookings(criteria,
         result => dispatch(findBookingsCompleted({criteria, result})));
 
@@ -29,7 +29,7 @@ const findBookingsByLocatorCompleted = bookingSearch => ({
 });
 
 export const findBookingsByLocator = criteria => dispatch => {
-    dispatch(clearBookingSearch());
+    // dispatch(clearBookingSearch());
     backend.bookingService.findBookingsByLocator(criteria,
     result => dispatch(findBookingsByLocatorCompleted({criteria, result})));
     

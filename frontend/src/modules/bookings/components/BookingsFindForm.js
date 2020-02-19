@@ -21,7 +21,7 @@ class BookingsFindForm extends React.Component {
     }
 
     componentDidMount() {
-        this.props.clearBookingSearch();
+        // this.props.clearBookingSearch();
     }
 
     handleMinDateChange(event) {

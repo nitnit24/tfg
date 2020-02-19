@@ -19,7 +19,7 @@ const BookingsFind = ({history}) => (
          <h4 className="h4">
             <FormattedMessage id="project.bookings.BookingsFind.bookings"/>
         </h4>
-        <Tabs defaultActiveKey="profile" id="uncontrolled-tab-example" >
+        <Tabs defaultActiveKey="home" id="uncontrolled-tab-example" >
             <Tab  eventKey="home" title="Buscar por parámetros">
                 <BookingsFindForm history={history}/>
                 <BookingsFindResult history={history}/>

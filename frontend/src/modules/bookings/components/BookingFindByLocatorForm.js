@@ -17,7 +17,7 @@ class BookingFindByLocatorForm extends React.Component {
         };
     }
     componentDidMount() {
-        this.props.clearBookingSearch();
+        // this.props.clearBookingSearch();
     }
 
 
