@@ -623,6 +623,7 @@ public class BookingServiceTest {
 		roomTypeService.addRoomType(user.getId(), roomType);
 
 		Calendar date = Calendar.getInstance();
+		date.add(Calendar.DAY_OF_YEAR, 2);
 
 		int freeRooms = 4;
 		BigDecimal price = new BigDecimal(90);
@@ -638,7 +639,7 @@ public class BookingServiceTest {
 		
 		//BookingDay2
 		Calendar date2 = Calendar.getInstance();
-		date2.add(Calendar.DAY_OF_YEAR, 1);
+		date2.add(Calendar.DAY_OF_YEAR, 3);
 		dailyPanelService.addSaleRoom(roomType.getId(), date2, freeRooms);
 		SaleRoomTariff saleRoomTariff2 = dailyPanelService.uploadSaleRoomTariff(price, tariff.getId(),
 				roomType.getId(), date2);
@@ -646,7 +647,7 @@ public class BookingServiceTest {
 		
 		//BookingDay3
 		Calendar date3 = Calendar.getInstance();
-		date3.add(Calendar.DAY_OF_YEAR, 2);
+		date3.add(Calendar.DAY_OF_YEAR, 4);
 		dailyPanelService.addSaleRoom(roomType.getId(), date3, freeRooms);
 		SaleRoomTariff saleRoomTariff3 = dailyPanelService.uploadSaleRoomTariff(price, tariff.getId(),
 				roomType.getId(), date3);
@@ -659,8 +660,9 @@ public class BookingServiceTest {
 		bookingRoomSummarys.add(bookingRoomSummary);
 		
 		Calendar startDate = Calendar.getInstance();
+		startDate.add(Calendar.DAY_OF_YEAR, 2);
 		Calendar endDate = Calendar.getInstance();
-		endDate.add(Calendar.DAY_OF_YEAR, 2);
+		endDate.add(Calendar.DAY_OF_YEAR, 4);
 		String name = "name";
 		String surName = "surNmae";
 		String phone = "666666666";

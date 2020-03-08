@@ -91,7 +91,7 @@ class ClientUpdateBookingForm extends React.Component {
         return (  
             <div>
                  <Errors errors={this.state.backendErrors} handleClose={() => this.handleErrorsClose()}/>
-                <div className=" border rounded p-4">
+                <div className=" border rounded p-4 bg-white">
                     <h5>
                         <FormattedMessage id="project.saleRooms.ClientForm.title"/>
                     </h5>

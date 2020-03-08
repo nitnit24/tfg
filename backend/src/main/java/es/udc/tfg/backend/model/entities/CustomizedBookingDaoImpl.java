@@ -54,7 +54,17 @@ public class CustomizedBookingDaoImpl implements CustomizedBookingDao {
 			
 		}
 		
-		queryString += " ORDER BY b.startDate";
+		if (dataType.equals("Reserva")) {
+			queryString += " ORDER BY b.date";
+		}
+		
+		if (dataType.equals("Entrada")) {
+			queryString += " ORDER BY b.startDate";
+		}
+		
+		if (dataType.equals("Salida")) {
+			queryString += " ORDER BY b.endDate";
+		}
 		
 		Query query = entityManager.createQuery(queryString).setFirstResult(page*size).setMaxResults(size+1);
 		

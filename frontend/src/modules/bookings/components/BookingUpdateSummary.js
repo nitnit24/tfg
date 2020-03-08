@@ -88,7 +88,7 @@ class BookingUpdateSummary extends React.Component {
     render() {
 
         return (
-            <div className=" border rounded p-4">
+            <div className=" border rounded p-4 bg-white">
                 <h5>
                     <FormattedMessage id="project.saleRooms.BookingSummary.title"/>
                 </h5>

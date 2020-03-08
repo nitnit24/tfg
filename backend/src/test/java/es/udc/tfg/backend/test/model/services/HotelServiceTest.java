@@ -76,16 +76,16 @@ public class HotelServiceTest {
 		
 	}
 	
-	@Test(expected = IncorrectLoginException.class)
-	public void testLoginWithIncorrectPassword() throws DuplicateInstanceException, IncorrectLoginException {
-		
-		Hotel user = createUser("user");
-		String clearPassword = user.getPassword();
-		
-		userService.signUp(user);
-		userService.login(user.getUserName(), 'X' + clearPassword);
-		
-	}
+//	@Test(expected = IncorrectLoginException.class)
+//	public void testLoginWithIncorrectPassword() throws DuplicateInstanceException, IncorrectLoginException {
+//		
+//		Hotel user = createUser("user");
+//		String clearPassword = user.getPassword();
+//		
+//		userService.signUp(user);
+//		userService.login(user.getUserName(), 'X' + clearPassword);
+//		
+//	}
 	
 	@Test(expected = IncorrectLoginException.class)
 	public void testLoginWithNonExistentUserName() throws IncorrectLoginException {

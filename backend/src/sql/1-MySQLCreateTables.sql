@@ -59,23 +59,24 @@ CREATE TABLE RoomType (
 
 CREATE TABLE SaleRoom (
 	idSaleRoom BIGINT NOT NULL AUTO_INCREMENT,
-    idRoomType BIGINT NOT NULL,
+    idRoomType BIGINT,
     freeRooms SMALLINT NOT NULL,
     date DATE NOT NULL,
     CONSTRAINT AK_SaleRoom UNIQUE(idRoomType,date),
     CONSTRAINT SaleRoomPK PRIMARY KEY (idSaleRoom),
     CONSTRAINT idRoomTypeFK FOREIGN KEY(idRoomType)
-        REFERENCES RoomType (id)
+        REFERENCES RoomType (id) ON DELETE SET NULL
 ) ENGINE = InnoDB;
 
 CREATE TABLE SaleRoomTariff (
 	id BIGINT NOT NULL AUTO_INCREMENT,
 	price DECIMAL(11,2),
-	idTariff BIGINT NOT NULL,
+	idTariff BIGINT,
 	idSaleRoom BIGINT NOT NULL,
 	CONSTRAINT SaleRoomTariffPK PRIMARY KEY (id),
-	CONSTRAINT idTariffFK FOREIGN KEY(idTariff) REFERENCES Tariff (id),
+	CONSTRAINT idTariffFK FOREIGN KEY(idTariff) REFERENCES Tariff (id) ON DELETE SET NULL,
 	CONSTRAINT idSaleRoomFK FOREIGN KEY(idSaleRoom) REFERENCES SaleRoom (idSaleRoom)
+	
 ) Engine = InnoDB;
 
 

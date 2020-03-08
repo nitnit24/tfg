@@ -95,7 +95,7 @@ class BookingsFindForm extends React.Component {
                                     <div className= "col-2">
                                         <span>Fecha de</span>
                                     </div>
-                                    <div className= "col-3">
+                                    <div className= "col-2">
                                         <span>Desde</span>
                                     </div>
                                     <div className= "col-3">
@@ -114,7 +114,7 @@ class BookingsFindForm extends React.Component {
                                             <option value="Reserva">Reserva </option>
                                         </select>
                                     </div>
-                                    <div className="col-3 input-group mb-2" >  
+                                    <div className="col-2 input-group mb-2" >  
                                         <div class="input-group-prepend">
                                             <input type="date" id="minDate" className="form-control "
                                                 value={this.state.minDate}

@@ -164,7 +164,7 @@ public class EmailServiceImpl implements EmailService{
 			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(hotel.getEmail()));
 
 			// Seteamos el asunto
-			message.setSubject("Su reserva " + booking.getLocator());
+			message.setSubject("Nueva reserva " + booking.getLocator());
 
 			String hotelName = hotel.getHotelName();
 			String hotelAddress = hotel.getAddress();
@@ -172,8 +172,7 @@ public class EmailServiceImpl implements EmailService{
 			String hotelEmail = hotel.getEmail();
 			String image = hotel.getImage();
 
-			String msg = "<b><h2 style=\"text-align:center;\" >¡Gracias " + booking.getName() + "!</h2></b>";
-			msg += "<b><h1 style=\"text-align:center;\" > Confirmación de reserva </h1></b>";
+			String msg = "<b><h1 style=\"text-align:center;\" > Confirmación de reserva </h1></b>";
 			msg += "<h3 style=\"text-align:center;\" > Localizador : " + "<b>" + booking.getLocator() + "</b> ";
 			msg += " <b> <h2 style=\"text-align:center;color:MediumBlue;\" > Hotel " + hotelName + "</h2></b>";
 			msg += "<p style=\"text-align:center;\" >" + hotelAddress;
@@ -370,7 +369,7 @@ public class EmailServiceImpl implements EmailService{
 			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(hotel.getEmail()));
 
 			// Seteamos el asunto
-			message.setSubject("Su reserva modificada " + booking.getLocator());
+			message.setSubject("Reserva modificada " + booking.getLocator());
 
 			String hotelName = hotel.getHotelName();
 			String hotelAddress = hotel.getAddress();
@@ -378,8 +377,8 @@ public class EmailServiceImpl implements EmailService{
 			String hotelEmail = hotel.getEmail();
 			String image = hotel.getImage();
 			
-			String msg = "<b><h2 style=\"text-align:center;\" >¡Gracias " + booking.getName() + "!</h2></b>";
-			msg += "<b><h1 style=\"text-align:center;\" > Confirmación de modificación reserva </h1></b>";
+
+			String msg = "<b><h1 style=\"text-align:center;\" > Confirmación de modificación reserva </h1></b>";
 			msg += "<h3 style=\"text-align:center;\" > Localizador : " + "<b>" + booking.getLocator() + "</b> ";
 			msg += " <b> <h2 style=\"text-align:center;color:MediumBlue;\" >" + hotelName + "</h2></b>";
 			msg += "<p style=\"text-align:center;\" >" + hotelAddress;
@@ -469,7 +468,7 @@ public class EmailServiceImpl implements EmailService{
 			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(booking.getEmail()));
 
 			// Seteamos el asunto
-			message.setSubject("Su reserva modificada " + booking.getLocator());
+			message.setSubject("Su reserva cancelada " + booking.getLocator());
 
 			String hotelName = hotel.getHotelName();
 			String hotelAddress = hotel.getAddress();
@@ -576,7 +575,7 @@ public class EmailServiceImpl implements EmailService{
 			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(hotel.getEmail()));
 
 			// Seteamos el asunto
-			message.setSubject("Su reserva modificada " + booking.getLocator());
+			message.setSubject("Reserva cancelada " + booking.getLocator());
 
 			String hotelName = hotel.getHotelName();
 			String hotelAddress = hotel.getAddress();
@@ -584,8 +583,8 @@ public class EmailServiceImpl implements EmailService{
 			String hotelEmail = hotel.getEmail();
 			String image = hotel.getImage();
 			
-			String msg = "<b><h2 style=\"text-align:center;\" >¡Gracias " + booking.getName() + "!</h2></b>";
-			msg += "<b><h1 style=\"text-align:center;\" > Confirmación de cancelación reserva </h1></b>";
+
+			String msg = "<b><h1 style=\"text-align:center;\" > Confirmación de cancelación reserva </h1></b>";
 			msg += "<h3 style=\"text-align:center;\" > Localizador : " + "<b>" + booking.getLocator() + "</b> ";
 			msg += " <b> <h2 style=\"text-align:center;color:MediumBlue;\" >" + hotelName + "</h2></b>";
 			msg += "<p style=\"text-align:center;\" >" + hotelAddress;
